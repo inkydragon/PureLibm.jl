@@ -15,6 +15,7 @@ makedocs(;
     pages=[
         "Home" => "index.md",
         "Reference" => Any[
+            "LLVM Libc [Apache]" => "ref/llvm-libc.md",
             "Core Math [MIT]" => "ref/core-math.md",
             "RLibm [MIT]" => "ref/rlibm.md",
             "Std C11" => "ref/std-c11.md",
