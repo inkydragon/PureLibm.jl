@@ -14,6 +14,9 @@ makedocs(;
     ),
     pages=[
         "Home" => "index.md",
+        "Reference" => Any[
+            "Std C23" => "ref/std-c23.md",
+        ],
     ],
 )
 
