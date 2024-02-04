@@ -29,12 +29,14 @@ long double acosl(long double x);
 double asin(double x);
 float asinf(float x);
 long double asinl(long double x);
+
 double atan(double x);
 float atanf(float x);
 long double atanl(long double x);
 double atan2(double y, double x);
 float atan2f(float y, float x);
 long double atan2l(long double y, long double x);
+
 double cos(double x);
 float cosf(float x);
 long double cosl(long double x);
@@ -58,6 +60,7 @@ long double asinhl(long double x);
 double atanh(double x);
 float atanhf(float x);
 long double atanhl(long double x);
+
 double cosh(double x);
 float coshf(float x);
 long double coshl(long double x);
@@ -214,9 +217,11 @@ long double truncl(long double x);
 double fmod(double x, double y);
 float fmodf(float x, float y);
 long double fmodl(long double x, long double y);
+
 double remainder(double x, double y);
 float remainderf(float x, float y);
 long double remainderl(long double x, long double y);
+
 double remquo(double x, double y, int *quo);
 float remquof(float x, float y, int *quo);
 long double remquol(long double x, long double y, int *quo);
