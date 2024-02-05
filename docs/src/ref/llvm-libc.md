@@ -4,3 +4,19 @@
 
 ## implementations
 See: [Implementation Status](https://libc.llvm.org/math/#higher-math-functions)
+
+not impl:
+```c
+acosh
+asinh
+atan2
+
+pow
+cbrt
+
+erf
+erfc
+
+lgamma
+tgamma
+```
