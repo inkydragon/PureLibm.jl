@@ -1,5 +1,5 @@
 module PureLibm
 
-# Write your package code here.
+include("utils/const.jl")
 
 end
