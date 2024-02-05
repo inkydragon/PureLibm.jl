@@ -15,3 +15,16 @@
 julia --project=docs -e "using Pkg; Pkg.develop(PackageSpec(path=pwd())); Pkg.instantiate();"
 julia --project=docs docs/make.jl
 ```
+
+
+## License
+```
+// SPDX-License-Identifier: MIT OR Apache-2.0
+```
+
+PureLibm.jl is licensed under either of
+
+- MIT license ([LICENSE-MIT](LICENSE-MIT))
+- Apache License, Version 2.0, ([LICENSE-APACHE](LICENSE-APACHE))
+
+at your option.
