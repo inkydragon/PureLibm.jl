@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Std C23 · PureLibm.jl</title><meta name="title" content="Std C23 · PureLibm.jl"/><meta property="og:title" content="Std C23 · PureLibm.jl"/><meta property="twitter:title" content="Std C23 · PureLibm.jl"/><meta name="description" content="Documentation for PureLibm.jl."/><meta property="og:description" content="Documentation for PureLibm.jl."/><meta property="twitter:description" content="Documentation for PureLibm.jl."/><meta property="og:url" content="https://inkydragon.github.io/PureLibm.jl/ref/std-c23/"/><meta property="twitter:url" content="https://inkydragon.github.io/PureLibm.jl/ref/std-c23/"/><link rel="canonical" href="https://inkydragon.github.io/PureLibm.jl/ref/std-c23/"/><script data-outdated-warner src="../../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.050/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL="../.."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../../assets/documenter.js"></script><script src="../../search_index.js"></script><script src="../../siteinfo.js"></script><script src="../../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit"><a href="../../">PureLibm.jl</a></span></div><button class="docs-search-query input is-rounded is-small is-clickable my-2 mx-auto py-1 px-2" id="documenter-search-query">Search docs (Ctrl + /)</button><ul class="docs-menu"><li><a class="tocitem" href="../../">Home</a></li><li><span class="tocitem">Reference</span><ul><li><a class="tocitem" href="../references/">Reference</a></li><li><a class="tocitem" href="../llvm-libc/">LLVM Libc [Apache]</a></li><li><a class="tocitem" href="../core-math/">Core Math [MIT]</a></li><li><a class="tocitem" href="../rlibm/">RLibm [MIT]</a></li><li><a class="tocitem" href="../std-c11/">Std C11</a></li><li class="is-active"><a class="tocitem" href>Std C23</a><ul class="internal"><li><a class="tocitem" href="#math.h"><span><code>&lt;math.h&gt;</code></span></a></li><li><a class="tocitem" href="#Classification"><span>Classification</span></a></li><li><a class="tocitem" href="#Trigonometric"><span>Trigonometric</span></a></li><li><a class="tocitem" href="#Hyperbolic"><span>Hyperbolic</span></a></li><li><a class="tocitem" href="#Exponential-and-logarithmic"><span>Exponential and logarithmic</span></a></li><li><a class="tocitem" href="#Power-and-Absolute-value"><span>Power and Absolute-value</span></a></li><li><a class="tocitem" href="#Error-and-gamma"><span>Error and gamma</span></a></li><li><a class="tocitem" href="#Nearest-integer"><span>Nearest integer</span></a></li><li><a class="tocitem" href="#Remainder"><span>Remainder</span></a></li><li><a class="tocitem" href="#Manipulation"><span>Manipulation</span></a></li><li><a class="tocitem" href="#Maximum,-minimum"><span>Maximum, minimum</span></a></li><li><a class="tocitem" href="#Fused-multiply-add"><span>Fused multiply-add</span></a></li><li><a class="tocitem" href="#Round-to-narrower-type"><span>Round to narrower type</span></a></li><li><a class="tocitem" href="#Quantum-and-quantum-exponent"><span>Quantum and quantum exponent</span></a></li><li><a class="tocitem" href="#Decimal-re-encoding"><span>Decimal re-encoding</span></a></li><li><a class="tocitem" href="#Comparison"><span>Comparison</span></a></li></ul></li></ul></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><a class="docs-sidebar-button docs-navbar-link fa-solid fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a><nav class="breadcrumb"><ul class="is-hidden-mobile"><li><a class="is-disabled">Reference</a></li><li class="is-active"><a href>Std C23</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Std C23</a></li></ul></nav><div class="docs-right"><a class="docs-navbar-link" href="https://github.com/inkydragon/PureLibm.jl" title="View the repository on GitHub"><span class="docs-icon fa-brands"></span><span class="docs-label is-hidden-touch">GitHub</span></a><a class="docs-navbar-link" href="https://github.com/inkydragon/PureLibm.jl/blob/main/docs/src/ref/std-c23.md" title="Edit source on GitHub"><span class="docs-icon fa-solid"></span></a><a class="docs-settings-button docs-navbar-link fa-solid fa-gear" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-article-toggle-button fa-solid fa-chevron-up" id="documenter-article-toggle-button" href="javascript:;" title="Collapse all docstrings"></a></div></header><article class="content" id="documenter-page"><h1 id="Std-C23"><a class="docs-heading-anchor" href="#Std-C23">Std C23</a><a id="Std-C23-1"></a><a class="docs-heading-anchor-permalink" href="#Std-C23" title="Permalink"></a></h1><blockquote><p>TODO: Modifying heading levels when <code>Documenter.jl</code> supports displaying third level headings</p></blockquote><h2 id="math.h"><a class="docs-heading-anchor" href="#math.h"><code>&lt;math.h&gt;</code></a><a id="math.h-1"></a><a class="docs-heading-anchor-permalink" href="#math.h" title="Permalink"></a></h2><h2 id="Classification"><a class="docs-heading-anchor" href="#Classification">Classification</a><a id="Classification-1"></a><a class="docs-heading-anchor-permalink" href="#Classification" title="Permalink"></a></h2><pre><code class="language-c hljs">// 7.12.2 The FP_CONTRACT pragma
+#pragma STDC FP_CONTRACT on-off-switch
+
+// 7.12.3 Classification macros
+int fpclassify(real-floating x);
+
+    int iscanonical(real-floating x);
+
+int isfinite(real-floating x);
+int isinf(real-floating x);
+int isnan(real-floating x);
+int isnormal(real-floating x);
+
+int signbit(real-floating x);
+
+    int issignaling(real-floating x);
+    int issubnormal(real-floating x);
+    int iszero(real-floating x);</code></pre><h2 id="Trigonometric"><a class="docs-heading-anchor" href="#Trigonometric">Trigonometric</a><a id="Trigonometric-1"></a><a class="docs-heading-anchor-permalink" href="#Trigonometric" title="Permalink"></a></h2><pre><code class="language-c hljs">// 7.12.4 Trigonometric functions
+double acos(double x);
+float acosf(float x);
+long double acosl(long double x);
+double asin(double x);
+float asinf(float x);
+long double asinl(long double x);
+
+double atan(double x);
+float atanf(float x);
+long double atanl(long double x);
+double atan2(double y, double x);
+float atan2f(float y, float x);
+long double atan2l(long double y, long double x);
+
+double cos(double x);
+float cosf(float x);
+long double cosl(long double x);
+double sin(double x);
+float sinf(float x);
+long double sinl(long double x);
+double tan(double x);
+float tanf(float x);
+long double tanl(long double x);
+
+    double acospi(double x);
+    float acospif(float x);
+    long double acospil(long double x);
+    double asinpi(double x);
+    float asinpif(float x);
+    long double asinpil(long double x);
+    double atanpi(double x);
+    float atanpif(float x);
+    long double atanpil(long double x);
+    double atan2pi(double y, double x);
+    float atan2pif(float y, float x);
+    long double atan2pil(long double y, long double x);
+
+    double cospi(double x);
+    float cospif(float x);
+    long double cospil(long double x);
+    double sinpi(double x);
+    float sinpif(float x);
+    long double sinpil(long double x);
+    double tanpi(double x);
+    float tanpif(float x);
+    long double tanpil(long double x);</code></pre><h2 id="Hyperbolic"><a class="docs-heading-anchor" href="#Hyperbolic">Hyperbolic</a><a id="Hyperbolic-1"></a><a class="docs-heading-anchor-permalink" href="#Hyperbolic" title="Permalink"></a></h2><pre><code class="language-c hljs">// 7.12.5 Hyperbolic functions
+double acosh(double x);
+float acoshf(float x);
+long double acoshl(long double x);
+double asinh(double x);
+float asinhf(float x);
+long double asinhl(long double x);
+double atanh(double x);
+float atanhf(float x);
+long double atanhl(long double x);
+
+double cosh(double x);
+float coshf(float x);
+long double coshl(long double x);
+double sinh(double x);
+float sinhf(float x);
+long double sinhl(long double x);
+double tanh(double x);
+float tanhf(float x);
+long double tanhl(long double x);</code></pre><h2 id="Exponential-and-logarithmic"><a class="docs-heading-anchor" href="#Exponential-and-logarithmic">Exponential and logarithmic</a><a id="Exponential-and-logarithmic-1"></a><a class="docs-heading-anchor-permalink" href="#Exponential-and-logarithmic" title="Permalink"></a></h2><pre><code class="language-c hljs">// 7.12.6 Exponential and logarithmic functions
+double exp(double x);
+float expf(float x);
+long double expl(long double x);
+    double exp10(double x);
+    float exp10f(float x);
+    long double exp10l(long double x);
+    double exp10m1(double x);
+    float exp10m1f(float x);
+    long double exp10m1l(long double x);
+
+double exp2(double x);
+float exp2f(float x);
+long double exp2l(long double x);
+    double exp2m1(double x);
+    float exp2m1f(float x);
+    long double exp2m1l(long double x);
+
+double expm1(double x);
+float expm1f(float x);
+long double expm1l(long double x);
+
+double frexp(double value, int *p);
+float frexpf(float value, int *p);
+long double frexpl(long double value, int *p);
+
+int ilogb(double x);
+int ilogbf(float x);
+int ilogbl(long double x);
+double ldexp(double x, int p);
+float ldexpf(float x, int p);
+long double ldexpl(long double x, int p);
+    long int llogb(double x);
+    long int llogbf(float x);
+    long int llogbl(long double x);
+
+double log(double x);
+float logf(float x);
+long double logl(long double x);
+
+double log10(double x);
+float log10f(float x);
+long double log10l(long double x);
+    double log10p1(double x);
+    float log10p1f(float x);
+    long double log10p1l(long double x);
+
+double log1p(double x);
+float log1pf(float x);
+long double log1pl(long double x);
+    double logp1(double x);
+    float logp1f(float x);
+    long double logp1l(long double x);
+
+double log2(double x);
+float log2f(float x);
+long double log2l(long double x);
+    double log2p1(double x);
+    float log2p1f(float x);
+    long double log2p1l(long double x);
+
+double logb(double x);
+float logbf(float x);
+long double logbl(long double x);
+
+double modf(double value, double *iptr);
+float modff(float value, float *iptr);
+long double modfl(long double value, long double *iptr);
+
+double scalbn(double x, int n);
+float scalbnf(float x, int n);
+long double scalbnl(long double x, int n);
+double scalbln(double x, long int n);
+float scalblnf(float x, long int n);
+long double scalblnl(long double x, long int n);</code></pre><h2 id="Power-and-Absolute-value"><a class="docs-heading-anchor" href="#Power-and-Absolute-value">Power and Absolute-value</a><a id="Power-and-Absolute-value-1"></a><a class="docs-heading-anchor-permalink" href="#Power-and-Absolute-value" title="Permalink"></a></h2><pre><code class="language-c hljs">// 7.12.7 Power and absolute-value functions
+double cbrt(double x);
+float cbrtf(float x);
+long double cbrtl(long double x);
+
+    double compoundn(double x, long long int n);
+    float compoundnf(float x, long long int n);
+    long double compoundnl(long double x, long long int n);
+
+double fabs(double x);
+float fabsf(float x);
+long double fabsl(long double x);
+
+double hypot(double x, double y);
+float hypotf(float x, float y);
+long double hypotl(long double x, long double y);
+
+double pow(double x, double y);
+float powf(float x, float y);
+long double powl(long double x, long double y);
+    double pown(double x, long long int n);
+    float pownf(float x, long long int n);
+    long double pownl(long double x, long long int n);
+
+    double powr(double y, double x);
+    float powrf(float y, float x);
+    long double powrl(long double y, long double x);
+
+    double rootn(double x, long long int n);
+    float rootnf(float x, long long int n);
+    long double rootnl(long double x, long long int n);
+
+    double rsqrt(double x);
+    float rsqrtf(float x);
+    long double rsqrtl(long double x);
+
+double sqrt(double x);
+float sqrtf(float x);
+long double sqrtl(long double x);</code></pre><h2 id="Error-and-gamma"><a class="docs-heading-anchor" href="#Error-and-gamma">Error and gamma</a><a id="Error-and-gamma-1"></a><a class="docs-heading-anchor-permalink" href="#Error-and-gamma" title="Permalink"></a></h2><pre><code class="language-c hljs">// 7.12.8 Error and gamma functions
+double erf(double x);
+float erff(float x);
+long double erfl(long double x);
+double erfc(double x);
+float erfcf(float x);
+long double erfcl(long double x);
+
+double lgamma(double x);
+float lgammaf(float x);
+long double lgammal(long double x);
+double tgamma(double x);
+float tgammaf(float x);
+long double tgammal(long double x);</code></pre><h2 id="Nearest-integer"><a class="docs-heading-anchor" href="#Nearest-integer">Nearest integer</a><a id="Nearest-integer-1"></a><a class="docs-heading-anchor-permalink" href="#Nearest-integer" title="Permalink"></a></h2><pre><code class="language-c hljs">// 7.12.9 Nearest integer functions
+double ceil(double x);
+float ceilf(float x);
+long double ceill(long double x);
+
+double floor(double x);
+float floorf(float x);
+long double floorl(long double x);
+
+double nearbyint(double x);
+float nearbyintf(float x);
+long double nearbyintl(long double x);
+double rint(double x);
+float rintf(float x);
+long double rintl(long double x);
+long int lrint(double x);
+long int lrintf(float x);
+long int lrintl(long double x);
+long long int llrint(double x);
+long long int llrintf(float x);
+long long int llrintl(long double x);
+
+double round(double x);
+float roundf(float x);
+long double roundl(long double x);
+long int lround(double x);
+long int lroundf(float x);
+long int lroundl(long double x);
+long long int llround(double x);
+long long int llroundf(float x);
+long long int llroundl(long double x);
+
+    double roundeven(double x);
+    float roundevenf(float x);
+    long double roundevenl(long double x);
+
+double trunc(double x);
+float truncf(float x);
+long double truncl(long double x);
+
+    double fromfp(double x, int rnd, unsigned int width);
+    float fromfpf(float x, int rnd, unsigned int width);
+    long double fromfpl(long double x, int rnd, unsigned int width);
+    double ufromfp(double x, int rnd, unsigned int width);
+    float ufromfpf(float x, int rnd, unsigned int width);
+    long double ufromfpl(long double x, int rnd, unsigned int width);
+
+    double fromfpx(double x, int rnd, unsigned int width);
+    float fromfpxf(float x, int rnd, unsigned int width);
+    long double fromfpxl(long double x, int rnd, unsigned int width);
+    double ufromfpx(double x, int rnd, unsigned int width);
+    float ufromfpxf(float x, int rnd, unsigned int width);
+    long double ufromfpxl(long double x, int rnd, unsigned int width);</code></pre><h2 id="Remainder"><a class="docs-heading-anchor" href="#Remainder">Remainder</a><a id="Remainder-1"></a><a class="docs-heading-anchor-permalink" href="#Remainder" title="Permalink"></a></h2><pre><code class="language-c hljs">// 7.12.10 Remainder functions
+double fmod(double x, double y);
+float fmodf(float x, float y);
+long double fmodl(long double x, long double y);
+
+double remainder(double x, double y);
+float remainderf(float x, float y);
+long double remainderl(long double x, long double y);
+
+double remquo(double x, double y, int *quo);
+float remquof(float x, float y, int *quo);
+long double remquol(long double x, long double y, int *quo);</code></pre><h2 id="Manipulation"><a class="docs-heading-anchor" href="#Manipulation">Manipulation</a><a id="Manipulation-1"></a><a class="docs-heading-anchor-permalink" href="#Manipulation" title="Permalink"></a></h2><pre><code class="language-c hljs">// 7.12.11 Manipulation functions
+double copysign(double x, double y);
+float copysignf(float x, float y);
+long double copysignl(long double x, long double y);
+
+double nan(const char *tagp);
+float nanf(const char *tagp);
+long double nanl(const char *tagp);
+
+double nextafter(double x, double y);
+float nextafterf(float x, float y);
+long double nextafterl(long double x, long double y);
+
+double nexttoward(double x, long double y);
+float nexttowardf(float x, long double y);
+long double nexttowardl(long double x, long double y);
+
+    double nextup(double x);
+    float nextupf(float x);
+    long double nextupl(long double x);
+
+    double nextdown(double x);
+    float nextdownf(float x);
+    long double nextdownl(long double x);
+
+    int canonicalize(double * cx, const double * x);
+    int canonicalizef(float * cx, const float * x);
+    int canonicalizel(long double * cx, const long double * x);</code></pre><h2 id="Maximum,-minimum"><a class="docs-heading-anchor" href="#Maximum,-minimum">Maximum, minimum</a><a id="Maximum,-minimum-1"></a><a class="docs-heading-anchor-permalink" href="#Maximum,-minimum" title="Permalink"></a></h2><pre><code class="language-c hljs">// 7.12.12 Maximum, minimum, and positive difference functions
+double fdim(double x, double y);
+float fdimf(float x, float y);
+long double fdiml(long double x, long double y);
+
+double fmax(double x, double y);
+float fmaxf(float x, float y);
+long double fmaxl(long double x, long double y);
+
+double fmin(double x, double y);
+float fminf(float x, float y);
+long double fminl(long double x, long double y);
+
+    double fmaximum(double x, double y);
+    float fmaximumf(float x, float y);
+    long double fmaximuml(long double x, long double y);
+    double fminimum(double x, double y);
+    float fminimumf(float x, float y);
+    long double fminimuml(long double x, long double y);
+
+    double fmaximum_mag(double x, double y);
+    float fmaximum_magf(float x, float y);
+    long double fmaximum_magl(long double x, long double y);
+    double fminimum_mag(double x, double y);
+    float fminimum_magf(float x, float y);
+    long double fminimum_magl(long double x, long double y);
+
+    double fmaximum_num(double x, double y);
+    float fmaximum_numf(float x, float y);
+    long double fmaximum_numl(long double x, long double y);
+    double fminimum_num(double x, double y);
+    float fminimum_numf(float x, float y);
+    long double fminimum_numl(long double x, long double y);
+
+    double fmaximum_mag_num(double x, double y);
+    float fmaximum_mag_numf(float x, float y);
+    long double fmaximum_mag_numl(long double x, long double y);
+    double fminimum_mag_num(double x, double y);
+    float fminimum_mag_numf(float x, float y);
+    long double fminimum_mag_numl(long double x, long double y);</code></pre><h2 id="Fused-multiply-add"><a class="docs-heading-anchor" href="#Fused-multiply-add">Fused multiply-add</a><a id="Fused-multiply-add-1"></a><a class="docs-heading-anchor-permalink" href="#Fused-multiply-add" title="Permalink"></a></h2><pre><code class="language-c hljs">// 7.12.13 Fused multiply-add
+double fma(double x, double y, double z);
+float fmaf(float x, float y, float z);
+long double fmal(long double x, long double y, long double z);</code></pre><h2 id="Round-to-narrower-type"><a class="docs-heading-anchor" href="#Round-to-narrower-type">Round to narrower type</a><a id="Round-to-narrower-type-1"></a><a class="docs-heading-anchor-permalink" href="#Round-to-narrower-type" title="Permalink"></a></h2><pre><code class="language-c hljs">// 7.12.14 Functions that round result to narrower type
+    float fadd(double x, double y);
+    float faddl(long double x, long double y);
+    double daddl(long double x, long double y);
+
+    float fsub(double x, double y);
+    float fsubl(long double x, long double y);
+    double dsubl(long double x, long double y);
+
+    float fmul(double x, double y);
+    float fmull(long double x, long double y);
+    double dmull(long double x, long double y);
+
+    float fdiv(double x, double y);
+    float fdivl(long double x, long double y);
+    double ddivl(long double x, long double y);
+
+    float ffma(double x, double y, double z);
+    float ffmal(long double x, long double y, long double z);
+    double dfmal(long double x, long double y, long double z);
+
+    float fsqrt(double x);
+    float fsqrtl(long double x);
+    double dsqrtl(long double x);</code></pre><h2 id="Quantum-and-quantum-exponent"><a class="docs-heading-anchor" href="#Quantum-and-quantum-exponent">Quantum and quantum exponent</a><a id="Quantum-and-quantum-exponent-1"></a><a class="docs-heading-anchor-permalink" href="#Quantum-and-quantum-exponent" title="Permalink"></a></h2><pre><code class="language-c hljs">// 7.12.15 Quantum and quantum exponent functions
+// need __STDC_IEC_60559_DFP__</code></pre><h2 id="Decimal-re-encoding"><a class="docs-heading-anchor" href="#Decimal-re-encoding">Decimal re-encoding</a><a id="Decimal-re-encoding-1"></a><a class="docs-heading-anchor-permalink" href="#Decimal-re-encoding" title="Permalink"></a></h2><pre><code class="language-c hljs">// 7.12.16 Decimal re-encoding functions
+// need __STDC_IEC_60559_DFP__</code></pre><h2 id="Comparison"><a class="docs-heading-anchor" href="#Comparison">Comparison</a><a id="Comparison-1"></a><a class="docs-heading-anchor-permalink" href="#Comparison" title="Permalink"></a></h2><pre><code class="language-c hljs">// 7.12.17 Comparison macros
+int isgreater(real-floating x, real-floating y);
+int isgreaterequal(real-floating x, real-floating y);
+
+int isless(real-floating x, real-floating y);
+int islessequal(real-floating x, real-floating y);
+int islessgreater(real-floating x, real-floating y);
+
+int isunordered(real-floating x, real-floating y);
+
+    int iseqsig(real-floating x, real-floating y);</code></pre></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../std-c11/">« Std C11</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="auto">Automatic (OS)</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.2.1 on <span class="colophon-date" title="Monday 5 February 2024 18:57">Monday 5 February 2024</span>. Using Julia version 1.10.0.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
