@@ -8,6 +8,20 @@
 [![Coverage](https://codecov.io/gh/inkydragon/PureLibm.jl/branch/main/graph/badge.svg)](https://codecov.io/gh/inkydragon/PureLibm.jl)
 
 
+## Implementation Goals
+1. As accurate as possible.
+    - The input of `Float32` should pass the exhaustive checking
+    - The result of `Float64` should match the output of CORE-MATH.
+    - Rounding mode: Only `FE_TONEAREST` for now.
+    - Other rounding modes will be considered after the completion of `FE_TONEAREST`.
+2. Code readability.
+    - Magic numbers should not be used, use named constant.
+    - If it is possible to use absolute values, do not use shifted values.
+    - For algorithm implementations, the implementation logic in the references should be followed as much as possible, even if it has an impact on performance.
+3. Performance should be considered after the implementation is complete, with a lower priority than correctness.
+    - If refactoring the algorithm improves performance, implementations that match the original reference are retained as references for testing purposes.
+
+
 ## Dev Memo
 
 ### Build doc
