@@ -19,6 +19,7 @@ makedocs(;
             "LLVM Libc [Apache]" => "ref/llvm-libc.md",
             "Core Math [MIT]" => "ref/core-math.md",
             "RLibm [MIT]" => "ref/rlibm.md",
+            "Zig [MIT]" => "ref/zig.md",
             "Std C11" => "ref/std-c11.md",
             "Std C23" => "ref/std-c23.md",
         ],
