@@ -8,7 +8,7 @@
 - [sourceware/newlib-cygwin.git](https://sourceware.org/git/newlib-cygwin.git)
 - [JuliaMath/openlibm](https://github.com/JuliaMath/openlibm)
 - [musl-libc/musl](https://git.musl-libc.org/cgit/musl)
-- [apple/libc](https://opensource.apple.com/source/Libc/)
+- [apple/Libm](https://github.com/apple-oss-distributions/Libm)
 - [llvm-project/libc/src/math](https://github.com/llvm/llvm-project/tree/main/libc/src/math)
 - MSVC/Universal C Runtime Library
 - [freebsd-src/lib/msun](https://github.com/freebsd/freebsd-src/tree/main/lib/msun)
