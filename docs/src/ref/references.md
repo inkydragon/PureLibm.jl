@@ -1,5 +1,21 @@
 # References
 
+## Libm impl
+
+- [sourceware/glibc.git](https://sourceware.org/git/glibc.git)
+- [intel/Intel oneAPI Math Kernel Library](https://www.intel.com/content/www/us/en/developer/tools/oneapi/onemkl-download.html)
+- [amd/aocl-libm-ose](https://github.com/amd/aocl-libm-ose)
+- [sourceware/newlib-cygwin.git](https://sourceware.org/git/newlib-cygwin.git)
+- [JuliaMath/openlibm](https://github.com/JuliaMath/openlibm)
+- [musl-libc/musl](https://git.musl-libc.org/cgit/musl)
+- [apple/libc](https://opensource.apple.com/source/Libc/)
+- [llvm-project/libc/src/math](https://github.com/llvm/llvm-project/tree/main/libc/src/math)
+- MSVC/Universal C Runtime Library
+- [freebsd-src/lib/msun](https://github.com/freebsd/freebsd-src/tree/main/lib/msun)
+- [arm/Arm Performance Libraries](https://learn.arm.com/install-guides/armpl/)
+- [nvidia/CUDA Math Libraries](https://developer.nvidia.com/gpu-accelerated-libraries#linear-algebra)
+- [amd/ROCm libraries](https://rocm.docs.amd.com/en/latest/reference/api-libraries.html)
+
 ## Tools
 - [float.exposed](https://float.exposed/)
 
