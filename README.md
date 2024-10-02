@@ -30,6 +30,10 @@ julia --project=docs -e "using Pkg; Pkg.develop(PackageSpec(path=pwd())); Pkg.in
 julia --project=docs docs/make.jl
 ```
 
+```julia
+using Pkg; using LocalCoverage; Pkg.add(url=".");  html_coverage(generate_coverage("PureLibm"; run_test=true); dir = "../cov")
+```
+
 
 ## License
 ```
