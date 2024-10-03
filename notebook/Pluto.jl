@@ -37,8 +37,9 @@ function plot_ulps(func::Function, x::Vector{T}) where T <: Union{Float32, Float
 
     y = rel_ulp.(func, x);
 
-    min_y = minimum(y)
-    max_y = maximum(y)
+    y1 = filter(!isnan, y)
+    min_y = minimum(y1)
+    max_y = maximum(y1)
 	max_rel_ulp = maximum(abs.([max_y, min_y]))
 	println("[$f_name] max_rel_ulp=$max_rel_ulp")
     y_lim = max_rel_ulp * 1.2
