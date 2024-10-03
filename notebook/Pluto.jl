@@ -29,6 +29,17 @@ function sample_2pi(n_sample::Int=10_000)
     range(min_x, max_x, length=n_sample);
 end
 
+# ╔═╡ 63793212-257f-485c-a5bf-c2d5448c26e9
+function gen_real_range(x_min::Real=-Inf, x_max::Real=Inf, n_sample::Int=10^6)
+    if isinf(x_min)
+        x_min = nextfloat(x_min)
+    end
+    if isinf(x_max)
+        x_max = prevfloat(x_max)
+    end
+    range(float(x_min),float(x_max),n_sample)
+end
+
 # ╔═╡ 59fce8bf-ec87-41a2-ada7-ebed50c15f4d
 function plot_ulps(func::Function, x::Vector{T}) where T <: Union{Float32, Float64}
     f_name = "$(func)"
@@ -146,22 +157,13 @@ cos  sin  tan
 ```
 """
 
-# ╔═╡ 6ed3f145-8795-4cb0-90f4-dcab26a8623d
-plot_ulps(sin, sample_2pi(100_000))
-
-# ╔═╡ ce807d1b-8a38-48fa-858b-39ab55ac4efa
-plot_ulps(cos, sample_2pi(100_000))
-
-# ╔═╡ 6a646b81-87b8-4843-b2ff-1284f2307bd5
-plot_ulps(tan, range(0-pi/2, pi/2, length=100_000))
-
-# ╔═╡ 3dd45ed9-564e-4c78-8fa5-9232f9a8bb37
-plot_ulps(asin, 
+# ╔═╡ 753f6f07-7241-4d7d-b6ad-0fbd00cbc342
+plot_ulps(acos, 
 	range(-1.0, 1.0, length=100_000)
 )
 
-# ╔═╡ 753f6f07-7241-4d7d-b6ad-0fbd00cbc342
-plot_ulps(acos, 
+# ╔═╡ 3dd45ed9-564e-4c78-8fa5-9232f9a8bb37
+plot_ulps(asin, 
 	range(-1.0, 1.0, length=100_000)
 )
 
@@ -172,6 +174,21 @@ plot_ulps(atan,
 
 # ╔═╡ 0fda3731-890b-4eff-9225-7cd401f8996a
 # TODO: atan2
+
+# ╔═╡ ce807d1b-8a38-48fa-858b-39ab55ac4efa
+plot_ulps(cos, sample_2pi(100_000))
+
+# ╔═╡ 6ed3f145-8795-4cb0-90f4-dcab26a8623d
+plot_ulps(sin, sample_2pi(100_000))
+
+# ╔═╡ cb7902aa-3337-4a4f-908b-5bd6d303d603
+# ╠═╡ disabled = true
+#=╠═╡
+plot_ulps(sin, gen_real_range())
+  ╠═╡ =#
+
+# ╔═╡ 6a646b81-87b8-4843-b2ff-1284f2307bd5
+plot_ulps(tan, range(0-pi/2, pi/2, length=100_000))
 
 # ╔═╡ a6c1bc46-205e-407c-82ed-817a33f06760
 md"""
@@ -187,9 +204,6 @@ acosh/asinh/atanh
 plot_ulps(cosh, 
 	range(-22.0, 22.0, length=10_000)
 )
-
-# ╔═╡ e61cf98a-904e-44ec-81e4-96559a565592
-plot(sinh)
 
 # ╔═╡ 76a78f50-03d0-43e6-9dcf-8b6b5447aa97
 plot_ulps(sinh, 
@@ -292,6 +306,9 @@ hypot
 ```
 """
 
+# ╔═╡ d161377b-4a9b-46d1-af7f-2a4ad266e352
+# TODO(2): pow
+
 # ╔═╡ 6aa40b8a-c8cd-4dc1-b593-f4795cfb90f0
 plot_ulps(sqrt, 
 	range(0.0, 100, length=100_000)
@@ -303,9 +320,6 @@ plot_ulps(cbrt,
 	range(0.0, 1000, length=100_000)
 )
 # max_ulp = 0.668
-
-# ╔═╡ 173e6c05-3992-4127-abe1-702678a60eb2
-# TODO(2-arg): pow
 
 # ╔═╡ 2d67d43d-70b9-4cf6-9d7e-858f08886897
 # TODO(2-arg): hypot
@@ -1479,21 +1493,22 @@ version = "1.4.1+1"
 # ╠═e5de6105-a0d5-4d11-869e-c4945f03bdec
 # ╠═ca2e8d24-4881-47f6-a92b-ef9a7e2ffb08
 # ╠═3b19e085-d226-4ab5-b50c-c3b77d9a6851
+# ╠═63793212-257f-485c-a5bf-c2d5448c26e9
 # ╠═59fce8bf-ec87-41a2-ada7-ebed50c15f4d
 # ╠═eb062ef6-3768-435f-9e3f-98deac5050ed
 # ╠═03d705cc-08a7-4074-8672-6e4619d95c81
 # ╠═191b7597-2277-4da1-8847-0a26d17c08f2
 # ╠═ef9b8668-781b-4857-80db-5f8efaf1b068
-# ╠═6ed3f145-8795-4cb0-90f4-dcab26a8623d
-# ╠═ce807d1b-8a38-48fa-858b-39ab55ac4efa
-# ╠═6a646b81-87b8-4843-b2ff-1284f2307bd5
-# ╠═3dd45ed9-564e-4c78-8fa5-9232f9a8bb37
 # ╠═753f6f07-7241-4d7d-b6ad-0fbd00cbc342
+# ╠═3dd45ed9-564e-4c78-8fa5-9232f9a8bb37
 # ╠═bb7c6db7-902c-4dcd-9a34-e4d786fb9cbb
 # ╠═0fda3731-890b-4eff-9225-7cd401f8996a
+# ╠═ce807d1b-8a38-48fa-858b-39ab55ac4efa
+# ╠═6ed3f145-8795-4cb0-90f4-dcab26a8623d
+# ╠═cb7902aa-3337-4a4f-908b-5bd6d303d603
+# ╠═6a646b81-87b8-4843-b2ff-1284f2307bd5
 # ╠═a6c1bc46-205e-407c-82ed-817a33f06760
 # ╠═27c0bc2d-b79d-4ee4-bb41-44294f6e3a68
-# ╠═e61cf98a-904e-44ec-81e4-96559a565592
 # ╠═76a78f50-03d0-43e6-9dcf-8b6b5447aa97
 # ╠═e706b8d4-d3cf-430a-bb3b-fb58abe1f7ef
 # ╠═f3887fc0-8ea7-4b94-b296-911d76c080a2
@@ -1513,9 +1528,9 @@ version = "1.4.1+1"
 # ╠═ad8185ce-23a4-4f88-b559-48f7293225e2
 # ╠═a36128db-562e-45b6-b0fe-0878ab0d02b1
 # ╠═7aa10648-af2e-441d-9eb5-0202698f4688
+# ╠═d161377b-4a9b-46d1-af7f-2a4ad266e352
 # ╠═6aa40b8a-c8cd-4dc1-b593-f4795cfb90f0
 # ╠═b6199030-2f13-4df7-801d-958c16bb35f2
-# ╠═173e6c05-3992-4127-abe1-702678a60eb2
 # ╠═2d67d43d-70b9-4cf6-9d7e-858f08886897
 # ╠═53fee3bd-4972-410e-90a7-27f2f2c75336
 # ╠═3bad1f3f-8211-409d-966e-cf44af241261
