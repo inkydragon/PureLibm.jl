@@ -22,6 +22,7 @@ makedocs(;
         "Home" => "index.md",
         "Math Functions" => libm_functions,
         "function-index.md",
+        "docs.md",
         "Reference" => Any[
             "Reference" => "ref/references.md",
             # cr
@@ -36,7 +37,6 @@ makedocs(;
             "Std C11" => "ref/std-c11.md",
             "Std C23" => "ref/std-c23.md",
         ],
-        "docs.md",
     ],
 )
 
