@@ -7,4 +7,6 @@ include("utils/hint.jl")
 # impl
 include("openlibm/OpenLibm.jl")
 
+include("doc.jl")
+
 end

@@ -1,0 +1,5 @@
+# `cbrt`
+
+```@docs
+PureLibm.cbrt
+```
