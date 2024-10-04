@@ -29,6 +29,11 @@
 # C99: Power and Absolute-value
 # pow
 # sqrt
+"""
+    sqrt(x)
+
+Compute the non-negative square root of x.
+"""
 sqrt(x) = not_impl_error()
 include("sqrtf.jl")
 # cbrt
