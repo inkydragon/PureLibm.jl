@@ -34,6 +34,8 @@ pow  sqrt  cbrt
 hypot
 ```
 
+- [`sqrt`](@ref PureLibm.sqrt)
+
 ## Error and gamma
 
 ```c

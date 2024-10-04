@@ -3,6 +3,12 @@ using Documenter
 
 DocMeta.setdocmeta!(PureLibm, :DocTestSetup, :(using PureLibm); recursive=true)
 
+libm_functions = Any[
+    "libm/index.md",
+    # Power
+    "libm/sqrt.md",
+]
+
 makedocs(;
     modules=[PureLibm],
     authors="Chengyu HAN <git@wo-class.cn> and contributors",
@@ -14,9 +20,7 @@ makedocs(;
     ),
     pages=[
         "Home" => "index.md",
-        "Math Functions" => Any[
-            "libm/index.md",
-        ],
+        "Math Functions" => libm_functions,
         "function-index.md",
         "Reference" => Any[
             "Reference" => "ref/references.md",
