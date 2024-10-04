@@ -6,7 +6,13 @@
 Compute arc cosine of `x`.
 """
 acos(_) = not_impl_error()
-# asin
+
+"""
+    asin(x)
+
+Compute arc-sine of `x`.
+"""
+asin(_) = not_impl_error()
 # atan
 # atan2
 # cos
