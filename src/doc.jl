@@ -1,4 +1,3 @@
-# OpenLibm
 
 # C99: Trigonometric
 # acos
@@ -28,10 +27,19 @@
 
 # C99: Power and Absolute-value
 # pow
-include("sqrt.jl")
-include("sqrtf.jl")
-include("cbrt.jl")
-include("cbrtf.jl")
+"""
+    sqrt(x)
+
+Compute the non-negative square root of x.
+"""
+sqrt(_) = not_impl_error()
+
+"""
+    cbrt(x)
+
+Computes the cube root of `x`.
+"""
+cbrt(_) = not_impl_error()
 # hypot
 
 # C99: Error and gamma
