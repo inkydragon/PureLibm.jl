@@ -1,4 +1,9 @@
 
+function not_impl_error()
+    error("NotImplementedError: This functionality has not been implemented yet.")
+end
+
+
 function domain_error_ignore()
     # errno = EDOM
     # feraiseexcept(FE_INVALID)
