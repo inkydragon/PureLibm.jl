@@ -32,7 +32,7 @@ include("utils/const.jl")
 # C99: Power and Absolute-value
 # pow
 include("sqrt.jl")
-# cbrt
+include("cbrt.jl")
 # hypot
 
 # C99: Error and gamma

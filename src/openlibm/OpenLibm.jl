@@ -37,7 +37,13 @@ Compute the non-negative square root of x.
 sqrt(x) = not_impl_error()
 include("sqrt.jl")
 include("sqrtf.jl")
-# cbrt
+
+"""
+    cbrt(x)
+"""
+cbrt(x) = not_impl_error()
+include("cbrt.jl")
+include("cbrtf.jl")
 # hypot
 
 # C99: Error and gamma
