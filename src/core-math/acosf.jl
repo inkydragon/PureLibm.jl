@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
 # Based on core-math/src/binary32/acos/acosf.c
+# CORE-MATH project Copyright (c) 2023 Alexei Sibidanov.
 
 function as_special(x::Float32)::Float32
     """Function to handle special cases
@@ -65,7 +66,7 @@ const CR_ACOSF_C2 = Vector{Float64}([
 ])
 
 function cr_acosf(x::Float32)::Float32
-    """Function for accurate cosine inverse (acos) in Float32
+    """Correctly-rounded arc-cosine function for Float32.
     """
     pi2 = 0x1.921fb54442d18p+0  # Pi/2 constant
     o = [0.0, 0x1.921fb54442d18p+1]  # Table for accuracy
