@@ -3,3 +3,4 @@
 include("helper.jl")
 
 include("acosf.jl")
+include("asinf.jl")
