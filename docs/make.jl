@@ -14,6 +14,9 @@ makedocs(;
     ),
     pages=[
         "Home" => "index.md",
+        "Math Functions" => Any[
+            "libm/index.md",
+        ],
         "function-index.md",
         "Reference" => Any[
             "Reference" => "ref/references.md",
