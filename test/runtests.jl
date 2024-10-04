@@ -31,7 +31,7 @@ include("utils/const.jl")
 
 # C99: Power and Absolute-value
 # pow
-# sqrt
+include("sqrt.jl")
 # cbrt
 # hypot
 

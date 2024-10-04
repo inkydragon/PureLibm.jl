@@ -29,6 +29,8 @@
 # C99: Power and Absolute-value
 # pow
 # sqrt
+sqrt(x) = not_impl_error()
+include("sqrtf.jl")
 # cbrt
 # hypot
 
