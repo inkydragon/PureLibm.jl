@@ -37,6 +37,7 @@ hypot
 ```
 
 - [`sqrt`](@ref PureLibm.sqrt)
+- [`cbrt`](@ref PureLibm.cbrt)
 
 ## Error and gamma
 
