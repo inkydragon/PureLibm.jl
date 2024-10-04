@@ -40,6 +40,8 @@ include("sqrtf.jl")
 
 """
     cbrt(x)
+
+Computes the cube root of `x`.
 """
 cbrt(x) = not_impl_error()
 include("cbrt.jl")

@@ -7,6 +7,7 @@ libm_functions = Any[
     "libm/index.md",
     # Power
     "libm/sqrt.md",
+    "libm/cbrt.md",
 ]
 
 makedocs(;
