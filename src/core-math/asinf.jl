@@ -70,7 +70,7 @@ function cr_asinf(x::Float32)
         end
     end
 
-    if ax < (0x7e << 24)
+    if ax < (0x0000_007e << 24)
         z = xs
         z2 = z * z
         c0 = poly12(z2, CR_ASINF_C1)
