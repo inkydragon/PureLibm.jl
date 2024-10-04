@@ -35,6 +35,7 @@
 Compute the non-negative square root of x.
 """
 sqrt(x) = not_impl_error()
+include("sqrt.jl")
 include("sqrtf.jl")
 # cbrt
 # hypot
