@@ -10,6 +10,8 @@ acos  asin  atan  atan2
 cos  sin  tan
 ```
 
+- [`acos`](@ref PureLibm.acos)
+
 ## Hyperbolic
 
 ```c

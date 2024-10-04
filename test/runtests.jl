@@ -4,7 +4,7 @@ using Test
 include("utils/const.jl")
 
 # C99: Trigonometric
-# acos
+include("acos.jl")
 # asin
 # atan
 # atan2

@@ -1,6 +1,11 @@
 
 # C99: Trigonometric
-# acos
+"""
+    acos(x)
+
+Compute arc cosine of `x`.
+"""
+acos(_) = not_impl_error()
 # asin
 # atan
 # atan2
