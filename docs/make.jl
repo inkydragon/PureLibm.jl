@@ -8,6 +8,7 @@ libm_functions = Any[
     
     "libm/acos.md",
     "libm/asin.md",
+    "libm/atan.md",
     # Power
     "libm/sqrt.md",
     "libm/cbrt.md",

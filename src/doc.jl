@@ -13,7 +13,13 @@ acos(_) = not_impl_error()
 Compute arc-sine of `x`.
 """
 asin(_) = not_impl_error()
-# atan
+
+"""
+    atan(x)
+
+Compute arc-tangent of `x`.
+"""
+atan(_) = not_impl_error()
 # atan2
 # cos
 # sin

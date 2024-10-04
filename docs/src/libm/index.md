@@ -12,6 +12,7 @@ cos  sin  tan
 
 - [`acos`](@ref PureLibm.acos)
 - [`asin`](@ref PureLibm.asin)
+- [`atan`](@ref PureLibm.atan)
 
 ## Hyperbolic
 
