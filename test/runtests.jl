@@ -6,7 +6,7 @@ include("utils/const.jl")
 # C99: Trigonometric
 include("acos.jl")
 include("asin.jl")
-# atan
+include("atan.jl")
 # atan2
 # cos
 # sin
