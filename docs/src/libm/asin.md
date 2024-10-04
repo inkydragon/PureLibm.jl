@@ -1,0 +1,5 @@
+# `asin`
+
+```@docs
+PureLibm.asin
+```
