@@ -2,7 +2,7 @@
 # Based on core-math/src/binary32/acos/acosf.c
 # CORE-MATH project Copyright (c) 2023 Alexei Sibidanov.
 
-function as_special(x::Float32)::Float32
+function _acosf_as_special(x::Float32)::Float32
     """Function to handle special cases
     """
     pih = Float32(0x1.921fb6p+1)
@@ -56,7 +56,7 @@ function cr_acosf(x::Float32)::Float32
     ax = tu << 1
 
     if ax >= (0x0000_007f << 24)
-        return as_special(x)
+        return _acosf_as_special(x)
     end
 
     # Case where input is within range
