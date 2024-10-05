@@ -7,7 +7,7 @@ include("utils/const.jl")
 include("acos.jl")
 include("asin.jl")
 include("atan.jl")
-# atan2
+include("atan2.jl")
 # cos
 # sin
 # tan

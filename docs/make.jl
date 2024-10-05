@@ -5,10 +5,12 @@ DocMeta.setdocmeta!(PureLibm, :DocTestSetup, :(using PureLibm); recursive=true)
 
 libm_functions = Any[
     "libm/index.md",
-    
+
+    # Trigonometric
     "libm/acos.md",
     "libm/asin.md",
     "libm/atan.md",
+    "libm/atan2.md",
     # Power
     "libm/sqrt.md",
     "libm/cbrt.md",
