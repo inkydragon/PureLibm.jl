@@ -131,8 +131,8 @@ function cr_atan2f(y::Float32, x::Float32)::Float32
 
     gt = ay > ax
     i = (uy >> 31) * 4 + (ux >> 31) * 2 + gt
-    zx = x
-    zy = y
+    zx = Float64(x)
+    zy = Float64(y)
     m = (0, 1)
     z = (m[gt + 1] * zx + m[1 - gt + 1] * zy) / (m[gt + 1] * zy + m[1 - gt + 1] * zx)
     z2 = z * z
@@ -162,7 +162,7 @@ function cr_atan2f(y::Float32, x::Float32)::Float32
     r = z * r + off[i + 1]
     res_u = reinterpret(UInt64, r)
 
-    if (res_u + 8) & 0x0fff_ffff <= 16
+    if ((res_u + UInt64(8)) & 0x0fff_ffff) <= 16
         if ay < ax && ((ax - ay) >> 23) >= 25
             return cr_atan2f_tiny(y, x)
         end
