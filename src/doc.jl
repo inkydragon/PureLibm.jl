@@ -20,7 +20,14 @@ asin(_) = not_impl_error()
 Compute arc-tangent of `x`.
 """
 atan(_) = not_impl_error()
-# atan2
+
+"""
+    atan2(y, x)
+
+Compute arc-tangent of `y / x`.
+"""
+atan2(y, x) = not_impl_error()
+
 # cos
 # sin
 # tan
