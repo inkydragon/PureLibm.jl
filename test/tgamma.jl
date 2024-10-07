@@ -10,8 +10,10 @@
         # fp-divide-by-zero
         @test PureLibm.tgamma(T(+0.0)) == T(+Inf)
         @test PureLibm.tgamma(T(-0.0)) == T(-Inf)
-        
+        @test isnan(PureLibm.tgamma(T(NaN)))
+
         # sanity check
-        # TODO
+        @test PureLibm.tgamma(T(1)) == T(1)
+        @test isinf(PureLibm.tgamma(T(40)))
     end
 end
