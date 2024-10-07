@@ -1,10 +1,12 @@
 # Std C23
-> TODO: Modifying heading levels when `Documenter.jl` supports displaying third level headings
+
+> [ISO/IEC 9899:2023](https://open-std.org/jtc1/sc22/wg14/www/projects#9899)
 
 
 ## `<math.h>`
 
 ## Classification
+
 ```c
 // 7.12.2 The FP_CONTRACT pragma
 #pragma STDC FP_CONTRACT on-off-switch
@@ -27,6 +29,7 @@ int signbit(real-floating x);
 ```
 
 ## Trigonometric
+
 ```c
 // 7.12.4 Trigonometric functions
 double acos(double x);
@@ -78,6 +81,7 @@ long double tanl(long double x);
 ```
 
 ## Hyperbolic
+
 ```c
 // 7.12.5 Hyperbolic functions
 double acosh(double x);
@@ -101,7 +105,8 @@ float tanhf(float x);
 long double tanhl(long double x);
 ```
 
-## Exponential and logarithmic 
+## Exponential and logarithmic
+
 ```c
 // 7.12.6 Exponential and logarithmic functions
 double exp(double x);
@@ -181,6 +186,7 @@ long double scalblnl(long double x, long int n);
 ```
 
 ## Power and Absolute-value
+
 ```c
 // 7.12.7 Power and absolute-value functions
 double cbrt(double x);
@@ -202,6 +208,7 @@ long double hypotl(long double x, long double y);
 double pow(double x, double y);
 float powf(float x, float y);
 long double powl(long double x, long double y);
+
     double pown(double x, long long int n);
     float pownf(float x, long long int n);
     long double pownl(long double x, long long int n);
@@ -224,6 +231,7 @@ long double sqrtl(long double x);
 ```
 
 ## Error and gamma
+
 ```c
 // 7.12.8 Error and gamma functions
 double erf(double x);
@@ -242,6 +250,7 @@ long double tgammal(long double x);
 ```
 
 ## Nearest integer
+
 ```c
 // 7.12.9 Nearest integer functions
 double ceil(double x);
@@ -299,6 +308,7 @@ long double truncl(long double x);
 ```
 
 ## Remainder
+
 ```c
 // 7.12.10 Remainder functions
 double fmod(double x, double y);
@@ -315,6 +325,7 @@ long double remquol(long double x, long double y, int *quo);
 ```
 
 ## Manipulation
+
 ```c
 // 7.12.11 Manipulation functions
 double copysign(double x, double y);
@@ -347,6 +358,7 @@ long double nexttowardl(long double x, long double y);
 ```
 
 ## Maximum, minimum
+
 ```c
 // 7.12.12 Maximum, minimum, and positive difference functions
 double fdim(double x, double y);
@@ -391,6 +403,7 @@ long double fminl(long double x, long double y);
 ```
 
 ## Fused multiply-add
+
 ```c
 // 7.12.13 Fused multiply-add
 double fma(double x, double y, double z);
@@ -399,6 +412,7 @@ long double fmal(long double x, long double y, long double z);
 ```
 
 ## Round to narrower type
+
 ```c
 // 7.12.14 Functions that round result to narrower type
     float fadd(double x, double y);
@@ -427,18 +441,21 @@ long double fmal(long double x, long double y, long double z);
 ```
 
 ## Quantum and quantum exponent
+
 ```c
 // 7.12.15 Quantum and quantum exponent functions
 // need __STDC_IEC_60559_DFP__
 ```
 
 ## Decimal re-encoding
+
 ```c
 // 7.12.16 Decimal re-encoding functions
 // need __STDC_IEC_60559_DFP__
 ```
 
 ## Comparison
+
 ```c
 // 7.12.17 Comparison macros
 int isgreater(real-floating x, real-floating y);
