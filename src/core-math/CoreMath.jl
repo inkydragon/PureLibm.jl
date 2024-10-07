@@ -9,4 +9,5 @@ include("atanf.jl")
 include("atan2f.jl")
 
 # Power
+include("rsqrt.jl")
 include("rsqrtf.jl")
