@@ -31,17 +31,20 @@ makedocs(;
         "function-index.md",
         "docs.md",
         "Reference" => Any[
-            # C Std
-            "Std C99" => "ref/std-c99.md",
-            "Std C11" => "ref/std-c11.md",
-            "Std C23" => "ref/std-c23.md",
-            # IEEE 754
-            "IEEE 754" => "ref/ieee754.md",
-            # cr
-            "LLVM Libc [Apache]" => "ref/llvm-libc.md",
-            "Core Math [MIT]" => "ref/core-math.md",
-            "RLibm [MIT]" => "ref/rlibm.md",
             "ref/index.md",
+            "C Standards" => Any[
+                # C std
+                "ref/std-c99.md",
+                "ref/std-c11.md",
+                "ref/std-c23.md",
+                # IEEE 754
+                "IEEE 754" => "ref/ieee754.md",
+            ],
+            "Correctly Rounded" => Any[
+                "LLVM Libc [Apache]" => "ref/llvm-libc.md",
+                "Core Math [MIT]" => "ref/core-math.md",
+                "RLibm [MIT]" => "ref/rlibm.md",
+            ],
             # libm
             "BSD Libm [BSD]" => "ref/bsd.md",
             "Zig [MIT]" => "ref/zig.md",
