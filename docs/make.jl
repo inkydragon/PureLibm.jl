@@ -41,6 +41,7 @@ makedocs(;
             "Zig [MIT]" => "ref/zig.md",
             "AOCL-LibM [BSD-3]" => "ref/aocl.md",
             # C Std
+            "Std C99" => "ref/std-c99.md",
             "Std C11" => "ref/std-c11.md",
             "Std C23" => "ref/std-c23.md",
             # IEEE 754
