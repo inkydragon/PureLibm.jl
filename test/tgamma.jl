@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
 import SpecialFunctions
+using Random
 
 @testset "tgamma" begin
     @testset "$T" for T in [Float32, ]
@@ -20,10 +21,16 @@ import SpecialFunctions
         @test PureLibm.tgamma(T(1/2)) ≈ T(sqrt(π))
         @test PureLibm.tgamma(T(-1/2)) ≈ T(-2sqrt(π))
 
-        # compare test
+        # --- compare test
         for x in 1:36
             @test PureLibm.tgamma(T(x)) ≈ SpecialFunctions.gamma(T(x))
         end
-        
+        # tgammaf(0.38)=1.937f  ~  tgammaf(3.0)=2.0f
+        xlo = reinterpret(UInt32, Float32(0.38))
+        xhi = reinterpret(UInt32, Float32(3.0))
+        for xu in rand(xlo:xhi, 10^3)
+            x = reinterpret(Float32, xu)
+            @test PureLibm.tgamma(x) ≈ SpecialFunctions.gamma(x)
+        end
     end
 end
