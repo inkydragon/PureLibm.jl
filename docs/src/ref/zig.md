@@ -1,4 +1,5 @@
-# Zig [MIT]
+# Zig
+
 > - [zig std.math](https://github.com/ziglang/zig/tree/master/lib/std/math/)
 > - [MIT License](https://github.com/ziglang/zig/blob/master/LICENSE)
 

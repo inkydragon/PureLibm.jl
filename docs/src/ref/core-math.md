@@ -1,4 +1,5 @@
-# Core Math Project [MIT]
+# Core Math Project
+
 > - [The CORE-MATH Project](https://core-math.gitlabpages.inria.fr/)
 > - [[MIT license](#license)] [core-math - Gitlab at Inria](https://gitlab.inria.fr/core-math/core-math/)
 

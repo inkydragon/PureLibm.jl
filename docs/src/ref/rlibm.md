@@ -1,4 +1,5 @@
-# RLibm [MIT]
+# RLibm
+
 > - [RLibm Project](https://people.cs.rutgers.edu/~sn349/rlibm/)
 > - [[MIT License](https://github.com/rutgers-apl/The-RLIBM-Project/blob/main/LICENSE)] [The RLIBM Project - Github](https://github.com/rutgers-apl/The-RLIBM-Project)
 
