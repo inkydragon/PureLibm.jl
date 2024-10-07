@@ -1,6 +1,12 @@
 using PureLibm
 using Test
 
+"""
+Running Exhaustive tests for `Float32`.
+"""
+const CheckExhaustive = Ref{Bool}(false)
+
+
 include("utils/const.jl")
 include("utils/llvm_intrinsics.jl")
 
@@ -41,7 +47,7 @@ include("cbrt.jl")
 # erf
 # erfc
 # lgamma
-# tgamma
+include("tgamma.jl")
 
 @testset "PureLibm.jl" begin
     # Write your tests here.

@@ -15,6 +15,8 @@ math_functions = Any[
     "math/sqrt.md",
     "math/rsqrt.md",
     "math/cbrt.md",
+    # Error and gamma
+    "math/tgamma.md",
 ]
 
 makedocs(;

@@ -11,3 +11,6 @@ include("atan2f.jl")
 # Power
 include("rsqrt.jl")
 include("rsqrtf.jl")
+
+# Error and gamma
+include("tgammaf.jl")
