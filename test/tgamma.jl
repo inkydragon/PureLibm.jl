@@ -34,3 +34,15 @@ using Random
         end
     end
 end
+
+if CheckExhaustive[]
+@testset "tgamma-exhaustive[0f, 36f]" begin
+    
+    xlo = reinterpret(UInt32, Float32(0.0))
+    xhi = reinterpret(UInt32, Float32(36.0))
+    for xu in xlo:xhi
+        x = reinterpret(Float32, xu)
+        @test PureLibm.tgamma(x) ≈ SpecialFunctions.gamma(x)
+    end
+end
+end # CheckExhaustive
