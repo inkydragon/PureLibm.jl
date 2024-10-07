@@ -46,9 +46,9 @@ makedocs(;
                 "RLibm [MIT]" => "ref/rlibm.md",
             ],
             # libm
-            "BSD Libm [BSD]" => "ref/bsd.md",
+            # "BSD Libm [BSD]" => "ref/bsd.md",
             "Zig [MIT]" => "ref/zig.md",
-            "AOCL-LibM [BSD-3]" => "ref/aocl.md",
+            # "AOCL-LibM [BSD-3]" => "ref/aocl.md",
         ],
     ],
 )
