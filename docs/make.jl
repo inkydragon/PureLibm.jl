@@ -32,6 +32,12 @@ makedocs(;
         "docs.md",
         "Reference" => Any[
             "Reference" => "ref/references.md",
+            # C Std
+            "Std C99" => "ref/std-c99.md",
+            "Std C11" => "ref/std-c11.md",
+            "Std C23" => "ref/std-c23.md",
+            # IEEE 754
+            "IEEE 754" => "ref/ieee754.md",
             # cr
             "LLVM Libc [Apache]" => "ref/llvm-libc.md",
             "Core Math [MIT]" => "ref/core-math.md",
@@ -40,12 +46,6 @@ makedocs(;
             "BSD Libm [BSD]" => "ref/bsd.md",
             "Zig [MIT]" => "ref/zig.md",
             "AOCL-LibM [BSD-3]" => "ref/aocl.md",
-            # C Std
-            "Std C99" => "ref/std-c99.md",
-            "Std C11" => "ref/std-c11.md",
-            "Std C23" => "ref/std-c23.md",
-            # IEEE 754
-            "IEEE 754" => "ref/ieee754.md",
         ],
     ],
 )
