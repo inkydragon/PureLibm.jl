@@ -31,7 +31,6 @@ makedocs(;
         "function-index.md",
         "docs.md",
         "Reference" => Any[
-            "Reference" => "ref/references.md",
             # C Std
             "Std C99" => "ref/std-c99.md",
             "Std C11" => "ref/std-c11.md",
@@ -42,6 +41,7 @@ makedocs(;
             "LLVM Libc [Apache]" => "ref/llvm-libc.md",
             "Core Math [MIT]" => "ref/core-math.md",
             "RLibm [MIT]" => "ref/rlibm.md",
+            "ref/index.md",
             # libm
             "BSD Libm [BSD]" => "ref/bsd.md",
             "Zig [MIT]" => "ref/zig.md",
