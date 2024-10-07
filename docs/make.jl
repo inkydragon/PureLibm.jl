@@ -13,6 +13,7 @@ math_functions = Any[
     "math/atan2.md",
     # Power
     "math/sqrt.md",
+    "math/rsqrt.md",
     "math/cbrt.md",
 ]
 

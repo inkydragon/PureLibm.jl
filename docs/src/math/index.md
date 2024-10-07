@@ -55,7 +55,7 @@
 - powr
 - rootn
 - [`sqrt`](@ref PureLibm.sqrt)
-- rsqrt
+- [`rsqrt(::Float32)`](@ref PureLibm.rsqrt)
 - [`cbrt`](@ref PureLibm.cbrt)
 - compoundn
 - `hypot`
