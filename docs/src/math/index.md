@@ -10,10 +10,10 @@ acos  asin  atan  atan2
 cos  sin  tan
 ```
 
-- [`acos`](@ref PureLibm.acos)
-- [`asin`](@ref PureLibm.asin)
-- [`atan`](@ref PureLibm.atan)
-- [`atan2`](@ref PureLibm.atan2)
+- [`acos(::Float32)`](@ref PureLibm.acos)
+- [`asin(::Float32)`](@ref PureLibm.asin)
+- [`atan(::Float32)`](@ref PureLibm.atan)
+- [`atan2(::Float32)`](@ref PureLibm.atan2)
 
 ## Hyperbolic
 
