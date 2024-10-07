@@ -16,6 +16,9 @@ import SpecialFunctions
         # sanity check
         @test PureLibm.tgamma.(T.(1:5)) == T[1, 1, 2, 6, 24]
         @test PureLibm.tgamma(T(36)) == T(Inf)
+        # special value
+        @test PureLibm.tgamma(T(1/2)) ≈ T(sqrt(π))
+        @test PureLibm.tgamma(T(-1/2)) ≈ T(-2sqrt(π))
 
         # compare test
         for x in 1:36
