@@ -3,7 +3,7 @@ using Documenter
 
 DocMeta.setdocmeta!(PureLibm, :DocTestSetup, :(using PureLibm); recursive=true)
 
-libm_functions = Any[
+math_functions = Any[
     "math/index.md",
 
     # Trigonometric
@@ -27,7 +27,7 @@ makedocs(;
     ),
     pages=[
         "Home" => "index.md",
-        "Math Functions" => libm_functions,
+        "Math Functions" => math_functions,
         "function-index.md",
         "docs.md",
         "Reference" => Any[
