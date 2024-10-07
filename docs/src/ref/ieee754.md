@@ -55,7 +55,37 @@ acosh
 atanh
 ```
 
+
 ## General operations
+
+| IEC 60559 operation        |              C operation | julia op      | Clause       |
+|:---------------------------|-------------------------:|:--------------|:-------------|
+| class                      |               fpclassify | ❌             | 7.12.3.1     |
+| class                      |                `signbit` | ✅             | 7.12.3.7     |
+| class                      |              issignaling | ❌             | 7.12.3.8     |
+| isSignMinus                |                `signbit` | ✅             | 7.12.3.7     |
+| isNormal                   |                 isnormal | ❌             | 7.12.3.6     |
+| isFinite                   |               `isfinite` | ✅             | 7.12.3.3     |
+| isZero                     |                 `iszero` | ✅             | 7.12.3.10    |
+| isSubnormal                |            `issubnormal` | ✅             | 7.12.3.9     |
+| isInfinite                 |                  `isinf` | ✅             | 7.12.3.4     |
+| isNaN                      |                  `isnan` | ✅             | 7.12.3.5     |
+| isSignaling                |              issignaling | ❌             | 7.12.3.8     |
+| isCanonical                |              iscanonical | ❌             | 7.12.3.2     |
+| radix                      |              `FLT_RADIX` | ❌             | 5.2.4.2.2    |
+| totalOrder                 |               totalorder | ❌             | F.10.12.1    |
+| totalOrderMag              |            totalordermag | ❌             | F.10.12.2    |
+| lowerFlags                 |            feclearexcept | ❌             | 7.6.4.1      |
+| raiseFlags                 |              fesetexcept | ❌             | 7.6.4.4      |
+| testFlags                  |             fetestexcept | ❌             | 7.6.4.7      |
+| testSavedFlags             |         fetestexceptflag | ❌             | 7.6.4.6      |
+| restoreFlags               |          fesetexceptflag | ❌             | 7.6.4.5      |
+| saveAllFlags               |          fegetexceptflag | ❌             | 7.6.4.2      |
+| getBinaryRoundingDirection |               fegetround | `rounding`     | 7.6.5.2      |
+| setBinaryRoundingDirection |               fesetround | `setrounding`  | 7.6.5.5      |
+| saveModes                  |                fegetmode | ❌             | 7.6.5.1      |
+| restoreModes               |                fesetmode | ❌             | 7.6.5.4      |
+| defaultModes               | fesetmode(`FE_DFL_MODE`) | ❌             | 7.6.5.4, 7.6 |
 
 ```c
 // 5.7.2 General operations 5
