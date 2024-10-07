@@ -1,5 +1,17 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
 
+@testset "_llvm_clz" begin
+    # Int32
+    @test PureLibm._llvm_clz(UInt32(1)) == 31
+    @test PureLibm._llvm_clz(typemax(UInt32)) == 0
+    @test PureLibm._llvm_clz(typemax(UInt32) >> 1) == 1
+
+    # Int64
+    @test PureLibm._llvm_clz(UInt64(1)) == 63
+    @test PureLibm._llvm_clz(typemax(UInt64)) == 0
+    @test PureLibm._llvm_clz(typemax(UInt64) >> 1) == 1
+end
+
 for T in [Float32, Float64]
     @testset "_llvm_roundeven(::$T)" begin
         # IEC 60559
