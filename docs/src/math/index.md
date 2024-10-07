@@ -1,51 +1,68 @@
-# Index
+# Implementation Status
 
-> C99 Math Functions
+> - [`func`](#): impl for both `Float32,Float64`
+> - [`func(::Float32)`](#): impl only for `Float32`
+> - `func`: Not-impl C99 Math Functions
+> - func: Not-impl C23 Math Functions
 
 ## Trigonometric
 
-```c
-// 7.12.4 Trigonometric functions
-acos  asin  atan  atan2
-cos  sin  tan
-```
+- [`acos(::Float32)`](@ref PureLibm.acos)
+- [`asin(::Float32)`](@ref PureLibm.asin)
+- [`atan(::Float32)`](@ref PureLibm.atan)
+- [`atan2(::Float32)`](@ref PureLibm.atan2)
+- `cos`
+- `sin`
+- `tan`
+- acospi
+- asinpi
+- atanpi
+- atan2pi
+- cospi
+- sinpi
+- tanpi
 
-- [`acos`](@ref PureLibm.acos)
-- [`asin`](@ref PureLibm.asin)
-- [`atan`](@ref PureLibm.atan)
-- [`atan2`](@ref PureLibm.atan2)
 
 ## Hyperbolic
 
-```c
-// 7.12.5 Hyperbolic functions
-acosh  asinh  atanh
-cosh  sinh  tanh
-```
+- `acosh`
+- `asinh`
+- `atanh`
+- `cosh`
+- `sinh`
+- `tanh`
 
 ## Exponential and logarithmic
 
-```c
-// 7.12.6 Exponential and logarithmic functions
-exp  exp2  expm1 
-log10  log1p  log2  log
-```
+- `exp`
+- `expm1`
+- exp10
+- exp10m1
+- `exp2`
+- exp2m1
+- `log`
+- `log1p`
+- logp1
+- `log10`
+- log10p1
+- `log2`
+- log2p1
 
 ## Power
 
-```c
-// 7.12.7 Power
-pow  sqrt  cbrt
-hypot
-```
-
+- `pow`
+- pown
+- powr
+- rootn
 - [`sqrt`](@ref PureLibm.sqrt)
+- [`rsqrt`](@ref PureLibm.rsqrt)
 - [`cbrt`](@ref PureLibm.cbrt)
+- compoundn
+- `hypot`
 
 ## Error and gamma
 
-```c
-// 7.12.8 Error and gamma functions
-erf  erfc
-lgamma  tgamma
-```
+- `erf`
+- `erfc`
+- `lgamma`
+- `tgamma`

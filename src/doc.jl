@@ -59,6 +59,13 @@ Compute the non-negative square root of x.
 sqrt(_) = not_impl_error()
 
 """
+    rsqrt(x)
+
+Computes the reciprocal square root of `x`.
+"""
+rsqrt(_) = not_impl_error()
+
+"""
     cbrt(x)
 
 Computes the cube root of `x`.

@@ -32,6 +32,7 @@ include("atan2.jl")
 # C99: Power and Absolute-value
 # pow
 include("sqrt.jl")
+include("rsqrt.jl")
 include("cbrt.jl")
 # hypot
 

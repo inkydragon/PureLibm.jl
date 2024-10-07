@@ -1,6 +1,7 @@
 module PureLibm
 
 include("utils/const.jl")
+include("utils/llvm_intrinsics.jl")
 include("utils/error.jl")
 include("utils/hint.jl")
 
