@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
+import SpecialFunctions
 
 @testset "tgamma" begin
     @testset "$T" for T in [Float32, ]
@@ -13,7 +14,13 @@
         @test isnan(PureLibm.tgamma(T(NaN)))
 
         # sanity check
-        @test PureLibm.tgamma(T(1)) == T(1)
-        @test isinf(PureLibm.tgamma(T(40)))
+        @test PureLibm.tgamma.(T.(1:5)) == T[1, 1, 2, 6, 24]
+        @test PureLibm.tgamma(T(36)) == T(Inf)
+
+        # compare test
+        for x in 1:36
+            @test PureLibm.tgamma(T(x)) ≈ SpecialFunctions.gamma(T(x))
+        end
+        
     end
 end
