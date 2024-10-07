@@ -35,6 +35,7 @@ using Random
     end
 end
 
+CheckExhaustive[] = true
 if CheckExhaustive[]
 @testset "tgamma-exhaustive[0f, 36f]" begin
     
