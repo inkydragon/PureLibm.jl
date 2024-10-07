@@ -2,7 +2,11 @@
 
 include("helper.jl")
 
+# Trigonometric
 include("acosf.jl")
 include("asinf.jl")
 include("atanf.jl")
 include("atan2f.jl")
+
+# Power
+include("rsqrtf.jl")
