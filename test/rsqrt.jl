@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
 
-for T in [Float32, ]
+for T in [Float32, Float64]
     @testset "rsqrt(::$T)" begin
         # IEC 60559
         # rSqrt(+∞) is +0 with no exception. 
