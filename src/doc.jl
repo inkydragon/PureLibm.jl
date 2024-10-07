@@ -77,4 +77,9 @@ cbrt(_) = not_impl_error()
 # erf
 # erfc
 # lgamma
-# tgamma
+"""
+    tgamma(x)
+
+Computes the true gamma function of `x`.
+"""
+tgamma(_) = not_impl_error()

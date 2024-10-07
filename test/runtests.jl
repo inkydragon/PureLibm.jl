@@ -41,7 +41,7 @@ include("cbrt.jl")
 # erf
 # erfc
 # lgamma
-# tgamma
+include("tgamma.jl")
 
 @testset "PureLibm.jl" begin
     # Write your tests here.

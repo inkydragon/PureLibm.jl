@@ -1,0 +1,5 @@
+# `tgamma`
+
+```@docs
+PureLibm.tgamma
+```

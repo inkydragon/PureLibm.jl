@@ -65,4 +65,4 @@
 - `erf`
 - `erfc`
 - `lgamma`
-- `tgamma`
+- [`tgamma`](@ref PureLibm.tgamma)
