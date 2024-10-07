@@ -43,6 +43,8 @@ makedocs(;
             # C Std
             "Std C11" => "ref/std-c11.md",
             "Std C23" => "ref/std-c23.md",
+            # IEEE 754
+            "IEEE 754" => "ref/ieee754.md",
         ],
     ],
 )
