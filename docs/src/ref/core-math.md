@@ -1,7 +1,14 @@
 # Core Math Project
 
 > - [The CORE-MATH Project](https://core-math.gitlabpages.inria.fr/)
-> - [[MIT license](#license)] [core-math - Gitlab at Inria](https://gitlab.inria.fr/core-math/core-math/)
+
+
+## License
+
+> Available CORE-MATH functions (under MIT license for the stand-alone functions):
+>
+> —— [Usages of CORE-MATH](https://core-math.gitlabpages.inria.fr/)
+
 
 ## rounding modes
 
@@ -57,10 +64,3 @@ FE_TOWARDZERO
 | `tanh`    | ✅        | ✅        | ❌        |
 | `tanpi`   | ✅        | ✅        | ❌        |
 | `tgamma`  | ✅        | ❌        | ❌        |
-
-
-## license
-
-> Available CORE-MATH functions (under MIT license for the stand-alone functions):
->
-> —— [Usages of CORE-MATH](https://core-math.gitlabpages.inria.fr/)
