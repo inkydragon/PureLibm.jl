@@ -119,12 +119,16 @@ function cr_tgammaf(x::Float32)::Float32
     d4 = d2 * d2
     d8 = d4 * d4
     c = _CR_TGAMMAF_C
-    f = (c[1] + d * c[2])
+
+    f = (
+        (c[1] + d * c[2])
         + d2 * (c[3] + d * c[4])
         + d4 * ((c[5] + d * c[6]) + d2 * (c[7] + d * c[8]))
-        + d8 * ((c[9] + d * c[10]) 
-                + d2 * (c[11] + d * c[12]) 
-                + d4 * ((c[13] + d * c[14]) + d2 * (c[15] + d * c[16])))
+        + d8 * (
+            (c[9] + d * c[10]) 
+            + d2 * (c[11] + d * c[12]) 
+            + d4 * ((c[13] + d * c[14]) + d2 * (c[15] + d * c[16])))
+    )
 
     jm = trunc(Int, abs(i))
     w = Float64(1.0)
