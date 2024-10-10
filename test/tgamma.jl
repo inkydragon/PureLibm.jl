@@ -35,8 +35,8 @@ using Random
     end
 end
 
-# CheckExhaustive[] = true  # 1108344833  3m00.4s
-if CheckExhaustive[]
+if "tgammaf" in CheckExhaustive
+# 1108344833  3m00.4s
 @testset "tgamma-exhaustive[0f, 36f]" begin
     
     xlo = reinterpret(UInt32, Float32(0.0))

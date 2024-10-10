@@ -4,7 +4,11 @@ using Test
 """
 Running Exhaustive tests for `Float32`.
 """
-const CheckExhaustive = Ref{Bool}(false)
+const CheckExhaustive = if haskey(ENV, "PURELIBM_CHECK_EXHAUSTIVE")
+    Set(strip.(split(ENV["PURELIBM_CHECK_EXHAUSTIVE"], ",")))
+else
+    Set{String}()
+end
 
 
 include("utils/const.jl")
