@@ -1,6 +1,8 @@
 using PureLibm
 using Test
 
+# TODO: copy tests to LibmTest.jl
+
 """
 Running Exhaustive tests for `Float32`.
 """
