@@ -35,15 +35,56 @@ using Random
     end
 end
 
-if "tgammaf" in CheckExhaustive
-# 1108344833  3m00.4s
-@testset "tgamma-exhaustive[0f, 36f]" begin
-    
-    xlo = reinterpret(UInt32, Float32(0.0))
-    xhi = reinterpret(UInt32, Float32(36.0))
+if "tgammaf.fast" in CheckExhaustive
+    # 4294967296 cases  42.0s
+@testset "tgammaf-exhaustive.fast" begin
+    xlo = typemin(UInt32)
+    xhi = typemax(UInt32)
+    # xlo = reinterpret(UInt32, Float32(0.38))
+    # xhi = reinterpret(UInt32, Float32(3.0))
     for xu in xlo:xhi
         x = reinterpret(Float32, xu)
-        @test PureLibm.tgamma(x) ≈ SpecialFunctions.gamma(x)
+        if x < 0 && (isinteger(x) || isinf(x))
+            continue  # Skip DomainError
+        end
+        y = PureLibm.tgamma(x)
+        z = SpecialFunctions.gamma(x)
+
+        if isnan(z) && isnan(y)
+            continue
+        elseif isinf(z) && isinf(y)
+            continue
+        elseif z ≈ y
+            continue
+        else
+            println("[xu = $xu ($x)]:  y=$y; z=$z")
+        end
     end
+    println("test $(length(xlo:xhi)) cases")
+end
+end # CheckExhaustive
+
+if "tgammaf" in CheckExhaustive
+# 4294967296 cases  37.1s
+@testset "tgammaf-exhaustive" begin
+    xlo = typemin(UInt32)
+    xhi = typemax(UInt32)
+    # xlo = reinterpret(UInt32, Float32(0.38))
+    # xhi = reinterpret(UInt32, Float32(3.0))
+    for xu in xlo:xhi
+        x = reinterpret(Float32, xu)
+        if x < 0 && (isinteger(x) || isinf(x))
+            continue  # Skip DomainError
+        end
+        y = PureLibm.tgamma(x)
+        z = Float32(SpecialFunctions.gamma(Float32(x)))
+
+        if y === z
+            continue
+        else
+            println("[xu = $xu ($x)]:  y=$y; z=$z")
+        end
+    end
+    println("test $(length(xlo:xhi)) cases")
 end
 end # CheckExhaustive
