@@ -77,7 +77,7 @@ if "tgammaf" in CheckExhaustive
             continue  # Skip DomainError
         end
         y = PureLibm.tgamma(x)
-        z = Float32(SpecialFunctions.gamma(Float32(x)))
+        z = Float32(SpecialFunctions.gamma(BigFloat(x)))
 
         if y === z
             continue
