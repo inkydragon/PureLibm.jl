@@ -36,7 +36,8 @@ using Random
 end
 
 if "tgammaf.fast" in CheckExhaustive
-    # 4294967296 cases  42.0s
+#   24998053 cases   0.6s
+# 4294967296 cases  42.0s
 @testset "tgammaf-exhaustive.fast" begin
     xlo = typemin(UInt32)
     xhi = typemax(UInt32)
@@ -65,7 +66,8 @@ end
 end # CheckExhaustive
 
 if "tgammaf" in CheckExhaustive
-# 4294967296 cases  37.1s
+#   24998053 cases  16m59.1s
+# 4294967296 cases
 @testset "tgammaf-exhaustive" begin
     xlo = typemin(UInt32)
     xhi = typemax(UInt32)
