@@ -58,7 +58,7 @@ if "tgammaf.fast" in CheckExhaustive
         elseif z ≈ y
             continue
         else
-            @printf("[xu = 0x%x (%e)]:  y=%e; z=%e", xu, x, y, z)
+            @printf("[xu = 0x%x (%e)]:  y=%e; z=%e\n", xu, x, y, z)
         end
     end
     println("test $(length(xlo:xhi)) cases")
@@ -84,7 +84,7 @@ if "tgammaf" in CheckExhaustive
         if y === z
             continue
         else
-            @printf("[xu = 0x%x (%e)]:  y=%e; z=%e", xu, x, y, z)
+            @printf("[xu = 0x%x (%e)]:  y=%e; z=%e\n", xu, x, y, z)
         end
     end
     println("test $(length(xlo:xhi)) cases")
