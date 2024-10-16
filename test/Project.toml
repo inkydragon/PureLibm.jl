@@ -1,5 +1,6 @@
 [deps]
 LocalCoverage = "5f6e1e16-694c-5876-87ef-16b5274f298e"
+Printf = "de0858da-6303-5e67-8744-51eddeeeb8d7"
 PureLibm = "0e8bb516-7e7b-4254-9d20-c684d1ced6e2"
 Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 SpecialFunctions = "276daf66-3868-5448-9aa4-cd146d93841b"

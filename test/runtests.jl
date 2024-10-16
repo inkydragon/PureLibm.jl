@@ -1,5 +1,6 @@
 using PureLibm
 using Test
+using Printf
 
 # TODO: copy tests to LibmTest.jl
 
