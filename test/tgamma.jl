@@ -87,4 +87,10 @@ if "tgammaf" in CheckExhaustive
     end
     println("test $(length(xlo:xhi)) cases")
 end
+
+# Base.MPFR.version() == v"4.2.0"
+#   [xu = 0x27de86a9 668894889 (6.1763377e-15)]:  y=1.6190824e14; z=1.6190825e14
+#   [xu = 0x27e05475 669013109 (6.2264058e-15)]:  y=1.606063e14; z=1.6060631e14
+#   [xu = 0x41e886d1 1105757905 (29.065828)]:  y=3.801415e29; z=3.8014147e29
 end # CheckExhaustive
+# ENV["PURELIBM_CHECK_EXHAUSTIVE"] = "tgammaf.fast,tgammaf"
