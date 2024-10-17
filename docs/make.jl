@@ -21,7 +21,7 @@ math_functions = Any[
 
 makedocs(;
     modules=[PureLibm],
-    authors="Chengyu HAN <git@wo-class.cn> and contributors",
+    authors="Chengyu HAN <cyhan.dev@outlook.com> and contributors",
     sitename="PureLibm.jl",
     format=Documenter.HTML(;
         canonical="https://inkydragon.github.io/PureLibm.jl",
