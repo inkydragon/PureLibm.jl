@@ -19,6 +19,7 @@ end
 
 
 if "acosf.fast" in CheckExhaustive
+# 2* 0.0:1.0    2130706434 cases    1m14.0s
 @testset "acosf-exhaustive.fast" begin
     xlo = reinterpret(UInt32, Float32(0.0))
     xhi = reinterpret(UInt32, Float32(1.0))
@@ -43,6 +44,7 @@ end
 end # CheckExhaustive
 
 if "acosf" in CheckExhaustive
+# 2130706434 cases  181m42.7s
 @testset "acosf-exhaustive" begin
     xlo = reinterpret(UInt32, Float32(0.0))
     xhi = reinterpret(UInt32, Float32(1.0))
