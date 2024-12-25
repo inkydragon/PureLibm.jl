@@ -76,3 +76,4 @@ function cr_tanhf(x::Float32)::Float32
     return r
 end
 
+tanh(x::Float32) = cr_tanhf(x)

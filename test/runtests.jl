@@ -32,7 +32,7 @@ include("atan2.jl")
 # atanh
 # cosh
 # sinh
-# tanh
+include("tanh.jl")
 
 # C99: Exponential and logarithmic
 # exp
