@@ -15,26 +15,27 @@ for T in [Float32, ]
         @test isnan(PureLibm.tanh(T(-NaN)))
     end
 
-    # random test
-    test_x = T[
-        # tanhf32(3pi) == 1
-        # tanhf64(7pi) == 1
-        (n*pi for n in 1:7)...,
-        # [0.0, 7*pi]
-        rand(0.0:eps():7pi, 10)...,
-        # branch cov
-        # 102 <= e < 105
-        0x1p-25,
-        # e < 102
-        0.0,
-        0x1p-27,
-    ]
-    test_x = [test_x..., -test_x...]
-    @testset "tanh($x)" for x in test_x
-        # Test against system libm
-        @test PureLibm.tanh(x) ≈ tanh(x)
-        # Test against MPFR
-        @test PureLibm.tanh(x) === T(tanh(BigFloat(x)))
+    @testset "tanh(random)" begin
+        test_x = T[
+            # tanhf32(3pi) == 1
+            # tanhf64(7pi) == 1
+            (n*pi for n in 1:7)...,
+            # [0.0, 7*pi]
+            rand(0.0:eps():7pi, 10)...,
+            # branch cov
+            # 102 <= e < 105
+            0x1p-25,
+            # e < 102
+            0.0,
+            0x1p-27,
+        ]
+        test_x = [test_x..., -test_x...]
+        @testset "tanh($x)" for x in test_x
+            # Test against system libm
+            @test PureLibm.tanh(x) ≈ tanh(x)
+            # Test against MPFR
+            @test PureLibm.tanh(x) === T(tanh(BigFloat(x)))
+        end
     end
 end
 
