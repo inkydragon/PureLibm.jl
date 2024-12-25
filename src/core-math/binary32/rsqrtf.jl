@@ -9,42 +9,53 @@ function cr_rsqrtf(x::Float32)::Float32
     xd = Float64(x)
     ixu = reinterpret(UInt32, x)
 
-    if ixu >= (UInt32(0xff) << 23) || ixu == 0
+    if @unlikely(ixu >= (UInt32(0xff) << 23) || ixu == 0)
         if (ixu << 1) == 0
+            # +-0
             return Float32(1.0) / x
         end
         if (ixu >> 31) != 0
             ixu &= ~UInt32(0) >> 1
             if ixu > (UInt32(0xff) << 23)
-                return x
+                # NaN
+                return x + x
             end
 
             # feraiseexcept(FE_INVALID)
-            return NaN32
+            return -NaN32
         end
         if (ixu << 9) == 0
             return Float32(0.0)
         end
-        return x
+        # NaN
+        return x + x
     end
 
     m = UInt32(ixu << 8)
-    if ixu == 0x002f_7e2a || m == 0xbdf8_a800 || m == 0x55b7_bd00
-        if ixu != 0x0055_b7bd
+    # (x = 4.361527f-39, ixu = 0x002f7e2a, m = 0x2f7e2a00)
+    # Ranges:
+    # (x = 1.744611f-38, ixu = 0x00bdf8a8, m = 0xbdf8a800)
+    # (x = 1.2625759f38, ixu = 0x7ebdf8a8, m = 0xbdf8a800)
+    # (x = 7.87193f-39,  ixu = 0x0055b7bd, m = 0x55b7bd00)
+    # (x = 2.8407959f38, ixu = 0x7f55b7bd, m = 0x55b7bd00)
+    if @unlikely(ixu == 0x002f7e2a || m == 0xbdf8a800 || m == 0x55b7bd00)
+        if ixu != 0x0055b7bd
+            # x != 7.87193f-39
             e = ixu >> 23
             k = 1
-            if ixu == 0x002f_7e2a
-                e = -1
+            if ixu == 0x002f7e2a
+                e = UInt32(0) - UInt32(1)
             end
-            if m == 0x55b7_bd00
+            if m == 0x55b7bd00
                 k = 0
             end
-            tb = (0x000c_1740, 0x0052_22e0)
+            tb = (0x000c1740, 0x005222e0)
             ru = tb[k + 1]
-            e = UInt32((512 - e) / 2 - 578)
+            # NOTE: negative UInt wrap around
+            e = (UInt32(512) - e) ÷ UInt32(2) - UInt32(578)
             ru |= e << 23
             rf = reinterpret(Float32, ru)
-            dru = (e - 25) << 23
+            dru = (e - UInt32(25)) << 23
             drf = reinterpret(Float32, dru)
             return rf - drf
         end
