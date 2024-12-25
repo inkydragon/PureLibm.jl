@@ -5,18 +5,6 @@ DocMeta.setdocmeta!(PureLibm, :DocTestSetup, :(using PureLibm); recursive=true)
 
 math_functions = Any[
     "math/index.md",
-
-    # Trigonometric
-    "math/cr_acos.md",
-    "math/cr_asin.md",
-    "math/cr_atan.md",
-    "math/cr_atan2.md",
-    # Hyperbolic
-    "math/cr_tanh.md",
-    # Power
-    "math/cr_rsqrt.md",
-    # Error and gamma
-    "math/cr_tgamma.md",
 ]
 
 makedocs(;
