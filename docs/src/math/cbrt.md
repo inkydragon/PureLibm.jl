@@ -1,5 +1,0 @@
-# `cbrt`
-
-```@docs
-PureLibm.cbrt
-```

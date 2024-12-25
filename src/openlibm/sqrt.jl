@@ -210,4 +210,4 @@ function __ieee754_sqrt(x::Float64)::Float64
     return reinterpret(Float64, (UInt64(ix0) << 32) | ix1)
 end
 
-sqrt(x::Float64) = __ieee754_sqrt(x)
+musl_sqrt(x::Float64) = __ieee754_sqrt(x)

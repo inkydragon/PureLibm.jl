@@ -54,9 +54,9 @@
 - pown
 - powr
 - rootn
-- [`sqrt`](@ref PureLibm.sqrt)
+- `sqrt`
 - [`cr_rsqrt`](@ref PureLibm.cr_rsqrt)
-- [`cbrt`](@ref PureLibm.cbrt)
+- `cbrt`
 - compoundn
 - `hypot`
 

@@ -13,7 +13,7 @@ is preserved.
 Optimized by Bruce D. Evans.
 """
 
-function cbrt(x::Float64)::Float64
+function musl_cbrt(x::Float64)::Float64
     # Const
     B1 = UInt32(715094163)  # B1 = (1023-1023/3-0.03306235651)*2^20
     B2 = UInt32(696219795)  # B2 = (1023-1023/3-54/3-0.03306235651)*2^20

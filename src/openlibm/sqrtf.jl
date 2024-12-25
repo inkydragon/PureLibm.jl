@@ -98,4 +98,4 @@ function __ieee754_sqrtf(x::Float32)::Float32
     return reinterpret(Float32, Int32(ix))
 end
 
-sqrt(x::Float32) = __ieee754_sqrtf(x)
+musl_sqrt(x::Float32) = __ieee754_sqrtf(x)

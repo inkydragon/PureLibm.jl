@@ -14,9 +14,7 @@ math_functions = Any[
     # Hyperbolic
     "math/cr_tanh.md",
     # Power
-    "math/sqrt.md",
     "math/cr_rsqrt.md",
-    "math/cbrt.md",
     # Error and gamma
     "math/cr_tgamma.md",
 ]

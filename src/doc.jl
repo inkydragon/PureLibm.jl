@@ -56,12 +56,7 @@ cr_tanh(x::Float32) = cr_tanhf(x)
 
 # C99: Power and Absolute-value
 # pow
-"""
-    sqrt(x)
-
-Compute the non-negative square root of x.
-"""
-sqrt(_) = not_impl_error()
+# sqrt
 
 """
     cr_rsqrt(x)
@@ -70,12 +65,7 @@ Computes the reciprocal square root of `x`.
 """
 cr_rsqrt(x::Float32) = cr_rsqrtf(x)
 
-"""
-    cbrt(x)
-
-Computes the cube root of `x`.
-"""
-cbrt(_) = not_impl_error()
+# cbrt
 # hypot
 
 # C99: Error and gamma

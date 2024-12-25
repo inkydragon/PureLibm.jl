@@ -1,5 +1,0 @@
-# `sqrt`
-
-```@docs
-PureLibm.sqrt
-```

@@ -65,4 +65,4 @@ function cbrtf(x::Float32)::Float32
     return Float32(tt)
 end
 
-cbrt(x::Float32) = cbrtf(x)
+musl_cbrt(x::Float32) = cbrtf(x)
