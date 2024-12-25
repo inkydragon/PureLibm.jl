@@ -1,0 +1,5 @@
+# `tanh`
+
+```@docs
+PureLibm.tanh
+```

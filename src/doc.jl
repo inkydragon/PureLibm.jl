@@ -38,7 +38,12 @@ atan2(y, x) = not_impl_error()
 # atanh
 # cosh
 # sinh
-# tanh
+"""
+    tanh(x)
+
+Compute hyperbolic tangent of `x`.
+"""
+tanh(_) = not_impl_error()
 
 # C99: Exponential and logarithmic
 # exp
