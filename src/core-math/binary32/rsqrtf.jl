@@ -43,17 +43,18 @@ function cr_rsqrtf(x::Float32)::Float32
             e = ixu >> 23
             k = 1
             if ixu == 0x002f7e2a
-                e = -1
+                e = UInt32(0) - UInt32(1)
             end
             if m == 0x55b7bd00
                 k = 0
             end
             tb = (0x000c1740, 0x005222e0)
             ru = tb[k + 1]
-            e = UInt32((512 - e) / 2 - 578)
+            # NOTE: negative UInt wrap around
+            e = (UInt32(512) - e) ÷ UInt32(2) - UInt32(578)
             ru |= e << 23
             rf = reinterpret(Float32, ru)
-            dru = (e - 25) << 23
+            dru = (e - UInt32(25)) << 23
             drf = reinterpret(Float32, dru)
             return rf - drf
         end
