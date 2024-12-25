@@ -18,3 +18,19 @@ for T in [Float32, Float64]
         @test PureLibm.cr_rsqrt(T(4)) ≈ T(0.5)
     end
 end
+
+@testset "cr_rsqrt.special-case" begin
+    test_x = Float32[
+        # Special Cases
+        4.361527f-39,
+        1.744611f-38,
+        7.87193f-39,
+    ]
+    test_x = [test_x..., -test_x...]
+    @testset "cr_rsqrt($x)" for x in test_x
+        # Test against system libm
+        @test PureLibm.cr_rsqrt(x) ≈ 1/sqrt(x)
+        # Test against MPFR
+        @test PureLibm.cr_rsqrt(x) === Float32(1/sqrt(BigFloat(x)))
+    end
+end
