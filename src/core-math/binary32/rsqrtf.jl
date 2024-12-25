@@ -9,7 +9,7 @@ function cr_rsqrtf(x::Float32)::Float32
     xd = Float64(x)
     ixu = reinterpret(UInt32, x)
 
-    if ixu >= (UInt32(0xff) << 23) || ixu == 0
+    if @unlikely(ixu >= (UInt32(0xff) << 23) || ixu == 0)
         if (ixu << 1) == 0
             return Float32(1.0) / x
         end
@@ -29,7 +29,7 @@ function cr_rsqrtf(x::Float32)::Float32
     end
 
     m = UInt32(ixu << 8)
-    if ixu == 0x002f_7e2a || m == 0xbdf8_a800 || m == 0x55b7_bd00
+    if @unlikely(ixu == 0x002f_7e2a || m == 0xbdf8_a800 || m == 0x55b7_bd00)
         if ixu != 0x0055_b7bd
             e = ixu >> 23
             k = 1
