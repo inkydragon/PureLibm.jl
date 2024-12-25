@@ -24,7 +24,9 @@ end
         # Special Cases
         4.361527f-39,
         1.744611f-38,
+        1.2625759f38,
         7.87193f-39,
+        2.8407959f38,
     ]
     test_x = [test_x..., -test_x...]
     @testset "cr_rsqrt($x)" for x in test_x

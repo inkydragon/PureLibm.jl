@@ -33,10 +33,11 @@ function cr_rsqrtf(x::Float32)::Float32
 
     m = UInt32(ixu << 8)
     # (x = 4.361527f-39, ixu = 0x002f7e2a, m = 0x2f7e2a00)
+    # Ranges:
     # (x = 1.744611f-38, ixu = 0x00bdf8a8, m = 0xbdf8a800)
-    # (x =-1.744611f-38, ixu = 0x80bdf8a8, m = 0xbdf8a800)
+    # (x = 1.2625759f38, ixu = 0x7ebdf8a8, m = 0xbdf8a800)
     # (x = 7.87193f-39,  ixu = 0x0055b7bd, m = 0x55b7bd00)
-    # (x =-7.87193f-39,  ixu = 0x8055b7bd, m = 0x55b7bd00)
+    # (x = 2.8407959f38, ixu = 0x7f55b7bd, m = 0x55b7bd00)
     if @unlikely(ixu == 0x002f7e2a || m == 0xbdf8a800 || m == 0x55b7bd00)
         if ixu != 0x0055b7bd
             # x != 7.87193f-39
