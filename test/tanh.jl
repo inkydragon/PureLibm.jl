@@ -2,11 +2,7 @@
 
 for T in [Float32, ]
     @testset "tanh(::$T)" begin
-        t_neg = -rand(T)
-        t_pos = rand(T)
-
-        # IEC 60559
-        # F.10.2.6
+        # IEC 60559, F.10.2.6
         #   tanh(±0) returns ±0.
         @test PureLibm.tanh(T(+0.0)) ≈ +0.0
         @test PureLibm.tanh(T(-0.0)) ≈ -0.0
@@ -17,8 +13,22 @@ for T in [Float32, ]
         # test NaN
         @test isnan(PureLibm.tanh(T(NaN)))
         @test isnan(PureLibm.tanh(T(-NaN)))
+    end
 
-        # sanity check
+    # random test
+    test_x = T[
+        # tanhf32(3pi) == 1
+        # tanhf64(7pi) == 1
+        (n*pi for n in 1:7)...,
+        # [0.0, 7*pi]
+        rand(0.0:eps():7pi, 10)...,
+    ]
+    # TODO: test -(test_x)
+    @testset "tanh($x)" for x in test_x
+        # Test against system libm
+        @test PureLibm.tanh(x) ≈ tanh(x)
+        # Test against MPFR
+        @test PureLibm.tanh(x) === T(tanh(BigFloat(x)))
     end
 end
 
