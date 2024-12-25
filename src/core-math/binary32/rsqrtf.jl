@@ -11,12 +11,14 @@ function cr_rsqrtf(x::Float32)::Float32
 
     if @unlikely(ixu >= (UInt32(0xff) << 23) || ixu == 0)
         if (ixu << 1) == 0
+            # +-0
             return Float32(1.0) / x
         end
         if (ixu >> 31) != 0
             ixu &= ~UInt32(0) >> 1
             if ixu > (UInt32(0xff) << 23)
-                return x
+                # NaN
+                return x + x
             end
 
             # feraiseexcept(FE_INVALID)
@@ -25,7 +27,8 @@ function cr_rsqrtf(x::Float32)::Float32
         if (ixu << 9) == 0
             return Float32(0.0)
         end
-        return x
+        # NaN
+        return x + x
     end
 
     m = UInt32(ixu << 8)
