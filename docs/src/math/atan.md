@@ -1,5 +1,0 @@
-# `atan`
-
-```@docs
-PureLibm.atan
-```

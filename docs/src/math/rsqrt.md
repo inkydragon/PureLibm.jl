@@ -1,5 +1,0 @@
-# `rsqrt`
-
-```@docs
-PureLibm.rsqrt
-```

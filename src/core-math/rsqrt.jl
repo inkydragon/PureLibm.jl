@@ -112,5 +112,3 @@ function cr_rsqrt(x::Float64)::Float64
 
     return rf
 end
-
-rsqrt(x::Float64) = cr_rsqrt(x)

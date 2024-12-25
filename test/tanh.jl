@@ -1,21 +1,21 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
 
 for T in [Float32, ]
-    @testset "tanh(::$T)" begin
+    @testset "cr_tanh(::$T)" begin
         # IEC 60559, F.10.2.6
         #   tanh(±0) returns ±0.
-        @test PureLibm.tanh(T(+0.0)) ≈ +0.0
-        @test PureLibm.tanh(T(-0.0)) ≈ -0.0
+        @test PureLibm.cr_tanh(T(+0.0)) ≈ +0.0
+        @test PureLibm.cr_tanh(T(-0.0)) ≈ -0.0
         #   tanh(±∞) returns ±1.
-        @test PureLibm.tanh(T(+Inf)) === T(+1.0)
-        @test PureLibm.tanh(T(-Inf)) === T(-1.0)
+        @test PureLibm.cr_tanh(T(+Inf)) === T(+1.0)
+        @test PureLibm.cr_tanh(T(-Inf)) === T(-1.0)
 
         # test NaN
-        @test isnan(PureLibm.tanh(T(NaN)))
-        @test isnan(PureLibm.tanh(T(-NaN)))
+        @test isnan(PureLibm.cr_tanh(T(NaN)))
+        @test isnan(PureLibm.cr_tanh(T(-NaN)))
     end
 
-    @testset "tanh(random)" begin
+    @testset "cr_tanh(random)" begin
         test_x = T[
             # tanhf32(3pi) == 1
             # tanhf64(7pi) == 1
@@ -32,22 +32,22 @@ for T in [Float32, ]
         test_x = [test_x..., -test_x...]
         @testset "tanh($x)" for x in test_x
             # Test against system libm
-            @test PureLibm.tanh(x) ≈ tanh(x)
+            @test PureLibm.cr_tanh(x) ≈ tanh(x)
             # Test against MPFR
-            @test PureLibm.tanh(x) === T(tanh(BigFloat(x)))
+            @test PureLibm.cr_tanh(x) === T(tanh(BigFloat(x)))
         end
     end
 end
 
-if "tanhf.fast" in CheckExhaustive
+if "cr_tanh.fast" in CheckExhaustive
     # test 2184026058 cases 1m11.2s
-    @testset "tanhf-exhaustive.fast" begin
+    @testset "cr_tanh-exhaustive.fast" begin
         xlo = reinterpret(UInt32, Float32(0.0))
         xhi = reinterpret(UInt32, Float32(3pi))
         for xu in xlo:xhi, sign in [1, -1]
             x = reinterpret(Float32, xu)
             x = copysign(x, sign)
-            y = PureLibm.tanh(x)
+            y = PureLibm.cr_tanh(x)
             z = tanh(x)
     
             if isapprox(y, z; nans=true)
@@ -60,15 +60,15 @@ if "tanhf.fast" in CheckExhaustive
     end
 end # CheckExhaustive
 
-if "tanhf" in CheckExhaustive
+if "cr_tanh" in CheckExhaustive
     # 
-    @testset "tanhf-exhaustive" begin
+    @testset "cr_tanh-exhaustive" begin
         xlo = reinterpret(UInt32, Float32(0.0))
         xhi = reinterpret(UInt32, Float32(3pi))
         for xu in xlo:xhi, sign in [1, -1]
             x = reinterpret(Float32, xu)
             x = copysign(x, sign)
-            y = PureLibm.tanh(x)
+            y = PureLibm.cr_tanh(x)
             z = Float32(tanh(BigFloat(x)))
 
             if isequal(y, z)
@@ -81,4 +81,4 @@ if "tanhf" in CheckExhaustive
     end
 end # CheckExhaustive
 
-# ENV["PURELIBM_CHECK_EXHAUSTIVE"] = "tanhf.fast,tanhf"
+# ENV["PURELIBM_CHECK_EXHAUSTIVE"] = "cr_tanh.fast,cr_tanh"

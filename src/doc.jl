@@ -1,32 +1,32 @@
 
 # C99: Trigonometric
 """
-    acos(x)
+    cr_acos(x)
 
 Compute arc cosine of `x`.
 """
-acos(_) = not_impl_error()
+cr_acos(x::Float32) = cr_acosf(x)
 
 """
-    asin(x)
+    cr_asin(x)
 
 Compute arc-sine of `x`.
 """
-asin(_) = not_impl_error()
+cr_asin(x::Float32) = cr_asinf(x)
 
 """
-    atan(x)
+    cr_atan(x)
 
 Compute arc-tangent of `x`.
 """
-atan(_) = not_impl_error()
+cr_atan(x::Float32) = cr_atanf(x)
 
 """
-    atan2(y, x)
+    cr_atan2(y, x)
 
 Compute arc-tangent of `y / x`.
 """
-atan2(y, x) = not_impl_error()
+cr_atan2(y::Float32, x::Float32) = cr_atan2f(y, x)
 
 # cos
 # sin
@@ -39,11 +39,11 @@ atan2(y, x) = not_impl_error()
 # cosh
 # sinh
 """
-    tanh(x)
+    cr_tanh(x)
 
 Compute hyperbolic tangent of `x`.
 """
-tanh(_) = not_impl_error()
+cr_tanh(x::Float32) = cr_tanhf(x)
 
 # C99: Exponential and logarithmic
 # exp
@@ -64,11 +64,11 @@ Compute the non-negative square root of x.
 sqrt(_) = not_impl_error()
 
 """
-    rsqrt(x)
+    cr_rsqrt(x)
 
 Computes the reciprocal square root of `x`.
 """
-rsqrt(_) = not_impl_error()
+cr_rsqrt(x::Float32) = cr_rsqrtf(x)
 
 """
     cbrt(x)
@@ -83,8 +83,8 @@ cbrt(_) = not_impl_error()
 # erfc
 # lgamma
 """
-    tgamma(x)
+    cr_tgamma(x)
 
 Computes the true gamma function of `x`.
 """
-tgamma(_) = not_impl_error()
+cr_tgamma(x::Float32) = cr_tgammaf(x)

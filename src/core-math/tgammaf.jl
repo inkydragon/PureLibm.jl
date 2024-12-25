@@ -162,5 +162,3 @@ function cr_tgammaf(x::Float32)::Float32
 
     return r
 end
-
-tgamma(x::Float32) = cr_tgammaf(x)

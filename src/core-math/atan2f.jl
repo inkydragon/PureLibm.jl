@@ -200,5 +200,3 @@ function cr_atan2f(y::Float32, x::Float32)::Float32
 
     return r
 end
-
-atan2(y::Float32, x::Float32) = cr_atan2f(y, x)

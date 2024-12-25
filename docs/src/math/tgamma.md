@@ -1,5 +1,0 @@
-# `tgamma`
-
-```@docs
-PureLibm.tgamma
-```

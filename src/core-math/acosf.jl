@@ -100,5 +100,3 @@ function cr_acosf(x::Float32)::Float32
 
     return Float32(r)
 end
-
-acos(x::Float32) = cr_acosf(x)

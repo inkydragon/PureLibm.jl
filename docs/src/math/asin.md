@@ -1,5 +1,0 @@
-# `asin`
-
-```@docs
-PureLibm.asin
-```

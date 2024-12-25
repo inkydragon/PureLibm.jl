@@ -1,5 +1,0 @@
-# `acos`
-
-```@docs
-PureLibm.acos
-```

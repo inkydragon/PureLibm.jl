@@ -76,5 +76,3 @@ function cr_tanhf(x::Float32)::Float32
     r = z * n0 / d0
     return r
 end
-
-tanh(x::Float32) = cr_tanhf(x)

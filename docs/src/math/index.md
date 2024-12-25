@@ -7,10 +7,10 @@
 
 ## Trigonometric
 
-- [`acos(::Float32)`](@ref PureLibm.acos)
-- [`asin(::Float32)`](@ref PureLibm.asin)
-- [`atan(::Float32)`](@ref PureLibm.atan)
-- [`atan2(::Float32)`](@ref PureLibm.atan2)
+- [`cr_acos(::Float32)`](@ref PureLibm.cr_acos)
+- [`cr_asin(::Float32)`](@ref PureLibm.cr_asin)
+- [`cr_atan(::Float32)`](@ref PureLibm.cr_atan)
+- [`cr_atan2(::Float32)`](@ref PureLibm.cr_atan2)
 - `cos`
 - `sin`
 - `tan`
@@ -30,7 +30,7 @@
 - `atanh`
 - `cosh`
 - `sinh`
-- `tanh`
+- [`cr_tanh`](@ref PureLibm.cr_tanh)
 
 ## Exponential and logarithmic
 
@@ -55,7 +55,7 @@
 - powr
 - rootn
 - [`sqrt`](@ref PureLibm.sqrt)
-- [`rsqrt`](@ref PureLibm.rsqrt)
+- [`cr_rsqrt`](@ref PureLibm.cr_rsqrt)
 - [`cbrt`](@ref PureLibm.cbrt)
 - compoundn
 - `hypot`
@@ -65,4 +65,4 @@
 - `erf`
 - `erfc`
 - `lgamma`
-- [`tgamma`](@ref PureLibm.tgamma)
+- [`cr_tgamma(::Float32)`](@ref PureLibm.cr_tgamma)

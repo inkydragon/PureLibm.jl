@@ -53,6 +53,3 @@ function cr_rsqrtf(x::Float32)::Float32
     # use __builtin_sqrt
     return (1.0 / xd) * sqrt(xd)
 end
-
-
-rsqrt(x::Float32) = cr_rsqrtf(x)

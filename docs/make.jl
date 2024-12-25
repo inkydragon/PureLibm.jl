@@ -7,18 +7,18 @@ math_functions = Any[
     "math/index.md",
 
     # Trigonometric
-    "math/acos.md",
-    "math/asin.md",
-    "math/atan.md",
-    "math/atan2.md",
+    "math/cr_acos.md",
+    "math/cr_asin.md",
+    "math/cr_atan.md",
+    "math/cr_atan2.md",
     # Hyperbolic
-    "math/tanh.md",
+    "math/cr_tanh.md",
     # Power
     "math/sqrt.md",
-    "math/rsqrt.md",
+    "math/cr_rsqrt.md",
     "math/cbrt.md",
     # Error and gamma
-    "math/tgamma.md",
+    "math/cr_tgamma.md",
 ]
 
 makedocs(;

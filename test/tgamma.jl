@@ -2,43 +2,43 @@
 import SpecialFunctions
 using Random
 
-@testset "tgamma" begin
+@testset "cr_tgamma" begin
     @testset "$T" for T in [Float32, ]
         # IEC 60559
-        @test PureLibm.tgamma(T(Inf)) == T(Inf)
+        @test PureLibm.cr_tgamma(T(Inf)) == T(Inf)
         # fp-invalid
-        @test isnan(PureLibm.tgamma(T(-Inf)))
-        @test isnan(PureLibm.tgamma(T(-1.0)))
+        @test isnan(PureLibm.cr_tgamma(T(-Inf)))
+        @test isnan(PureLibm.cr_tgamma(T(-1.0)))
         # fp-divide-by-zero
-        @test PureLibm.tgamma(T(+0.0)) == T(+Inf)
-        @test PureLibm.tgamma(T(-0.0)) == T(-Inf)
-        @test isnan(PureLibm.tgamma(T(NaN)))
+        @test PureLibm.cr_tgamma(T(+0.0)) == T(+Inf)
+        @test PureLibm.cr_tgamma(T(-0.0)) == T(-Inf)
+        @test isnan(PureLibm.cr_tgamma(T(NaN)))
 
         # sanity check
-        @test PureLibm.tgamma.(T.(1:5)) == T[1, 1, 2, 6, 24]
-        @test PureLibm.tgamma(T(36)) == T(Inf)
+        @test PureLibm.cr_tgamma.(T.(1:5)) == T[1, 1, 2, 6, 24]
+        @test PureLibm.cr_tgamma(T(36)) == T(Inf)
         # special value
-        @test PureLibm.tgamma(T(1/2)) ≈ T(sqrt(π))
-        @test PureLibm.tgamma(T(-1/2)) ≈ T(-2sqrt(π))
+        @test PureLibm.cr_tgamma(T(1/2)) ≈ T(sqrt(π))
+        @test PureLibm.cr_tgamma(T(-1/2)) ≈ T(-2sqrt(π))
 
         # --- compare test
         for x in 1:36
-            @test PureLibm.tgamma(T(x)) ≈ SpecialFunctions.gamma(T(x))
+            @test PureLibm.cr_tgamma(T(x)) ≈ SpecialFunctions.gamma(T(x))
         end
         # tgammaf(0.38)=1.937f  ~  tgammaf(3.0)=2.0f
         xlo = reinterpret(UInt32, Float32(0.38))
         xhi = reinterpret(UInt32, Float32(3.0))
         for xu in rand(xlo:xhi, 10^3)
             x = reinterpret(Float32, xu)
-            @test PureLibm.tgamma(x) ≈ SpecialFunctions.gamma(x)
+            @test PureLibm.cr_tgamma(x) ≈ SpecialFunctions.gamma(x)
         end
     end
 end
 
-if "tgammaf.fast" in CheckExhaustive
+if "cr_tgamma.fast" in CheckExhaustive
 #   24998053 cases   0.6s
 # 4294967296 cases  47.1s
-@testset "tgammaf-exhaustive.fast" begin
+@testset "cr_tgamma-exhaustive.fast" begin
     xlo = typemin(UInt32)
     xhi = typemax(UInt32)
     # xlo = reinterpret(UInt32, Float32(0.38))
@@ -48,7 +48,7 @@ if "tgammaf.fast" in CheckExhaustive
         if x < 0 && (isinteger(x) || isinf(x))
             continue  # Skip DomainError
         end
-        y = PureLibm.tgamma(x)
+        y = PureLibm.cr_tgamma(x)
         z = SpecialFunctions.gamma(x)
 
         if isnan(z) && isnan(y)
@@ -65,10 +65,10 @@ if "tgammaf.fast" in CheckExhaustive
 end
 end # CheckExhaustive
 
-if "tgammaf" in CheckExhaustive
+if "cr_tgamma" in CheckExhaustive
 #   24998053 cases  16m59.1s
 # 4294967296 cases
-@testset "tgammaf-exhaustive" begin
+@testset "cr_tgamma-exhaustive" begin
     xlo = typemin(UInt32)
     xhi = typemax(UInt32)
     # xlo = reinterpret(UInt32, Float32(0.38))
@@ -78,7 +78,7 @@ if "tgammaf" in CheckExhaustive
         if x < 0 && (isinteger(x) || isinf(x))
             continue  # Skip DomainError
         end
-        y = PureLibm.tgamma(x)
+        y = PureLibm.cr_tgamma(x)
         z = Float32(SpecialFunctions.gamma(BigFloat(x)))
 
         if y === z
@@ -95,4 +95,4 @@ end
 #   [xu = 0x27e05475 669013109 (6.2264058e-15)]:  y=1.606063e14; z=1.6060631e14
 #   [xu = 0x41e886d1 1105757905 (29.065828)]:  y=3.801415e29; z=3.8014147e29
 end # CheckExhaustive
-# ENV["PURELIBM_CHECK_EXHAUSTIVE"] = "tgammaf.fast,tgammaf"
+# ENV["PURELIBM_CHECK_EXHAUSTIVE"] = "cr_tgamma.fast,cr_tgamma"

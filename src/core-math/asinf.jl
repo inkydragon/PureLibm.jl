@@ -92,5 +92,3 @@ function cr_asinf(x::Float32)
 
     return Float32(r)
 end
-
-asin(x::Float32) = cr_asinf(x)

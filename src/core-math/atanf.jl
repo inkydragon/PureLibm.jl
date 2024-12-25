@@ -97,5 +97,3 @@ function cr_atanf(x::Float32)::Float32
     r = copysign(0x1.0fdaa22168c23p-7, z) - r + copysign(0x1.9p0, z)
     return Float32(r)
 end
-
-atan(x::Float32) = cr_atanf(x)
