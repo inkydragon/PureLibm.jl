@@ -40,7 +40,7 @@ for T in [Float32, ]
 end
 
 if "tanhf.fast" in CheckExhaustive
-    #
+    # test 2184026058 cases 1m11.2s
     @testset "tanhf-exhaustive.fast" begin
         xlo = reinterpret(UInt32, Float32(0.0))
         xhi = reinterpret(UInt32, Float32(3pi))
