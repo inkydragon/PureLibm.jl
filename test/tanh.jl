@@ -22,8 +22,14 @@ for T in [Float32, ]
         (n*pi for n in 1:7)...,
         # [0.0, 7*pi]
         rand(0.0:eps():7pi, 10)...,
+        # branch cov
+        # 102 <= e < 105
+        0x1p-25,
+        # e < 102
+        0.0,
+        0x1p-27,
     ]
-    # TODO: test -(test_x)
+    test_x = [test_x..., -test_x...]
     @testset "tanh($x)" for x in test_x
         # Test against system libm
         @test PureLibm.tanh(x) ≈ tanh(x)
