@@ -32,17 +32,23 @@ function cr_rsqrtf(x::Float32)::Float32
     end
 
     m = UInt32(ixu << 8)
-    if @unlikely(ixu == 0x002f_7e2a || m == 0xbdf8_a800 || m == 0x55b7_bd00)
-        if ixu != 0x0055_b7bd
+    # (x = 4.361527f-39, ixu = 0x002f7e2a, m = 0x2f7e2a00)
+    # (x = 1.744611f-38, ixu = 0x00bdf8a8, m = 0xbdf8a800)
+    # (x =-1.744611f-38, ixu = 0x80bdf8a8, m = 0xbdf8a800)
+    # (x = 7.87193f-39,  ixu = 0x0055b7bd, m = 0x55b7bd00)
+    # (x =-7.87193f-39,  ixu = 0x8055b7bd, m = 0x55b7bd00)
+    if @unlikely(ixu == 0x002f7e2a || m == 0xbdf8a800 || m == 0x55b7bd00)
+        if ixu != 0x0055b7bd
+            # x != 7.87193f-39
             e = ixu >> 23
             k = 1
-            if ixu == 0x002f_7e2a
+            if ixu == 0x002f7e2a
                 e = -1
             end
-            if m == 0x55b7_bd00
+            if m == 0x55b7bd00
                 k = 0
             end
-            tb = (0x000c_1740, 0x0052_22e0)
+            tb = (0x000c1740, 0x005222e0)
             ru = tb[k + 1]
             e = UInt32((512 - e) / 2 - 578)
             ru |= e << 23
