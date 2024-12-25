@@ -80,16 +80,16 @@ function cr_rsqrt(x::Float64)::Float64
             return -Inf64  # x = -0
         end
         if ixu > 0xfff0_0000_0000_0000
-            return x
+            return x + x  # NaN
         end
         if (ixu >> 63) == 1
             # feraiseexcept(FE_INVALID)
             return -NaN64
         end
         if (ixu << 12) == 0
-            return 0.0
+            return 0.0  # +Inf
         end
-        return x
+        return x + x  # NaN
     else
         r = (1.0 / x) * sqrt(x)
     end
