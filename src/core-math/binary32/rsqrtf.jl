@@ -20,7 +20,7 @@ function cr_rsqrtf(x::Float32)::Float32
             end
 
             # feraiseexcept(FE_INVALID)
-            return NaN32
+            return -NaN32
         end
         if (ixu << 9) == 0
             return Float32(0.0)

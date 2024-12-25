@@ -84,7 +84,7 @@ function cr_rsqrt(x::Float64)::Float64
         end
         if (ixu >> 63) == 1
             # feraiseexcept(FE_INVALID)
-            return NaN64
+            return -NaN64
         end
         if (ixu << 12) == 0
             return 0.0
