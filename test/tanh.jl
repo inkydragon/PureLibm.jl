@@ -39,10 +39,10 @@ for T in [Float32, ]
 end
 
 if "tanhf.fast" in CheckExhaustive
-    # 2* 0.0:1.0    2130706434 cases    3m43.3s
+    #
     @testset "tanhf-exhaustive.fast" begin
         xlo = reinterpret(UInt32, Float32(0.0))
-        xhi = reinterpret(UInt32, Float32(1.0))
+        xhi = reinterpret(UInt32, Float32(3pi))
         for xu in xlo:xhi, sign in [1, -1]
             x = reinterpret(Float32, xu)
             x = copysign(x, sign)
@@ -62,3 +62,26 @@ if "tanhf.fast" in CheckExhaustive
         println("test $(length(xlo:xhi)*2) cases")
     end
 end # CheckExhaustive
+
+if "tanhf" in CheckExhaustive
+    # 
+    @testset "tanhf-exhaustive" begin
+        xlo = reinterpret(UInt32, Float32(0.0))
+        xhi = reinterpret(UInt32, Float32(3pi))
+        for xu in xlo:xhi, sign in [1, -1]
+            x = reinterpret(Float32, xu)
+            x = copysign(x, sign)
+            y = PureLibm.tanh(x)
+            z = Float32(tanh(BigFloat(x)))
+
+            if y === z
+                continue
+            else
+                @printf("[xu = 0x%x (%e)]:  y=%e; z=%e\n", xu, x, y, z)
+            end
+        end
+        println("test $(length(xlo:xhi)*2) cases")
+    end
+end # CheckExhaustive
+
+# ENV["PURELIBM_CHECK_EXHAUSTIVE"] = "tanhf.fast,tanhf"
