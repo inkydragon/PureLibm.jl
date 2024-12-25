@@ -3,10 +3,10 @@
 include("helper.jl")
 
 # Trigonometric
-include("acosf.jl")
-include("asinf.jl")
-include("atanf.jl")
-include("atan2f.jl")
+include("binary32/acosf.jl")
+include("binary32/asinf.jl")
+include("binary32/atanf.jl")
+include("binary32/atan2f.jl")
 
 # Hyperbolic
 # acosh
@@ -14,11 +14,11 @@ include("atan2f.jl")
 # atanh
 # cosh
 # sinh
-include("tanhf.jl")
+include("binary32/tanhf.jl")
 
 # Power
-include("rsqrt.jl")
-include("rsqrtf.jl")
+include("binary32/rsqrt.jl")
+include("binary32/rsqrtf.jl")
 
 # Error and gamma
-include("tgammaf.jl")
+include("binary32/tgammaf.jl")
