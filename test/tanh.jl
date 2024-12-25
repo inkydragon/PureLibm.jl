@@ -50,11 +50,7 @@ if "tanhf.fast" in CheckExhaustive
             y = PureLibm.tanh(x)
             z = tanh(x)
     
-            if isnan(z) && isnan(y)
-                continue
-            elseif isinf(z) && isinf(y)
-                continue
-            elseif z ≈ y
+            if isapprox(y, z; nans=true)
                 continue
             else
                 @printf("[xu = 0x%x (%e)]:  y=%e; z=%e\n", xu, x, y, z)
@@ -75,7 +71,7 @@ if "tanhf" in CheckExhaustive
             y = PureLibm.tanh(x)
             z = Float32(tanh(BigFloat(x)))
 
-            if y === z
+            if isequal(y, z)
                 continue
             else
                 @printf("[xu = 0x%x (%e)]:  y=%e; z=%e\n", xu, x, y, z)
