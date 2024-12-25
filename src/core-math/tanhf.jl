@@ -2,24 +2,23 @@
 # Based on core-math/src/binary32/tanh/tanhf.c
 # CORE-MATH project Copyright (c) 2022 Alexei Sibidanov.
 
-const CR_TANHF_CN = Vector{Float64}([
+const CR_TANHF_CN = NTuple{8, Float64}((
     0x1p+0, 0x1.30877b8b72d33p-3,
     0x1.694aa09ae9e5ep-8, 0x1.4101377abb729p-14,
     0x1.e0392b1db0018p-22, 0x1.2533756e546f7p-30,
     0x1.d62e5abe6ae8ap-41, 0x1.b06be534182dep-54
-])
+))
 
-const CR_TANHF_CD = Vector{Float64}([
+const CR_TANHF_CD = NTuple{8, Float64}((
     0x1p+0, 0x1.ed99131b0ebeap-2,
     0x1.0d27ed6c95a69p-5, 0x1.7cbdaca0e9fccp-11,
     0x1.b4e60b892578ep-18, 0x1.a6f707c5c71abp-26,
     0x1.35a8b6e2cd94cp-35, 0x1.ca8230677aa01p-47
-])
+))
 
 """Correctly-rounded hyperbolic tangent function of Float32.
 """
 function cr_tanhf(x::Float32)::Float32
-    z = Float64(x)
     ux = reinterpret(UInt32, x)
     e = (ux >> 23) & 0xff
 
@@ -29,8 +28,8 @@ function cr_tanhf(x::Float32)::Float32
             return x + x
         end
         # x = +-Inf
-        ir = [1.0f0, -1.0f0]
-        return ir[ux >> 31 + 1]
+        ir = (1.0f0, -1.0f0)
+        return ir[(ux >> 31) + 1]
     end
 
     if @unlikely(e < 115)
@@ -43,13 +42,15 @@ function cr_tanhf(x::Float32)::Float32
         end
 
         x2 = x * x
-        return fma(x, -0x1.555556p-2 * x2, x)
+        return fma(x, Float32(-0x1.555556p-2) * x2, x)
     end
 
     if (ux << 1) > (0x41102cb3 << 1)
-        return copysign(1.0f0, x) - copysign(0x1p-25, x)
+        # abs(x) > 9.010913f0
+        return copysign(1.0f0, x) - copysign(Float32(0x1p-25), x)
     end
 
+    z = Float64(x)
     z2 = z * z
     z4 = z2 * z2
     z8 = z4 * z4
