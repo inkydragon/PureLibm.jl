@@ -28,6 +28,11 @@ end
     ]
     test_x = [test_x..., -test_x...]
     @testset "cr_rsqrt($x)" for x in test_x
+        if x < 0
+            @test PureLibm.cr_rsqrt(x) === -NaN32
+            continue
+        end
+
         # Test against system libm
         @test PureLibm.cr_rsqrt(x) ≈ 1/sqrt(x)
         # Test against MPFR
