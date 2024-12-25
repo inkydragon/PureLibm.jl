@@ -61,4 +61,5 @@ makedocs(;
 deploydocs(;
     repo="github.com/inkydragon/PureLibm.jl",
     devbranch="main",
+    push_preview = true,
 )
