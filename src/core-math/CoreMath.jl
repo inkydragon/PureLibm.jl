@@ -17,7 +17,7 @@ include("binary32/atan2f.jl")
 include("binary32/tanhf.jl")
 
 # Power
-include("binary32/rsqrt.jl")
+include("binary64/rsqrt.jl")
 include("binary32/rsqrtf.jl")
 
 # Error and gamma
