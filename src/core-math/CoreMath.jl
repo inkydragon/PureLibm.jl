@@ -8,6 +8,14 @@ include("asinf.jl")
 include("atanf.jl")
 include("atan2f.jl")
 
+# Hyperbolic
+# acosh
+# asinh
+# atanh
+# cosh
+# sinh
+include("tanhf.jl")
+
 # Power
 include("rsqrt.jl")
 include("rsqrtf.jl")

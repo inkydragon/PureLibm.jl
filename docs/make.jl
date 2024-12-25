@@ -11,6 +11,8 @@ math_functions = Any[
     "math/asin.md",
     "math/atan.md",
     "math/atan2.md",
+    # Hyperbolic
+    "math/tanh.md",
     # Power
     "math/sqrt.md",
     "math/rsqrt.md",
@@ -59,4 +61,5 @@ makedocs(;
 deploydocs(;
     repo="github.com/inkydragon/PureLibm.jl",
     devbranch="main",
+    push_preview = true,
 )

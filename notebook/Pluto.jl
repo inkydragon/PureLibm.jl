@@ -29,6 +29,17 @@ function sample_2pi(n_sample::Int=10_000)
     range(min_x, max_x, length=n_sample);
 end
 
+# ╔═╡ 63793212-257f-485c-a5bf-c2d5448c26e9
+function gen_real_range(x_min::Real=-Inf, x_max::Real=Inf, n_sample::Int=10^6)
+    if isinf(x_min)
+        x_min = nextfloat(x_min)
+    end
+    if isinf(x_max)
+        x_max = prevfloat(x_max)
+    end
+    range(float(x_min),float(x_max),n_sample)
+end
+
 # ╔═╡ 59fce8bf-ec87-41a2-ada7-ebed50c15f4d
 function plot_ulps(func::Function, x::Vector{T}) where T <: Union{Float32, Float64}
     f_name = "$(func)"
@@ -37,8 +48,9 @@ function plot_ulps(func::Function, x::Vector{T}) where T <: Union{Float32, Float
 
     y = rel_ulp.(func, x);
 
-    min_y = minimum(y)
-    max_y = maximum(y)
+    y1 = filter(!isnan, y)
+    min_y = minimum(y1)
+    max_y = maximum(y1)
 	max_rel_ulp = maximum(abs.([max_y, min_y]))
 	println("[$f_name] max_rel_ulp=$max_rel_ulp")
     y_lim = max_rel_ulp * 1.2
@@ -80,28 +92,78 @@ end
 # ╔═╡ eb062ef6-3768-435f-9e3f-98deac5050ed
 plot_ulps(func::Function, x::AbstractRange) = plot_ulps(func, collect(x))
 
+# ╔═╡ 03d705cc-08a7-4074-8672-6e4619d95c81
+# import openlibm
+begin
+	# Base.MPFR.version()
+	# https://www.mpfr.org/mpfr-4.2.0/mpfr.html
+	function erf(x::Float64)
+	    ccall((:erf, libopenlibm), Cdouble, (Cdouble,), x)
+	end
+	function erf(x::BigFloat)
+	    r = BigFloat()
+	    # int mpfr_erf (mpfr_t rop, mpfr_t op, mp_rnd_t rnd)
+	    ccall((:mpfr_erf, Base.MPFR.libmpfr),
+	        Int32, (Ref{BigFloat}, Ref{BigFloat}, Base.MPFR.MPFRRoundingMode),
+	        r, x, Base.MPFR.rounding_raw(BigFloat))
+	    return r
+	end
+	function erfc(x::Float64)
+	    ccall((:erfc, libopenlibm), Cdouble, (Cdouble,), x)
+	end
+	function erfc(x::BigFloat)
+	    r = BigFloat()
+	    # int mpfr_erfc (mpfr_t rop, mpfr_t op, mpfr_rnd_t rnd)
+	    ccall((:mpfr_erfc, Base.MPFR.libmpfr),
+	        Int32, (Ref{BigFloat}, Ref{BigFloat}, Base.MPFR.MPFRRoundingMode),
+	        r, x, Base.MPFR.rounding_raw(BigFloat))
+	    return r
+	end
+	function lgamma(x::Float64)
+	    ccall((:lgamma, libopenlibm), Cdouble, (Cdouble,), x)
+	end
+	function lgamma(x::BigFloat)
+	    r = BigFloat()
+	    # int mpfr_lngamma (mpfr_t rop, mpfr_t op, mpfr_rnd_t rnd)
+	    ccall((:mpfr_lngamma, Base.MPFR.libmpfr),
+	        Int32, (Ref{BigFloat}, Ref{BigFloat}, Base.MPFR.MPFRRoundingMode),
+	        r, x, Base.MPFR.rounding_raw(BigFloat))
+	    return r
+	end
+	function tgamma(x::Float64)
+	    ccall((:tgamma, libopenlibm), Cdouble, (Cdouble,), x)
+	end
+	function tgamma(x::BigFloat)
+	    r = BigFloat()
+	    # int mpfr_gamma (mpfr_t rop, mpfr_t op, mpfr_rnd_t rnd)
+	    ccall((:mpfr_gamma, Base.MPFR.libmpfr),
+	        Int32, (Ref{BigFloat}, Ref{BigFloat}, Base.MPFR.MPFRRoundingMode),
+	        r, x, Base.MPFR.rounding_raw(BigFloat))
+	    return r
+	end
+end
+
 # ╔═╡ 191b7597-2277-4da1-8847-0a26d17c08f2
 md"## Math function plots"
 
 # ╔═╡ ef9b8668-781b-4857-80db-5f8efaf1b068
-md"### Trigonometric"
+md"""
+### Trigonometric
 
-# ╔═╡ 6ed3f145-8795-4cb0-90f4-dcab26a8623d
-plot_ulps(sin, sample_2pi(100_000))
-
-# ╔═╡ ce807d1b-8a38-48fa-858b-39ab55ac4efa
-plot_ulps(cos, sample_2pi(100_000))
-
-# ╔═╡ 6a646b81-87b8-4843-b2ff-1284f2307bd5
-plot_ulps(tan, range(0-pi/2, pi/2, length=100_000))
-
-# ╔═╡ 3dd45ed9-564e-4c78-8fa5-9232f9a8bb37
-plot_ulps(asin, 
-	range(-1.0, 1.0, length=100_000)
-)
+```
+acos  asin  atan
+atan2
+cos  sin  tan
+```
+"""
 
 # ╔═╡ 753f6f07-7241-4d7d-b6ad-0fbd00cbc342
 plot_ulps(acos, 
+	range(-1.0, 1.0, length=100_000)
+)
+
+# ╔═╡ 3dd45ed9-564e-4c78-8fa5-9232f9a8bb37
+plot_ulps(asin, 
 	range(-1.0, 1.0, length=100_000)
 )
 
@@ -112,6 +174,21 @@ plot_ulps(atan,
 
 # ╔═╡ 0fda3731-890b-4eff-9225-7cd401f8996a
 # TODO: atan2
+
+# ╔═╡ ce807d1b-8a38-48fa-858b-39ab55ac4efa
+plot_ulps(cos, sample_2pi(100_000))
+
+# ╔═╡ 6ed3f145-8795-4cb0-90f4-dcab26a8623d
+plot_ulps(sin, sample_2pi(100_000))
+
+# ╔═╡ cb7902aa-3337-4a4f-908b-5bd6d303d603
+# ╠═╡ disabled = true
+#=╠═╡
+plot_ulps(sin, gen_real_range())
+  ╠═╡ =#
+
+# ╔═╡ 6a646b81-87b8-4843-b2ff-1284f2307bd5
+plot_ulps(tan, range(0-pi/2, pi/2, length=100_000))
 
 # ╔═╡ a6c1bc46-205e-407c-82ed-817a33f06760
 md"""
@@ -127,9 +204,6 @@ acosh/asinh/atanh
 plot_ulps(cosh, 
 	range(-22.0, 22.0, length=10_000)
 )
-
-# ╔═╡ e61cf98a-904e-44ec-81e4-96559a565592
-plot(sinh)
 
 # ╔═╡ 76a78f50-03d0-43e6-9dcf-8b6b5447aa97
 plot_ulps(sinh, 
@@ -225,12 +299,15 @@ md"""
 ### Power and Absolute-value
 
 ```c
-// TODO(2-arg): pow 
+pow 
 sqrt / cbrt 
 // SKIP: fabs
-// TODO(2-arg): hypot
+hypot
 ```
 """
+
+# ╔═╡ d161377b-4a9b-46d1-af7f-2a4ad266e352
+# TODO(2): pow
 
 # ╔═╡ 6aa40b8a-c8cd-4dc1-b593-f4795cfb90f0
 plot_ulps(sqrt, 
@@ -244,6 +321,9 @@ plot_ulps(cbrt,
 )
 # max_ulp = 0.668
 
+# ╔═╡ 2d67d43d-70b9-4cf6-9d7e-858f08886897
+# TODO(2-arg): hypot
+
 # ╔═╡ 53fee3bd-4972-410e-90a7-27f2f2c75336
 md"""
 ### Error and gamma
@@ -254,20 +334,61 @@ lgamma / tgamma
 ```
 """
 
-# ╔═╡ c5c10e28-edf4-4168-af4d-d2eb385227df
-plot(erf)
+# ╔═╡ 3bad1f3f-8211-409d-966e-cf44af241261
+plot_ulps(erf, 
+	range(-2.0, 2.0, length=100_000)
+)
 
-# ╔═╡ 4de2e858-c03e-41fc-a477-3b1184710964
-plot(erfc)
+# ╔═╡ 7bf06309-f048-4d29-a3ad-db6de6ae7626
+plot_ulps(erfc, 
+	range(-2.0, 10.0, length=100_000)
+)
 
 # ╔═╡ 00c655c3-4a98-4949-9168-514a0e8fa70e
 plot(lgamma)
 
+# ╔═╡ d0b99d17-f676-4ed4-a397-acabc636fc7c
+plot_ulps(lgamma, 
+	range(-5.0, 5.0, length=100_000)
+)
+
 # ╔═╡ f1d2a135-9ec3-4513-8319-1080c718e495
 plot(tgamma)
 
-# ╔═╡ d7829f83-a088-45e4-a689-873483f0d6c8
+# ╔═╡ 63eaeef7-e535-4514-a1eb-3fb1d82b6608
+plot_ulps(tgamma, 
+	range(-5.0, 0.1, length=100_000)
+)
 
+# ╔═╡ d7829f83-a088-45e4-a689-873483f0d6c8
+md"""
+### BSD
+
+```
+j0 j1
+y0 y1
+```
+"""
+
+# ╔═╡ 36a705ec-5e42-41b4-a746-9b94ed7d97b2
+md"""
+### C23
+
+```
+acospi  asinpi  atanpi  atan2pi
+cospi  sinpi  tanpi
+# 
+exp10  exp10m1
+exp2m1
+    llogb
+log10p1  logp1  log2p1
+#
+compoundn
+pown  powr
+rootn
+rsqrt
+```
+"""
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -1372,20 +1493,22 @@ version = "1.4.1+1"
 # ╠═e5de6105-a0d5-4d11-869e-c4945f03bdec
 # ╠═ca2e8d24-4881-47f6-a92b-ef9a7e2ffb08
 # ╠═3b19e085-d226-4ab5-b50c-c3b77d9a6851
+# ╠═63793212-257f-485c-a5bf-c2d5448c26e9
 # ╠═59fce8bf-ec87-41a2-ada7-ebed50c15f4d
 # ╠═eb062ef6-3768-435f-9e3f-98deac5050ed
+# ╠═03d705cc-08a7-4074-8672-6e4619d95c81
 # ╠═191b7597-2277-4da1-8847-0a26d17c08f2
 # ╠═ef9b8668-781b-4857-80db-5f8efaf1b068
-# ╠═6ed3f145-8795-4cb0-90f4-dcab26a8623d
-# ╠═ce807d1b-8a38-48fa-858b-39ab55ac4efa
-# ╠═6a646b81-87b8-4843-b2ff-1284f2307bd5
-# ╠═3dd45ed9-564e-4c78-8fa5-9232f9a8bb37
 # ╠═753f6f07-7241-4d7d-b6ad-0fbd00cbc342
+# ╠═3dd45ed9-564e-4c78-8fa5-9232f9a8bb37
 # ╠═bb7c6db7-902c-4dcd-9a34-e4d786fb9cbb
 # ╠═0fda3731-890b-4eff-9225-7cd401f8996a
+# ╠═ce807d1b-8a38-48fa-858b-39ab55ac4efa
+# ╠═6ed3f145-8795-4cb0-90f4-dcab26a8623d
+# ╠═cb7902aa-3337-4a4f-908b-5bd6d303d603
+# ╠═6a646b81-87b8-4843-b2ff-1284f2307bd5
 # ╠═a6c1bc46-205e-407c-82ed-817a33f06760
 # ╠═27c0bc2d-b79d-4ee4-bb41-44294f6e3a68
-# ╠═e61cf98a-904e-44ec-81e4-96559a565592
 # ╠═76a78f50-03d0-43e6-9dcf-8b6b5447aa97
 # ╠═e706b8d4-d3cf-430a-bb3b-fb58abe1f7ef
 # ╠═f3887fc0-8ea7-4b94-b296-911d76c080a2
@@ -1405,13 +1528,18 @@ version = "1.4.1+1"
 # ╠═ad8185ce-23a4-4f88-b559-48f7293225e2
 # ╠═a36128db-562e-45b6-b0fe-0878ab0d02b1
 # ╠═7aa10648-af2e-441d-9eb5-0202698f4688
+# ╠═d161377b-4a9b-46d1-af7f-2a4ad266e352
 # ╠═6aa40b8a-c8cd-4dc1-b593-f4795cfb90f0
 # ╠═b6199030-2f13-4df7-801d-958c16bb35f2
+# ╠═2d67d43d-70b9-4cf6-9d7e-858f08886897
 # ╠═53fee3bd-4972-410e-90a7-27f2f2c75336
-# ╠═c5c10e28-edf4-4168-af4d-d2eb385227df
-# ╠═4de2e858-c03e-41fc-a477-3b1184710964
+# ╠═3bad1f3f-8211-409d-966e-cf44af241261
+# ╠═7bf06309-f048-4d29-a3ad-db6de6ae7626
 # ╠═00c655c3-4a98-4949-9168-514a0e8fa70e
+# ╠═d0b99d17-f676-4ed4-a397-acabc636fc7c
 # ╠═f1d2a135-9ec3-4513-8319-1080c718e495
+# ╠═63eaeef7-e535-4514-a1eb-3fb1d82b6608
 # ╠═d7829f83-a088-45e4-a689-873483f0d6c8
+# ╠═36a705ec-5e42-41b4-a746-9b94ed7d97b2
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
