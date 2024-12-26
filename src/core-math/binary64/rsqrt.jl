@@ -107,7 +107,6 @@ function cr_rsqrt(x::Float64)::Float64
             + (UInt64(0x3fe) << 52)
     mid = (aidr - 0x3c90_0000_0000_0000 + 16) >> 5
     if mid == 0 || aidr < 0x39b0_0000_0000_0000 || aidr > 0x3c9f_ffff_ffff_ff80
-        @show aidr x
         rf = as_rsqrt_refine(rf, x)
     end
 
