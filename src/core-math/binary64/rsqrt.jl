@@ -5,6 +5,7 @@
 function as_rsqrt_refine(rf::Float64, a::Float64)::Float64
     iru = reinterpret(UInt64, rf)
     iau = reinterpret(UInt64, a)
+
     if iau < (UInt64(1) << 52)
         nz = _llvm_clz(iau)
         iau <<= nz - 11
@@ -14,51 +15,52 @@ function as_rsqrt_refine(rf::Float64, a::Float64)::Float64
     end
 
     if (iau << 11) == (UInt64(1) << 63)
-        # Do nothing
-    else
-        mode = rounding(Float64)
-        e = (iau >> 52) & 1
-        rm = ((iru << 11 | (UInt64(1) << 63)) >> 11) % UInt64
-        am = (((iau & (~UInt64(0) >> 12)) | (UInt64(1) << 52)) << (5 - e)) % UInt64
-        rt = UInt128(rm) * UInt128(am)
-        rth = (rt >> 64) % UInt64
-        rtl = rt % UInt64
-        rrt = UInt128(rtl) * UInt128(rm)
-        t0 = rrt % UInt64
-        t1 = ((rrt >> 64) + rth * rm) % UInt64
-        rrt = UInt128(t1) << 64 | t0
-        s = Int64(rrt >> 127)
-        dd = Int64(1 - 2 * s)
-        rts = ((rt << 1) ⊻ (-s)) + s
-        prrt = UInt128(0)
-        am2 = am << 1
-        am20 = ~am
-        while true
-            iru -= (dd % UInt64) 
-            prrt = rrt
-            am20 += am2
-            tt = UInt128(rts - am20)
-            rrt -= tt
-            if ((prrt ^ rrt) >> 127) == 0
-                break
-            end
-        end
-        iru += ifelse((rrt >> 127) == 1, UInt64(0), dd % UInt64)
-        rrt = ifelse((rrt >> 127) == 1, rrt, prrt)
-        if mode == RoundNearest  # FE_TONEAREST
-            rm = ((iru << 11 | (UInt64(1) << 63)) >> 11) % UInt64
-            rt = UInt128(rm) * UInt128(am)
-            rrt += am >> 2
-            rrt += rt
-            inc = (rrt >> 127) % UInt64
-            iru += inc
-        else
-            # FE_UPWARD
-            iru += (mode == RoundUp) ? UInt64(1) : UInt64(0)
-        end
-        irf = reinterpret(Float64, iru)
-        rf = irf
+        return rf
     end
+
+    mode = rounding(Float64)
+    e = (iau >> 52) & 1
+    rm = ((iru << 11 | (UInt64(1) << 63)) >> 11) % UInt64
+    am = (((iau & (~UInt64(0) >> 12)) | (UInt64(1) << 52)) << (5 - e)) % UInt64
+    rt = UInt128(rm) * UInt128(am)
+    rth = (rt >> 64) % UInt64
+    rtl = rt % UInt64
+    rrt = UInt128(rtl) * UInt128(rm)
+    t0 = rrt % UInt64
+    t1 = ((rrt >> 64) + rth * rm) % UInt64
+    rrt = UInt128(t1) << 64 | t0
+    s = Int64(rrt >> 127)
+    dd = Int64(1 - 2 * s)
+    rts = ((rt << 1) ⊻ (-s)) + s
+    prrt = UInt128(0)
+    am2 = am << 1
+    am20 = ~am
+    while true
+        iru -= (dd % UInt64) 
+        prrt = rrt
+        am20 += am2
+        tt = UInt128(rts - am20)
+        rrt -= tt
+        if ((prrt ^ rrt) >> 127) == 0
+            break
+        end
+    end
+    iru += ifelse((rrt >> 127) == 1, UInt64(0), dd % UInt64)
+    rrt = ifelse((rrt >> 127) == 1, rrt, prrt)
+    if mode == RoundNearest  # FE_TONEAREST
+        rm = ((iru << 11 | (UInt64(1) << 63)) >> 11) % UInt64
+        rt = UInt128(rm) * UInt128(am)
+        rrt += am >> 2
+        rrt += rt
+        inc = (rrt >> 127) % UInt64
+        iru += inc
+    else
+        # FE_UPWARD
+        iru += (mode == RoundUp) ? UInt64(1) : UInt64(0)
+    end
+    irf = reinterpret(Float64, iru)
+    rf = irf
+
     return rf
 end
 
