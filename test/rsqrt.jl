@@ -20,7 +20,7 @@ for T in [Float32, Float64]
 
     @testset "cr_rsqrt(random)" begin
         test_x = T[
-            # rand(0.0:eps():1.0, 10)...,
+            rand(0.0:eps():1.0, 10)...,
             # Branch cov
             # ixu < (UInt64(1) << 52) && ixu != 0
             eps(T(0.0)),
