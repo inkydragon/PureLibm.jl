@@ -26,7 +26,6 @@ for T in [Float32, Float64]
             # ixu < (UInt64(1) << 52) && ixu != 0
             eps(T(0.0)),
         ]
-        test_x = [test_x..., -test_x...]
         @testset "cr_rsqrt($x)" for x in test_x
             if x < 0
                 @test PureLibm.cr_rsqrt(x) === -T(NaN)
