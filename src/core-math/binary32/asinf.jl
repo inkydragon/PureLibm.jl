@@ -51,7 +51,7 @@ function cr_asinf(x::Float32)
     if ax < 0x7ec29000
         # abs(x) < 0.8800049f0
         if ax < UInt32(115 << 24)
-            return fma(x, 0x1p-25, x)
+            return fma(x, Float32(0x1p-25), x)
         end
 
         z = xs
