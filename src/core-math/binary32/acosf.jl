@@ -56,11 +56,13 @@ function cr_acosf(x::Float32)::Float32
     ax = tu << 1
 
     if ax >= (0x0000_007f << 24)
+        # abs(x) >= 1.0
         return _acosf_as_special(x)
     end
 
     # Case where input is within range
     if ax < 0x7ec29000
+        # abs(x) < 0.8800049f0
         z = xs
         z2 = z * z
         z4 = z2 * z2
@@ -83,9 +85,10 @@ function cr_acosf(x::Float32)::Float32
 
     # Accurate path
     if ax < (0x0000_007e << 24)
-        if tu == 0x3288_85a3
+        # abs(x) < 0.5
+        if tu == 0x3288_85a3  # 1.5893255f-8
             return Float32(Float32(0x1.921fb6p+0) + 0x1p-25)
-        elseif tu == 0x3982_6222
+        elseif tu == 0x3982_6222  # 0.00024868647f0
             return Float32(Float32(0x1.920f6ap+0) + 0x1p-25)
         end
 

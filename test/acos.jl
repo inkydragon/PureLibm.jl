@@ -21,6 +21,8 @@ for T in [Float32, ]
             eps(T(0.0)),
             (0.0:0.05:1.0)...,
             rand(0.0:eps(T):1.0, 10)...,
+            # Branch cov
+            1.5893255f-8, 0.00024868647f0,
         ]
         test_x = [test_x..., -test_x...]
         @testset "cr_acos($x)" for x in test_x
