@@ -44,10 +44,12 @@ function cr_asinf(x::Float32)
     ax = t << UInt32(1)
 
     if ax > (0x0000_007f << 24)
+        # abs(x) > 1.0
         return _asinf_as_special(x)
     end
 
     if ax < 0x7ec29000
+        # abs(x) < 0.8800049f0
         if ax < UInt32(115 << 24)
             return fma(x, 0x1p-25, x)
         end
@@ -71,15 +73,16 @@ function cr_asinf(x::Float32)
     end
 
     if ax < (0x0000_007e << 24)
+        # abs(x) < 0.5
         z = xs
         z2 = z * z
         c0 = poly12(z2, CR_ASINF_C1)
         r = z + (z * z2) * c0
     else
-        if ax == 0x7e55688a
+        if ax == 0x7e55688a  # 0.6668132f0
             return copysign(Float32(0x1.75b8a2p-1), x) + copysign(Float32(0x1p-26), x)
         end
-        if ax == 0x7e107434
+        if ax == 0x7e107434  # 0.53213656f0
             return copysign(Float32(0x1.1f4b64p-1), x) + copysign(Float32(0x1p-26), x)
         end
 
