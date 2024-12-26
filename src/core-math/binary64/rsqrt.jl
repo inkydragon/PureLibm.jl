@@ -28,7 +28,7 @@ function as_rsqrt_refine(rf::Float64, a::Float64)::Float64
         t1 = ((rrt >> 64) + rth * rm) % UInt64
         rrt = UInt128(t1) << 64 | t0
         s = Int64(rrt >> 127)
-        dd = Int(1 - 2 * s)
+        dd = Int64(1 - 2 * s)
         rts = ((rt << 1) ⊻ (-s)) + s
         prrt = UInt128(0)
         am2 = am << 1
@@ -43,7 +43,7 @@ function as_rsqrt_refine(rf::Float64, a::Float64)::Float64
                 break
             end
         end
-        iru += ifelse((rrt >> 127) == 1, UInt64(0), UInt64(dd))
+        iru += ifelse((rrt >> 127) == 1, UInt64(0), dd % UInt64)
         rrt = ifelse((rrt >> 127) == 1, rrt, prrt)
         if mode == RoundNearest  # FE_TONEAREST
             rm = ((iru << 11 | (UInt64(1) << 63)) >> 11) % UInt64
