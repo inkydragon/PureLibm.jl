@@ -18,43 +18,43 @@ function as_rsqrt_refine(rf::Float64, a::Float64)::Float64
     else
         mode = rounding(Float64)
         e = (iau >> 52) & 1
-        rm = (iru << 11 | (UInt64(1) << 63)) >> 11
-        am = ((iau & (~UInt64(0) >> 12)) | (UInt64(1) << 52)) << (5 - e)
+        rm = ((iru << 11 | (UInt64(1) << 63)) >> 11) % UInt64
+        am = (((iau & (~UInt64(0) >> 12)) | (UInt64(1) << 52)) << (5 - e)) % UInt64
         rt = UInt128(rm) * UInt128(am)
-        rth = rt >> 64
-        rtl = rt
+        rth = (rt >> 64) % UInt64
+        rtl = rt % UInt64
         rrt = UInt128(rtl) * UInt128(rm)
-        t0 = rrt
-        t1 = (rrt >> 64) + rth * rm
+        t0 = rrt % UInt64
+        t1 = ((rrt >> 64) + rth * rm) % UInt64
         rrt = UInt128(t1) << 64 | t0
-        s = rrt >> 127
-        dd = 1 - 2 * s
+        s = Int(rrt >> 127)
+        dd = Int(1 - 2 * s)
         rts = ((rt << 1) ^ (-s)) + s
-        prrt = UInt128(0)  # Initialize prrt
+        prrt = UInt128(0)
         am2 = am << 1
-        am20 = -am
+        am20 = ~am
         while true
-            iru -= dd
+            iru -= (dd % UInt64) 
             prrt = rrt
             am20 += am2
-            tt = rts - am20
+            tt = UInt128(rts - am20)
             rrt -= tt
             if ((prrt ^ rrt) >> 127) == 0
                 break
             end
         end
-        iru += (rrt >> 127) ? 0 : dd
-        rrt = (rrt >> 127) ? rrt : prrt
+        iru += ifelse((rrt >> 127) == 1, UInt64(0), UInt64(dd))
+        rrt = ifelse((rrt >> 127) == 1, rrt, prrt)
         if mode == RoundNearest  # FE_TONEAREST
-            rm = (iru << 11 | (UInt64(1) << 63)) >> 11
+            rm = ((iru << 11 | (UInt64(1) << 63)) >> 11) % UInt64
             rt = UInt128(rm) * UInt128(am)
             rrt += am >> 2
             rrt += rt
-            inc = rrt >> 127
+            inc = (rrt >> 127) % UInt64
             iru += inc
         else
             # FE_UPWARD
-            iru += (mode == RoundUp) ? 1 : 0
+            iru += (mode == RoundUp) ? UInt64(1) : UInt64(0)
         end
         irf = reinterpret(Float64, iru)
         rf = irf
@@ -107,6 +107,7 @@ function cr_rsqrt(x::Float64)::Float64
             + (UInt64(0x3fe) << 52)
     mid = (aidr - 0x3c90_0000_0000_0000 + 16) >> 5
     if mid == 0 || aidr < 0x39b0_0000_0000_0000 || aidr > 0x3c9f_ffff_ffff_ff80
+        @show aidr x
         rf = as_rsqrt_refine(rf, x)
     end
 
