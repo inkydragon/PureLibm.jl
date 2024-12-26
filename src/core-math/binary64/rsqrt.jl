@@ -41,7 +41,7 @@ function as_rsqrt_refine(rf::Float64, a::Float64)::Float64
         am20 += am2
         tt = UInt128(rts - am20)
         rrt -= tt
-        if ((prrt ^ rrt) >> 127) == 0
+        if ((prrt ⊻ rrt) >> 127) == 1
             break
         end
     end
