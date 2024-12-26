@@ -27,9 +27,9 @@ function as_rsqrt_refine(rf::Float64, a::Float64)::Float64
         t0 = rrt % UInt64
         t1 = ((rrt >> 64) + rth * rm) % UInt64
         rrt = UInt128(t1) << 64 | t0
-        s = Int(rrt >> 127)
+        s = Int64(rrt >> 127)
         dd = Int(1 - 2 * s)
-        rts = ((rt << 1) ^ (-s)) + s
+        rts = ((rt << 1) ⊻ (-s)) + s
         prrt = UInt128(0)
         am2 = am << 1
         am20 = ~am
