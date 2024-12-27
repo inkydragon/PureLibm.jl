@@ -62,3 +62,15 @@ end
         @test PureLibm.cr_rsqrt(x) === Float32(1/sqrt(BigFloat(x)))
     end
 end
+
+if "cr_rsqrt.fast" in CheckExhaustive
+    @testset "cr_rsqrt-exhaustive.fast" begin
+        test_float_range(x->1/sqrt(x), PureLibm.cr_rsqrt, lo=Float32(0.0), hi=prevfloat(Float32(Inf)))
+    end
+end
+if "cr_rsqrt" in CheckExhaustive
+    @testset "cr_rsqrt-exhaustive" begin
+        test_float_range(x->1/sqrt(x), PureLibm.cr_rsqrt, lo=Float32(0.0), hi=prevfloat(Float32(Inf)), bigfloat=true)
+    end
+end
+# ENV["PURELIBM_CHECK_EXHAUSTIVE"] = "cr_rsqrt.fast,cr_rsqrt"
