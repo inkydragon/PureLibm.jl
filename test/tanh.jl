@@ -39,46 +39,17 @@ for T in [Float32, ]
     end
 end
 
+
 if "cr_tanh.fast" in CheckExhaustive
-    # test 2184026058 cases 1m11.2s
     @testset "cr_tanh-exhaustive.fast" begin
-        xlo = reinterpret(UInt32, Float32(0.0))
-        xhi = reinterpret(UInt32, Float32(3pi))
-        for xu in xlo:xhi, sign in [1, -1]
-            x = reinterpret(Float32, xu)
-            x = copysign(x, sign)
-            y = PureLibm.cr_tanh(x)
-            z = tanh(x)
-    
-            if isapprox(y, z; nans=true)
-                continue
-            else
-                @printf("[xu = 0x%x (%e)]:  y=%e; z=%e\n", xu, x, y, z)
-            end
-        end
-        println("test $(length(xlo:xhi)*2) cases")
+        test_float_range(tanh, PureLibm.cr_tanh, lo=Float32(0.0), hi=Float32(4pi))
+        test_float_range(tanh, PureLibm.cr_tanh, lo=Float32(-0.0), hi=Float32(-4pi))
     end
-end # CheckExhaustive
-
+end
 if "cr_tanh" in CheckExhaustive
-    # 
     @testset "cr_tanh-exhaustive" begin
-        xlo = reinterpret(UInt32, Float32(0.0))
-        xhi = reinterpret(UInt32, Float32(3pi))
-        for xu in xlo:xhi, sign in [1, -1]
-            x = reinterpret(Float32, xu)
-            x = copysign(x, sign)
-            y = PureLibm.cr_tanh(x)
-            z = Float32(tanh(BigFloat(x)))
-
-            if isequal(y, z)
-                continue
-            else
-                @printf("[xu = 0x%x (%e)]:  y=%e; z=%e\n", xu, x, y, z)
-            end
-        end
-        println("test $(length(xlo:xhi)*2) cases")
+        test_float_range(tanh, PureLibm.cr_tanh, lo=Float32(0.0), hi=Float32(4pi), bigfloat=true)
+        test_float_range(tanh, PureLibm.cr_tanh, lo=Float32(-0.0), hi=Float32(-4pi), bigfloat=true)
     end
-end # CheckExhaustive
-
+end
 # ENV["PURELIBM_CHECK_EXHAUSTIVE"] = "cr_tanh.fast,cr_tanh"
