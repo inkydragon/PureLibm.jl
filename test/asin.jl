@@ -37,3 +37,17 @@ for T in [Float32, ]
         end
     end
 end
+
+if "cr_asin.fast" in CheckExhaustive
+    @testset "cr_asin-exhaustive.fast" begin
+        test_float_range(asin, PureLibm.cr_asin, lo=Float32(0.0), hi=Float32(1.0))
+        test_float_range(asin, PureLibm.cr_asin, lo=Float32(-0.0), hi=Float32(-1.0))
+    end
+end
+if "cr_asin" in CheckExhaustive
+    @testset "cr_asin-exhaustive" begin
+        test_float_range(asin, PureLibm.cr_asin, lo=Float32(0.0), hi=Float32(1.0), bigfloat=true)
+        test_float_range(asin, PureLibm.cr_asin, lo=Float32(-0.0), hi=Float32(-1.0), bigfloat=true)
+    end
+end
+# ENV["PURELIBM_CHECK_EXHAUSTIVE"] = "cr_asin.fast,cr_asin"
