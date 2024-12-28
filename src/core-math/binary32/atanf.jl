@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
-# Based on core-math/src/binary32/acos/acosf.c
+# Based on core-math/src/binary32/atan/atanf.c
 # CORE-MATH project Copyright (c) 2022 Alexei Sibidanov.
 
 # polynomials generated using rminimax
@@ -12,8 +12,8 @@ with the following command:
 
 (see output atanf.sollya)
 
-The coefficient cd[0] was slightly reduced from the original value
-0x1.51eccde075d67p-2 to avoid an exceptional case for |x| = 0x1.1ad646p-4
+The coefficient `cd[0]` was slightly reduced from the original value
+`0x1.51eccde075d67p-2` to avoid an exceptional case for `|x| = 0x1.1ad646p-4`
 and rounding to nearest.
 """
 const CR_ATANF_CN = NTuple{7, Float64}((
@@ -29,20 +29,29 @@ const CR_ATANF_CD = NTuple{7, Float64}((
 ))
 
 
+"""
+Correctly-rounded arc-tangent of `Float32`.
+
+## Reference
+- [core-math file commit (a8066a5c)](https://gitlab.inria.fr/core-math/core-math/-/blob/69a32feab0759dc073a5e99cb6ee300e9739b607/src/binary32/atan/atanf.c)
+"""
 function cr_atanf(x::Float32)::Float32
-    """Correctly-rounded arc-tangent of Float32.
-    """
+    # pi/2 constant
     pi2 = 0x1.921fb54442d18p+0
+    @assert isequal(pi2, pi/2)
 
     tu = reinterpret(UInt32, x)
     e = Int((tu >> 23) & UInt32(0xff))
-    gt = e >= 127
-    if e == 0xff
-        if (tu << UInt32(9)) != 0
-            return x  # nan
+    ta = tu & 0x7fffffff
+    if (ta >= 0x4c700518)
+        # |x| >= 6.2919776f7 (0x1.e00a3p+25)
+        if (ta > 0x7f800000)
+            # atan(NaN) = NaN
+            return x + x
         end
 
-        return copysign(pi2, Float64(x))  # inf
+        # pi/2 when |x| >= 6.2919776f7 (0x1.e00a3p+25)
+        return copysign(pi2, Float64(x))
     end
 
     if e < (127 - 13)
@@ -57,17 +66,17 @@ function cr_atanf(x::Float32)::Float32
         return fma(Float32(-0x1.5555555555555p-2) * x, x * x, x)
     end
 
-    # now |x| >= 0x1p-13
+    #= now |x| >= 0.00012207031f0 (0x1p-13) =#
+    # gt is non-zero for |x| >= 1
+    gt = e >= 127
     z = Float64(x)
     if gt
-        # gt is non-zero for |x| >= 1
         z = 1.0 / z
     end
+
     z2 = z * z
     z4 = z2 * z2
     z8 = z4 * z4
-
-    # polynomials generated using rminimax
     cn = CR_ATANF_CN
     cn0 = cn[1] + z2 * cn[2]
     cn2 = cn[3] + z2 * cn[4]
@@ -86,14 +95,24 @@ function cr_atanf(x::Float32)::Float32
     cd0 += z4 * cd2
     cd4 += z4 * cd6
     cd0 += z8 * cd4
-
     r = cn0 / cd0
+
     if !gt
         # for |x| < 1, (float) r is correctly rounded
         return Float32(r)  
     end
 
     # now |x| >= 1
-    r = copysign(0x1.0fdaa22168c23p-7, z) - r + copysign(0x1.9p0, z)
+    PI_OVER2_H = 0x1.9p0
+    PI_OVER2_L = 0x1.0fdaa22168c23p-7
+    #=
+        now r approximates atan(1/x),we use atan(x) + atan(1/x) = sign(x)*pi/2,
+        where PI_OVER2_H + PI_OVER2_L approximates pi/2.
+        With sign(z)*L + (-r + sign(z)*H), it fails for x=0x1.98c252p+12 and
+        rounding upward.
+        With sign(z)*PI - r, where PI is a double approximation of pi to nearest,
+        it fails for x=0x1.ddf9f6p+0 and rounding upward.
+    =#
+    r = (copysign(PI_OVER2_L, z) - r) + copysign(PI_OVER2_H, z)
     return Float32(r)
 end
