@@ -23,13 +23,15 @@ const CR_ASINF_C2 = NTuple{12, Float64}((
 
 
 function _asinf_as_special(x::Float32)
-    t = reinterpret(UInt32, x)
-    ax = t << 1
+    tu = reinterpret(UInt32, x)
+    ax = tu << 1
     if ax > (0x000_00ff << 24)
-        return x  # nan
+        # asin(NaN) = NaN
+        return x + x
     end
 
-    # to raise FE_INVALID (NaN generation)
+    # asin(+-Inf) = NaN
+    # to raise FE_INVALID
     return 0.0f0 / 0.0f0
 end
 
