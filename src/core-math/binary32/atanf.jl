@@ -16,17 +16,17 @@ The coefficient cd[0] was slightly reduced from the original value
 0x1.51eccde075d67p-2 to avoid an exceptional case for |x| = 0x1.1ad646p-4
 and rounding to nearest.
 """
-const CR_ATANF_CN = Vector{Float64}([
+const CR_ATANF_CN = NTuple{7, Float64}((
     0x1.51eccde075d67p-2, 0x1.a76bb5637f2f2p-1, 0x1.81e0eed20de88p-1,
     0x1.376c8ca67d11dp-2, 0x1.aec7b69202ac6p-5, 0x1.9561899acc73ep-9,
     0x1.bf9fa5b67e6p-16
-])
+))
 
-const CR_ATANF_CD = Vector{Float64}([
+const CR_ATANF_CD = NTuple{7, Float64}((
     0x1.51eccde075d66p-2, 0x1.dfbdd7b392d28p-1, 0x1p+0,
     0x1.fd22bf0e89b54p-2, 0x1.d91ff8b576282p-4, 0x1.653ea99fc9bbp-7,
     0x1.1e7fcc202340ap-12
-])
+))
 
 
 function cr_atanf(x::Float32)::Float32
