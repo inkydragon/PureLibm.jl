@@ -1,9 +1,8 @@
 
-function poly12(z::Float64, c::Vector{Float64})::Float64
-    """Polynomial evaluation for 12 coefficients
-    """
-    @assert 12 == length(c)
-
+"""
+Polynomial evaluation for 12 coefficients
+"""
+function poly12(z::T, c::NTuple{12, T}) where T
     z2 = z * z
     z4 = z2 * z2
     c0 = c[1] + z * c[2]
@@ -19,3 +18,4 @@ function poly12(z::Float64, c::Vector{Float64})::Float64
 
     return c0
 end
+poly12(z::T, c::Vector{T}) where T = poly12(z, tuple(c...))
