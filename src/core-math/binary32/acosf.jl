@@ -51,6 +51,9 @@ end
 
 """
 Correctly-rounded arc-cosine function for `Float32`.
+
+## Reference
+- [core-math file commit (56dd3478)](https://gitlab.inria.fr/core-math/core-math/-/blob/69a32feab0759dc073a5e99cb6ee300e9739b607/src/binary32/acos/acosf.c)
 """
 function cr_acosf(x::Float32)::Float32
     # pi/2 constant
@@ -63,13 +66,22 @@ function cr_acosf(x::Float32)::Float32
     ax = tu << 1
 
     if @unlikely(ax >= (0x0000_007f << 24))
-        # abs(x) >= 1.0
+        # |x| >= 1.0
         return _acosf_as_special(x)
     end
 
-    # TODO: sync with master
-    if @likely(ax < 0x7ec29000)
-        # abs(x) < 0.8800049f0
+    if @likely(ax < 0x7ec2a1dc)
+        # |x| < 0.88014114f0 (0x1.c2a1dcp-1)
+        # avoid spurious underflow
+        if @unlikely(ax < 0x40000000)
+            # |x| < 2^-63
+            #= GCC <= 11 wrongly assumes the rounding is to nearest and
+                performs a constant folding here:
+                https://gcc.gnu.org/bugzilla/show_bug.cgi?id=57245
+            =#
+            return pi2
+        end
+
         z = xs
         z2 = z * z
         z4 = z2 * z2
@@ -92,7 +104,7 @@ function cr_acosf(x::Float32)::Float32
 
     # Accurate path
     if ax < (0x0000_007e << 24)
-        # abs(x) < 0.5
+        # |x| < 0.5
         if tu == 0x328885a3  # 1.5893255f-8
             return Float32(Float32(0x1.921fb6p+0) + 0x1p-25)
         elseif tu == 0x39826222  # 0.00024868647f0
@@ -102,7 +114,7 @@ function cr_acosf(x::Float32)::Float32
         x2 = xs * xs
         r = (pi2 - xs) - (xs * x2) * poly12(x2, CR_ACOSF_C1)
     else
-        # 0.5 <= abs(x) < 1.0
+        # 0.5 <= |x| < 1.0
         bx = abs(xs)
         z = 1.0 - bx
         s = copysign(sqrt(z), xs)
