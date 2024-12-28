@@ -22,6 +22,9 @@ const CR_ASINF_C2 = NTuple{12, Float64}((
 ))
 
 
+"""
+Special cases for `acosf` when `|x| > 1`
+"""
 function _asinf_as_special(x::Float32)
     tu = reinterpret(UInt32, x)
     ax = tu << 1
@@ -35,10 +38,16 @@ function _asinf_as_special(x::Float32)
     return 0.0f0 / 0.0f0
 end
 
-function cr_asinf(x::Float32)
-    """Correctly-rounded arc-sine function for Float32.
-    """
-    pi2 = Float64(0x1.921fb54442d18p+0)
+"""
+Correctly-rounded arc-sine function for `Float32`.
+
+## Reference
+- [core-math file commit (bc385c27)](https://gitlab.inria.fr/core-math/core-math/-/blob/69a32feab0759dc073a5e99cb6ee300e9739b607/src/binary32/asin/asinf.c)
+"""
+function cr_asinf(x::Float32)::Float32
+    # pi/2 constant
+    pi2 = 0x1.921fb54442d18p+0
+    @assert isequal(pi2, pi/2)
 
     xs = Float64(x)
     r = Float64(0.0)
@@ -46,13 +55,14 @@ function cr_asinf(x::Float32)
     ax = t << UInt32(1)
 
     if @unlikely(ax > (0x0000_007f << 24))
-        # abs(x) > 1.0
+        # |x| > 1.0
         return _asinf_as_special(x)
     end
 
     if @likely(ax < 0x7ec29000)
-        # abs(x) < 0.8800049f0
+        # |x| < 0.8800049f0
         if @unlikely(ax < UInt32(115 << 24))
+            # |x| < 0.00024414062f0
             return fma(x, Float32(0x1p-25), x)
         end
 
@@ -76,13 +86,15 @@ function cr_asinf(x::Float32)
         end
     end
 
+    # Accurate path
     if ax < (0x0000_007e << 24)
-        # abs(x) < 0.5
+        # |x| < 0.5
         z = xs
         z2 = z * z
         c0 = poly12(z2, CR_ASINF_C1)
         r = z + (z * z2) * c0
     else
+        # 0.5 <= |x| <= 1.0
         if @unlikely(ax == 0x7e55688a)  # 0.6668132f0
             return copysign(Float32(0x1.75b8a2p-1), x) + copysign(Float32(0x1p-26), x)
         end
@@ -94,7 +106,7 @@ function cr_asinf(x::Float32)
         z = 1.0 - bx
         s = sqrt(z)
         r = pi2 - s * poly12(z, CR_ASINF_C2)
-        r = Base.Math.copysign(r, xs)
+        r = copysign(r, xs)
     end
 
     return Float32(r)
