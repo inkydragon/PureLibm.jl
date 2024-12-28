@@ -18,4 +18,3 @@ function poly12(z::T, c::NTuple{12, T}) where T
 
     return c0
 end
-poly12(z::T, c::Vector{T}) where T = poly12(z, tuple(c...))
