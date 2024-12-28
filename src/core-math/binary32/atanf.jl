@@ -43,7 +43,7 @@ function cr_atanf(x::Float32)::Float32
     tu = reinterpret(UInt32, x)
     e = Int((tu >> 23) & UInt32(0xff))
     ta = tu & 0x7fffffff
-    if (ta >= 0x4c700518)
+    if @unlikely(ta >= 0x4c700518)
         # |x| >= 6.2919776f7 (0x1.e00a3p+25)
         if (ta > 0x7f800000)
             # atan(NaN) = NaN
@@ -54,8 +54,8 @@ function cr_atanf(x::Float32)::Float32
         return copysign(pi2, Float64(x))
     end
 
-    if e < (127 - 13)
-        if e < (127 - 25)
+    if @unlikely(e < (127 - 13))
+        if @unlikely(e < (127 - 25))
             if (tu << UInt32(1)) == 0
                 return x
             end
