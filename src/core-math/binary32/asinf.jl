@@ -2,18 +2,6 @@
 # Based on core-math/src/binary32/asin/asinf.c
 # CORE-MATH project Copyright (c) 2023 Alexei Sibidanov.
 
-function _asinf_as_special(x::Float32)
-    t = reinterpret(UInt32, x)
-    ax = t << 1
-    if ax > (0x000_00ff << 24)
-        return x  # nan
-    end
-
-    # to raise FE_INVALID (NaN generation)
-    return 0.0f0 / 0.0f0
-end
-
-
 const CR_ASINF_B = NTuple{16, Float64}((
     0x1.0000000000005p+0, 0x1.55557aeca105dp-3, 0x1.3314ec3db7d12p-4, 0x1.775738a5a6f92p-5,
     0x1.5d5f7ce1c8538p-8, 0x1.605c6d58740fp-2, -0x1.5728b732d73c6p+1, 0x1.f152170f151ebp+3,
@@ -32,6 +20,18 @@ const CR_ASINF_C2 = NTuple{12, Float64}((
     0x1.5ffb0276ec8eap-9, 0x1.033885a928decp-10, 0x1.911f2be23f8c7p-12, 0x1.4c3c55d2437fdp-13,
     0x1.af477e1d7b461p-15, 0x1.abd6bdff67dcbp-15, -0x1.1717e86d0fa28p-16, 0x1.6ff526de46023p-16
 ))
+
+
+function _asinf_as_special(x::Float32)
+    t = reinterpret(UInt32, x)
+    ax = t << 1
+    if ax > (0x000_00ff << 24)
+        return x  # nan
+    end
+
+    # to raise FE_INVALID (NaN generation)
+    return 0.0f0 / 0.0f0
+end
 
 function cr_asinf(x::Float32)
     """Correctly-rounded arc-sine function for Float32.
