@@ -19,6 +19,17 @@ function poly12(z::T, c::NTuple{12, T}) where T
     return c0
 end
 
+"""
+Multiplies two double-double precision numbers represented
+by their high and low parts, `(xh, xl) * (ch, cl)`.
+
+# Arguments
+- `(xh, xl)`:   `(high, low)` parts of `x` in double-double precision
+- `(ch, cl)`:   `(high, low)` parts of `c` in double-double precision
+
+# Returns
+- The `(high, low)` parts of the product.
+"""
 function muldd(xh::Float64, xl::Float64, ch::Float64, cl::Float64)
     ahlh = ch * xl
     alhh = cl * xh
@@ -30,6 +41,19 @@ function muldd(xh::Float64, xl::Float64, ch::Float64, cl::Float64)
     return ch, cl
 end
 
+"""
+Evaluate a polynomial using double-double arithmetic,
+`eval_poly_n((xh, xl), c...)`.
+
+# Arguments
+- `(xh, xl)`:   `(high, low)` parts of `x` in double-double precision
+- `n`:  The degree of the polynomial.
+- `c`:  The coefficients of the polynomial,
+        where each coefficient is a tuple of its `(high, low)` parts.
+
+# Returns
+- The `(high, low)` parts of the evaluated polynomial.
+"""
 function polydd(xh::Float64, xl::Float64, n::Int, c::Vector{Tuple{Float64, Float64}})
     @assert n == length(c)
     i = n
