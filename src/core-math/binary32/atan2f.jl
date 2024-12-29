@@ -2,17 +2,25 @@
 # Based on core-math/src/binary32/acos/acosf.c
 # CORE-MATH project Copyright (c) 2022 Alexei Sibidanov.
 
+"""
+For `y/x` tiny, use Taylor approximation `z - z^3/3` where `z=y/x`
+"""
 function cr_atan2f_tiny(y::Float32, x::Float32)
     dy = Float64(y)
     dx = Float64(x)
     z = dy / dx
     e = fma(-z, x, y)
-    c = -0x1.5555555555555p-2
+    # z * x + e = y thus y/x = z + e/x
+    c = -0x1.5555555555555p-2  # -1/3 rounded to nearest
     zz = z * z
     cz = c * z
     e = e / x + cz * zz
     t = reinterpret(UInt64, z)
-    if (t & 0x0fff_ffff) == 0
+    if (t & 0x0fff_ffff) == 0  # boundary case
+        #= If z and e are of same sign (resp. of different signs), we increase
+            (resp. decrease) the significant of t by 1 to avoid a double-rounding
+            issue when rounding t.f to binary32.
+        =#
         if z * e > 0
             t += 1
         else
