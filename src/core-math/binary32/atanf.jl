@@ -2,19 +2,25 @@
 # Based on core-math/src/binary32/atan/atanf.c
 # CORE-MATH project Copyright (c) 2022 Alexei Sibidanov.
 
-# polynomials generated using rminimax
-
 """
+Numerator coeffs for rminimax.
+
 polynomials generated using rminimax (https://gitlab.inria.fr/sfilip/rminimax)
 with the following command:
 
-    ./ratapprox --function="atan(x)" --dom=[0.000122070,1] --num=[x,x^3,x^5,x^7,x^9,x^11,x^13] --den=[1,x^2,x^4,x^6,x^8,x^10,x^12] --output=atanf.sollya --log
+    ./ratapprox --function="atan(x)" \
+        --dom=[0.000122070,1] \
+        --num=[x,x^3,x^5,x^7,x^9,x^11,x^13] \
+        --den=[1,x^2,x^4,x^6,x^8,x^10,x^12] \
+        --output=atanf.sollya --log
 
 (see output atanf.sollya)
 
 The coefficient `cd[0]` was slightly reduced from the original value
 `0x1.51eccde075d67p-2` to avoid an exceptional case for `|x| = 0x1.1ad646p-4`
 and rounding to nearest.
+
+See also [`CR_ATANF_CD`](@ref)
 """
 const CR_ATANF_CN = NTuple{7, Float64}((
     0x1.51eccde075d67p-2, 0x1.a76bb5637f2f2p-1, 0x1.81e0eed20de88p-1,
@@ -22,6 +28,11 @@ const CR_ATANF_CN = NTuple{7, Float64}((
     0x1.bf9fa5b67e6p-16
 ))
 
+"""
+Denominator coeffs for rminimax.
+
+See [`CR_ATANF_CN`](@ref)
+"""
 const CR_ATANF_CD = NTuple{7, Float64}((
     0x1.51eccde075d66p-2, 0x1.dfbdd7b392d28p-1, 0x1p+0,
     0x1.fd22bf0e89b54p-2, 0x1.d91ff8b576282p-4, 0x1.653ea99fc9bbp-7,
@@ -54,8 +65,8 @@ function cr_atanf(x::Float32)::Float32
         return copysign(pi2, Float64(x))
     end
 
-    if @unlikely(e < (127 - 13))
-        if @unlikely(e < (127 - 25))
+    if @unlikely(e < (127 - 13))  # |x| < 0.00012207031f0 (0x1p-13)
+        if @unlikely(e < (127 - 25))  # |x| < 2.9802322f-8 (0x1p-25)
             if (tu << UInt32(1)) == 0
                 return x
             end
@@ -74,9 +85,11 @@ function cr_atanf(x::Float32)::Float32
         z = 1.0 / z
     end
 
+    # minimax rational approximation for atan(x)
     z2 = z * z
     z4 = z2 * z2
     z8 = z4 * z4
+    # Numerator basis = x,x^3,x^5,x^7,x^9,x^11,x^13
     cn = CR_ATANF_CN
     cn0 = cn[1] + z2 * cn[2]
     cn2 = cn[3] + z2 * cn[4]
@@ -86,7 +99,7 @@ function cr_atanf(x::Float32)::Float32
     cn4 += z4 * cn6
     cn0 += z8 * cn4
     cn0 *= z
-    
+    # Denominator basis = 1,x^2,x^4,x^6,x^8,x^10,x^12
     cd = CR_ATANF_CD
     cd0 = cd[1] + z2 * cd[2]
     cd2 = cd[3] + z2 * cd[4]
