@@ -2,8 +2,35 @@
 # Based on core-math/src/binary32/acos/acosf.c
 # CORE-MATH project Copyright (c) 2022 Alexei Sibidanov.
 
-const CR_ATAN2F_CN = [0x1p+0, 0x1.40e0698f94c35p+1, 0x1.248c5da347f0dp+1, 0x1.d873386572976p-1, 0x1.46fa40b20f1dp-3, 0x1.33f5e041eed0fp-7, 0x1.546bbf28667c5p-14]
-const CR_ATAN2F_CD = [0x1p+0, 0x1.6b8b143a3f6dap+1, 0x1.8421201d18ed5p+1, 0x1.8221d086914ebp+0, 0x1.670657e3a07bap-2, 0x1.0f4951fd1e72dp-5, 0x1.b3874b8798286p-11]
+"""
+Numerator coeffs for rminimax.
+
+polynomials generated using rminimax (https://gitlab.inria.fr/sfilip/rminimax)
+with the following command:
+
+TODO...
+
+See also [`CR_ATAN2F_CD`](@ref)
+"""
+const CR_ATAN2F_CN = NTuple{7, Float64}((
+    0x1p+0, 0x1.40e0698f94c35p+1,
+    0x1.248c5da347f0dp+1, 0x1.d873386572976p-1,
+    0x1.46fa40b20f1dp-3, 0x1.33f5e041eed0fp-7,
+    0x1.546bbf28667c5p-14
+))
+
+"""
+Denominator coeffs for rminimax.
+
+See [`CR_ATAN2F_CN`](@ref)
+"""
+const CR_ATAN2F_CD = NTuple{7, Float64}((
+    0x1p+0, 0x1.6b8b143a3f6dap+1,
+    0x1.8421201d18ed5p+1, 0x1.8221d086914ebp+0,
+    0x1.670657e3a07bap-2, 0x1.0f4951fd1e72dp-5,
+    0x1.b3874b8798286p-11
+))
+
 const CR_ATAN2F_C = Vector{Tuple{Float64, Float64}}([
     (0x1p+0, -0x1.8c1dac5492248p-87), (-0x1.5555555555555p-2, -0x1.55553bf3a2abep-56),
     (0x1.999999999999ap-3, -0x1.99deed1ec9071p-57), (-0x1.2492492492492p-3, -0x1.fd99c8d18269ap-58),
