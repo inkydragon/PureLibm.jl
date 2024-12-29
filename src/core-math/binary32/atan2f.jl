@@ -2,6 +2,28 @@
 # Based on core-math/src/binary32/acos/acosf.c
 # CORE-MATH project Copyright (c) 2022 Alexei Sibidanov.
 
+const _CR_ATAN2F_CN = [0x1p+0, 0x1.40e0698f94c35p+1, 0x1.248c5da347f0dp+1, 0x1.d873386572976p-1, 0x1.46fa40b20f1dp-3, 0x1.33f5e041eed0fp-7, 0x1.546bbf28667c5p-14]
+const _CR_ATAN2F_CD = [0x1p+0, 0x1.6b8b143a3f6dap+1, 0x1.8421201d18ed5p+1, 0x1.8221d086914ebp+0, 0x1.670657e3a07bap-2, 0x1.0f4951fd1e72dp-5, 0x1.b3874b8798286p-11]
+const _CR_ATAN2F_C = Vector{Tuple{Float64, Float64}}([
+    (0x1p+0, -0x1.8c1dac5492248p-87), (-0x1.5555555555555p-2, -0x1.55553bf3a2abep-56),
+    (0x1.999999999999ap-3, -0x1.99deed1ec9071p-57), (-0x1.2492492492492p-3, -0x1.fd99c8d18269ap-58),
+    (0x1.c71c71c71c717p-4, -0x1.651eee4c4d9dp-61), (-0x1.745d1745d1649p-4, -0x1.632683d6c44a6p-58),
+    (0x1.3b13b13b11c63p-4, 0x1.bf69c1f8af41dp-58), (-0x1.11111110e6338p-4, 0x1.3c3e431e8bb68p-61),
+    (0x1.e1e1e1dc45c4ap-5, -0x1.be2db05c77bbfp-59), (-0x1.af286b8164b4fp-5, 0x1.a4673491f0942p-61),
+    (0x1.86185e9ad4846p-5, 0x1.e12e32d79fceep-59), (-0x1.642c6d5161faep-5, 0x1.3ce76c1ca03fp-59),
+    (0x1.47ad6f277e5bfp-5, -0x1.abd8d85bdb714p-60), (-0x1.2f64a2ee8896dp-5, 0x1.ef87d4b615323p-61),
+    (0x1.1a6a2b31741b5p-5, 0x1.a5d9d973547eep-62), (-0x1.07fbdad65e0a6p-5, -0x1.65ac07f5d35f4p-61),
+    (0x1.ee9932a9a5f8bp-6, 0x1.f8b9623f6f55ap-61), (-0x1.ce8b5b9584dc6p-6, 0x1.fe5af96e8ea2dp-61),
+    (0x1.ac9cb288087b7p-6, -0x1.450cdfceaf5cap-60), (-0x1.84b025351f3e6p-6, 0x1.579561b0d73dap-61),
+    (0x1.52f5b8ecdd52bp-6, 0x1.036bd2c6fba47p-60), (-0x1.163a8c44909dcp-6, 0x1.18f735ffb9f16p-60),
+    (0x1.a400dce3eea6fp-7, -0x1.c90569c0c1b5cp-61), (-0x1.1caa78ae6db3ap-7, -0x1.4c60f8161ea09p-61),
+    (0x1.52672453c0731p-8, 0x1.834efb598c338p-62), (-0x1.5850c5be137cfp-9, -0x1.445fc150ca7f5p-63),
+    (0x1.23eb98d22e1cap-10, -0x1.388fbaf1d783p-64), (-0x1.8f4e974a40741p-12, 0x1.271198a97da34p-66),
+    (0x1.a5cf2e9cf76e5p-14, -0x1.887eb4a63b665p-68), (-0x1.420c270719e32p-16, 0x1.efd595b27888bp-71),
+    (0x1.3ba2d69b51677p-19, -0x1.4fb06829cdfc7p-73), (-0x1.29b7e6f676385p-23, -0x1.a783b6de718fbp-77)
+])
+
+
 """
 For `y/x` tiny, use Taylor approximation `z - z^3/3` where `z=y/x`
 """
@@ -29,28 +51,6 @@ function cr_atan2f_tiny(y::Float32, x::Float32)
     end
     return reinterpret(Float64, t)
 end
-
-
-const _CR_ATAN2F_CN = [0x1p+0, 0x1.40e0698f94c35p+1, 0x1.248c5da347f0dp+1, 0x1.d873386572976p-1, 0x1.46fa40b20f1dp-3, 0x1.33f5e041eed0fp-7, 0x1.546bbf28667c5p-14]
-const _CR_ATAN2F_CD = [0x1p+0, 0x1.6b8b143a3f6dap+1, 0x1.8421201d18ed5p+1, 0x1.8221d086914ebp+0, 0x1.670657e3a07bap-2, 0x1.0f4951fd1e72dp-5, 0x1.b3874b8798286p-11]
-const _CR_ATAN2F_C = Vector{Tuple{Float64, Float64}}([
-    (0x1p+0, -0x1.8c1dac5492248p-87), (-0x1.5555555555555p-2, -0x1.55553bf3a2abep-56),
-    (0x1.999999999999ap-3, -0x1.99deed1ec9071p-57), (-0x1.2492492492492p-3, -0x1.fd99c8d18269ap-58),
-    (0x1.c71c71c71c717p-4, -0x1.651eee4c4d9dp-61), (-0x1.745d1745d1649p-4, -0x1.632683d6c44a6p-58),
-    (0x1.3b13b13b11c63p-4, 0x1.bf69c1f8af41dp-58), (-0x1.11111110e6338p-4, 0x1.3c3e431e8bb68p-61),
-    (0x1.e1e1e1dc45c4ap-5, -0x1.be2db05c77bbfp-59), (-0x1.af286b8164b4fp-5, 0x1.a4673491f0942p-61),
-    (0x1.86185e9ad4846p-5, 0x1.e12e32d79fceep-59), (-0x1.642c6d5161faep-5, 0x1.3ce76c1ca03fp-59),
-    (0x1.47ad6f277e5bfp-5, -0x1.abd8d85bdb714p-60), (-0x1.2f64a2ee8896dp-5, 0x1.ef87d4b615323p-61),
-    (0x1.1a6a2b31741b5p-5, 0x1.a5d9d973547eep-62), (-0x1.07fbdad65e0a6p-5, -0x1.65ac07f5d35f4p-61),
-    (0x1.ee9932a9a5f8bp-6, 0x1.f8b9623f6f55ap-61), (-0x1.ce8b5b9584dc6p-6, 0x1.fe5af96e8ea2dp-61),
-    (0x1.ac9cb288087b7p-6, -0x1.450cdfceaf5cap-60), (-0x1.84b025351f3e6p-6, 0x1.579561b0d73dap-61),
-    (0x1.52f5b8ecdd52bp-6, 0x1.036bd2c6fba47p-60), (-0x1.163a8c44909dcp-6, 0x1.18f735ffb9f16p-60),
-    (0x1.a400dce3eea6fp-7, -0x1.c90569c0c1b5cp-61), (-0x1.1caa78ae6db3ap-7, -0x1.4c60f8161ea09p-61),
-    (0x1.52672453c0731p-8, 0x1.834efb598c338p-62), (-0x1.5850c5be137cfp-9, -0x1.445fc150ca7f5p-63),
-    (0x1.23eb98d22e1cap-10, -0x1.388fbaf1d783p-64), (-0x1.8f4e974a40741p-12, 0x1.271198a97da34p-66),
-    (0x1.a5cf2e9cf76e5p-14, -0x1.887eb4a63b665p-68), (-0x1.420c270719e32p-16, 0x1.efd595b27888bp-71),
-    (0x1.3ba2d69b51677p-19, -0x1.4fb06829cdfc7p-73), (-0x1.29b7e6f676385p-23, -0x1.a783b6de718fbp-77)
-])
 
 function cr_atan2f(y::Float32, x::Float32)::Float32
     pi1 = 0x1.921fb54442d18p+1
