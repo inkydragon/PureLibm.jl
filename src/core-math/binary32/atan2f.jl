@@ -2,7 +2,7 @@
 # Based on core-math/src/binary32/acos/acosf.c
 # CORE-MATH project Copyright (c) 2022 Alexei Sibidanov.
 
-const _CR_ATAN2F_CN = [0x1p+0, 0x1.40e0698f94c35p+1, 0x1.248c5da347f0dp+1, 0x1.d873386572976p-1, 0x1.46fa40b20f1dp-3, 0x1.33f5e041eed0fp-7, 0x1.546bbf28667c5p-14]
+const CR_ATAN2F_CN = [0x1p+0, 0x1.40e0698f94c35p+1, 0x1.248c5da347f0dp+1, 0x1.d873386572976p-1, 0x1.46fa40b20f1dp-3, 0x1.33f5e041eed0fp-7, 0x1.546bbf28667c5p-14]
 const _CR_ATAN2F_CD = [0x1p+0, 0x1.6b8b143a3f6dap+1, 0x1.8421201d18ed5p+1, 0x1.8221d086914ebp+0, 0x1.670657e3a07bap-2, 0x1.0f4951fd1e72dp-5, 0x1.b3874b8798286p-11]
 const _CR_ATAN2F_C = Vector{Tuple{Float64, Float64}}([
     (0x1p+0, -0x1.8c1dac5492248p-87), (-0x1.5555555555555p-2, -0x1.55553bf3a2abep-56),
@@ -120,7 +120,7 @@ function cr_atan2f(y::Float32, x::Float32)::Float32
     z4 = z2 * z2
     z8 = z4 * z4
 
-    cn = _CR_ATAN2F_CN
+    cn = CR_ATAN2F_CN
     cn0 = cn[1] + z2 * cn[2]
     cn2 = cn[3] + z2 * cn[4]
     cn4 = cn[5] + z2 * cn[6]
