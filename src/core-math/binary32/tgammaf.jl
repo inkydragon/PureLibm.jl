@@ -18,7 +18,7 @@ const CR_TGAMMAF_TB = Vector{Tuple{UInt32, Float32, Float32}}([
     (reinterpret(UInt32, Float32(0x1.0874c8p+0)), Float32(0x1.f6c638p-1), Float32(0x1p-26))
 ])
 
-const _CR_TGAMMAF_C = Vector{Float64}([
+const CR_TGAMMAF_C = Vector{Float64}([
     0x1.c9a76be577123p+0, 0x1.8f2754ddcf90dp+0, 0x1.0d1191949419bp+0, 0x1.e1f42cf0ae4a1p-2,
     0x1.82b358a3ab638p-3, 0x1.e1f2b30cd907bp-5, 0x1.240f6d4071bd8p-6, 0x1.1522c9f3cd012p-8,
     0x1.1fd0051a0525bp-10, 0x1.9808a8b96c37ep-13, 0x1.b3f78e01152b5p-15, 0x1.49c85a7e1fd04p-18,
@@ -118,7 +118,7 @@ function cr_tgammaf(x::Float32)::Float32
     d2 = d * d
     d4 = d2 * d2
     d8 = d4 * d4
-    c = _CR_TGAMMAF_C
+    c = CR_TGAMMAF_C
 
     f = (
         (c[1] + d * c[2])
