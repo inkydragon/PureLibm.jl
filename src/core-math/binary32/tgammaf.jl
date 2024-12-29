@@ -18,6 +18,9 @@ const CR_TGAMMAF_TB = Vector{Tuple{UInt32, Float32, Float32}}([
     (reinterpret(UInt32, Float32(0x1.0874c8p+0)), Float32(0x1.f6c638p-1), Float32(0x1p-26))
 ])
 
+"""
+Ploy approximation coefficients for `sinpi?`
+"""
 const CR_TGAMMAF_C = Vector{Float64}([
     0x1.c9a76be577123p+0, 0x1.8f2754ddcf90dp+0, 0x1.0d1191949419bp+0, 0x1.e1f42cf0ae4a1p-2,
     0x1.82b358a3ab638p-3, 0x1.e1f2b30cd907bp-5, 0x1.240f6d4071bd8p-6, 0x1.1522c9f3cd012p-8,
@@ -26,38 +29,39 @@ const CR_TGAMMAF_C = Vector{Float64}([
 ])
 
 
+"""
+    cr_tgammaf(x::Float32)
+
+Correctly-rounded true gamma function for `Float32`.
+"""
 function cr_tgammaf(x::Float32)::Float32
     tb = CR_TGAMMAF_TB
 
     tu = reinterpret(UInt32, x)
     ax = tu << 1
-    if @unlikely(ax >= (UInt32(0xff) << 24))
-        #= x=NaN or +/-Inf =#
-        if ax == (UInt32(0xff) << 24)
-            # x=+/-Inf
-            if (tu >> 31) != 0
-                # x=-Inf
-                # TODO? errno = EDOM
-                # will raise the "Invalid operation" exception
-                return x / x
+    if @unlikely(ax >= (UInt32(0xff) << 24))  # x=NaN or +/-Inf
+        if ax == (UInt32(0xff) << 24)  # x=+/-Inf
+            if (tu >> 31) != 0  # x=-Inf
+                # errno = EDOM
+                #= tgammaf(-Inf) = NaN =#
+                return x / x  # will raise the "Invalid operation" exception
             end
-            # x=+Inf
+            # tgammaf(+Inf) = +Inf
             return x
         end
-        # x=NaN,
-        #   where x+x ensures the "Invalid operation" exception is set if x is sNaN
-        return x + x 
+        #= tgammaf(NaN) = NaN =#
+        return x + x  #= `x+x` ensures the "Invalid operation" exception is set
+                            if x is sNaN,  and it yields a qNaN =# 
     end
 
     z = Float64(x)
-    if @unlikely(ax < 0x6d00_0000)
-        #= |x| < 0x1p-18 =#
+    if @unlikely(ax < 0x6d00_0000)  # |x| < 0x1p-18 (3.814697265625e-6)
         d = (0x1.fa658c23b1578p-1 - 0x1.d0a118f324b63p-1 * z) * z - 0x1.2788cfc6fb619p-1
         f = 1.0 / z + d
         r = Float32(f)
-        if abs(r) > Float32(0x1.fffffep+127)
-            # TODO? errno = ERANGE
-        end
+        # if abs(r) > Float32(0x1.fffffep+127)
+        #     errno = ERANGE
+        # end
         rtu = reinterpret(UInt64, f)
         if @unlikely(((rtu + 2) & 0x0fff_ffff) < 4)
             for i in 1:length(tb)
@@ -66,29 +70,28 @@ function cr_tgammaf(x::Float32)::Float32
                 end
             end
         end
-
         return r
     end
 
     fx = floor(x)
-    if @unlikely(x >= Float32(0x1.18522p+5))
-        # The C standard says that if the function overflows, errno is set to ERANGE.
-        # TODO? errno = ERANGE
+    if @unlikely(x >= Float32(0x1.18522p+5))  # x >= 35.0401f0
+        #= The C standard says that if the function overflows,
+            errno is set to ERANGE. =#
+        # errno = ERANGE
         return Float32(0x1p127) * Float32(0x1p127)
     end
 
-    # compute k only after the overflow check,
-    #   otherwise the case to integer might overflow
+    #= compute k only after the overflow check,
+        otherwise the case to integer might overflow =#
     k = trunc(Int, fx)
-    if @unlikely(fx == x)
-        #= x is integer =#
+    if @unlikely(fx == x)  # x is integer
         if x == 0.0
-            # TODO? errno = ERANGE
+            # errno = ERANGE
             return Float32(1.0) / x
         end
         if x < 0.0
-            # TODO? errno = EDOM
-            # should raise the "Invalid operation" exception
+            # errno = EDOM
+            #= should raise the "Invalid operation" exception =#
             return Float32(0.0) / Float32(0.0)
         end
 
@@ -96,20 +99,24 @@ function cr_tgammaf(x::Float32)::Float32
         x0 = Float64(1.0)
         for _ in 1:(k-1)
             t0 *= x0
-            x0 += 1.0
+            x0 += 1.0  # TODO: donot use fp step
         end
         return Float32(t0)
     end
 
-    if @unlikely(x < -42.0)
-        #= negative non-integer =#
-        # For x < -42, x non-integer, |gamma(x)| < 2^-151.
+    if @unlikely(x < -42.0)  # negative non-integer
+        #= For x < -42, x non-integer, |gamma(x)| < 2^-151. =#
         sgn = (Float32(0x1p-127), -Float32(0x1p-127))
-        # The C standard says that if the function underflows, errno is set to ERANGE.
-        # TODO? errno = ERANGE
+        #= The C standard says that if the function underflows,
+            errno is set to ERANGE. =#
+        # errno = ERANGE
         return Float32(0x1p-127) * sgn[k & 1 + 1]
     end
 
+    #= x non-integer
+        0x1p-18 <= x < 35.0401f0
+        -42 < x <= -0x1p-18
+    =#
     m = z - 0x1.7p+1
     i = _llvm_roundeven(m)
     step = copysign(1.0, i)
@@ -119,7 +126,6 @@ function cr_tgammaf(x::Float32)::Float32
     d4 = d2 * d2
     d8 = d4 * d4
     c = CR_TGAMMAF_C
-
     f = (
         (c[1] + d * c[2])
         + d2 * (c[3] + d * c[4])
@@ -147,10 +153,9 @@ function cr_tgammaf(x::Float32)::Float32
 
     rtu = reinterpret(UInt64, f)
     r = Float32(f)
-    if @unlikely(r == 0.0)
-        # TODO? errno = ERANGE
-    end
-
+    # if @unlikely(r == 0.0)
+    #     errno = ERANGE
+    # end
     #= Deal with exceptional cases =#
     if @unlikely(((rtu + 2) & 0xfffffff) < 8)
         for j in 1:length(tb)
@@ -159,6 +164,5 @@ function cr_tgammaf(x::Float32)::Float32
             end
         end
     end
-
     return r
 end
