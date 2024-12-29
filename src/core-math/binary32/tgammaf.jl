@@ -5,7 +5,7 @@
 """
 List of exceptional cases.
 """
-const _CR_TGAMMAF_TB = Vector{Tuple{UInt32, Float32, Float32}}([
+const CR_TGAMMAF_TB = Vector{Tuple{UInt32, Float32, Float32}}([
     (UInt32(0x27de86a9), Float32(0x1.268266p+47), Float32(0x1p22)),
     (UInt32(0x27e05475), Float32(0x1.242422p+47), Float32(0x1p22)),
     (UInt32(0xb63befb3), Float32(-0x1.5cb6e4p+18), Float32(0x1p-7)),
@@ -27,7 +27,7 @@ const _CR_TGAMMAF_C = Vector{Float64}([
 
 
 function cr_tgammaf(x::Float32)::Float32
-    tb = _CR_TGAMMAF_TB
+    tb = CR_TGAMMAF_TB
 
     tu = reinterpret(UInt32, x)
     ax = tu << 1
