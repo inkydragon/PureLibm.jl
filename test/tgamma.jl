@@ -35,64 +35,42 @@ using Random
     end
 end
 
+
+function filter_DomainError(x)
+    bad = x < 0 && (isinteger(x) || isinf(x))
+    !bad
+end
+
+function test_float_range_filter(ref, impl; lo::T, hi::T, bigfloat=false) where T
+    UIntBaseType = Base.uinttype(T)
+    xu_lo = reinterpret(UIntBaseType, lo)
+    xu_hi = reinterpret(UIntBaseType, hi)
+    xu_range = xu_lo:xu_hi
+    x_range = Iterators.map(xu->reinterpret(T, xu), xu_range)
+    x_range = Iterators.filter(filter_DomainError, x_range)
+
+    libmname = "libm"
+    ref_fun = ref
+    if bigfloat
+        libmname = "mpfr"
+        ref_fun = x -> T(ref(BigFloat(x)))
+    end
+
+    @info "testing `$impl` against `$libmname.$ref` in $lo:$hi ($xu_range)"
+    __main_test_loop(x_range, ref_fun, impl)
+    @info "tested $(length(xu_range)) cases"
+end
+
 if "cr_tgamma.fast" in CheckExhaustive
-#   24998053 cases   0.6s
-# 4294967296 cases  47.1s
-@testset "cr_tgamma-exhaustive.fast" begin
-    xlo = typemin(UInt32)
-    xhi = typemax(UInt32)
-    # xlo = reinterpret(UInt32, Float32(0.38))
-    # xhi = reinterpret(UInt32, Float32(3.0))
-    for xu in xlo:xhi
-        x = reinterpret(Float32, xu)
-        if x < 0 && (isinteger(x) || isinf(x))
-            continue  # Skip DomainError
-        end
-        y = PureLibm.cr_tgamma(x)
-        z = SpecialFunctions.gamma(x)
-
-        if isnan(z) && isnan(y)
-            continue
-        elseif isinf(z) && isinf(y)
-            continue
-        elseif z ≈ y
-            continue
-        else
-            @printf("[xu = 0x%x (%e)]:  y=%e; z=%e\n", xu, x, y, z)
-        end
+    @testset "cr_tgamma-exhaustive.fast" begin
+        test_float_range_filter(SpecialFunctions.gamma, PureLibm.cr_tgamma, lo=Float32(0.0), hi=Float32(50.0))
+        test_float_range_filter(SpecialFunctions.gamma, PureLibm.cr_tgamma, lo=Float32(-0.0), hi=Float32(-50.0))
     end
-    println("test $(length(xlo:xhi)) cases")
 end
-end # CheckExhaustive
-
 if "cr_tgamma" in CheckExhaustive
-#   24998053 cases  16m59.1s
-# 4294967296 cases
-@testset "cr_tgamma-exhaustive" begin
-    xlo = typemin(UInt32)
-    xhi = typemax(UInt32)
-    # xlo = reinterpret(UInt32, Float32(0.38))
-    # xhi = reinterpret(UInt32, Float32(3.0))
-    for xu in xlo:xhi
-        x = reinterpret(Float32, xu)
-        if x < 0 && (isinteger(x) || isinf(x))
-            continue  # Skip DomainError
-        end
-        y = PureLibm.cr_tgamma(x)
-        z = Float32(SpecialFunctions.gamma(BigFloat(x)))
-
-        if y === z
-            continue
-        else
-            @printf("[xu = 0x%x (%e)]:  y=%e; z=%e\n", xu, x, y, z)
-        end
+    @testset "cr_tgamma-exhaustive" begin
+        test_float_range_filter(SpecialFunctions.gamma, PureLibm.cr_tgamma, lo=Float32(0.0), hi=Float32(50.0), bigfloat=true)
+        test_float_range_filter(SpecialFunctions.gamma, PureLibm.cr_tgamma, lo=Float32(-0.0), hi=Float32(-50.0), bigfloat=true)
     end
-    println("test $(length(xlo:xhi)) cases")
 end
-
-# Base.MPFR.version() == v"4.2.0"
-#   [xu = 0x27de86a9 668894889 (6.1763377e-15)]:  y=1.6190824e14; z=1.6190825e14
-#   [xu = 0x27e05475 669013109 (6.2264058e-15)]:  y=1.606063e14; z=1.6060631e14
-#   [xu = 0x41e886d1 1105757905 (29.065828)]:  y=3.801415e29; z=3.8014147e29
-end # CheckExhaustive
 # ENV["PURELIBM_CHECK_EXHAUSTIVE"] = "cr_tgamma.fast,cr_tgamma"
