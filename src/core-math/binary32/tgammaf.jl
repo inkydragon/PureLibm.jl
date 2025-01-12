@@ -6,15 +6,26 @@
 List of exceptional cases.
 """
 const CR_TGAMMAF_TB = Vector{Tuple{UInt32, Float32, Float32}}([
+    # 6.1763377f-15
     (UInt32(0x27de86a9), Float32(0x1.268266p+47), Float32(0x1p22)),
+    # 6.2264058f-15
     (UInt32(0x27e05475), Float32(0x1.242422p+47), Float32(0x1p22)),
+    # -2.8004695f-6
     (UInt32(0xb63befb3), Float32(-0x1.5cb6e4p+18), Float32(0x1p-7)),
+
+    # 0.015363082f0
     (UInt32(0x3c7bb570), Float32(0x1.021d9p+6), Float32(0x1p-19)),
+    # 29.065828f0
     (UInt32(0x41e886d1), Float32(0x1.33136ap+98), Float32(0x1p73)),
+    # -3.6221597f0
     (UInt32(0xc067d177), Float32(0x1.f6850cp-3), Float32(0x1p-28)),
+    # 0xbd99da31, -0.0751232f0
     (reinterpret(UInt32, Float32(-0x1.33b462p-4)), Float32(-0x1.befe66p+3), Float32(-0x1p-22)),
+    # 0xbf54c45a, -0.8311211f0
     (reinterpret(UInt32, Float32(-0x1.a988b4p-1)), Float32(-0x1.a6b4ecp+2), Float32(0x1p-23)),
+    # 0x41ee77fe, 29.80859f0
     (reinterpret(UInt32, Float32(0x1.dceffcp+4)), Float32(0x1.d3631cp+101), Float32(-0x1p-76)),
+    # 0x3f843a64, 1.033032f0
     (reinterpret(UInt32, Float32(0x1.0874c8p+0)), Float32(0x1.f6c638p-1), Float32(0x1p-26))
 ])
 
