@@ -7,7 +7,7 @@ function __main_test_loop(xs, ref_fun, impl_func)
         if isapprox(z, y; nans=true)
             continue
         else
-            xu = reinterpret(Base.uinttype(typeof(x)))
+            xu = reinterpret(Base.uinttype(typeof(x)), x)
             @printf("[xu = 0x%x (%e)]:  y=%e; z=%e\n", xu, x, y, z)
         end
     end
