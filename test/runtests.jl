@@ -36,7 +36,7 @@ include("atan2.jl")
 include("tanh.jl")
 
 # C99: Exponential and logarithmic
-# exp
+include("exp.jl")
 # exp2
 # expm1 
 # log10
