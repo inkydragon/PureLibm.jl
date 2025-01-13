@@ -2,16 +2,6 @@
 # Based on core-math/src/binary32/exp/expf.c
 # CORE-MATH project Copyright (c) 2023 Alexei Sibidanov.
 
-const CR_EXPF_C = NTuple{6, Float64}((
-    0x1.62e42fefa39efp-1, 0x1.ebfbdff82c58fp-3, 0x1.c6b08d702e0edp-5,
-    0x1.3b2ab6fb92e5ep-7, 0x1.5d886e6d54203p-10, 0x1.430976b8ce6efp-13
-))
-
-const CR_EXPF_B = NTuple{4, Float64}((
-    1.0, 0x1.62e42fef4c4e7p-1,
-    0x1.ebfd1b232f475p-3, 0x1.c6b19384ecd93p-5
-))
-
 const CR_EXPF_TB = NTuple{64, UInt64}((
     0x3ff0000000000000, 0x3ff02c9a3e778061, 0x3ff059b0d3158574, 0x3ff0874518759bc8,
     0x3ff0b5586cf9890f, 0x3ff0e3ec32d3d1a2, 0x3ff11301d0125b51, 0x3ff1429aaea92de0,
@@ -29,6 +19,16 @@ const CR_EXPF_TB = NTuple{64, UInt64}((
     0x3ffc199bdd85529c, 0x3ffc67f12e57d14b, 0x3ffcb720dcef9069, 0x3ffd072d4a07897c,
     0x3ffd5818dcfba487, 0x3ffda9e603db3285, 0x3ffdfc97337b9b5f, 0x3ffe502ee78b3ff6,
     0x3ffea4afa2a490da, 0x3ffefa1bee615a27, 0x3fff50765b6e4540, 0x3fffa7c1819e90d8
+))
+
+const CR_EXPF_B = NTuple{4, Float64}((
+    1.0, 0x1.62e42fef4c4e7p-1,
+    0x1.ebfd1b232f475p-3, 0x1.c6b19384ecd93p-5
+))
+
+const CR_EXPF_C = NTuple{6, Float64}((
+    0x1.62e42fefa39efp-1, 0x1.ebfbdff82c58fp-3, 0x1.c6b08d702e0edp-5,
+    0x1.3b2ab6fb92e5ep-7, 0x1.5d886e6d54203p-10, 0x1.430976b8ce6efp-13
 ))
 
 
