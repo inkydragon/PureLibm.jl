@@ -26,4 +26,5 @@ if "cr_exp" in CheckExhaustive
         test_float_range(exp, PureLibm.cr_exp, lo=neg_range.lo, hi=neg_range.hi, bigfloat=true)
     end
 end
+# ~ 20s / 65min
 # ENV["PURELIBM_CHECK_EXHAUSTIVE"] = "cr_exp.fast,cr_exp"
