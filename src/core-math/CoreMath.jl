@@ -18,6 +18,7 @@ include("binary32/tanhf.jl")
 
 # Exponential and logarithmic
 include("binary32/expf.jl")
+include("binary32/exp2f.jl")
 
 # Power
 include("binary64/rsqrt.jl")

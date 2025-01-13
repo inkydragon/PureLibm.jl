@@ -52,7 +52,13 @@ cr_tanh(x::Float32) = cr_tanhf(x)
 Compute natural exponential of `x`.
 """
 cr_exp(x::Float32) = cr_expf(x)
-# exp2
+
+"""
+    cr_exp2(x)
+
+Compute `2^x` of `x`.
+"""
+cr_exp2(x::Float32) = cr_exp2f(x)
 # expm1 
 # log10
 # log1p
