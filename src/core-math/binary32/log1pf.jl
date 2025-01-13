@@ -130,6 +130,7 @@ function cr_log1pf(x::Float32)::Float32
             trf = rl + Lh
             tru = reinterpret(UInt64, trf)
             if @unlikely((tru & UInt64(0x0fff_ffff)) == 0)
+                # XXX: Maybe bug:             Float32(-0x1.271f10p-6)
                 if (x==-0x1.247ab0p-6) return Float32(-0x1.271f0ep-6) - Float32(0x1p-31); end
                 if (x==-0x1.3a415ep-5) return Float32(-0x1.407112p-5) + Float32(0x1p-30); end
                 if (x==+0x1.fb035ap-2) return Float32(+0x1.9bddc2p-2) + Float32(0x1p-27); end
