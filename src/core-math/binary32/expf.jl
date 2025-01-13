@@ -46,7 +46,7 @@ function cr_expf(x::Float32)::Float32
     uu = reinterpret(UInt64, uf)
     ux = UInt32(tu << 1)
 
-    if @unlikely(ux > 0x859d1d80 || ux < 0x6f93813e)
+    if @unlikely(ux > 0x8562e42e || ux < 0x6f93813e)
         if @likely(ux < 0x6f93813e)
             return 1.0 + z * (1.0 + z * 0.5)
         end
