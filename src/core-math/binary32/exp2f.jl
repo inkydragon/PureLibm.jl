@@ -74,6 +74,7 @@ function cr_exp2f(x::Float32)::Float32
     if @unlikely((tu & UInt32(0xffff)) == 0)
         k = ((tu >> 23) & UInt32(0xff)) - 127
         if @unlikely(k >= 0 && k < 9 && (tu << (9 + k)) == 0)
+            # NOTE: Arithmetic shift/signed shift
             msk = reinterpret(Int32, tu) >> 31
             m = Int32(((tu & 0x7fffff) | (Int32(1) << 23)) >> (23 - k))
             m = (m ⊻ msk) - msk + 127
