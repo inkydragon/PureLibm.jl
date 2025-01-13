@@ -61,7 +61,12 @@ Compute `2^x` of `x`.
 cr_exp2(x::Float32) = cr_exp2f(x)
 # expm1 
 # log10
-# log1p
+"""
+    cr_log1p(x)
+
+Compute biased argument natural logarithm `log(1+x)` of `x`.
+"""
+cr_log1p(x::Float32) = cr_log1pf(x)
 # log2
 # log
 
