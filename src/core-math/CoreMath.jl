@@ -16,6 +16,9 @@ include("binary32/atan2f.jl")
 # sinh
 include("binary32/tanhf.jl")
 
+# Exponential and logarithmic
+include("binary32/expf.jl")
+
 # Power
 include("binary64/rsqrt.jl")
 include("binary32/rsqrtf.jl")

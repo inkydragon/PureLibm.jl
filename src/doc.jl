@@ -46,7 +46,12 @@ Compute hyperbolic tangent of `x`.
 cr_tanh(x::Float32) = cr_tanhf(x)
 
 # C99: Exponential and logarithmic
-# exp
+"""
+    cr_exp(x)
+
+Compute natural exponential of `x`.
+"""
+cr_exp(x::Float32) = cr_expf(x)
 # exp2
 # expm1 
 # log10
