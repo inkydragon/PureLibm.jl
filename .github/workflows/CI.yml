@@ -49,7 +49,8 @@ jobs:
     name: Documentation
     runs-on: ubuntu-latest
     permissions:
-      actions: write # needed to allow julia-actions/cache to proactively delete old caches that it has created
+      # needed to allow julia-actions/cache to proactively delete old caches that it has created
+      actions: write 
       contents: write
       statuses: write
     steps:
@@ -65,9 +66,6 @@ jobs:
           Pkg.develop(PackageSpec(path=pwd()))
           Pkg.instantiate()
       - uses: julia-actions/julia-buildpkg@v1
-      - uses: julia-actions/julia-docdeploy@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Run doctests
         shell: julia --project=docs --color=yes {0}
         run: |
@@ -75,3 +73,6 @@ jobs:
           using PureLibm
           DocMeta.setdocmeta!(PureLibm, :DocTestSetup, :(using PureLibm); recursive=true)
           doctest(PureLibm)
+      - uses: julia-actions/julia-docdeploy@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
