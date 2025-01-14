@@ -1,10 +1,9 @@
 # PureLibm
-
-> A correctly rounded maths library in pure Julia.
-
 [![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://inkydragon.github.io/PureLibm.jl/dev/)
 [![Build Status](https://github.com/inkydragon/PureLibm.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/inkydragon/PureLibm.jl/actions/workflows/CI.yml?query=branch%3Amain)
 [![codecov](https://codecov.io/gh/inkydragon/PureLibm.jl/graph/badge.svg?token=bxtVgfRQ7R)](https://codecov.io/gh/inkydragon/PureLibm.jl)
+
+> A correctly rounded maths library in pure Julia.
 
 
 ## Implementation Goals
