@@ -4,8 +4,16 @@ on:
     branches:
       - main
     tags: ['*']
+    paths-ignore:
+      - 'klee/**'
+      - 'notebook/**'
+      - '.editorconfig'
+      - '.gitignore'
+      - 'LICENSE-*'
+      - 'README.md'
   pull_request:
   workflow_dispatch:
+
 concurrency:
   # Skip intermediate builds: always.
   # Cancel intermediate builds: only if it is a pull request build.
@@ -31,6 +39,9 @@ jobs:
           - windows-latest
         # arch:
         #   - x64
+        include:
+          - os: ubuntu-latest
+            version: nightly
     steps:
       - uses: actions/checkout@v4
       - uses: julia-actions/setup-julia@v2
@@ -49,7 +60,8 @@ jobs:
     name: Documentation
     runs-on: ubuntu-latest
     permissions:
-      actions: write # needed to allow julia-actions/cache to proactively delete old caches that it has created
+      # needed to allow julia-actions/cache to proactively delete old caches that it has created
+      actions: write 
       contents: write
       statuses: write
     steps:
@@ -65,9 +77,6 @@ jobs:
           Pkg.develop(PackageSpec(path=pwd()))
           Pkg.instantiate()
       - uses: julia-actions/julia-buildpkg@v1
-      - uses: julia-actions/julia-docdeploy@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Run doctests
         shell: julia --project=docs --color=yes {0}
         run: |
@@ -75,3 +84,6 @@ jobs:
           using PureLibm
           DocMeta.setdocmeta!(PureLibm, :DocTestSetup, :(using PureLibm); recursive=true)
           doctest(PureLibm)
+      - uses: julia-actions/julia-docdeploy@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
