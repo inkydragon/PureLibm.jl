@@ -25,28 +25,57 @@
 
 ## Dev Memo
 
+### Run tests
+```sh
+# The following command will init test project in the `test/` directory.
+#   You only need to run this line once.
+julia --project=test -e "using Pkg; Pkg.develop(PackageSpec(path=pwd())); Pkg.instantiate();"
+julia --project=test -e "using Pkg; Pkg.test(\"PureLibm\");"
+```
+
+### Build docs
+```sh
+# The following command will init docs project in the `docs/` directory.
+#   You only need to run this line once.
+julia --project=docs -e "using Pkg; Pkg.develop(PackageSpec(path=pwd())); Pkg.instantiate();"
+julia --project=docs docs/make.jl
+# html files located in `docs/build/`
+```
+
+### Gen Test Coverage
+> - You need [`lcov`](https://github.com/linux-test-project/lcov)
+>   in your `PATH` to gen test coverage report.
+> - See also: [JuliaCI/LocalCoverage.jl](https://github.com/JuliaCI/LocalCoverage.jl)
+
+```sh
+julia --project=test -e "using Pkg; Pkg.develop(PackageSpec(path=pwd())); Pkg.instantiate();"
+# Open REPL in test/
+julia --project=test
+```
+
+In Julia REPL:
+```jl
+# In Julia REPL
+using Pkg; using LocalCoverage; Pkg.add(url=".");  html_coverage(generate_coverage("PureLibm"; run_test=true); dir = "../cov")
+# in logs:  `Found common filename prefix "/home/cyhan/.julia/packages/PureLibm/bbJui"`
+# so coverage html files located in  `~/.julia/packages/PureLibm/cov/`
+
+# Test in another branch instead of `main` (default branch)
+using Pkg; using LocalCoverage; Pkg.add(url=".", rev="dev");  html_coverage(generate_coverage("PureLibm"; run_test=true); dir = "../cov")
+```
+
 ### Run exhaustive tests
 ```sh
 julia --project=test -e "using Pkg; Pkg.develop(PackageSpec(path=pwd())); Pkg.instantiate();"
 
-# fast: compare with system libm (takes serval seconds/minutes)
+# --- fast mode: compare with system libm (takes serval seconds/minutes)
 # Set ENV and run
 export PURELIBM_CHECK_EXHAUSTIVE="cr_acos.fast"
 julia --project=test -e "using Pkg; Pkg.test(\"PureLibm\");"
 
-# slow: compare with MPFR (takes hours)
+# --- slow mode: compare with MPFR (takes hours)
 export PURELIBM_CHECK_EXHAUSTIVE="cr_acos"
 julia --project=test -e "using Pkg; Pkg.test(\"PureLibm\");"
-```
-
-### Build doc
-```sh
-julia --project=docs -e "using Pkg; Pkg.develop(PackageSpec(path=pwd())); Pkg.instantiate();"
-julia --project=docs docs/make.jl
-```
-
-```julia
-using Pkg; using LocalCoverage; Pkg.add(url=".");  html_coverage(generate_coverage("PureLibm"; run_test=true); dir = "../cov")
 ```
 
 
