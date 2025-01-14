@@ -42,7 +42,7 @@ include("exp2.jl")
 # log10
 include("log1p.jl")
 # log2
-# log
+include("log.jl")
 
 # C99: Power and Absolute-value
 # pow

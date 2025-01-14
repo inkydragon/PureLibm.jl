@@ -68,7 +68,12 @@ Compute biased argument natural logarithm `log(1+x)` of `x`.
 """
 cr_log1p(x::Float32) = cr_log1pf(x)
 # log2
-# log
+"""
+    cr_log(x)
+
+Compute natural logarithm of `x`.
+"""
+cr_log(x::Float32) = cr_logf(x)
 
 # C99: Power and Absolute-value
 # pow

@@ -58,5 +58,5 @@ if "cr_log1p" in CheckExhaustive
         test_float_range(log1p, PureLibm.cr_log1p, lo=pos_range.lo, hi=pos_range.hi, bigfloat=true)
     end
 end
-# ~ 23s / 
+# ~ 23s / 128min
 # ENV["PURELIBM_CHECK_EXHAUSTIVE"] = "cr_log1p.fast,cr_log1p"
