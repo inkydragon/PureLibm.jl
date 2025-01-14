@@ -85,15 +85,15 @@ function cr_tgammaf(x::Float32)::Float32
     end
 
     fx = floor(x)
-    """
-    using Roots
-    max_f32 = prevfloat(Float32(Inf))
-    f(x) = gamma(BigFloat(x)) - BigFloat(max_f32)
-    find_zero(f, (34.9,35.1), Bisection())
-    find_zero(f, (34.9,35.1), Bisection()) |> Float32
-    gamma(35.040096f0)
-    gamma(nextfloat(35.040096f0))
-    """
+    #= Magic numnber: Float32(0x1.18522p+5)
+        using Roots
+        max_f32 = prevfloat(Float32(Inf))
+        f(x) = gamma(BigFloat(x)) - BigFloat(max_f32)
+        find_zero(f, (34.9,35.1), Bisection())
+        find_zero(f, (34.9,35.1), Bisection()) |> Float32
+        gamma(35.040096f0)
+        gamma(nextfloat(35.040096f0))
+    =#
     if @unlikely(x >= Float32(0x1.18522p+5))  # x >= 35.0401f0
         #= The C standard says that if the function overflows,
             errno is set to ERANGE. =#
