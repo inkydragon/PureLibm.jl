@@ -25,6 +25,20 @@
 
 ## Dev Memo
 
+### Run exhaustive tests
+```sh
+julia --project=test -e "using Pkg; Pkg.develop(PackageSpec(path=pwd())); Pkg.instantiate();"
+
+# fast: compare with system libm (takes serval seconds/minutes)
+# Set ENV and run
+export PURELIBM_CHECK_EXHAUSTIVE="cr_acos.fast"
+julia --project=test -e "using Pkg; Pkg.test(\"PureLibm\");"
+
+# slow: compare with MPFR (takes hours)
+export PURELIBM_CHECK_EXHAUSTIVE="cr_acos"
+julia --project=test -e "using Pkg; Pkg.test(\"PureLibm\");"
+```
+
 ### Build doc
 ```sh
 julia --project=docs -e "using Pkg; Pkg.develop(PackageSpec(path=pwd())); Pkg.instantiate();"
