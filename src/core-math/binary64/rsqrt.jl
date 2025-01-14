@@ -46,7 +46,7 @@ function as_rsqrt_refine(rf::Float64, a::Float64)::Float64
         if ((prrt ⊻ rrt) >> 127) == 1
             break
         end
-    end
+    end  # COV_EXCL_LINE
 
     iru += ifelse((rrt >> 127) == 1, UInt64(0), dd % UInt64)
     rrt = ifelse((rrt >> 127) == 1, rrt, prrt)
