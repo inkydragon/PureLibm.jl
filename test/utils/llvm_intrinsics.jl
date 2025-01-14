@@ -31,3 +31,15 @@ for T in [Float32, Float64]
         @test PureLibm._llvm_roundeven(T(-0.5)) === T(-0.0)
     end
 end
+
+@testset "_llvm_popcount" begin
+    # UInt32
+    @test PureLibm._llvm_popcount(UInt32(0)) == 0
+    @test PureLibm._llvm_popcount(typemax(UInt32)) == 32
+    @test PureLibm._llvm_popcount(typemax(UInt32) >> 1) == 31
+
+    # UInt64
+    @test PureLibm._llvm_popcount(UInt64(0)) == 0
+    @test PureLibm._llvm_popcount(typemax(UInt64)) == 64
+    @test PureLibm._llvm_popcount(typemax(UInt64) >> 1) == 63
+end
