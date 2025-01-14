@@ -120,14 +120,13 @@ function cr_logf(x::Float32)::Float32
         f += tl[j+1] - tl[1]
         el = e * 0x1.62e42fefa3ap-1
         r = el + f
-        ub = Float32(r)
         tzf = Float32(r)
         tzu = reinterpret(UInt32, tzf)
         if @unlikely((tzu & ((UInt32(1)<<28) - UInt32(1))) == 0)
             dr = (el - r) + f
             r += dr * 64.0
-            ub = Float32(r)
         end
+        ub = Float32(r)
     end
 
     return ub
