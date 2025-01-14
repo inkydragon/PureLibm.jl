@@ -11,6 +11,20 @@ for T in [Float32, ]
         @test isnan(PureLibm.cr_exp10(T(NaN)))
 
         # Coverage
+        @test PureLibm.cr_exp10(T(1)) == T(10)
+        @test PureLibm.cr_exp10(T(3)) == T(1000)
+        @test PureLibm.cr_exp10(T(-1)) == 1/T(10)
+        if Float32 == T
+            # if tu > 0xc23369f4
+            @test PureLibm.cr_exp10(T(-44.9)) == T(1.0f-45)
+            @test PureLibm.cr_exp10(T(-50)) == T(0.0)
+            # if tu < 0x80000000
+            @test PureLibm.cr_exp10(T(38.6)) == T(Inf)
+            @test PureLibm.cr_exp10(T(40)) == T(Inf)
+            # if @unlikely(ub != lb)
+            @test PureLibm.cr_exp10(T(0.00034665596f0)) == T(1.0007986f0)
+            @test PureLibm.cr_exp10(T(1.6168841f0)) == T(41.388924f0)
+        end
     end
 end
 
