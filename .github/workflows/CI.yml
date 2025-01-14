@@ -31,6 +31,9 @@ jobs:
           - windows-latest
         # arch:
         #   - x64
+        include:
+          - os: ubuntu-latest
+            version: nightly
     steps:
       - uses: actions/checkout@v4
       - uses: julia-actions/setup-julia@v2
