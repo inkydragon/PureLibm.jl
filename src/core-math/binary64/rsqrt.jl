@@ -2,6 +2,9 @@
 # Based on core-math/src/binary64/rsqrt/rsqrt.c
 # CORE-MATH project Copyright (c) 2022-2023 Alexei Sibidanov.
 
+"""
+NOTE: Remvoed support for `RoundUp` (FE_UPWARD) mode.
+"""
 function as_rsqrt_refine(rf::Float64, a::Float64)::Float64
     iru = reinterpret(UInt64, rf)
     iau = reinterpret(UInt64, a)
@@ -18,7 +21,6 @@ function as_rsqrt_refine(rf::Float64, a::Float64)::Float64
         return rf
     end
 
-    mode = rounding(Float64)
     e = (iau >> 52) & 1
     rm = ((iru << 11 | (UInt64(1) << 63)) >> 11) % UInt64
     am = (((iau & (~UInt64(0) >> 12)) | (UInt64(1) << 52)) << (5 - e)) % UInt64
@@ -44,19 +46,16 @@ function as_rsqrt_refine(rf::Float64, a::Float64)::Float64
         if ((prrt ⊻ rrt) >> 127) == 1
             break
         end
-    end
+    end  # COV_EXCL_LINE
+
     iru += ifelse((rrt >> 127) == 1, UInt64(0), dd % UInt64)
     rrt = ifelse((rrt >> 127) == 1, rrt, prrt)
-    if mode == RoundNearest  # FE_TONEAREST
-        rm = ((iru << 11 | (UInt64(1) << 63)) >> 11) % UInt64
+    let rm = ((iru << 11 | (UInt64(1) << 63)) >> 11) % UInt64
         rt = UInt128(rm) * UInt128(am)
         rrt += am >> 2
         rrt += rt
         inc = (rrt >> 127) % UInt64
         iru += inc
-    else
-        # FE_UPWARD
-        iru += (mode == RoundUp) ? UInt64(1) : UInt64(0)
     end
     irf = reinterpret(Float64, iru)
     rf = irf

@@ -63,14 +63,16 @@ end
     end
 end
 
+pos_range = (lo=Float32(0.0), hi=Float32(Inf))
+ref_rsqrt(x) = 1 / sqrt(x)
 if "cr_rsqrt.fast" in CheckExhaustive
     @testset "cr_rsqrt-exhaustive.fast" begin
-        test_float_range(x->1/sqrt(x), PureLibm.cr_rsqrt, lo=Float32(0.0), hi=prevfloat(Float32(Inf)))
+        test_float_range(ref_rsqrt, PureLibm.cr_rsqrt, lo=pos_range.lo, hi=pos_range.hi)
     end
 end
 if "cr_rsqrt" in CheckExhaustive
     @testset "cr_rsqrt-exhaustive" begin
-        test_float_range(x->1/sqrt(x), PureLibm.cr_rsqrt, lo=Float32(0.0), hi=prevfloat(Float32(Inf)), bigfloat=true)
+        test_float_range(ref_rsqrt, PureLibm.cr_rsqrt, lo=pos_range.lo, hi=pos_range.hi, bigfloat=true)
     end
 end
 # ENV["PURELIBM_CHECK_EXHAUSTIVE"] = "cr_rsqrt.fast,cr_rsqrt"
