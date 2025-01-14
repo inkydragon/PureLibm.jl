@@ -80,11 +80,11 @@ julia --project=test -e "using Pkg; Pkg.test(\"PureLibm\");"
 
 
 ## License
-```
+```c
 // SPDX-License-Identifier: MIT OR Apache-2.0
 ```
 
-PureLibm.jl is licensed under either of
+`PureLibm.jl` is licensed under either of
 
 - MIT license ([LICENSE-MIT](LICENSE-MIT))
 - Apache License, Version 2.0, ([LICENSE-APACHE](LICENSE-APACHE))
