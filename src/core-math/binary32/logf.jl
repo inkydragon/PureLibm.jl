@@ -2,7 +2,7 @@
 # Based on core-math/src/binary32/log/logf.c
 # CORE-MATH project Copyright (c) 2023-2024 Alexei Sibidanov and Paul Zimmermann.
 
-const CR_LOGF_TR = [
+const CR_LOGF_TR = NTuple{65, Float64}((
     0x1p+0, 0x1.f81f82p-1, 0x1.f07c1fp-1, 0x1.e9131acp-1,
     0x1.e1e1e1ep-1, 0x1.dae6077p-1, 0x1.d41d41dp-1, 0x1.cd85689p-1,
     0x1.c71c71cp-1, 0x1.c0e0704p-1, 0x1.bacf915p-1, 0x1.b4e81b5p-1,
@@ -20,8 +20,9 @@ const CR_LOGF_TR = [
     0x1.1111111p-1, 0x1.0ecf56cp-1, 0x1.0c9715p-1, 0x1.0a6810ap-1,
     0x1.0842108p-1, 0x1.0624dd3p-1, 0x1.041041p-1, 0x1.0204081p-1,
     0.5
-]
-const CR_LOGF_TL = [
+))
+
+const CR_LOGF_TL = NTuple{65, Float64}((
     -0x1.3b40815cd0628p-45, 0x1.fc0a890fbb514p-7, 0x1.f829b1e780b98p-6, 0x1.77458f532c948p-5,
     0x1.f0a30c2114ef2p-5, 0x1.341d793bbc7f7p-4, 0x1.6f0d28d256172p-4, 0x1.a926d3a6acb89p-4,
     0x1.e2707722ae90cp-4, 0x1.0d77e7a90896cp-3, 0x1.29552f6fff036p-3, 0x1.44d2b6c5b7831p-3,
@@ -39,12 +40,16 @@ const CR_LOGF_TL = [
     0x1.41d8fe8667173p-1, 0x1.4618bc1ec5d87p-1, 0x1.4a4f85d303d8p-1, 0x1.4e7d8127f5a75p-1,
     0x1.52a2d26dbc47p-1, 0x1.56bf9d597f25ep-1, 0x1.5ad404cb59df2p-1, 0x1.5ee02a928153ap-1,
     0x1.62e42fefa38b4p-1
-]
-const CR_LOGF_B = [0x1.00000006342eap+0, -0x1.0001f7fdc3977p-1, 0x1.554a4e5cae9cfp-2]
-const CR_LOGF_C = [
+))
+
+const CR_LOGF_B = NTuple{3, Float64}((
+    0x1.00000006342eap+0, -0x1.0001f7fdc3977p-1, 0x1.554a4e5cae9cfp-2
+))
+
+const CR_LOGF_C = NTuple{7, Float64}((
     -0x1p-1, 0x1.55555555571cap-2, -0x1.0000000002d85p-2, 0x1.9999987d0c963p-3,
     -0x1.555554059a8bbp-3, 0x1.24aebcf71a38fp-3, -0x1.001c73915d758p-3
-]
+))
 
 
 function _logf_as_special(x::Float32)::Float32
