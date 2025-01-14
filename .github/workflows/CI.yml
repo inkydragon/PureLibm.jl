@@ -4,8 +4,16 @@ on:
     branches:
       - main
     tags: ['*']
+    paths-ignore:
+      - 'klee/**'
+      - 'notebook/**'
+      - '.editorconfig'
+      - '.gitignore'
+      - 'LICENSE-*'
+      - 'README.md'
   pull_request:
   workflow_dispatch:
+
 concurrency:
   # Skip intermediate builds: always.
   # Cancel intermediate builds: only if it is a pull request build.
