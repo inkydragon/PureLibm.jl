@@ -27,6 +27,8 @@ for T in [Float32, ]
             # ub != lb && ax < (0x0000_007e << 24)
             #   x in [0.0, 0.5]
             reinterpret.(Float32, rand(UInt32(0):0x3f000000, 10))...,
+            # if ax < (0x0000_007e << 24)
+            0.00044382224f0, 0.49999875f0,
         ]
         test_x = [test_x..., -test_x...]
         @testset "cr_asin($x)" for x in test_x
