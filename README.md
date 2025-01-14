@@ -1,6 +1,6 @@
 # PureLibm
 
-> A pure Julia math library
+> A correctly rounded maths library in pure Julia.
 
 [![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://inkydragon.github.io/PureLibm.jl/dev/)
 [![Build Status](https://github.com/inkydragon/PureLibm.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/inkydragon/PureLibm.jl/actions/workflows/CI.yml?query=branch%3Amain)
@@ -12,13 +12,15 @@
     - The input of `Float32` should pass the exhaustive checking
     - The result of `Float64` should match the output of CORE-MATH.
     - Rounding mode: Only `FE_TONEAREST` for now.
-    - Other rounding modes will be considered after the completion of `FE_TONEAREST`.
+    - Other rounding modes will be considered after the `FE_TONEAREST` mode is implemented.
 2. Code readability.
     - Magic numbers should not be used, use named constant.
-    - If it is possible to use absolute values, do not use shifted values.
-    - For algorithm implementations, the implementation logic in the references should be followed as much as possible, even if it has an impact on performance.
+    - Whenever possible, give the origin of the magic number, and the process of calculating it.
+    - Avoid complex bit manipulations, and if possible use the corresponding functions instead of them.
+        Or wrap the corresponding operations in a function.
 3. Performance should be considered after the implementation is complete, with a lower priority than correctness.
-    - If refactoring the algorithm improves performance, implementations that match the original reference are retained as references for testing purposes.
+    - If refactoring the algorithm improves performance,
+        implementations that match the original reference are retained as references for testing purposes.
 
 
 ## Dev Memo
