@@ -48,6 +48,13 @@ Compute natural exponential of `x`.
 cr_exp(x::Float32) = cr_expf(x)
 
 """
+    cr_exp10(x)
+
+Compute `10^x` of `x`.
+"""
+cr_exp10(x::Float32) = cr_exp10f(x)
+
+"""
     cr_exp2(x)
 
 Compute `2^x` of `x`.
