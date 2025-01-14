@@ -40,7 +40,7 @@ include("exp.jl")
 include("exp2.jl")
 # expm1 
 # log10
-# log1p
+include("log1p.jl")
 # log2
 # log
 
