@@ -32,6 +32,19 @@ using Random
             x = reinterpret(Float32, xu)
             @test PureLibm.cr_tgamma(x) ≈ SpecialFunctions.gamma(x)
         end
+        
+        # Coverage
+        if Float32 == T
+            # Upper if tu == tb[i][1]
+            @test PureLibm.cr_tgamma(T(6.1763377f-15)) == T(1.6190824f14)
+            @test PureLibm.cr_tgamma(T(-2.8004695f-6)) == T(-357083.56f0)
+            # Lower if tu == tb[j][1]
+            @test PureLibm.cr_tgamma(T(0.015363082f0)) == T(64.52887f0)
+            @test PureLibm.cr_tgamma(T(-3.6221597f0)) == T(0.24537095f0)
+            # if @unlikely(x < -42.0)  # negative non-integer
+            @test PureLibm.cr_tgamma(T(-42.1)) == T(0)
+            @test PureLibm.cr_tgamma(T(-43.1)) == -T(0)
+        end
     end
 end
 
