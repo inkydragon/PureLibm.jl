@@ -30,16 +30,16 @@ by their high and low parts, `(xh, xl) * (ch, cl)`.
 # Returns
 - The `(high, low)` parts of the product.
 """
-# function muldd(xh::Float64, xl::Float64, ch::Float64, cl::Float64)
-#     ahlh = ch * xl
-#     alhh = cl * xh
-#     ahhh = ch * xh
-#     ahhl = fma(ch, xh, -ahhh)
-#     ahhl += alhh + ahlh
-#     ch = ahhh + ahhl
-#     cl = (ahhh - ch) + ahhl
-#     return ch, cl
-# end
+function muldd(xh::Float64, xl::Float64, ch::Float64, cl::Float64)
+    ahlh = ch * xl
+    alhh = cl * xh
+    ahhh = ch * xh
+    ahhl = fma(ch, xh, -ahhh)
+    ahhl += alhh + ahlh
+    ch = ahhh + ahhl
+    cl = (ahhh - ch) + ahhl
+    return ch, cl
+end
 
 """
 Evaluate a polynomial using double-double arithmetic,
@@ -54,18 +54,18 @@ Evaluate a polynomial using double-double arithmetic,
 # Returns
 - The `(high, low)` parts of the evaluated polynomial.
 """
-# function polydd(xh::Float64, xl::Float64, n::Int, c::Vector{Tuple{Float64, Float64}})
-#     @assert n == length(c)
-#     i = n
-#     ch = c[i][1]
-#     cl = c[i][2]
-#     while i >= 1
-#         ch, cl = muldd(xh, xl, ch, cl)
-#         th = ch + c[i - 1][1]
-#         tl = (c[i - 1][1] - th) + ch
-#         ch = th
-#         cl += tl + c[i - 1][2]
-#         i -= 1
-#     end
-#     return ch, cl
-# end
+function polydd(xh::Float64, xl::Float64, n::Int, c::Vector{Tuple{Float64, Float64}})
+    @assert n == length(c)
+    i = n
+    ch = c[i][1]
+    cl = c[i][2]
+    while i >= 1
+        ch, cl = muldd(xh, xl, ch, cl)
+        th = ch + c[i - 1][1]
+        tl = (c[i - 1][1] - th) + ch
+        ch = th
+        cl += tl + c[i - 1][2]
+        i -= 1
+    end
+    return ch, cl
+end
