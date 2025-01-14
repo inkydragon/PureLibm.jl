@@ -122,7 +122,8 @@ function cr_logf(x::Float32)::Float32
         r = el + f
         tzf = Float32(r)
         tzu = reinterpret(UInt32, tzf)
-        if @unlikely((tzu & ((UInt32(1)<<28) - UInt32(1))) == 0)
+        mask = (UInt32(1) << 28) - UInt32(1)
+        if @unlikely((tzu & mask) == 0)
             dr = (el - r) + f
             r += dr * 64.0
         end
