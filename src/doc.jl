@@ -20,13 +20,7 @@ cr_asin(x::Float32) = cr_asinf(x)
 Compute arc-tangent of `x`.
 """
 cr_atan(x::Float32) = cr_atanf(x)
-
-"""
-    cr_atan2(y, x)
-
-Compute arc-tangent of `y / x`.
-"""
-cr_atan2(y::Float32, x::Float32) = cr_atan2f(y, x)
+# cr_atan2
 
 # cos
 # sin

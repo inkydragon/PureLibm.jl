@@ -6,7 +6,7 @@ include("helper.jl")
 include("binary32/acosf.jl")
 include("binary32/asinf.jl")
 include("binary32/atanf.jl")
-include("binary32/atan2f.jl")
+# atan2f
 
 # Hyperbolic
 # acosh

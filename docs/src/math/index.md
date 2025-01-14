@@ -10,7 +10,7 @@
 - [`cr_acos(::Float32)`](@ref PureLibm.cr_acos)
 - [`cr_asin(::Float32)`](@ref PureLibm.cr_asin)
 - [`cr_atan(::Float32)`](@ref PureLibm.cr_atan)
-- [`cr_atan2(::Float32)`](@ref PureLibm.cr_atan2)
+- `atan2`
 - `cos`
 - `sin`
 - `tan`
