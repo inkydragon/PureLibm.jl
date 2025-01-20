@@ -24,7 +24,7 @@ include("asin.jl")
 include("atan.jl")
 # atan2
 # cos
-# sin
+include("sin.jl")
 # tan
 
 # C99: Hyperbolic

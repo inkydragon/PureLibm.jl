@@ -23,7 +23,12 @@ cr_atan(x::Float32) = cr_atanf(x)
 # cr_atan2
 
 # cos
-# sin
+"""
+    cr_sin(x)
+
+Compute sine of `x`.
+"""
+cr_sin(x::Float32) = cr_sinf(x)
 # tan
 
 # C99: Hyperbolic

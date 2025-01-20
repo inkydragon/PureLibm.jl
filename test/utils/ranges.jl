@@ -1,5 +1,42 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
 
+"""
+Generate random float numbers using `rand(UInt)`.
+
+# Arguments
+- `lo::Unsigned`: lower bound
+- `hi::Unsigned`: upper bound
+- `n::Int`: number of random values
+
+# Returns
+- `Vector{T}`: Generator for random float values in the range `[lo, hi]`
+"""
+function rand_float(xu_lo::T, xu_hi::T, n::Int) where {T<:Unsigned}
+    FloatType = Base.floattype(T)
+    xu_range = xu_lo:xu_hi
+    xu_rand = rand(xu_range, n)
+    f_rand = Iterators.map(xu->reinterpret(FloatType, xu), xu_rand)
+    f_rand
+end
+
+"""
+Generate random float numbers using `rand(UInt)`.
+
+# Arguments
+- `lo::AbstractFloat`: lower bound
+- `hi::AbstractFloat`: upper bound
+- `n::Int`: number of random values
+
+# Returns
+- `Vector{T}`: Generator for random float values in the range `[lo, hi]`
+"""
+function rand_float(lo::T, hi::T, n::Int) where {T<:AbstractFloat}
+    UIntBaseType = Base.uinttype(T)
+    xu_lo = reinterpret(UIntBaseType, lo)
+    xu_hi = reinterpret(UIntBaseType, hi)
+    rand_float(xu_lo, xu_hi, n)
+end
+
 function __main_test_loop(xs, ref_fun, impl_func)
     for x in xs
         y = impl_func(x)
