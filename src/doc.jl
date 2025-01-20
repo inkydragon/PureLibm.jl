@@ -22,7 +22,13 @@ Compute arc-tangent of `x`.
 cr_atan(x::Float32) = cr_atanf(x)
 # cr_atan2
 
-# cos
+"""
+    cr_cos(x)
+
+Compute cosine of `x`.
+"""
+cr_cos(x::Float32) = cr_cosf(x)
+
 """
     cr_sin(x)
 

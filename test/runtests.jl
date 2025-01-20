@@ -23,7 +23,7 @@ include("acos.jl")
 include("asin.jl")
 include("atan.jl")
 # atan2
-# cos
+include("cos.jl")
 include("sin.jl")
 # tan
 
