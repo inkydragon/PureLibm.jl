@@ -54,7 +54,7 @@ end
 
 const CR_COSF_ST = Vector{Tuple{UInt32, Float32, Float32}}([
     # 4.712389f0 (0x1.2d97c8p+2)
-    (0x4096cbe4, Float32(-0x1.99bc5ap-27), Float32(-0x1p-52)),
+    (0x4096cbe4, Float32(0x1.99bc5cp-27), Float32(-0x1p-52)),
     # 2.8616508f15 (0x1.4555p+51)
     (0x5922aa80, Float32(0x1.115d7ep-1), Float32(-0x1p-26)),
     # 2.3127222f16 (0x1.48a858p+54)
