@@ -20,10 +20,8 @@ function _cosf_absc(z::Float64, ia::Int64)
     a, b = CR_SINF_A, CR_SINF_B
     aa = (a[1] + z2 * a[2]) + z4 * (a[3] + z2 * a[4])
     bb = (b[1] + z2 * b[2]) + z4 * (b[3] + z2 * b[4])
-    # s0 = CR_COSF_TB[(ia & 31) + 1]
-    # c0 = CR_COSF_TB[((ia+8) & 31) + 1]
-    c0 = CR_COSF_TB[(ia & 31) + 1]
     s0 = CR_COSF_TB[((ia+8) & 31) + 1]
+    c0 = CR_COSF_TB[(ia & 31) + 1]
     return aa, bb, s0, c0
 end
 
@@ -39,12 +37,11 @@ function _cosf_big(x::Float32)::Float32
 
     z, ia = _sinf_rbig(tu)
     aa, bb, s0, c0 = _cosf_absc(z, ia)
-    # r = s0 + z * (aa * c0 - bb * (z * s0))
     r = c0 + z*(aa*s0 - bb*(z*c0))
     tru = reinterpret(UInt64, r)
 
     tail = (tru + UInt64(6)) & (~UInt64(0) >> 36);
-    if tail < 12
+    if tail <= 12
         return _cosf_database(x, r)
     end
 
@@ -109,7 +106,6 @@ function cr_cosf(x::Float32)::Float32
 
     aa, bb, s0, c0 = _cosf_absc(z, ia)
     z2 = z * z
-    # r = c0 + aa * (z * s0) - bb * (z2 * c0)
     r = c0 + aa*(z*s0) - bb*(z2*c0)
     return r
 end
