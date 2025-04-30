@@ -23,8 +23,32 @@ for T in [Float32, ]
         test_x = T[
             eps(T(0.0)),
             # -pi~pi
+            # range(Float32(0.0), Float32(pi), length=10)...,
+            # range(-Float32(0.0), -Float32(pi), length=10)...,
             rand_float(Float32(0.0), Float32(pi), 10)...,
             rand_float(-Float32(0.0), -Float32(pi), 10)...,
+
+            ## Branch coverage
+            # cr_cosf: `return -Float32(0x1p-1) * x * x + 1.0f0`
+            #   (ax < 0x73000000) and !(ax < 0x66000000)
+            #   [0x66000000, 0x73000000)
+            rand_float(0x66000000>>1, 0x73000000>>1, 2)...,
+            # cr_cosf: `z, ia = rltl(z0)`
+            #   !(ax > 0x99000000 || ax < 0x73000000) and !(ax < 0x82a41896)
+            #   [0x82a41896, 0x99000000]
+            rand_float(0x82a41896>>1, 0x99000000>>1, 2)...,
+            # _cosf_big: `return r`
+            #   (ax > 0x99000000 || ax < 0x73000000) and !(ax < 0x73000000)
+            #       and !(nan or +-inf) and !(tail < 12)
+            #   [0x73000000, 0xff000000)
+            rand_float(0x73000000>>1, 0xff000000>>1, 8)...,
+
+            # Special cases: _cosf_database
+            4.712389f0,
+            2.8616508f15,
+            2.3127222f16,
+            1.1004678f19,
+            1.7269983f20,
         ]
         @testset "cr_cos($x)" for x in test_x
             # Test against system libm
@@ -49,5 +73,5 @@ if "cr_cos" in CheckExhaustive
         test_float_range(cos, PureLibm.cr_cos, lo=neg_range.lo, hi=neg_range.hi, bigfloat=true)
     end
 end
-# ~
+# fast~80s
 # ENV["PURELIBM_CHECK_EXHAUSTIVE"] = "cr_cos.fast,cr_cos"
