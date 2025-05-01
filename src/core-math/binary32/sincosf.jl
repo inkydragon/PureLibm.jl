@@ -39,7 +39,7 @@ function _sincosf_big(x::Float32)
             return sout, cout  # NaN
         end
         # to raise FE_INVALID
-        sout = 0.0f0 / 0.0f0 
+        sout = 0.0f0 / 0.0f0
         cout = 0.0f0 / 0.0f0
         return sout, cout
     end
@@ -47,10 +47,12 @@ function _sincosf_big(x::Float32)
     z, ia = _sinf_rbig(tu)
     aa, bb, s0, c0 = _sinf_absc(z, ia)
     bb = bb * z
-    sout = s0 + z * (aa * c0 - bb * s0)
-    cout = c0 - z * (aa * s0 + bb * c0)
+    s = s0 + z * (aa * c0 - bb * s0)
+    c = c0 - z * (aa * s0 + bb * c0)
+    sout = Float32(s)
+    cout = Float32(c)
 
-    tru = reinterpret(UInt64, cout)
+    tru = reinterpret(UInt64, c)
     tail = (tru + UInt64(6)) & (~UInt64(0) >> 36);
     if tail <= 12
         return _sincosf_database(x, sout, cout)
@@ -91,6 +93,7 @@ function cr_sincosf(x::Float32)::Tuple{Float32, Float32}
         end
 
         if ax == 0x812d97c8
+            # tu == 0x4096cbe4 (4.712389f0)
             return _sincosf_database(x, sout, cout)
         end
         z, ia = rltl0(z0)
@@ -99,6 +102,7 @@ function cr_sincosf(x::Float32)::Tuple{Float32, Float32}
             return _sincosf_big(x)
         end
         if ax == 0x8c333330
+            # tu == 0x46199998 (9830.398f0)
             return _sincosf_database(x, sout, cout)
         end
         z, ia = rltl(z0)
@@ -108,7 +112,9 @@ function cr_sincosf(x::Float32)::Tuple{Float32, Float32}
     z2 = z * z
     aa = aa * z
     bb = bb * z2
-    sout = s0 + (aa * c0 - bb * s0)
-    cout = c0 - (aa * s0 + bb * c0)
+    s = s0 + (aa * c0 - bb * s0)
+    c = c0 - (aa * s0 + bb * c0)
+    sout = Float32(s)
+    cout = Float32(c)
     return sout, cout
 end
