@@ -43,7 +43,12 @@ Compute sine and cosine of `x`.
 """
 cr_sincos(x::Float32) = cr_sincosf(x)
 
-# tan
+"""
+    cr_tan(x)
+
+Compute tangent of `x`.
+"""
+cr_tan(x::Float32) = cr_tanf(x)
 
 # C99: Hyperbolic
 # acosh
