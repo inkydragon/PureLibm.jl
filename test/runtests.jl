@@ -26,7 +26,7 @@ include("atan.jl")
 include("cos.jl")
 include("sin.jl")
 include("sincos.jl")
-# tan
+include("tan.jl")
 
 # C99: Hyperbolic
 # acosh

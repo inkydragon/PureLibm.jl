@@ -10,6 +10,7 @@ include("binary32/atanf.jl")
 include("binary32/cosf.jl")
 include("binary32/sinf.jl")
 include("binary32/sincosf.jl")
+include("binary32/tanf.jl")
 
 # Hyperbolic
 # acosh
