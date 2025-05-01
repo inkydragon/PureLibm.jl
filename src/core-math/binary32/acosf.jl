@@ -83,18 +83,8 @@ function cr_acosf(x::Float32)::Float32
         end
 
         z = xs
-        z2 = z * z
-        z4 = z2 * z2
-        z8 = z4 * z4
-        z16 = z8 * z8
-        b = CR_ACOSF_B
-        r = z * (
-            ((b[1] + z2 * b[2]) + z4 * (b[3] + z2 * b[4])) +
-            z8 * ((b[5] + z2 * b[6]) + z4 * (b[7] + z2 * b[8])) +
-            z16 * (((b[9] + z2 * b[10]) + z4 * (b[11] + z2 * b[12])) +
-                   z8 * ((b[13] + z2 * b[14]) + z4 * (b[15] + z2 * b[16])))
-        )
-        
+        r = z * poly_x2_c16(z, CR_ACOSF_B)
+
         ub = Float32(0x1.921fb54574191p+0 - r)
         lb = Float32(0x1.921fb543118ap+0 - r)
         if ub == lb

@@ -20,6 +20,23 @@ function poly12(z::T, c::NTuple{12, T}) where T
 end
 
 """
+Polynomial evaluation with `x^{2n}` base and 16 coefficients
+"""
+function poly_x2_c16(z::T, c::NTuple{16, T}) where T
+    z2 = z * z
+    z4 = z2 * z2
+    z8 = z4 * z4
+    z16 = z8 * z8
+    r = (
+        ((c[1] + z2 * c[2]) + z4 * (c[3] + z2 * c[4])) +
+        z8 * ((c[5] + z2 * c[6]) + z4 * (c[7] + z2 * c[8])) +
+        z16 * (((c[9] + z2 * c[10]) + z4 * (c[11] + z2 * c[12])) +
+               z8 * ((c[13] + z2 * c[14]) + z4 * (c[15] + z2 * c[16])))
+    )
+    return r
+end
+
+"""
 Multiplies two double-double precision numbers represented
 by their high and low parts, `(xh, xl) * (ch, cl)`.
 
