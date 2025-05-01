@@ -19,7 +19,7 @@ function _sincosf_database(x::Float32, s0::Float32, c0::Float32)
     tu = reinterpret(UInt32, x)
     ax = tu & (~UInt32(0) >> 1)
     for (uarg, sh, sl, ch, cl) in CR_SINCOSF_ST
-        if ax == uarg
+        if @unlikely(ax == uarg)  # true: 1.45%
             sout = add_sign(x, sh, sl)
             cout = ch + cl
             return sout, cout
@@ -54,7 +54,7 @@ function _sincosf_big(x::Float32)
 
     tru = reinterpret(UInt64, c)
     tail = (tru + UInt64(6)) & (~UInt64(0) >> 36);
-    if tail <= 12
+    if @unlikely(tail <= 12)  # true: < 0.1%
         return _sincosf_database(x, sout, cout)
     end
 
@@ -73,12 +73,12 @@ function cr_sincosf(x::Float32)::Tuple{Float32, Float32}
     z = 0.0
     sout, cout = Float32(0.0), Float32(0.0)
     # |x| < 0x1.2d97c8p+3
-    if ax < 0x822d97c8
+    if @likely(ax < 0x822d97c8)  # true: 51.0% (full range, not nan/inf)
         # |x| < 0x1p-12
-        if ax < 0x73000000
+        if @unlikely(ax < 0x73000000)
             # |x| < 0x1p-25
-            if ax < 0x66000000
-                if ax == 0
+            if @unlikely(ax < 0x66000000)
+                if @unlikely(ax == 0)
                     sout = x
                     cout = Float32(1.0)
                 else
@@ -92,22 +92,23 @@ function cr_sincosf(x::Float32)::Tuple{Float32, Float32}
             return sout, cout
         end
 
-        if ax == 0x812d97c8
+        if @unlikely(ax == 0x812d97c8)
             # tu == 0x4096cbe4 (4.712389f0)
             return _sincosf_database(x, sout, cout)
         end
         z, ia = rltl0(z0)
     else
-        if ax > 0x99000000
+        if @unlikely(ax > 0x99000000)
             return _sincosf_big(x)
         end
-        if ax == 0x8c333330
+        if @unlikely(ax == 0x8c333330)
             # tu == 0x46199998 (9830.398f0)
             return _sincosf_database(x, sout, cout)
         end
         z, ia = rltl(z0)
     end
 
+    # 14.9% (full range, not nan/inf)
     aa, bb, s0, c0 = _sinf_absc(z, ia)
     z2 = z * z
     aa = aa * z
