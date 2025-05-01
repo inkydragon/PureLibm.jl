@@ -35,6 +35,14 @@ cr_cos(x::Float32) = cr_cosf(x)
 Compute sine of `x`.
 """
 cr_sin(x::Float32) = cr_sinf(x)
+
+"""
+    cr_sincos(x)
+
+Compute sine and cosine of `x`.
+"""
+cr_sincos(x::Float32) = cr_sincosf(x)
+
 # tan
 
 # C99: Hyperbolic
