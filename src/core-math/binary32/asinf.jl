@@ -42,7 +42,7 @@ end
 Correctly-rounded arc-sine function for `Float32`.
 
 ## Reference
-- [core-math file commit (bc385c27)](https://gitlab.inria.fr/core-math/core-math/-/blob/69a32feab0759dc073a5e99cb6ee300e9739b607/src/binary32/asin/asinf.c)
+- https://gitlab.inria.fr/core-math/core-math/-/blob/2c08994e3cd967a63c4c1eed729353a1c3b9c798/src/binary32/asin/asinf.c
 """
 function cr_asinf(x::Float32)::Float32
     # pi/2 constant
@@ -51,8 +51,8 @@ function cr_asinf(x::Float32)::Float32
 
     xs = Float64(x)
     r = Float64(0.0)
-    t = reinterpret(UInt32, x)
-    ax = t << UInt32(1)
+    tu = reinterpret(UInt32, x)
+    ax = tu << UInt32(1)
 
     if @unlikely(ax > (0x0000_007f << 24))
         # |x| > 1.0
@@ -62,23 +62,25 @@ function cr_asinf(x::Float32)::Float32
     if @likely(ax < 0x7ec29000)
         # |x| < 0.8800049f0
         if @unlikely(ax < UInt32(115 << 24))
-            # |x| < 0.00024414062f0
+            # |x| < 0.00024414062f0 (0x1p-12)
+            #= The Taylor expansion of asin(x) at x=0 is x + x^3/6 + o(x^3),
+                thus for |x| >= 2^-126 we have no underflow, whatever the
+                rounding mode.
+                For |x| < 2^-126 and rounding towards zero, we have underflow.
+                For x = nextbelow(2^-126) = 0x1.fffffcp-127, asin(x) would round
+                upward to 0x1.fffffep-127 with unbounded exponent range, which is not
+                representable, thus we have underflow too.
+                In summary, we have underflow whenever |x| < 2^-126. 
+            =#
+            # if x != 0 && abs(x) < Float32(0x1p-126)
+            #     nothing  # underflow
+            # end
             return fma(x, Float32(0x1p-25), x)
         end
 
         z = xs
-        z2 = z * z
-        z4 = z2 * z2
-        z8 = z4 * z4
-        z16 = z8 * z8
-        b = CR_ASINF_B
-        r = z * (
-            (((b[1] + z2*b[2]) + z4*(b[3] + z2*b[4]))
-                + z8*((b[5] + z2*b[6]) + z4*(b[7] + z2*b[8])))
-            + z16*(
-                ((b[9] + z2*b[10]) + z4*(b[11] + z2*b[12]))
-                + z8*((b[13] + z2*b[14]) + z4*(b[15] + z2*b[16])))
-        )
+        r = z * poly_x2_c16(z, CR_ASINF_B)
+
         ub = Float32(r)
         lb = Float32(r - z * 0x1.efa8ebp-31)
         if ub == lb
