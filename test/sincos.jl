@@ -25,14 +25,14 @@ for T in [Float32, ]
     end
 
     # Coverage test
-    @testset "cr_sincos(random::$T)" begin
+    @testset "cr_sincos(rand($T))" begin
         test_x = T[
             eps(T(0.0)),
             # -pi~pi
             range(Float32(0.0), Float32(pi), length=10)...,
             range(-Float32(0.0), -Float32(pi), length=10)...,
-            # rand_float(Float32(0.0), Float32(pi), 10)...,
-            # rand_float(-Float32(0.0), -Float32(pi), 10)...,
+            rand_float(Float32(0.0), Float32(pi), 10)...,
+            rand_float(-Float32(0.0), -Float32(pi), 10)...,
 
             ## Branch coverage
             # cr_sincosf: `sout = (-Float32(0x1.555556p-3) * x) * (x * x) + x`
