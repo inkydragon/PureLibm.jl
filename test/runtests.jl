@@ -42,7 +42,7 @@ include("tanh.jl")
 include("exp.jl")
 include("exp10.jl")
 include("exp2.jl")
-# expm1 
+include("expm1.jl")
 # log10
 include("log1p.jl")
 # log2

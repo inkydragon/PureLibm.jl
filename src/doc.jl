@@ -98,7 +98,14 @@ cr_exp10(x::Float32) = cr_exp10f(x)
 Compute `2^x` of `x`.
 """
 cr_exp2(x::Float32) = cr_exp2f(x)
-# expm1 
+
+"""
+    cr_expm1(x)
+
+Compute `exp(x) - 1` of `x`.
+"""
+cr_expm1(x::Float32) = cr_expm1f(x)
+
 # log10
 """
     cr_log1p(x)
