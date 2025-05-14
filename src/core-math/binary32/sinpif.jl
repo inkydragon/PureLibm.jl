@@ -52,8 +52,9 @@ function cr_sinpif(x::Float32)
     end
 
     m = Int32((ixu & (~UInt32(0) >> 9)) | (Int32(1) << 23))
-    sgn = Int32(ixu >> 31)
+    sgn = reinterpret(Int32, ixu) >> 31
     m = (m ⊻ sgn) - sgn
+    m_u32 = reinterpret(UInt32, m)
     s = Int32(143 - e)
     if (s < 0)
         # |x| >= 0x1p+17
@@ -62,7 +63,7 @@ function cr_sinpif(x::Float32)
             return copysign(Float32(0.0), x)
         end
 
-        iq = UInt32(m) << (-s - 1)
+        iq = m_u32 << (-s - 1)
         iq &= 127
         if iq == 0 || iq == 64
             return copysign(Float32(0.0), x)
@@ -76,17 +77,17 @@ function cr_sinpif(x::Float32)
     end
 
     si = Int32(25 - s)
-    if (si >= 0 && (UInt32(m) << si) == 0)
+    if (si >= 0 && (m_u32 << si) == 0)
         return copysign(Float32(0.0), x)
     end
 
-    k = Int32(UInt32(m) << (31 - s))
+    k = reinterpret(Int32, m_u32 << (31 - s))
     z = Float64(k)
     z2 = z * z
     fs = sn[1] + z2 * (sn[2] + z2 * sn[3])
     fc = cn[1] + z2 * (cn[2] + z2 * cn[3])
-    iq = UInt32(m >> s)
-    iq = (iq + 1) >> 1
+    iq = reinterpret(UInt32, m >> s)
+    iq = UInt32((iq + 1) >> 1)
     is = UInt32(iq & 127)
     ic = UInt32((iq + 32) & 127)
     ts = S[is + 1]
