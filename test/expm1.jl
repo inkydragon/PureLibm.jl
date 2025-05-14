@@ -13,6 +13,10 @@ for T in [Float32, ]
 
         # sanity check
         @test isnan(PureLibm.cr_expm1(T(NaN)))
+        @test PureLibm.cr_expm1(T(1)) ≈ T(ℯ - 1.0)
+        # overflow
+        @test PureLibm.cr_expm1(89f0) == Inf32      # expm1(89f0) == Inf32
+        @test PureLibm.cr_expm1(T(710)) == T(Inf)   # expm1(710) == Inf64
     end
 end
 
