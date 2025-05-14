@@ -34,18 +34,15 @@ for T in [Float32, ]
     end
 end
 
-pos_range = (lo=Float32(0.0), hi=prevfloat(Float32(1.0)))
-neg_range = (lo=Float32(-0.0), hi=nextfloat(Float32(-1.0)))
+pos_range = (lo=Float32(1.0), hi=prevfloat(Float32(Inf)))
 if "cr_acosh.fast" in CheckExhaustive
     @testset "cr_acosh-exhaustive.fast" begin
         test_float_range(acosh, PureLibm.cr_acosh, lo=pos_range.lo, hi=pos_range.hi)
-        test_float_range(acosh, PureLibm.cr_acosh, lo=neg_range.lo, hi=neg_range.hi)
     end
 end
 if "cr_acosh" in CheckExhaustive
     @testset "cr_acosh-exhaustive" begin
         test_float_range(acosh, PureLibm.cr_acosh, lo=pos_range.lo, hi=pos_range.hi, bigfloat=true)
-        test_float_range(acosh, PureLibm.cr_acosh, lo=neg_range.lo, hi=neg_range.hi, bigfloat=true)
     end
 end
 # ENV["PURELIBM_CHECK_EXHAUSTIVE"] = "cr_acosh.fast,cr_acosh"
