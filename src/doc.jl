@@ -37,6 +37,13 @@ Compute sine of `x`.
 cr_sin(x::Float32) = cr_sinf(x)
 
 """
+    cr_sinpi(x)
+
+Compute sine of `x*pi`.
+"""
+cr_sinpi(x::Float32) = cr_sinpif(x)
+
+"""
     cr_sincos(x)
 
 Compute sine and cosine of `x`.
