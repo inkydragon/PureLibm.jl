@@ -24,7 +24,6 @@ include("asin.jl")
 include("atan.jl")
 # atan2
 include("cos.jl")
-include("cosh.jl")
 include("sin.jl")
 include("sinpi.jl")
 include("sincos.jl")
@@ -34,8 +33,8 @@ include("tan.jl")
 include("acosh.jl")
 include("asinh.jl")
 # atanh
-# cosh
-# sinh
+include("cosh.jl")
+include("sinh.jl")
 include("tanh.jl")
 
 # Exponential and logarithmic
