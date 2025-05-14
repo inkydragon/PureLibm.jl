@@ -3,10 +3,14 @@
 for T in [Float32, ]
     @testset "cr_asinh(::$T)" begin
         # IEC 60559
+        # asinh(±0) returns ±0
+        @test PureLibm.cr_asinh(T(0.0)) == T(0.0)
+        @test PureLibm.cr_asinh(T(-0.0)) == T(-0.0)
+        # asinh(±∞) returns ±∞
+        @test PureLibm.cr_asinh(T(Inf)) == T(Inf)
 
         # sanity check
         @test isnan(PureLibm.cr_asinh(T(NaN)))
-
     end
 
     @testset "cr_asinh(random)" begin
