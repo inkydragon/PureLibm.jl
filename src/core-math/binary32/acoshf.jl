@@ -104,9 +104,11 @@ Correctly-rounded inverse hyperbolic cosine function for `Float32`.
 """
 function cr_acoshf(x::Float32)
     tu = reinterpret(UInt32, x)
-    if (tu <= 0x3f800000)
+    if @unlikely(tu <= 0x3f800000)
+        # |x| <= 1.0
         return _acoshf_as_special(x)
-    elseif (tu <= 0x3f99db23)
+    elseif @unlikely(tu <= 0x3f99db23)
+        # |x| <= 1.202
         zf = x - 1.0f0
         z = Float64(zf)
         a = sqrt(2.0 * z)
@@ -116,7 +118,8 @@ function cr_acoshf(x::Float32)
         f = ((c[1] + z*c[2]) + z2*(c[3] + z*c[4])) + z4*((c[5] + z*c[6]) + z2*(c[7] + z*c[8]))
         r = a + (a*z)*f
         return Float32(r)
-    elseif (tu < 0x7f800000)
+    elseif @likely(tu < 0x7f800000)
+        # |x| < Inf32
         xd = Float64(x)
         x2 = xd * xd
         tpf = xd + sqrt(x2 - 1.0)
@@ -133,7 +136,7 @@ function cr_acoshf(x::Float32)
         r = ((lix[128+1] * e + lix[j+1]) + z*c[1]) + z2*(c[2] + z*c[3])
 
         ru = reinterpret(UInt64, r)
-        if (((ru + 259000) & UInt64(0xfffffff)) < 260000)
+        if @unlikely(((ru + 259000) & UInt64(0xfffffff)) < 260000)
             # accurate path
             z2 = z*z
             cp = CR_ACOSHF_CP
@@ -147,7 +150,7 @@ function cr_acoshf(x::Float32)
             Ll = ln2l * e
             rf = fma(z, c0, Ll + lix[j+1]) + Lh
             ru = reinterpret(UInt64, rf) 
-            if ((ru & UInt64(0xfffffff)) == 0)
+            if @unlikely((ru & UInt64(0xfffffff)) == 0)
                 h = fma(z, c0, Ll + lix[j+1]) + (Lh - rf)
                 rf = rf + 64.0 * h
             end
@@ -156,6 +159,7 @@ function cr_acoshf(x::Float32)
         end
         return Float32(r)
     else
+        # NaN, Inf
         return _acoshf_as_special(x)
     end
 end
