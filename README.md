@@ -21,6 +21,52 @@
     - If refactoring the algorithm improves performance,
         implementations that match the original reference are retained as references for testing purposes.
 
+## Implementation Status
+
+| Functions | Float32 | Float64 |
+|-----------|:-------:|:-------:|
+| acos      |    ✅    |         |
+| acosh     |    ✅    |         |
+| acospi    |         |         |
+| asin      |    ✅    |         |
+| asinh     |         |         |
+| asinpi    |         |         |
+| atan      |    ✅    |         |
+| atan2     |         |         |
+| atan2pi   |         |         |
+| atanh     |    ✅    |         |
+| atanpi    |         |         |
+| cbrt      |         |         |
+| compound  |         |         |
+| cos       |    ✅    |         |
+| cosh      |         |         |
+| cospi     |         |         |
+| erf       |         |         |
+| erfc      |         |         |
+| exp       |    ✅    |         |
+| exp10     |    ✅    |         |
+| exp10m1   |         |         |
+| exp2      |    ✅    |         |
+| exp2m1    |         |         |
+| expm1     |    ✅    |         |
+| hypot     |         |         |
+| lgamma    |         |         |
+| log       |         |         |
+| log10     |         |         |
+| log10p1   |         |         |
+| log1p     |    ✅    |         |
+| log2      |         |         |
+| log2p1    |         |         |
+| pow       |         |         |
+| rsqrt     |    ✅    |    ✅    |
+| sin       |    ✅    |         |
+| sincos    |         |         |
+| sinh      |         |         |
+| sinpi     |    ✅    |         |
+| tan       |    ✅    |         |
+| tanh      |         |         |
+| tanpi     |         |         |
+| tgamma    |    ✅    |         |
 
 ## Dev Memo
 
