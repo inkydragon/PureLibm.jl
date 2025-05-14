@@ -17,6 +17,8 @@ for T in [Float32, ]
         # overflow
         @test PureLibm.cr_expm1(89f0) == Inf32      # expm1(89f0) == Inf32
         @test PureLibm.cr_expm1(T(710)) == T(Inf)   # expm1(710) == Inf64
+        # underflow
+        @test PureLibm.cr_expm1(-17.4f0) == -one(T)
     end
 end
 
