@@ -1,0 +1,40 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
+
+for T in [Float32, ]
+    @testset "cr_asinh(::$T)" begin
+        # IEC 60559
+
+        # sanity check
+        @test isnan(PureLibm.cr_asinh(T(NaN)))
+
+    end
+
+    @testset "cr_asinh(random)" begin
+        test_x = T[
+
+        ]
+        test_x = [test_x..., -test_x...]
+        @testset "cr_asinh($x)" for x in test_x
+            # Test against system libm
+            @test PureLibm.cr_asinh(x) ≈ asinh(x)
+            # Test against MPFR
+            @test PureLibm.cr_asinh(x) === T(asinh(BigFloat(x)))
+        end
+    end
+end
+
+pos_range = (lo=Float32(0.0), hi=prevfloat(Float32(Inf)))
+neg_range = (lo=Float32(-0.0), hi=nextfloat(Float32(Inf)))
+if "cr_asinh.fast" in CheckExhaustive
+    @testset "cr_asinh-exhaustive.fast" begin
+        test_float_range(asinh, PureLibm.cr_asinh, lo=pos_range.lo, hi=pos_range.hi)
+        test_float_range(asinh, PureLibm.cr_asinh, lo=neg_range.lo, hi=neg_range.hi)
+    end
+end
+if "cr_asinh" in CheckExhaustive
+    @testset "cr_asinh-exhaustive" begin
+        test_float_range(asinh, PureLibm.cr_asinh, lo=pos_range.lo, hi=pos_range.hi, bigfloat=true)
+        test_float_range(asinh, PureLibm.cr_asinh, lo=neg_range.lo, hi=neg_range.hi, bigfloat=true)
+    end
+end
+# ENV["PURELIBM_CHECK_EXHAUSTIVE"] = "cr_asinh.fast,cr_asinh"

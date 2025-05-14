@@ -72,7 +72,13 @@ cr_sinpi(x::Float32) = cr_sinpif(x)
 Compute inverse hyperbolic cosine of `x`.
 """
 cr_acosh(x::Float32) = cr_acoshf(x)
-# asinh
+
+"""
+    cr_asinh(x)
+
+Compute inverse hyperbolic sine of `x`.
+"""
+cr_asinh(x::Float32) = cr_asinhf(x)
 # atanh
 
 """
