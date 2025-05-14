@@ -92,11 +92,11 @@ function cr_asinhf(x::Float32)
     tu = reinterpret(UInt32, x)
     tu = tu & (~UInt32(0) >> 1)
     xs = Float64(x)
-    if (tu <= 0x3e815667)
+    if @unlikely(tu <= 0x3e815667)
         # |x| <= 0.25261232 (0x1.02accep-2)
-        if (tu <= 0x39ddb3d7)
+        if @unlikely(tu <= 0x39ddb3d7)
             # |x| <= 0.00042286396 (0x1.bb67aep-12)
-            if (tu == 0)
+            if @unlikely(tu == 0)
                 return x
             end
             res = fma(x, Float32(-0x1p-25), x)
@@ -111,7 +111,7 @@ function cr_asinhf(x::Float32)
         r = xs - xs * f
         return Float32(r)
     else
-        if (tu >= 0x7f800000)
+        if @unlikely(tu >= 0x7f800000)
             # inf or NaN
             return x + x
         end
@@ -132,7 +132,7 @@ function cr_asinhf(x::Float32)
         rf = ((lix[128+1] * e + lix[j+1]) + z * c[1]) + z2 * (c[2] + z * c[3])
     
         ru = reinterpret(UInt64, rf)
-        if (((ru + 259000) & UInt64(0xfffffff)) < 260000)
+        if @unlikely(((ru + 259000) & UInt64(0xfffffff)) < 260000)
             # accurate path
             z2 = z * z
             cp = CR_ASINHF_CP
@@ -146,7 +146,7 @@ function cr_asinhf(x::Float32)
             Ll = ln2l * e
             rf = fma(z, c0, Ll + lix[j+1]) + Lh
             ru = reinterpret(UInt64, rf)
-            if ((ru & UInt64(0xfffffff)) == 0)
+            if @unlikely((ru & UInt64(0xfffffff)) == 0)
                 h = fma(z, c0, Ll + lix[j+1]) + (Lh - rf)
                 rf += 64.0 * h
             end
