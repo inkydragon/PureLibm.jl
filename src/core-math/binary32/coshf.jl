@@ -26,6 +26,10 @@ const CR_COSHF_CP = NTuple{4, Float64}((
 
 """
 Correctly-rounded hyperbolic cosine of `Float32`.
+
+# Reference
+- [DLMF 4.28.2](https://dlmf.nist.gov/4.28#E2)
+- https://gitlab.inria.fr/core-math/core-math/-/blob/de59ecfbe35b4e2dddbad2849f3cdde7835d5a48/src/binary32/cosh/coshf.c
 """
 function cr_coshf(x::Float32)
     iln2 = Float64(0x1.71547652b82fep+5)
@@ -33,7 +37,7 @@ function cr_coshf(x::Float32)
     tu = reinterpret(UInt32, x)
     z = Float64(x)
     ax = tu << 1
-    if (ax > 0x8565_a9f8)
+    if @unlikely(ax > 0x8565_a9f8)
         # |x| >~ 89.4
         if ax >= 0xff00_0000
             if (ax << 8) != 0
@@ -45,11 +49,11 @@ function cr_coshf(x::Float32)
         return r
     end
 
-    if (ax < 0x7c00_0000)
+    if @unlikely(ax < 0x7c00_0000)
         # |x| < 0.125
-        if (ax < 0x7400_0000)
+        if @unlikely(ax < 0x7400_0000)
             # |x| < 0x1p-11
-            if (ax < 0x6600_0000)
+            if @unlikely(ax < 0x6600_0000)
                 # |x| < 0x1p-24
                 return fma(abs(x), Float32(0x1p-25), 1.0f0)
             end
@@ -87,7 +91,7 @@ function cr_coshf(x::Float32)
 
     ub = Float32(r)
     lb = Float32(r - 1.45e-10 * r)
-    if (ub != lb)
+    if @unlikely(ub != lb)
         iln2h = Float64(0x1.7154765p+5)
         iln2l = Float64(0x1.5c17f0bbbe88p-26)
 
