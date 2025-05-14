@@ -27,6 +27,17 @@ for T in [Float32, ]
             # [20, 89]  cosh(90f0) == Inf32
             rand_float(Float32(20), Float32(89), 16)...,
             89.4,
+
+            # branch coverage
+            # (ax > 0x8565_a9f8) && !ax >= 0xff00_0000
+            #   [89.4, Inf32]
+            rand_float(Float32(89.4), prevfloat(Inf32), 4)...,
+            # (ax < 0x7c00_0000) && !(ax < 0x7400_0000)
+            #   [0x1p-11, 0.125]
+            rand_float(Float32(0x1p-11), Float32(0.125), 4)...,
+            # (ub != lb)
+            2.563417f0, 2.6085603f0,
+            89.00481f0, 89.41558f0,
         ]
         test_x = [test_x..., -test_x...]
         @testset "cr_cosh($x)" for x in test_x
