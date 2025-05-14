@@ -31,7 +31,7 @@ include("sincos.jl")
 include("tan.jl")
 
 # C99: Hyperbolic
-# acosh
+include("acosh.jl")
 # asinh
 # atanh
 # cosh
