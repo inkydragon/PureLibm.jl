@@ -20,9 +20,11 @@ for T in [Float32, ]
 
     @testset "cr_acosh(random)" begin
         test_x = T[
- 
+            T(1.0),
+            nextfloat(T(1.0)),
+            # [1, Inf)
+            rand_float(T(1.0), T(Inf), 16)...,
         ]
-        test_x = [test_x..., -test_x...]
         @testset "cr_acosh($x)" for x in test_x
             # Test against system libm
             @test PureLibm.cr_acosh(x) ≈ acosh(x)
