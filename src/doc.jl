@@ -1,5 +1,5 @@
 
-# C99: Trigonometric
+#= Trigonometric =#
 """
     cr_acos(x)
 
@@ -30,25 +30,11 @@ Compute cosine of `x`.
 cr_cos(x::Float32) = cr_cosf(x)
 
 """
-    cr_cosh(x)
-
-Compute hyperbolic cosine of `x`.
-"""
-cr_cosh(x::Float32) = cr_coshf(x)
-
-"""
     cr_sin(x)
 
 Compute sine of `x`.
 """
 cr_sin(x::Float32) = cr_sinf(x)
-
-"""
-    cr_sinpi(x)
-
-Compute sine of `x*pi`.
-"""
-cr_sinpi(x::Float32) = cr_sinpif(x)
 
 """
     cr_sincos(x)
@@ -64,12 +50,34 @@ Compute tangent of `x`.
 """
 cr_tan(x::Float32) = cr_tanf(x)
 
-# C99: Hyperbolic
+# acospi
+# asinpi
+# atanpi
+# atan2pi
+
+# cospi
+"""
+    cr_sinpi(x)
+
+Compute sine of `x*pi`.
+"""
+cr_sinpi(x::Float32) = cr_sinpif(x)
+# tanpi
+
+
+#= Hyperbolic =#
 # acosh
 # asinh
 # atanh
-# cosh
+
+"""
+    cr_cosh(x)
+
+Compute hyperbolic cosine of `x`.
+"""
+cr_cosh(x::Float32) = cr_coshf(x)
 # sinh
+
 """
     cr_tanh(x)
 
@@ -77,7 +85,8 @@ Compute hyperbolic tangent of `x`.
 """
 cr_tanh(x::Float32) = cr_tanhf(x)
 
-# C99: Exponential and logarithmic
+
+#= Exponential and logarithmic =#
 """
     cr_exp(x)
 
@@ -91,6 +100,7 @@ cr_exp(x::Float32) = cr_expf(x)
 Compute `10^x` of `x`.
 """
 cr_exp10(x::Float32) = cr_exp10f(x)
+# exp10m1
 
 """
     cr_exp2(x)
@@ -98,6 +108,7 @@ cr_exp10(x::Float32) = cr_exp10f(x)
 Compute `2^x` of `x`.
 """
 cr_exp2(x::Float32) = cr_exp2f(x)
+# exp2m1
 
 """
     cr_expm1(x)
@@ -106,24 +117,35 @@ Compute `exp(x) - 1` of `x`.
 """
 cr_expm1(x::Float32) = cr_expm1f(x)
 
-# log10
-"""
-    cr_log1p(x)
-
-Compute biased argument natural logarithm `log(1+x)` of `x`.
-"""
-cr_log1p(x::Float32) = cr_log1pf(x)
-# log2
 """
     cr_log(x)
 
 Compute natural logarithm of `x`.
 """
 cr_log(x::Float32) = cr_logf(x)
+# log10
+# log10p1
 
-# C99: Power and Absolute-value
+"""
+    cr_log1p(x)
+
+Compute biased argument natural logarithm `log(1+x)` of `x`.
+"""
+cr_log1p(x::Float32) = cr_log1pf(x)
+# logp1
+# log2
+# log2p1
+
+
+#= Power and Absolute-value =#
+# cbrt
+# compoundn
+# hypot
+
 # pow
-# sqrt
+# pown
+# powr
+# rootn
 
 """
     cr_rsqrt(x)
@@ -131,13 +153,13 @@ cr_log(x::Float32) = cr_logf(x)
 Computes the reciprocal square root of `x`.
 """
 cr_rsqrt(x::Float32) = cr_rsqrtf(x)
+# sqrt
 
-# cbrt
-# hypot
 
-# C99: Error and gamma
+#= Error and gamma =#
 # erf
 # erfc
+
 # lgamma
 """
     cr_tgamma(x)
