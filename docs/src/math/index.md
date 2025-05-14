@@ -22,7 +22,6 @@
 - [`cr_sinpi(Float32)`](@ref PureLibm.cr_sinpi)
 - tanpi
 
-
 ## Hyperbolic
 
 - `acosh`
@@ -35,30 +34,30 @@
 ## Exponential and logarithmic
 
 - [`cr_exp(Float32)`](@ref PureLibm.cr_exp)
-- [`cr_expm1(Float32)`](@ref PureLibm.cr_expm1)
 - [`cr_exp10(Float32)`](@ref PureLibm.cr_exp10)
 - exp10m1
 - [`cr_exp2(Float32)`](@ref PureLibm.cr_exp2)
 - exp2m1
+- [`cr_expm1(Float32)`](@ref PureLibm.cr_expm1)
 - [`cr_log(Float32)`](@ref PureLibm.cr_log)
-- [`cr_log1p(Float32)`](@ref PureLibm.cr_log1p)
-- logp1
 - `log10`
 - log10p1
+- [`cr_log1p(Float32)`](@ref PureLibm.cr_log1p)
+- logp1
 - `log2`
 - log2p1
 
 ## Power
 
+- `cbrt`
+- compoundn
+- `hypot`
 - `pow`
 - pown
 - powr
 - rootn
-- `sqrt`
 - [`cr_rsqrt(Float32)`](@ref PureLibm.cr_rsqrt)
-- `cbrt`
-- compoundn
-- `hypot`
+- `sqrt`
 
 ## Error and gamma
 
