@@ -37,6 +37,12 @@ const CR_SINPIF_S = Float64[
 ]
 
 
+"""
+Correctly-rounded sine of `Float32` value for angles.
+
+# Reference
+- https://gitlab.inria.fr/core-math/core-math/-/blob/03c15350fdcc286625bc5fe9b57e47a2275af293/src/binary32/sinpi/sinpif.c
+"""
 function cr_sinpif(x::Float32)
     sn = CR_SINPIF_SN
     cn = CR_SINPIF_CN
@@ -44,7 +50,7 @@ function cr_sinpif(x::Float32)
 
     ixu = reinterpret(UInt32, x)
     e = Int32((ixu >> 23) & 0xff)
-    if (e == 0xff)
+    if @unlikely(e == 0xff)
         if (ixu << 9) == 0
             return Float32(NaN)
         end
@@ -56,9 +62,9 @@ function cr_sinpif(x::Float32)
     m = (m ⊻ sgn) - sgn
     m_u32 = reinterpret(UInt32, m)
     s = Int32(143 - e)
-    if (s < 0)
+    if @unlikely(s < 0)
         # |x| >= 0x1p+17
-        if (s < -6)
+        if @unlikely(s < -6)
             # |x| >= 0x1p+23
             return copysign(Float32(0.0), x)
         end
@@ -69,7 +75,7 @@ function cr_sinpif(x::Float32)
             return copysign(Float32(0.0), x)
         end
         return Float32(S[iq + 1])
-    elseif (s > 30)
+    elseif @unlikely(s > 30)
         # |x| < 0x1p-14
         z = Float64(x)
         z2 = z * z
@@ -77,7 +83,7 @@ function cr_sinpif(x::Float32)
     end
 
     si = Int32(25 - s)
-    if (si >= 0 && (m_u32 << si) == 0)
+    if @unlikely(si >= 0 && (m_u32 << si) == 0)
         return copysign(Float32(0.0), x)
     end
 
