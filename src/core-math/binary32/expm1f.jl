@@ -89,7 +89,7 @@ function cr_expm1f(x::Float32)
     c = CR_EXPM1F_C
     c2 = c[3] + c[4] * h
     c0 = c[1] + c[2] * h
-    svu = CR_EXPM1F_TD[(uu & 0x1f) + 1] + (uu >> 5) << 52
+    svu = reinterpret(UInt64, CR_EXPM1F_TD[(uu & 0x1f) + 1]) + (uu >> 5) << 52
     svf = reinterpret(Float64, svu)
     r = (c0 + h2 * c2) * svf - 1.0
 
