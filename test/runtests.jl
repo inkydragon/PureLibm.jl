@@ -24,6 +24,7 @@ include("asin.jl")
 include("atan.jl")
 # atan2
 include("cos.jl")
+include("cosh.jl")
 include("sin.jl")
 include("sinpi.jl")
 include("sincos.jl")

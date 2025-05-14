@@ -30,6 +30,13 @@ Compute cosine of `x`.
 cr_cos(x::Float32) = cr_cosf(x)
 
 """
+    cr_cosh(x)
+
+Compute hyperbolic cosine of `x`.
+"""
+cr_cosh(x::Float32) = cr_coshf(x)
+
+"""
     cr_sin(x)
 
 Compute sine of `x`.
