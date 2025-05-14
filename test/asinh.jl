@@ -22,6 +22,17 @@ for T in [Float32, ]
             rand_float(T(1e-4), T(0.25), 16)...,
             # [0.25, 1e6]
             rand_float(T(0.25), T(1e6), 16)...,
+
+            # branch coverage
+            # ((ru & UInt64(0xfffffff)) == 0)
+            2.9018954f7,
+            6.723824f7,
+            1.1760178f8,
+            4.8311844f9,
+            6.391892f22,
+            1.9926346f23,
+            2.749153f28,
+            9.862078f34,
         ]
         test_x = [test_x..., -test_x...]
         @testset "cr_asinh($x)" for x in test_x
