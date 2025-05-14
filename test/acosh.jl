@@ -1,0 +1,59 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
+
+for T in [Float32, ]
+    @testset "cr_acosh(::$T)" begin
+        # IEC 60559
+        # acosh(1) returns +0
+        @test PureLibm.cr_acosh(T(1.0)) == T(0.0)
+        # acosh(x) returns a NaN and raises the "invalid" floating-point exception for x < 1
+        @test isnan(PureLibm.cr_acosh(T(0.9)))
+        @test isnan(PureLibm.cr_acosh(T(0.0)))
+        @test isnan(PureLibm.cr_acosh(T(-0.0)))
+        @test isnan(PureLibm.cr_acosh(T(-0.9)))
+        # acosh(+∞) returns +∞
+        @test PureLibm.cr_acosh(T(Inf)) == T(Inf)
+
+        # sanity check
+        @test isnan(PureLibm.cr_acosh(T(NaN)))
+
+    end
+
+    @testset "cr_acosh(random)" begin
+        test_x = T[
+            T(1.0),
+            nextfloat(T(1.0)),
+            # [1, Inf)
+            rand_float(T(1.0), T(Inf), 16)...,
+
+            # branch coverage
+            # ((ru & UInt64(0xfffffff)) == 0)
+            2.9018954f7,
+            6.723824f7,
+            1.1760178f8,
+            4.8311844f9,
+            6.391892f22,
+            1.9926346f23,
+            2.749153f28,
+            9.862078f34,
+        ]
+        @testset "cr_acosh($x)" for x in test_x
+            # Test against system libm
+            @test PureLibm.cr_acosh(x) ≈ acosh(x)
+            # Test against MPFR
+            @test PureLibm.cr_acosh(x) === T(acosh(BigFloat(x)))
+        end
+    end
+end
+
+pos_range = (lo=Float32(1.0), hi=prevfloat(Float32(Inf)))
+if "cr_acosh.fast" in CheckExhaustive
+    @testset "cr_acosh-exhaustive.fast" begin
+        test_float_range(acosh, PureLibm.cr_acosh, lo=pos_range.lo, hi=pos_range.hi)
+    end
+end
+if "cr_acosh" in CheckExhaustive
+    @testset "cr_acosh-exhaustive" begin
+        test_float_range(acosh, PureLibm.cr_acosh, lo=pos_range.lo, hi=pos_range.hi, bigfloat=true)
+    end
+end
+# ENV["PURELIBM_CHECK_EXHAUSTIVE"] = "cr_acosh.fast,cr_acosh"
