@@ -24,6 +24,17 @@ for T in [Float32, ]
             nextfloat(T(1.0)),
             # [1, Inf)
             rand_float(T(1.0), T(Inf), 16)...,
+
+            # branch coverage
+            # ((ru & UInt64(0xfffffff)) == 0)
+            2.9018954f7,
+            6.723824f7,
+            1.1760178f8,
+            4.8311844f9,
+            6.391892f22,
+            1.9926346f23,
+            2.749153f28,
+            9.862078f34,
         ]
         @testset "cr_acosh($x)" for x in test_x
             # Test against system libm
