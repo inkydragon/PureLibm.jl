@@ -3,6 +3,15 @@
 for T in [Float32, ]
     @testset "cr_acosh(::$T)" begin
         # IEC 60559
+        # acosh(1) returns +0
+        @test PureLibm.cr_acosh(T(1.0)) == T(0.0)
+        # acosh(x) returns a NaN and raises the "invalid" floating-point exception for x < 1
+        @test isnan(PureLibm.cr_acosh(T(0.9)))
+        @test isnan(PureLibm.cr_acosh(T(0.0)))
+        @test isnan(PureLibm.cr_acosh(T(-0.0)))
+        @test isnan(PureLibm.cr_acosh(T(-0.9)))
+        # acosh(+∞) returns +∞
+        @test PureLibm.cr_acosh(T(Inf)) == T(Inf)
 
         # sanity check
         @test isnan(PureLibm.cr_acosh(T(NaN)))
