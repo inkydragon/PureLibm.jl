@@ -15,7 +15,13 @@ for T in [Float32, ]
 
     @testset "cr_asinh(random)" begin
         test_x = T[
-
+            eps(T(0.0)),
+            # [0, 1e-4]
+            rand_float(T(0.0), T(1e-4), 8)...,
+            # [1e-4, 0.25]
+            rand_float(T(1e-4), T(0.25), 16)...,
+            # [0.25, 1e6]
+            rand_float(T(0.25), T(1e6), 16)...,
         ]
         test_x = [test_x..., -test_x...]
         @testset "cr_asinh($x)" for x in test_x
