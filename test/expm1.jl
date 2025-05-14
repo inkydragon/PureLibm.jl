@@ -3,7 +3,16 @@
 for T in [Float32, ]
     @testset "cr_expm1(::$T)" begin
         # IEC 60559
+        # expm1(±0) returns ±0.
+        @test PureLibm.cr_expm1(zero(T)) == zero(T)
+        @test PureLibm.cr_expm1(-zero(T)) == -zero(T)
+        # expm1(−∞) returns −1.
+        @test PureLibm.cr_expm1(-T(Inf)) == -one(T)
+        # expm1(+∞) returns +∞.
+        @test PureLibm.cr_expm1(T(Inf)) == T(Inf)
 
+        # sanity check
+        @test isnan(PureLibm.cr_expm1(T(NaN)))
     end
 end
 
