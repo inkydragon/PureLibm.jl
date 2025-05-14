@@ -33,6 +33,9 @@ const CR_EXPM1F_B = NTuple{8, Float64}((
 
 """
 Correctly-rounded `exp(x) - 1` function for `Float32`.
+
+# Reference
+- https://gitlab.inria.fr/core-math/core-math/-/blob/345beda118d10da08ad2461fcac244e8e32d37de/src/binary32/expm1/expm1f.c
 """
 function cr_expm1f(x::Float32)
     iln2 = 0x1.71547652b82fep+5
@@ -41,11 +44,11 @@ function cr_expm1f(x::Float32)
     ux = reinterpret(UInt32, x)
     ax = ux << 1
     z = Float64(x)
-    if (ax < 0x7c400000)
+    if @likely(ax < 0x7c400000)
         # |x| < 0.15625
-        if (ax < 0x676a09e8)
+        if @unlikely(ax < 0x676a09e8)
             # |x| < 0x1.6a09e8p-24
-            if (ax == 0x0)
+            if @unlikely(ax == 0x0)
                 # x = +-0
                 return x
             end
@@ -62,12 +65,12 @@ function cr_expm1f(x::Float32)
         return Float32(r)
     end
 
-    if (ax >= 0x8562e430)
+    if @unlikely(ax >= 0x8562e430)
         # |x| > 88.72
         if ax > (UInt32(0xff) << 24)
             return x + x  # NaN
         end
-        if (ux >> 31 != 0)
+        if @unlikely(ux >> 31 != 0)
             # x < 0
             if ax == (UInt32(0xff) << 24)
                 return -1.0f0
@@ -95,8 +98,8 @@ function cr_expm1f(x::Float32)
 
     ub = Float32(r)
     lb = Float32(r - svf * 0x1.3b3p-33)
-    if (ub != lb)
-        if (ux > 0xc18aa123)
+    if @unlikely(ub != lb)
+        if @unlikely(ux > 0xc18aa123)
             # x < -17.32
             return -1.0f0 + Float32(0x1p-26)
         end
