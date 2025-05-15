@@ -55,7 +55,13 @@ cr_tan(x::Float32) = cr_tanf(x)
 # atanpi
 # atan2pi
 
-# cospi
+"""
+    cr_cospi(x)
+
+Compute cosine of `x*pi`.
+"""
+cr_cospi(x::Float32) = cr_cospif(x)
+
 """
     cr_sinpi(x)
 

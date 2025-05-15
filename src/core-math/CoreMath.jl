@@ -8,7 +8,7 @@ include("binary32/asinf.jl")
 include("binary32/atanf.jl")
 # atan2f
 include("binary32/cosf.jl")
-
+include("binary32/cospif.jl")
 include("binary32/sinf.jl")
 include("binary32/sinpif.jl")
 include("binary32/sincosf.jl")
