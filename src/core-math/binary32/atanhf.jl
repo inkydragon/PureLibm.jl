@@ -86,22 +86,21 @@ function cr_atanhf(x::Float32)
     ux = reinterpret(UInt32, x)
     ax = ux << 1
     if @unlikely(ax < 0x7a300000 || ax >= 0x7f000000)
-        # |x| < 0x1.5a3116p-5 or x is NaN/Inf
+        # |x| < 0x1.3p-5 or x is NaN/Inf
         if @unlikely(ax >= 0x7f000000)
             # NaN/Inf
             return _atanhf_as_special(x)
         end
         if @unlikely(ax < 0x73713744)
-            # |x| < 0x1.f5a956p-12
+            # |x| < 0.000352112 (0x1.713744p-12)
             if ax == 0
                 # x = +-0
                 return x
             end
             # errno = ERANGE
-            # |x| < 0.000352112(0x1.713744p-12)
             return fma(x, Float32(0x1p-25), x)
         else
-            # |x| < 0x1.3p-5
+            # 0x1.713744p-12 <= |x| < 0x1.3p-5
             z = Float64(x)
             z2 = z * z
             z4 = z2 * z2
@@ -111,6 +110,7 @@ function cr_atanhf(x::Float32)
         end
     end
 
+    # |x| >= 0x1.3p-5
     s = (1.0, -1.0)
     sgn = s[(ux>>31)+1]
     e = UInt32(ax >> 24)
