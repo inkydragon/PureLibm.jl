@@ -32,6 +32,11 @@ for T in [Float32, ]
         @test isnan(PureLibm.cr_tanpi(T(-Inf)))
 
         # sanity check
+        @test isnan(PureLibm.cr_tanpi(T(NaN)))
+        @test PureLibm.cr_tanpi(-T(1)) == T(0)
+        @test PureLibm.cr_tanpi(-T(1)/4) == -T(1)
+        @test PureLibm.cr_tanpi(T(1)/4) == T(1)
+        @test PureLibm.cr_tanpi(T(1)) == -T(0)
 
         # Coverage test
         @testset "cr_tanpi(random)" begin
