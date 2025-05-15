@@ -32,7 +32,7 @@ include("tan.jl")
 # C99: Hyperbolic
 include("acosh.jl")
 include("asinh.jl")
-# atanh
+include("atanh.jl")
 include("cosh.jl")
 include("sinh.jl")
 include("tanh.jl")
