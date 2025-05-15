@@ -10,11 +10,17 @@ for T in [Float32, ]
         @test PureLibm.cr_atanh(T(1.0)) == T(Inf)
         @test PureLibm.cr_atanh(T(-1.0)) == T(-Inf)
         # atanh(x) returns a NaN and raises the "invalid" floating-point exception for |x| > 1.
-        # @test isnan(PureLibm.cr_atanh(T(1.1)))
-        # @test isnan(PureLibm.cr_atanh(T(-1.1)))
+        @test isnan(PureLibm.cr_atanh(T(1.1)))
+        @test isnan(PureLibm.cr_atanh(T(-1.1)))
+        for x in rand_float(nextfloat(T(1.0)), prevfloat(T(Inf)), 16)
+            @test isnan(PureLibm.cr_atanh(x))
+            @test isnan(PureLibm.cr_atanh(-x))
+        end
     
         # sanity check
         @test isnan(PureLibm.cr_atanh(T(NaN)))
+        @test isnan(PureLibm.cr_atanh(T(Inf)))
+        @test isnan(PureLibm.cr_atanh(T(-Inf)))
     end
 
     @testset "cr_atanh(random)" begin
