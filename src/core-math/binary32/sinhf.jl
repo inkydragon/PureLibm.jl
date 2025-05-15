@@ -61,10 +61,10 @@ function cr_sinhf(x::Float32)
     tu = reinterpret(UInt32, x)
     ux = tu << 1
     z = Float64(x)
-    if (ux > 0x8565a9f8)
+    if @unlikely(ux > 0x8565a9f8)
         # |x| > 0x1.65a9f8p+6
         sgn = copysign(2.0f0, x)
-        if (ux >= 0xff000000)
+        if ux >= 0xff000000
             if (ux << 8) != 0
                 return x + x  # NaN
             end
@@ -74,15 +74,16 @@ function cr_sinhf(x::Float32)
         return r
     end
 
-    if (ux < 0x7c000000)
+    if @unlikely(ux < 0x7c000000)
         # |x| < 0.125
-        if (ux <= 0x74250bfe)
+        if @unlikely(ux <= 0x74250bfe)
             # |x| <= 0x1.250bfep-11
-            if (ux < 0x66000000)
+            if @unlikely(ux < 0x66000000)
                 # |x| < 0x1p-24
                 return fma(x, abs(x), x)
             end
-            if ux == 0x74250bfe
+            if @unlikely(ux == 0x74250bfe)
+                # hard to round case
                 sgn = copysign(1.0f0, x)
                 return sgn * Float32(0x1.250bfep-11) + sgn * Float32(0x1p-36)
             end
@@ -122,7 +123,7 @@ function cr_sinhf(x::Float32)
 
     ub = Float32(r)
     lb = Float32(r - 1.52e-10 * r)
-    if (ub != lb)
+    if @unlikely(ub != lb)
         iln2h = 0x1.7154765p+5
         iln2l = 0x1.5c17f0bbbe88p-26
         h = (iln2h * z - ia) + iln2l * z
