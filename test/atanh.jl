@@ -3,9 +3,18 @@
 for T in [Float32, ]
     @testset "cr_atanh($T)" begin
         # IEC 60559
-
+        # atanh(±0) returns ±0.
+        @test PureLibm.cr_atanh(T(0.0)) == T(0.0)
+        @test PureLibm.cr_atanh(T(-0.0)) == T(-0.0)
+        # atanh(±1) returns ±∞ and raises the "divide-by-zero" floating-point exception.
+        @test PureLibm.cr_atanh(T(1.0)) == T(Inf)
+        @test PureLibm.cr_atanh(T(-1.0)) == T(-Inf)
+        # atanh(x) returns a NaN and raises the "invalid" floating-point exception for |x| > 1.
+        # @test isnan(PureLibm.cr_atanh(T(1.1)))
+        # @test isnan(PureLibm.cr_atanh(T(-1.1)))
+    
         # sanity check
-
+        @test isnan(PureLibm.cr_atanh(T(NaN)))
     end
 
     @testset "cr_atanh(random)" begin
