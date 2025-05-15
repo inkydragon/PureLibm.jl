@@ -3,7 +3,12 @@
 for T in [Float32, ]
     @testset "cr_sinh(::$T)" begin
         # IEC 60559
-
+        # sinh(±0) returns ±0
+        @test PureLibm.cr_sinh(T(0.0)) == T(0.0)
+        @test PureLibm.cr_sinh(T(-0.0)) == T(-0.0)
+        # sinh(±∞) returns ±∞
+        @test PureLibm.cr_sinh(T(Inf)) == T(Inf)
+        @test PureLibm.cr_sinh(T(-Inf)) == T(-Inf)
 
         # sanity check
 
