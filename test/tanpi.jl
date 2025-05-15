@@ -3,6 +3,33 @@
 for T in [Float32, ]
     @testset "cr_tanpi(::$T)" begin
         # IEC 60559
+        # tanpi(±0) returns ±0
+        @test PureLibm.cr_tanpi(T(0.0)) == T(0.0)
+        @test PureLibm.cr_tanpi(T(-0.0)) == T(-0.0)
+        for n in rand(1:10^6, 64)
+            odd = 2n - 1
+            even = 2n
+            # tanpi(n) returns +0, for positive even and negative odd integers n
+            @test PureLibm.cr_tanpi(T(even)) == T(0.0)
+            @test PureLibm.cr_tanpi(T(-odd)) == T(0.0)
+            # tanpi(n) returns −0, for positive odd and negative even integers n
+            @test PureLibm.cr_tanpi(T(odd)) == T(-0.0)
+            @test PureLibm.cr_tanpi(T(-even)) == T(-0.0)
+
+            # tanpi(n + 1/2) returns +∞ and raises
+            #   the "divide-by-zero" floating-point exception,
+            #   for even integers n
+            @test PureLibm.cr_tanpi(T(even + 0.5)) == T(Inf)
+            @test PureLibm.cr_tanpi(T(-even + 0.5)) == T(Inf)
+            # tanpi(n + 1/2) returns −∞ and raises
+            #   the "divide-by-zero" floating-point exception,
+            #   for odd integers n
+            @test PureLibm.cr_tanpi(T(odd + 0.5)) == T(-Inf)
+            @test PureLibm.cr_tanpi(T(-odd + 0.5)) == T(-Inf)
+        end
+        # tanpi(±∞) returns a NaN and raises the "invalid" floating-point exception
+        @test isnan(PureLibm.cr_tanpi(T(Inf)))
+        @test isnan(PureLibm.cr_tanpi(T(-Inf)))
 
         # sanity check
 
