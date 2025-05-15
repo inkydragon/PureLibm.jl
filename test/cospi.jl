@@ -28,7 +28,18 @@ for T in [Float32]
         test_x = T[
             eps(T(0.0)),
             
+            # branch coverage
+            # ax >= UInt32(0x19f030)
+            rand_float(T(0x1.9f03p-129), T(2^-15), 2)...,
+            # (p > 63)
+            #   e > 175
+            0x1p+49,  # 176
+            0x1p+53,  # 180
+            # 112 <= e <= 143
+            2.0^-15,
+            2.0^16,
         ]
+        test_x = [test_x..., -test_x...]
         @testset "cr_cospi($x)" for x in test_x
             # Test against system libm
             @test PureLibm.cr_cospi(x) ≈ cospi(x)
