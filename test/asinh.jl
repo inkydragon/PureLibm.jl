@@ -45,7 +45,7 @@ for T in [Float32, ]
 end
 
 pos_range = (lo=Float32(0.0), hi=prevfloat(Float32(Inf)))
-neg_range = (lo=Float32(-0.0), hi=nextfloat(Float32(Inf)))
+neg_range = (lo=Float32(-0.0), hi=nextfloat(Float32(-Inf)))
 if "cr_asinh.fast" in CheckExhaustive
     @testset "cr_asinh-exhaustive.fast" begin
         test_float_range(asinh, PureLibm.cr_asinh, lo=pos_range.lo, hi=pos_range.hi)
