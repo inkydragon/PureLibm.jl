@@ -8,7 +8,7 @@ include("binary32/asinf.jl")
 include("binary32/atanf.jl")
 # atan2f
 include("binary32/cosf.jl")
-include("binary32/coshf.jl")
+
 include("binary32/sinf.jl")
 include("binary32/sinpif.jl")
 include("binary32/sincosf.jl")
@@ -18,8 +18,8 @@ include("binary32/tanf.jl")
 include("binary32/acoshf.jl")
 include("binary32/asinhf.jl")
 # atanh
-# cosh
-# sinh
+include("binary32/coshf.jl")
+include("binary32/sinhf.jl")
 include("binary32/tanhf.jl")
 
 # Exponential and logarithmic
