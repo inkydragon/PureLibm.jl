@@ -29,7 +29,7 @@
 | acosh     |    ✅    |         |
 | acospi    |         |         |
 | asin      |    ✅    |         |
-| asinh     |         |         |
+| asinh     |    ✅    |         |
 | asinpi    |         |         |
 | atan      |    ✅    |         |
 | atan2     |         |         |
@@ -39,7 +39,7 @@
 | cbrt      |         |         |
 | compound  |         |         |
 | cos       |    ✅    |         |
-| cosh      |         |         |
+| cosh      |    ✅    |         |
 | cospi     |         |         |
 | erf       |         |         |
 | erfc      |         |         |
@@ -51,7 +51,7 @@
 | expm1     |    ✅    |         |
 | hypot     |         |         |
 | lgamma    |         |         |
-| log       |         |         |
+| log       |    ✅    |         |
 | log10     |         |         |
 | log10p1   |         |         |
 | log1p     |    ✅    |         |
@@ -60,11 +60,11 @@
 | pow       |         |         |
 | rsqrt     |    ✅    |    ✅    |
 | sin       |    ✅    |         |
-| sincos    |         |         |
-| sinh      |         |         |
+| sincos    |    ✅    |         |
+| sinh      |    ✅    |         |
 | sinpi     |    ✅    |         |
 | tan       |    ✅    |         |
-| tanh      |         |         |
+| tanh      |    ✅    |         |
 | tanpi     |         |         |
 | tgamma    |    ✅    |         |
 

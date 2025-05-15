@@ -24,11 +24,11 @@
 
 ## Hyperbolic
 
-- `acosh`
-- `asinh`
-- `atanh`
+- [`cr_acosh(Float32)`](@ref PureLibm.cr_acosh)
+- [`cr_asinh(Float32)`](@ref PureLibm.cr_asinh)
+- [`cr_atanh(Float32)`](@ref PureLibm.cr_atanh)
 - [`cr_cosh(Float32)`](@ref PureLibm.cr_cosh)
-- `sinh`
+- [`cr_sinh(Float32)`](@ref PureLibm.cr_sinh)
 - [`cr_tanh(Float32)`](@ref PureLibm.cr_tanh)
 
 ## Exponential and logarithmic
