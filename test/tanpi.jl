@@ -42,7 +42,16 @@ for T in [Float32, ]
         @testset "cr_tanpi(random)" begin
             test_x = T[
                 eps(T(0.0)),
-            
+
+                # branch coverage
+                # (e > (150 << 23)) && !(e == (UInt32(0xff) << 23))
+                #   |x| > 2^23 and (not NaN/Inf)
+                rand_float(Float32(0x1p+28), prevfloat(T(Inf)), 8)...,
+                2^24,
+                # a == 0x3e933802
+                0x1.267004p-2,
+                # a == 0x38f26685
+                0x1.e4cd0ap-14,
             ]
             test_x = [test_x..., -test_x...]
             @testset "cr_tanpi($x)" for x in test_x
