@@ -16,7 +16,7 @@ include("binary32/tanf.jl")
 
 # Hyperbolic
 include("binary32/acoshf.jl")
-# asinh
+include("binary32/asinhf.jl")
 # atanh
 # cosh
 # sinh
