@@ -18,7 +18,7 @@ include("utils/const.jl")
 include("utils/llvm_intrinsics.jl")
 include("utils/ranges.jl")
 
-# C99: Trigonometric
+# Trigonometric
 include("acos.jl")
 include("asin.jl")
 include("atan.jl")
@@ -29,6 +29,7 @@ include("sin.jl")
 include("sinpi.jl")
 include("sincos.jl")
 include("tan.jl")
+include("tanpi.jl")
 
 # C99: Hyperbolic
 include("acosh.jl")
