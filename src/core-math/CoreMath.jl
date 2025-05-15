@@ -13,6 +13,7 @@ include("binary32/sinf.jl")
 include("binary32/sinpif.jl")
 include("binary32/sincosf.jl")
 include("binary32/tanf.jl")
+include("binary32/tanpif.jl")
 
 # Hyperbolic
 include("binary32/acoshf.jl")

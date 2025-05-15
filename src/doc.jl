@@ -68,7 +68,13 @@ cr_cospi(x::Float32) = cr_cospif(x)
 Compute sine of `x*pi`.
 """
 cr_sinpi(x::Float32) = cr_sinpif(x)
-# tanpi
+
+"""
+    cr_tanpi(x)
+
+Compute tangent of `x*pi`.
+"""
+cr_tanpi(x::Float32) = cr_tanpif(x)
 
 
 #= Hyperbolic =#
