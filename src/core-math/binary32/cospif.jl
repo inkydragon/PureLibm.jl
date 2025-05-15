@@ -47,7 +47,7 @@ function cr_cospif(x::Float32)
 
     ixu = reinterpret(UInt32, x)
     e = (ixu >> 23) & UInt32(0xff)
-    if (e == 0xff)
+    if @unlikely(e == 0xff)
         if (ixu << 9) == 0
             # feraiseexcept(FE_INVALID)
             return NaN32
@@ -59,7 +59,7 @@ function cr_cospif(x::Float32)
     m = reinterpret(Int32, mu)
     s = 143 - e
     p = e - 112
-    if (p < 0)
+    if @unlikely(p < 0)
         # |x| < 2^-15
         ax = ixu & (~UInt32(0) >> 1)
         if ax >= UInt32(0x19f030)
@@ -71,8 +71,8 @@ function cr_cospif(x::Float32)
         end
     end
 
-    if (p > 31)
-        if (p > 63)
+    if @unlikely(p > 31)
+        if @unlikely(p > 63)
             return Float32(1.0)
         end
         iq = reinterpret(Int32, mu << (p - 32))
@@ -80,7 +80,7 @@ function cr_cospif(x::Float32)
     end
 
     k = reinterpret(Int32, mu << p)
-    if (k == 0)
+    if @unlikely(k == 0)
         iq = m >> (32 - p)
         return Float32(S[(iq + 32) & 127 + 1])
     end
