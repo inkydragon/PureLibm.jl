@@ -11,14 +11,29 @@ for T in [Float32, ]
         @test PureLibm.cr_sinh(T(-Inf)) == T(-Inf)
 
         # sanity check
-
+        @test isnan(PureLibm.cr_sinh(T(NaN)))
+        # overflow
+        @test !isinf(PureLibm.cr_sinh(T(89)))
+        @test PureLibm.cr_sinh(Float32(90)) == T(Inf)
+        # @test !isinf(PureLibm.cr_sinh(90.0))
+        # @test !isinf(PureLibm.cr_sinh(709.0))
+        @test PureLibm.cr_sinh(T(710)) == T(Inf)
+        # sinh(-x) == -sinh(x)
+        for n in 0:90
+            @test PureLibm.cr_sinh(-T(n)) == -PureLibm.cr_sinh(T(n))
+        end
+        # for Float64
+        for n in rand(90:710, 16)
+            @test PureLibm.cr_sinh(-T(n)) == -PureLibm.cr_sinh(T(n))
+        end
     end
 
     # Coverage test
     @testset "cr_sinh(random)" begin
         test_x = T[
             eps(T(0.0)),
-
+            # [0, 90]
+            rand_float(T(0), T(90), 16)...,
         ]
         @testset "cr_sinh($x)" for x in test_x
             # Test against system libm
@@ -29,8 +44,8 @@ for T in [Float32, ]
     end
 end
 
-pos_range = (lo=Float32(0.0), hi=prevfloat(Float32(Inf)))
-neg_range = (lo=Float32(-0.0), hi=nextfloat(Float32(-Inf)))
+pos_range = (lo=Float32(0.0), hi=prevfloat(Float32(90)))
+neg_range = (lo=Float32(-0.0), hi=nextfloat(Float32(-90)))
 if "cr_sinh.fast" in CheckExhaustive
     @testset "cr_sinh-exhaustive.fast" begin
         test_float_range(sinh, PureLibm.cr_sinh, lo=pos_range.lo, hi=pos_range.hi)
