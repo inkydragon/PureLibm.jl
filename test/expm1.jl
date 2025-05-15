@@ -20,6 +20,39 @@ for T in [Float32, ]
         # underflow
         @test PureLibm.cr_expm1(-17.4f0) == -one(T)
     end
+
+    @testset "cr_expm1(random)" begin
+        test_x = T[
+            eps(T(0.0)),
+            # rand_float(T(0.0), T(1.0), 16)...,
+
+            ## Branch cov
+            # (ax < 0x676a09e8)
+            #   |x| < 0x1.6a09e8p-24
+            rand_float(T(0), T(0x1.6a09e8p-24), 4)...,
+            # (ax < 0x7c400000) && !(ax < 0x676a09e8)
+            #   0x1.6a09e8p-24 <= |x| < 0.15625
+            0x1.6a09e8p-24,
+            rand_float(T(0x1.6a09e8p-24), T(0.15625), 4)...,
+            # (ax >= 0x8562e430) && (not NaN)
+            # && (ux >> 31 != 0) && !(ax == (UInt32(0xff) << 24))
+            #   |x| > 88.72 && x < 0 && x!=Inf
+            rand_float(-T(88.72), -T(710), 4)...,
+            # (ub != lb) && !(ux > 0xc18aa123)
+            # XXX: empty
+            # (ub != lb) && !(ux > 0xc18aa123)
+            0.30389398,
+            0.30733502,
+            3.722294,
+            3.8374038,
+        ]
+        @testset "cr_expm1($x)" for x in test_x
+            # Test against system libm
+            @test PureLibm.cr_expm1(x) ≈ expm1(x)
+            # Test against MPFR
+            @test PureLibm.cr_expm1(x) === T(expm1(BigFloat(x)))
+        end
+    end
 end
 
 pos_range = (lo=Float32(0.0), hi=Float32(Inf))
