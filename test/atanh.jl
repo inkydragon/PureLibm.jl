@@ -20,7 +20,8 @@ for T in [Float32, ]
     @testset "cr_atanh(random)" begin
         test_x = T[
             eps(T(0.0)),
-
+            # [0, 1]
+            rand_float(T(0), T(1.0), 16)...,
         ]
         test_x = [test_x..., -test_x...]
         @testset "cr_atanh($x)" for x in test_x
