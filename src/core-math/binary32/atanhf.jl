@@ -85,13 +85,13 @@ Correctly-rounded inverse hyperbolic tangent of `Float32`.
 function cr_atanhf(x::Float32)
     ux = reinterpret(UInt32, x)
     ax = ux << 1
-    if (ax < 0x7a300000 || ax >= 0x7f000000)
+    if @unlikely(ax < 0x7a300000 || ax >= 0x7f000000)
         # |x| < 0x1.5a3116p-5 or x is NaN/Inf
-        if (ax >= 0x7f000000)
+        if @unlikely(ax >= 0x7f000000)
             # NaN/Inf
             return _atanhf_as_special(x)
         end
-        if (ax < 0x73713744)
+        if @unlikely(ax < 0x73713744)
             # |x| < 0x1.f5a956p-12
             if ax == 0
                 # x = +-0
@@ -137,7 +137,7 @@ function cr_atanhf(x::Float32)
 
     ub = Float32(r)
     lb = Float32(r + sgn * 0.226e-9)
-    if (ub != lb)
+    if @unlikely(ub != lb)
         zn4 = zn2^2
         zd4 = zd2^2
         c = CR_ATANHF_C2
