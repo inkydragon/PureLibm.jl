@@ -17,7 +17,10 @@ for T in [Float32]
 
         # sanity check
         @test isnan(PureLibm.cr_cospi(T(NaN)))
-
+        @test PureLibm.cr_cospi(T(1)/4) == sqrt(T(2))/2
+        @test PureLibm.cr_cospi(T(1)/2) == T(0)
+        @test PureLibm.cr_cospi(T(3)/4) == -sqrt(T(2))/2
+        @test PureLibm.cr_cospi(T(1)) == T(-1)
     end
 
     # Coverage test
