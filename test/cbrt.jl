@@ -3,9 +3,19 @@
 for T in (Float32, )
     @testset "cr_cbrt($T)" begin
         # IEC 60559
+        @test isnan(PureLibm.cr_cbrt(T(NaN)))
+        # cbrt(±0) returns ±0
+        @test PureLibm.cr_cbrt(T(0.0)) == T(0.0)
+        @test PureLibm.cr_cbrt(T(-0.0)) == T(-0.0)
+        # cbrt(±∞) returns ±∞
+        @test PureLibm.cr_cbrt(T(Inf)) == T(Inf)
+        @test PureLibm.cr_cbrt(T(-Inf)) == T(-Inf)
 
         # sanity check
-
+        for n in rand(1:1000, 16)
+            @test PureLibm.cr_cbrt(T(n^3)) == T(n)
+            @test PureLibm.cr_cbrt(-T(n^3)) == -T(n)
+        end
     end
 
     @testset "cr_cbrt(random)" begin
