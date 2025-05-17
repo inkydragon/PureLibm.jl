@@ -31,7 +31,25 @@ for T in [Float32, ]
     @testset "cr_asinpi(random)" begin
         test_x = T[
             eps(T(0.0)),
+            rand_float(T(0.0), T(1.0), 32)...,
 
+            # Branch coverage
+            # i == 0
+            0x1p-5,  # (s = 24, i = 0)
+            # !(i == 0)
+            #   s in (19, 32)
+            0x1p-4,  # (s = 23, i = 1)
+            0x1p-3,  # (s = 22, i = 2)
+            0x1p-2,  # (s = 21, i = 4)
+            0x1p-1,  # (s = 20, i = 8)
+            # s = 20, i in [9, 15]
+            0x1.2p-1,
+            0x1.4p-1,
+            0x1.6p-1,
+            0x1.8p-1,
+            0x1.ap-1,
+            0x1.cp-1,
+            0x1.ep-1,
         ]
         test_x = [test_x..., -test_x...]
         @testset "cr_asinpi($x)" for x in test_x
