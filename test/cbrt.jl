@@ -21,6 +21,7 @@ for T in (Float32, )
     @testset "cr_cbrt(random)" begin
         test_x = T[
             eps(T(0.0)),
+            rand_float(T(0.0), T(prevfloat(Float32(Inf))), 32)...,
 
         ]
         test_x = [test_x..., -test_x...]
