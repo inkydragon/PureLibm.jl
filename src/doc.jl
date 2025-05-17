@@ -18,9 +18,17 @@ cr_acos
 """
     cr_asin(x)
 
-Compute arc-sine of `x`.
+Compute the inverse sine of `x` in radians.
+
+Returns the arc-sine of `x` in ranges `[-pi/2, pi/2]`.
+- Returns `±0` if `x` is `±0`
+- Returns `NaN` if `x` is `|x| > 1`
+- Returns `NaN` if `x` is `NaN`
+
+# Reference
+- [DLMF: §4.23.1](https://dlmf.nist.gov/4.23#E1)
 """
-cr_asin(x::Float32) = cr_asinf(x)
+cr_asin
 
 """
     cr_atan(x)
