@@ -43,7 +43,11 @@ const CR_ASINPIF_CH = Vector{NTuple{8, Float64}}([
 """
     cr_asinpi(x::Float32)
 
-Correctly-rounded half-revolution arc-sine function for  `Float32` value.
+Correctly-rounded half-revolution arc-sine function for `Float32` value.
+This function computes `asin(x)/π`
+
+# Reference
+- [src/binary32/asinpi/asinpif.c](https://gitlab.inria.fr/core-math/core-math/-/blob/03c15350fdcc286625bc5fe9b57e47a2275af293/src/binary32/asinpi/asinpif.c)
 """
 cr_asinpi(x::Float32) = cr_asinpif(x)
 
@@ -89,6 +93,19 @@ function cr_asinpif(x::Float32)
         c4 += c6 * z4
         c0 += c4 * (z4 * z4)
         r = z * c0
+        #= For rounding towards zero, the largest positive number for which there
+            is underflow is 0x1.921fb4p-125.
+            For rounding to nearest, it is 0x1.921fb4p-125 too (although the result
+            is 0x1p-126).
+            For rounding upwards, it is 0x1.921fb2p-125.
+        =#
+        # THRESHOLD = 0x1.fffffe632357dp-127
+        # if (ax != 0.0f0
+        #     && (abs(x) <= 0x1.921fb2p-125
+        #         || (abs(x) == 0x1.921fb4p-125
+        #             && abs(z * CR_ASINPIF_CH[1][1]) <= THRESHOLD)))
+        #         errno = ERANGE  # underflow
+        # end
         return Float32(r)
     else
         # |x| >= 2^-4
