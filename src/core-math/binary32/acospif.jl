@@ -42,6 +42,9 @@ const CR_ACOSPIF_CH = Vector{NTuple{8, Float64}}([
 
 Correctly-rounded half-revolution arc-cosine function for `Float32` value.
 This function computes `acos(x)/π`
+
+# Reference
+- [src/binary32/acospi/acospif.c](https://gitlab.inria.fr/core-math/core-math/-/blob/03c15350fdcc286625bc5fe9b57e47a2275af293/src/binary32/acospi/acospif.c)
 """
 cr_acospi(x::Float32) = cr_acospif(x)
 
