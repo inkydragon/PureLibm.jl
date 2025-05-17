@@ -53,7 +53,7 @@ function cr_asinpif(x::Float32)
     z = Float64(x)
     tu = reinterpret(UInt32, x)
     e = (tu >> 23) & UInt32(0xff)
-    if (e >= 127)
+    if @unlikely(e >= 127)
         # |x| >= 1 or nan
         if ax == 1.0f0
             # |x| = 1
@@ -71,7 +71,7 @@ function cr_asinpif(x::Float32)
 
     s = Int(146 - e)
     i = 0
-    if (s < 32)
+    if @likely(s < 32)
         # s<32 corresponds to |x| >= 2^-12
         i = Int(((tu & (~UInt32(0) >> 9)) | (UInt32(1) << 23)) >> s)
     end
@@ -79,7 +79,7 @@ function cr_asinpif(x::Float32)
     z2 = z * z
     z4 = z2 * z2
     c = CR_ASINPIF_CH[i+1]
-    if (i == 0)
+    if @unlikely(i == 0)
         # |x| < 2^-4
         c0 = c[1] + z2 * c[2]
         c2 = c[3] + z2 * c[4]
