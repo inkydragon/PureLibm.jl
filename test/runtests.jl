@@ -24,11 +24,15 @@ include("asin.jl")
 include("atan.jl")
 # atan2
 include("cos.jl")
-include("cospi.jl")
 include("sin.jl")
-include("sinpi.jl")
 include("sincos.jl")
 include("tan.jl")
+include("acospi.jl")
+# asinpi
+# atanpi
+# atan2pi
+include("cospi.jl")
+include("sinpi.jl")
 include("tanpi.jl")
 
 # C99: Hyperbolic
