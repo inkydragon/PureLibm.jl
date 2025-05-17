@@ -157,6 +157,9 @@ Returns the tangent of `x`.
 - Returns `NaN` if `x` is `x < 1`
 - Returns `+∞` if `x` is `+∞`
 - Returns `NaN` if `x` is `NaN`
+
+# Reference
+- [DLMF: §4.37.2](https://dlmf.nist.gov/4.37#E2)
 """
 cr_acosh
 
@@ -169,6 +172,9 @@ Returns the tangent of `x`.
 - Returns `±0` if `x` is `±0`
 - Returns `±∞` if `x` is `±∞`
 - Returns `NaN` if `x` is `NaN`
+
+# Reference
+- [DLMF: §4.37.1](https://dlmf.nist.gov/4.37#E1)
 """
 cr_asinh
 
@@ -182,6 +188,9 @@ Returns the tangent of `x`.
 - Returns `±∞` if `x` is `±1`
 - Returns `NaN` if `x` is `|x| > 1`
 - Returns `NaN` if `x` is `NaN`
+
+# Reference
+- [DLMF: §4.37.3](https://dlmf.nist.gov/4.37#E3)
 """
 cr_atanh
 
