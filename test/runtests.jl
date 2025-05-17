@@ -29,7 +29,7 @@ include("sincos.jl")
 include("tan.jl")
 include("acospi.jl")
 include("asinpi.jl")
-# atanpi
+include("atanpi.jl")
 # atan2pi
 include("cospi.jl")
 include("sinpi.jl")
