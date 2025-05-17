@@ -101,7 +101,7 @@ cr_tan
 """
     cr_acospi(x)
 
-Compute the inverse cosine of `x*pi` in radians.
+Compute the inverse cosine of `x` divided by `π`.
 """
 cr_acospi
 # asinpi
