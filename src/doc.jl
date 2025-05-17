@@ -132,9 +132,18 @@ cr_sinpi
 """
     cr_tanpi(x)
 
-Compute tangent of `x*pi`.
+Compute the tangent of `x*pi` in radians.
+
+Returns the tangent of `x` in ranges `[-∞, ∞]`.
+- Returns `±0` if `x` is `±0`
+- Returns `+0` if `x` is `n`, for positive even and negative odd integers `n`
+- Returns `-0` if `x` is `n`, for positive odd and negative even integers `n`
+- Returns `+∞` if `x` is `n + 1/2`, for even integers `n`
+- Returns `-∞` if `x` is `n + 1/2`, for odd integers `n`
+- Returns `NaN` if `x` is `±∞`
+- Returns `NaN` if `x` is `NaN`
 """
-cr_tanpi(x::Float32) = cr_tanpif(x)
+cr_tanpi
 
 
 #= Hyperbolic =#
