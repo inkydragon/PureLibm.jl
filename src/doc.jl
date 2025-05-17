@@ -227,9 +227,17 @@ cr_sinh
 """
     cr_tanh(x)
 
-Compute hyperbolic tangent of `x`.
+Compute the hyperbolic tangent of `x` in radians.
+
+Returns the hyperbolic tangent of `x`.
+- Returns `±0` if `x` is `±0`
+- Returns `±∞` if `x` is `±1`
+- Returns `NaN` if `x` is `NaN`
+
+# Reference
+- [DLMF: §4.28.4](https://dlmf.nist.gov/4.28#E4)
 """
-cr_tanh(x::Float32) = cr_tanhf(x)
+cr_tanh
 
 
 #= Exponential and logarithmic =#
