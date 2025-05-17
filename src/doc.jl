@@ -314,7 +314,7 @@ cr_log1p(x::Float32) = cr_log1pf(x)
 
 Compute cubic root of `x`.
 """
-cr_cbrt(x::Float32) = cr_cbrtf(x)
+cr_cbrt
 # compoundn
 # hypot
 
