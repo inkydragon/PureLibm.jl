@@ -7,6 +7,12 @@ _acospi(x::T) where {T<:AbstractFloat} = T(acos(x) / pi)
 for T in [Float32, ]
     @testset "cr_acospi(::$T)" begin
         # IEC 60559
+        @test isnan(PureLibm.cr_acospi(T(NaN)))
+        # acospi(+1) returns +0.
+        @test PureLibm.cr_acospi(T(1.0)) == T(0.0)
+        # acospi(x) returns a NaN and raises the "invalid" floating-point exception
+        #   for |x| > 1.
+        @test isnan(PureLibm.cr_acospi(T(2.0)))
 
         # sanity check
 
