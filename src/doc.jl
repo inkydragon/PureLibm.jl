@@ -119,9 +119,15 @@ cr_cospi
 """
     cr_sinpi(x)
 
-Compute sine of `x*pi`.
+Compute the sine of `x*pi` in radians.
+
+Returns the sine of `x` in ranges `[-1, 1]`.
+- Returns `±0` if `x` is `±0`
+- Returns `±0` if `x` is `±n`, for positive integers `n`
+- Returns `NaN` if `x` is `±∞`
+- Returns `NaN` if `x` is `NaN`
 """
-cr_sinpi(x::Float32) = cr_sinpif(x)
+cr_sinpi
 
 """
     cr_tanpi(x)
