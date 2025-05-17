@@ -163,9 +163,14 @@ cr_acosh
 """
     cr_asinh(x)
 
-Compute inverse hyperbolic sine of `x`.
+Compute the inverse hyperbolic sine of `x` in radians.
+
+Returns the tangent of `x`.
+- Returns `±0` if `x` is `±0`
+- Returns `±∞` if `x` is `±∞`
+- Returns `NaN` if `x` is `NaN`
 """
-cr_asinh(x::Float32) = cr_asinhf(x)
+cr_asinh
 
 """
     cr_atanh(x)
