@@ -98,7 +98,12 @@ Returns the tangent of `x` in ranges `[-∞, ∞]`.
 """
 cr_tan
 
-# acospi
+"""
+    cr_acospi(x)
+
+Compute the inverse cosine of `x*pi` in radians.
+"""
+cr_acospi
 # asinpi
 # atanpi
 # atan2pi
