@@ -15,7 +15,11 @@ for T in [Float32, ]
         @test isnan(PureLibm.cr_acospi(T(2.0)))
 
         # sanity check
-
+        @test PureLibm.cr_acospi(T(0.0)) == T(0.5)
+        @test PureLibm.cr_acospi(-T(0.0)) == T(0.5)
+        @test PureLibm.cr_acospi(-T(1.0)) == T(1.0)
+        @test isnan(PureLibm.cr_acospi(T(Inf)))
+        @test isnan(PureLibm.cr_acospi(-T(Inf)))
     end
 
     @testset "cr_acospi(random)" begin
