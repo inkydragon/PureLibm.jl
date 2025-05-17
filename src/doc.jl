@@ -49,9 +49,17 @@ cr_atan
 """
     cr_cos(x)
 
-Compute cosine of `x`.
+Compute the cosine of `x` in radians.
+
+Returns the arc-sine of `x` in ranges `[-1, 1]`.
+- Returns `±0` if `x` is `1`
+- Returns `NaN` if `x` is `±∞`
+- Returns `NaN` if `x` is `NaN`
+
+# Reference
+- [DLMF: §4.14.2](https://dlmf.nist.gov/4.14#E2)
 """
-cr_cos(x::Float32) = cr_cosf(x)
+cr_cos
 
 """
     cr_sin(x)

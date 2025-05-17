@@ -75,8 +75,12 @@ function _cosf_database(x::Float32, r::Float64)::Float32
 end
 
 """
+    cr_cos(x::Float32)
+
 Correctly-rounded cosine of `Float32`.
 """
+cr_cos(x::Float32) = cr_cosf(x)
+
 function cr_cosf(x::Float32)::Float32
     tu = reinterpret(UInt32, x)
     ax = tu << 1
