@@ -35,7 +35,7 @@ cr_asin
 
 Compute the inverse tangent of `x` in radians.
 
-Returns the arc-sine of `x` in ranges `[-pi/2, pi/2]`.
+Returns the arc-tangent of `x` in ranges `[-pi/2, pi/2]`.
 - Returns `±0` if `x` is `±0`
 - Returns `±π/2` if `x` is `±∞`
 - Returns `NaN` if `x` is `NaN`
@@ -51,8 +51,8 @@ cr_atan
 
 Compute the cosine of `x` in radians.
 
-Returns the arc-sine of `x` in ranges `[-1, 1]`.
-- Returns `±0` if `x` is `1`
+Returns the cosine of `x` in ranges `[-1, 1]`.
+- Returns `1` if `x` is `±0`
 - Returns `NaN` if `x` is `±∞`
 - Returns `NaN` if `x` is `NaN`
 
@@ -66,7 +66,7 @@ cr_cos
 
 Compute the sine of `x` in radians.
 
-Returns the arc-sine of `x` in ranges `[-1, 1]`.
+Returns the sine of `x` in ranges `[-1, 1]`.
 - Returns `±0` if `x` is `±0`
 - Returns `NaN` if `x` is `±∞`
 - Returns `NaN` if `x` is `NaN`
