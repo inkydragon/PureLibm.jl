@@ -15,7 +15,7 @@ include("binary32/sinf.jl")
 include("binary32/sincosf.jl")
 include("binary32/tanf.jl")
 include("binary32/acospif.jl")
-# asinpi
+include("binary32/asinpif.jl")
 # atanpi
 # atan2pi
 include("binary32/cospif.jl")
