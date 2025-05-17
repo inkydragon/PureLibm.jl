@@ -3,9 +3,17 @@
 """
     cr_acos(x)
 
-Compute arc cosine of `x`.
+Compute the inverse cosine of `x` in radians.
+
+Returns the arc-cosine of `x` in ranges `[0, pi]`.
+- Returns `+0` if `x` is `1`
+- Returns `NaN` if `x` is `|x| > 1`
+- Returns `NaN` if `x` is `NaN`
+
+# Reference
+- [DLMF: §4.23.2](https://dlmf.nist.gov/4.23#E2)
 """
-cr_acos(x::Float32) = cr_acosf(x)
+cr_acos
 
 """
     cr_asin(x)

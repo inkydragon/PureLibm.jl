@@ -50,11 +50,36 @@ function _acosf_as_special(x::Float32)::Float32
 end
 
 """
+    cr_acos(x::Float32)
+
 Correctly-rounded arc-cosine function for `Float32`.
 
-## Reference
-- https://gitlab.inria.fr/core-math/core-math/-/blob/f786e13fb0595adee545d7b29931d283f658ba0a/src/binary32/acos/acosf.c
+# Examples
+```jldoctest
+julia> cr_acos(-1.0f0) / pi
+1.0f0
+
+julia> cr_acos(-0.5f0) / pi
+0.6666667f0
+
+julia> cr_acos(0f0) / pi
+0.5f0
+
+julia> cr_acos(0.5f0) / pi
+0.33333334f0
+
+julia> cr_acos(1.0f0) / pi
+0.0f0
+
+julia> cr_acos(NaN32)
+NaN32
+```
+
+# Reference
+- [src/binary32/acos/acosf.c](https://gitlab.inria.fr/core-math/core-math/-/blob/f786e13fb0595adee545d7b29931d283f658ba0a/src/binary32/acos/acosf.c)
 """
+cr_acos(x::Float32) = cr_acosf(x)
+
 function cr_acosf(x::Float32)::Float32
     # pi/2 constant
     pi2 = 0x1.921fb54442d18p+0
