@@ -4,40 +4,57 @@
 _asinpi(x::T) where {T<:AbstractFloat} = T(asin(x) / pi)
 
 for T in [Float32, ]
-    @testset "cr_asin(::$T)" begin
+    @testset "cr_asinpi(::$T)" begin
         # IEC 60559
-
+        @test isnan(PureLibm.cr_asinpi(T(NaN)))
+        # asinpi(±0) returns ±0.
+        @test PureLibm.cr_asinpi(T(0.0)) == T(0.0)
+        @test PureLibm.cr_asinpi(-T(0.0)) == -T(0.0)
+        # asinpi(x) returns a NaN and raises the "invalid" floating-point exception
+        #   for |x| > 1.
+        @test isnan(PureLibm.cr_asinpi(nextfloat(T(1))))
+        @test isnan(PureLibm.cr_asinpi(prevfloat(T(-1))))
+        @test isnan(PureLibm.cr_asinpi(T(2)))
+        @test isnan(PureLibm.cr_asinpi(T(-2)))
+        @test isnan(PureLibm.cr_asinpi(T(Inf)))
+        @test isnan(PureLibm.cr_asinpi(T(-Inf)))
+    
         # sanity check
-
+        @test PureLibm.cr_asinpi(-T(1.0)) == -T(1) / 2
+        @test PureLibm.cr_asinpi(-T(0.5)) == -T(1) / 6
+        @test PureLibm.cr_asinpi(-T(0.0)) == -T(0.0)
+        @test PureLibm.cr_asinpi(T(0.0)) == T(0.0)
+        @test PureLibm.cr_asinpi(T(0.5)) == T(1) / 6
+        @test PureLibm.cr_asinpi(T(1.0)) == T(1) / 2
     end
 
-    @testset "cr_asin(random)" begin
+    @testset "cr_asinpi(random)" begin
         test_x = T[
             eps(T(0.0)),
 
         ]
         test_x = [test_x..., -test_x...]
-        @testset "cr_asin($x)" for x in test_x
+        @testset "cr_asinpi($x)" for x in test_x
             # Test against system libm
-            @test PureLibm.cr_asin(x) ≈ _asinpi(x)
+            @test PureLibm.cr_asinpi(x) ≈ _asinpi(x)
             # Test against MPFR
-            @test PureLibm.cr_asin(x) === T(_asinpi(BigFloat(x)))
+            @test PureLibm.cr_asinpi(x) === T(_asinpi(BigFloat(x)))
         end
     end
 end
 
 pos_range = (lo=Float32(0.0), hi=prevfloat(Float32(1.0)))
 neg_range = (lo=Float32(-0.0), hi=nextfloat(Float32(-1.0)))
-if "cr_asin.fast" in CheckExhaustive
-    @testset "cr_asin-exhaustive.fast" begin
-        test_float_range(_asinpi, PureLibm.cr_asin, lo=pos_range.lo, hi=pos_range.hi)
-        test_float_range(_asinpi, PureLibm.cr_asin, lo=neg_range.lo, hi=neg_range.hi)
+if "cr_asinpi.fast" in CheckExhaustive
+    @testset "cr_asinpi-exhaustive.fast" begin
+        test_float_range(_asinpi, PureLibm.cr_asinpi, lo=pos_range.lo, hi=pos_range.hi)
+        test_float_range(_asinpi, PureLibm.cr_asinpi, lo=neg_range.lo, hi=neg_range.hi)
     end
 end
-if "cr_asin" in CheckExhaustive
-    @testset "cr_asin-exhaustive" begin
-        test_float_range(_asinpi, PureLibm.cr_asin, lo=pos_range.lo, hi=pos_range.hi, bigfloat=true)
-        test_float_range(_asinpi, PureLibm.cr_asin, lo=neg_range.lo, hi=neg_range.hi, bigfloat=true)
+if "cr_asinpi" in CheckExhaustive
+    @testset "cr_asinpi-exhaustive" begin
+        test_float_range(_asinpi, PureLibm.cr_asinpi, lo=pos_range.lo, hi=pos_range.hi, bigfloat=true)
+        test_float_range(_asinpi, PureLibm.cr_asinpi, lo=neg_range.lo, hi=neg_range.hi, bigfloat=true)
     end
 end
-# ENV["PURELIBM_CHECK_EXHAUSTIVE"] = "cr_asin.fast,cr_asin"
+# ENV["PURELIBM_CHECK_EXHAUSTIVE"] = "cr_asinpi.fast,cr_asinpi"
