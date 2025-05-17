@@ -197,9 +197,17 @@ cr_atanh
 """
     cr_cosh(x)
 
-Compute hyperbolic cosine of `x`.
+Compute the hyperbolic cosine of `x` in radians.
+
+Returns the hyperbolic cosine of `x`.
+- Returns `1` if `x` is `±0`
+- Returns `+∞` if `x` is `±∞`
+- Returns `NaN` if `x` is `NaN`
+
+# Reference
+- [DLMF: §4.28.2](https://dlmf.nist.gov/4.28#E2)
 """
-cr_cosh(x::Float32) = cr_coshf(x)
+cr_cosh
 
 """
     cr_sinh(x)
