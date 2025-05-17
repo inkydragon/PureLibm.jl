@@ -152,7 +152,7 @@ cr_tanpi
 
 Compute the inverse hyperbolic cosine of `x` in radians.
 
-Returns the tangent of `x`.
+Returns the inverse hyperbolic cosine of `x`.
 - Returns `+0` if `x` is `1`
 - Returns `NaN` if `x` is `x < 1`
 - Returns `+∞` if `x` is `+∞`
@@ -168,7 +168,7 @@ cr_acosh
 
 Compute the inverse hyperbolic sine of `x` in radians.
 
-Returns the tangent of `x`.
+Returns the inverse hyperbolic sine of `x`.
 - Returns `±0` if `x` is `±0`
 - Returns `±∞` if `x` is `±∞`
 - Returns `NaN` if `x` is `NaN`
@@ -183,7 +183,7 @@ cr_asinh
 
 Compute the inverse hyperbolic tangent of `x` in radians.
 
-Returns the tangent of `x`.
+Returns the inverse hyperbolic tangent of `x`.
 - Returns `±0` if `x` is `±0`
 - Returns `±∞` if `x` is `±1`
 - Returns `NaN` if `x` is `|x| > 1`
