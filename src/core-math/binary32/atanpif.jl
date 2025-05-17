@@ -24,7 +24,11 @@ const CR_ATANPIF_CD = NTuple{7,Float64}((
 """
     cr_atanpi(x::Float32)
 
-Correctly-rounded half-revolution arc-tangent of `Float32` value
+Correctly-rounded half-revolution arc-tangent of `Float32` value.
+This function computes `atan(x)/π`
+
+# Reference
+- [src/binary32/atanpi/atanpif.c](https://gitlab.inria.fr/core-math/core-math/-/blob/03c15350fdcc286625bc5fe9b57e47a2275af293/src/binary32/atanpi/atanpif.c)
 """
 cr_atanpi(x::Float32) = cr_atanpif(x)
 
@@ -76,12 +80,15 @@ function cr_atanpif(x::Float32)
 
     ax = tu & (~UInt32(0) >> 1)
     if @unlikely(ax == 0x3fa267dd)
+        # 1.2687947f0 (0x1.44cfbap+0)
         return copysign(Float32(0x1.267004p-2), x) - copysign(Float32(0x1p-55), x)
     end
     if @unlikely(ax == 0x3f693531)
+        # 0.9109679f0 (0x1.d26a62p-1)
         return copysign(Float32(0x1.e1a662p-3), x) + copysign(Float32(0x1p-28), x)
     end
     if @unlikely(ax == 0x3f800000)
+        # 1.0f0 (0x1p+0)
         return copysign(Float32(0x1p-2), x)
     end
 
