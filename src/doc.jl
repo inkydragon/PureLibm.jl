@@ -79,9 +79,9 @@ cr_sin
 """
     cr_sincos(x)
 
-Compute sine and cosine of `x`.
+Compute the sine and cosine of `x` in radians.
 """
-cr_sincos(x::Float32) = cr_sincosf(x)
+cr_sincos
 
 """
     cr_tan(x)
