@@ -33,9 +33,17 @@ cr_asin
 """
     cr_atan(x)
 
-Compute arc-tangent of `x`.
+Compute the inverse tangent of `x` in radians.
+
+Returns the arc-sine of `x` in ranges `[-pi/2, pi/2]`.
+- Returns `±0` if `x` is `±0`
+- Returns `±π/2` if `x` is `±∞`
+- Returns `NaN` if `x` is `NaN`
+
+# Reference
+- [DLMF: §4.23.3](https://dlmf.nist.gov/4.23#E3)
 """
-cr_atan(x::Float32) = cr_atanf(x)
+cr_atan
 # cr_atan2
 
 """

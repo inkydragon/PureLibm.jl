@@ -3,15 +3,17 @@
 for T in [Float32, ]
     @testset "cr_atan(::$T)" begin
         # IEC 60559
+        # atan(±0) returns ±0
         @test PureLibm.cr_atan(T(0.0)) == T(0.0)
         @test PureLibm.cr_atan(T(-0.0)) == T(-0.0)
+        # atan(±∞) returns ±π/2
         @test PureLibm.cr_atan(T(Inf)) ≈ pi/2
         @test PureLibm.cr_atan(T(-Inf)) ≈ -pi/2
         @test isnan(PureLibm.cr_atan(T(NaN)))
     
         # sanity check
         @test PureLibm.cr_atan(T(1)) ≈ pi/4
-        
+
         # Coverage
         if Float32 == T
             # if @unlikely(e < (127 - 25))  # |x| < 2.9802322f-8 (0x1p-25)

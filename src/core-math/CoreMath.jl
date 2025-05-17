@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
 
-export cr_acos, cr_asin
+export cr_acos, cr_asin, cr_atan
 
 
 include("helper.jl")

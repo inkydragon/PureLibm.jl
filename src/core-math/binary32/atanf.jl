@@ -41,11 +41,39 @@ const CR_ATANF_CD = NTuple{7, Float64}((
 
 
 """
+    cr_atan(x::Float32)
+
 Correctly-rounded arc-tangent of `Float32`.
 
-## Reference
-- [core-math file commit (a8066a5c)](https://gitlab.inria.fr/core-math/core-math/-/blob/69a32feab0759dc073a5e99cb6ee300e9739b607/src/binary32/atan/atanf.c)
+# Examples
+```jldoctest
+julia> cr_atan(Inf32) / pi
+0.5f0
+
+julia> cr_atan(1.0f0) / pi
+0.25f0
+
+julia> cr_atan(0.0f0)
+0.0f0
+
+julia> cr_atan(-0.0f0)
+-0.0f0
+
+julia> cr_atan(-1.0f0) / pi
+-0.25f0
+
+julia> cr_atan(-Inf32) / pi
+-0.5f0
+
+julia> cr_atan(-NaN32)
+NaN32
+```
+
+# Reference
+- [src/binary32/atan/atanf.c](https://gitlab.inria.fr/core-math/core-math/-/blob/69a32feab0759dc073a5e99cb6ee300e9739b607/src/binary32/atan/atanf.c)
 """
+cr_atan(x::Float32) = cr_atanf(x)
+
 function cr_atanf(x::Float32)::Float32
     # pi/2 constant
     pi2 = 0x1.921fb54442d18p+0
