@@ -175,9 +175,15 @@ cr_asinh
 """
     cr_atanh(x)
 
-Compute inverse hyperbolic tangent of `x`.
+Compute the inverse hyperbolic tangent of `x` in radians.
+
+Returns the tangent of `x`.
+- Returns `±0` if `x` is `±0`
+- Returns `±∞` if `x` is `±1`
+- Returns `NaN` if `x` is `|x| > 1`
+- Returns `NaN` if `x` is `NaN`
 """
-cr_atanh(x::Float32) = cr_atanhf(x)
+cr_atanh
 
 """
     cr_cosh(x)

@@ -80,8 +80,12 @@ function _atanhf_as_special(x::Float32)
 end
 
 """
+    cr_atanh(x::Float32)
+
 Correctly-rounded inverse hyperbolic tangent of `Float32`.
 """
+cr_atanh(x::Float32) = cr_atanhf(x)
+
 function cr_atanhf(x::Float32)
     ux = reinterpret(UInt32, x)
     ax = ux << 1
