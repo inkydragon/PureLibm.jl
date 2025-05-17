@@ -106,9 +106,15 @@ cr_tan
 """
     cr_cospi(x)
 
-Compute cosine of `x*pi`.
+Compute the cosine of `x*pi` in radians.
+
+Returns the cosine of `x` in ranges `[-1, 1]`.
+- Returns `1` if `x` is `±0`
+- Returns `+0` if `x` is `n + 1/2`, for integers `n`
+- Returns `NaN` if `x` is `±∞`
+- Returns `NaN` if `x` is `NaN`
 """
-cr_cospi(x::Float32) = cr_cospif(x)
+cr_cospi
 
 """
     cr_sinpi(x)
