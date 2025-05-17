@@ -86,9 +86,17 @@ cr_sincos(x::Float32) = cr_sincosf(x)
 """
     cr_tan(x)
 
-Compute tangent of `x`.
+Compute the tangent of `x` in radians.
+
+Returns the tangent of `x` in ranges `[-∞, ∞]`.
+- Returns `±0` if `x` is `±0`
+- Returns `NaN` if `x` is `±∞`
+- Returns `NaN` if `x` is `NaN`
+
+# Reference
+- [DLMF: §4.14.4](https://dlmf.nist.gov/4.14#E4)
 """
-cr_tan(x::Float32) = cr_tanf(x)
+cr_tan
 
 # acospi
 # asinpi
