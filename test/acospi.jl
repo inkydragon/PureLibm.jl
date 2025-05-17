@@ -12,22 +12,26 @@ for T in [Float32, ]
         @test PureLibm.cr_acospi(T(1.0)) == T(0.0)
         # acospi(x) returns a NaN and raises the "invalid" floating-point exception
         #   for |x| > 1.
-        @test isnan(PureLibm.cr_acospi(T(2.0)))
+        @test isnan(PureLibm.cr_acospi(nextfloat(T(1))))
+        @test isnan(PureLibm.cr_acospi(prevfloat(T(-1))))
+        @test isnan(PureLibm.cr_acospi(T(2)))
+        @test isnan(PureLibm.cr_acospi(T(-2)))
 
         # sanity check
-        @test PureLibm.cr_acospi(T(0.0)) == T(0.5)
-        @test PureLibm.cr_acospi(-T(0.0)) == T(0.5)
-        @test PureLibm.cr_acospi(-T(1.0)) == T(1.0)
         @test isnan(PureLibm.cr_acospi(T(Inf)))
         @test isnan(PureLibm.cr_acospi(-T(Inf)))
+        @test PureLibm.cr_acospi(-T(1)) == T(1)
+        @test PureLibm.cr_acospi(-T(0.5)) == T(2) / 3
+        @test PureLibm.cr_acospi(-T(0)) == T(1) / 2
+        @test PureLibm.cr_acospi(T(0)) == T(1) / 2
+        @test PureLibm.cr_acospi(T(0.5)) == T(1) / 3
+        @test PureLibm.cr_acospi(T(1)) == T(0)
     end
 
     @testset "cr_acospi(random)" begin
         test_x = T[
             eps(T(0.0)),
-
-            ## Branch cov
-
+            rand_float(T(0.0), T(1.0), 32)...,
         ]
         test_x = [test_x..., -test_x...]
         @testset "cr_acospi($x)" for x in test_x
