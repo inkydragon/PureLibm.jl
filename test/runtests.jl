@@ -53,12 +53,13 @@ include("log1p.jl")
 # log2
 include("log.jl")
 
-# C99: Power and Absolute-value
-# pow
-include("sqrt.jl")
-include("rsqrt.jl")
+# Power and Absolute-value
 include("cbrt.jl")
+# compoundn
 # hypot
+# pow
+include("rsqrt.jl")
+include("sqrt.jl")
 
 # C99: Error and gamma
 # erf
