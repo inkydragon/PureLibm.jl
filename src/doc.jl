@@ -64,9 +64,17 @@ cr_cos
 """
     cr_sin(x)
 
-Compute sine of `x`.
+Compute the sine of `x` in radians.
+
+Returns the arc-sine of `x` in ranges `[-1, 1]`.
+- Returns `±0` if `x` is `±0`
+- Returns `NaN` if `x` is `±∞`
+- Returns `NaN` if `x` is `NaN`
+
+# Reference
+- [DLMF: §4.14.1](https://dlmf.nist.gov/4.14#E1)
 """
-cr_sin(x::Float32) = cr_sinf(x)
+cr_sin
 
 """
     cr_sincos(x)
