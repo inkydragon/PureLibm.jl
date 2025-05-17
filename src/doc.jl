@@ -111,7 +111,13 @@ cr_acospi
 Compute the inverse sine of `x` divided by `π`.
 """
 cr_asinpi
-# atanpi
+
+"""
+    cr_atanpi(x)
+
+Compute the inverse tangent of `x` divided by `π`.
+"""
+cr_atanpi
 # atan2pi
 
 """
