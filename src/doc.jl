@@ -103,8 +103,14 @@ cr_tan
 
 Compute the inverse cosine of `x` divided by `π`.
 """
+
 cr_acospi
-# asinpi
+"""
+    cr_asinpi(x)
+
+Compute the inverse sine of `x` divided by `π`.
+"""
+cr_asinpi
 # atanpi
 # atan2pi
 
