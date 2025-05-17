@@ -86,8 +86,12 @@ const CR_ASINHF_CP = NTuple{6, Float64}((
 
 
 """
+    cr_asinh(x::Float32)
+
 Correctly-rounded inverse hyperbolic sine function for `Float32`.
 """
+cr_asinh(x::Float32) = cr_asinhf(x)
+
 function cr_asinhf(x::Float32)
     tu = reinterpret(UInt32, x)
     tu = tu & (~UInt32(0) >> 1)

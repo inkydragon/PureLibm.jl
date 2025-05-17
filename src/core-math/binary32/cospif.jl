@@ -40,8 +40,12 @@ const CR_COSPIF_S = Float64[
 ]
 
 """
+    cr_cospi(x::Float32)
+
 Correctly-rounded cosine of `Float32` for angles.
 """
+cr_cospi(x::Float32) = cr_cospif(x)
+
 function cr_cospif(x::Float32)
     S = CR_COSPIF_S
 

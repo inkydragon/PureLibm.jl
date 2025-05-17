@@ -13,8 +13,12 @@ const CR_TANPIF_CD = NTuple{4,Float64}((
 ))
 
 """
+    cr_tanpi(x::Float32)
+
 Correctly-rounded tangent of `Float32` for angles.
 """
+cr_tanpi(x::Float32) = cr_tanpif(x)
+
 function cr_tanpif(x::Float32)
     ixu = reinterpret(UInt32, x)
     e = ixu & (UInt32(0xff) << 23)

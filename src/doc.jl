@@ -3,52 +3,100 @@
 """
     cr_acos(x)
 
-Compute arc cosine of `x`.
+Compute the inverse cosine of `x` in radians.
+
+Returns the arc-cosine of `x` in ranges `[0, pi]`.
+- Returns `+0` if `x` is `1`
+- Returns `NaN` if `x` is `|x| > 1`
+- Returns `NaN` if `x` is `NaN`
+
+# Reference
+- [DLMF: §4.23.2](https://dlmf.nist.gov/4.23#E2)
 """
-cr_acos(x::Float32) = cr_acosf(x)
+cr_acos
 
 """
     cr_asin(x)
 
-Compute arc-sine of `x`.
+Compute the inverse sine of `x` in radians.
+
+Returns the arc-sine of `x` in ranges `[-pi/2, pi/2]`.
+- Returns `±0` if `x` is `±0`
+- Returns `NaN` if `x` is `|x| > 1`
+- Returns `NaN` if `x` is `NaN`
+
+# Reference
+- [DLMF: §4.23.1](https://dlmf.nist.gov/4.23#E1)
 """
-cr_asin(x::Float32) = cr_asinf(x)
+cr_asin
 
 """
     cr_atan(x)
 
-Compute arc-tangent of `x`.
+Compute the inverse tangent of `x` in radians.
+
+Returns the arc-tangent of `x` in ranges `[-pi/2, pi/2]`.
+- Returns `±0` if `x` is `±0`
+- Returns `±π/2` if `x` is `±∞`
+- Returns `NaN` if `x` is `NaN`
+
+# Reference
+- [DLMF: §4.23.3](https://dlmf.nist.gov/4.23#E3)
 """
-cr_atan(x::Float32) = cr_atanf(x)
+cr_atan
 # cr_atan2
 
 """
     cr_cos(x)
 
-Compute cosine of `x`.
+Compute the cosine of `x` in radians.
+
+Returns the cosine of `x` in ranges `[-1, 1]`.
+- Returns `1` if `x` is `±0`
+- Returns `NaN` if `x` is `±∞`
+- Returns `NaN` if `x` is `NaN`
+
+# Reference
+- [DLMF: §4.14.2](https://dlmf.nist.gov/4.14#E2)
 """
-cr_cos(x::Float32) = cr_cosf(x)
+cr_cos
 
 """
     cr_sin(x)
 
-Compute sine of `x`.
+Compute the sine of `x` in radians.
+
+Returns the sine of `x` in ranges `[-1, 1]`.
+- Returns `±0` if `x` is `±0`
+- Returns `NaN` if `x` is `±∞`
+- Returns `NaN` if `x` is `NaN`
+
+# Reference
+- [DLMF: §4.14.1](https://dlmf.nist.gov/4.14#E1)
 """
-cr_sin(x::Float32) = cr_sinf(x)
+cr_sin
 
 """
     cr_sincos(x)
 
-Compute sine and cosine of `x`.
+Compute the sine and cosine of `x` in radians.
 """
-cr_sincos(x::Float32) = cr_sincosf(x)
+cr_sincos
 
 """
     cr_tan(x)
 
-Compute tangent of `x`.
+Compute the tangent of `x` in radians.
+
+Returns the tangent of `x` in ranges `[-∞, ∞]`.
+- Returns `±0` if `x` is `±0`
+- Returns `NaN` if `x` is `±∞`
+- Returns `NaN` if `x` is `NaN`
+
+# Reference
+- [DLMF: §4.14.4](https://dlmf.nist.gov/4.14#E4)
 """
-cr_tan(x::Float32) = cr_tanf(x)
+cr_tan
 
 # acospi
 # asinpi
@@ -58,67 +106,138 @@ cr_tan(x::Float32) = cr_tanf(x)
 """
     cr_cospi(x)
 
-Compute cosine of `x*pi`.
+Compute the cosine of `x*pi` in radians.
+
+Returns the cosine of `x` in ranges `[-1, 1]`.
+- Returns `1` if `x` is `±0`
+- Returns `+0` if `x` is `n + 1/2`, for integers `n`
+- Returns `NaN` if `x` is `±∞`
+- Returns `NaN` if `x` is `NaN`
 """
-cr_cospi(x::Float32) = cr_cospif(x)
+cr_cospi
 
 """
     cr_sinpi(x)
 
-Compute sine of `x*pi`.
+Compute the sine of `x*pi` in radians.
+
+Returns the sine of `x` in ranges `[-1, 1]`.
+- Returns `±0` if `x` is `±0`
+- Returns `±0` if `x` is `±n`, for positive integers `n`
+- Returns `NaN` if `x` is `±∞`
+- Returns `NaN` if `x` is `NaN`
 """
-cr_sinpi(x::Float32) = cr_sinpif(x)
+cr_sinpi
 
 """
     cr_tanpi(x)
 
-Compute tangent of `x*pi`.
+Compute the tangent of `x*pi` in radians.
+
+Returns the tangent of `x` in ranges `[-∞, ∞]`.
+- Returns `±0` if `x` is `±0`
+- Returns `+0` if `x` is `n`, for positive even and negative odd integers `n`
+- Returns `-0` if `x` is `n`, for positive odd and negative even integers `n`
+- Returns `+∞` if `x` is `n + 1/2`, for even integers `n`
+- Returns `-∞` if `x` is `n + 1/2`, for odd integers `n`
+- Returns `NaN` if `x` is `±∞`
+- Returns `NaN` if `x` is `NaN`
 """
-cr_tanpi(x::Float32) = cr_tanpif(x)
+cr_tanpi
 
 
 #= Hyperbolic =#
 """
     cr_acosh(x)
 
-Compute inverse hyperbolic cosine of `x`.
+Compute the inverse hyperbolic cosine of `x` in radians.
+
+Returns the inverse hyperbolic cosine of `x`.
+- Returns `+0` if `x` is `1`
+- Returns `NaN` if `x` is `x < 1`
+- Returns `+∞` if `x` is `+∞`
+- Returns `NaN` if `x` is `NaN`
+
+# Reference
+- [DLMF: §4.37.2](https://dlmf.nist.gov/4.37#E2)
 """
-cr_acosh(x::Float32) = cr_acoshf(x)
+cr_acosh
 
 """
     cr_asinh(x)
 
-Compute inverse hyperbolic sine of `x`.
+Compute the inverse hyperbolic sine of `x` in radians.
+
+Returns the inverse hyperbolic sine of `x`.
+- Returns `±0` if `x` is `±0`
+- Returns `±∞` if `x` is `±∞`
+- Returns `NaN` if `x` is `NaN`
+
+# Reference
+- [DLMF: §4.37.1](https://dlmf.nist.gov/4.37#E1)
 """
-cr_asinh(x::Float32) = cr_asinhf(x)
+cr_asinh
 
 """
     cr_atanh(x)
 
-Compute inverse hyperbolic tangent of `x`.
+Compute the inverse hyperbolic tangent of `x` in radians.
+
+Returns the inverse hyperbolic tangent of `x`.
+- Returns `±0` if `x` is `±0`
+- Returns `±∞` if `x` is `±1`
+- Returns `NaN` if `x` is `|x| > 1`
+- Returns `NaN` if `x` is `NaN`
+
+# Reference
+- [DLMF: §4.37.3](https://dlmf.nist.gov/4.37#E3)
 """
-cr_atanh(x::Float32) = cr_atanhf(x)
+cr_atanh
 
 """
     cr_cosh(x)
 
-Compute hyperbolic cosine of `x`.
+Compute the hyperbolic cosine of `x` in radians.
+
+Returns the hyperbolic cosine of `x`.
+- Returns `1` if `x` is `±0`
+- Returns `+∞` if `x` is `±∞`
+- Returns `NaN` if `x` is `NaN`
+
+# Reference
+- [DLMF: §4.28.2](https://dlmf.nist.gov/4.28#E2)
 """
-cr_cosh(x::Float32) = cr_coshf(x)
+cr_cosh
 
 """
     cr_sinh(x)
 
-Compute hyperbolic sine of `x`.
+Compute the hyperbolic sine of `x` in radians.
+
+Returns the hyperbolic sine of `x`.
+- Returns `±0` if `x` is `±0`
+- Returns `±∞` if `x` is `±∞`
+- Returns `NaN` if `x` is `NaN`
+
+# Reference
+- [DLMF: §4.28.1](https://dlmf.nist.gov/4.28#E1)
 """
-cr_sinh(x::Float32) = cr_sinhf(x)
+cr_sinh
 
 """
     cr_tanh(x)
 
-Compute hyperbolic tangent of `x`.
+Compute the hyperbolic tangent of `x` in radians.
+
+Returns the hyperbolic tangent of `x`.
+- Returns `±0` if `x` is `±0`
+- Returns `±∞` if `x` is `±1`
+- Returns `NaN` if `x` is `NaN`
+
+# Reference
+- [DLMF: §4.28.4](https://dlmf.nist.gov/4.28#E4)
 """
-cr_tanh(x::Float32) = cr_tanhf(x)
+cr_tanh
 
 
 #= Exponential and logarithmic =#

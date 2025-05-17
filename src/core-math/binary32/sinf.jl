@@ -151,8 +151,12 @@ function rltl(x::Float64)
 end
 
 """
+    cr_sin(x::Float32)
+
 Correctly-rounded sine of `Float32`.
 """
+cr_sin(x::Float32) = cr_sinf(x)
+
 function cr_sinf(x::Float32)::Float32
     tu = reinterpret(UInt32, x)
     ax = tu << 1

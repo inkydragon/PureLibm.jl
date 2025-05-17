@@ -43,6 +43,8 @@ Correctly-rounded sine of `Float32` value for angles.
 # Reference
 - https://gitlab.inria.fr/core-math/core-math/-/blob/03c15350fdcc286625bc5fe9b57e47a2275af293/src/binary32/sinpi/sinpif.c
 """
+cr_sinpi(x::Float32) = cr_sinpif(x)
+
 function cr_sinpif(x::Float32)
     sn = CR_SINPIF_SN
     cn = CR_SINPIF_CN

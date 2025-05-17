@@ -53,8 +53,12 @@ const CR_SINHF_TB = UInt64[
 ]
 
 """
+    cr_sinh(x::Float32) 
+
 Correctly-rounded hyperbolic sine of `Float32`.
 """
+cr_sinh(x::Float32) = cr_sinhf(x)
+
 function cr_sinhf(x::Float32)
     iln2 = 0x1.71547652b82fep+5
 

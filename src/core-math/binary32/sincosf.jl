@@ -62,8 +62,12 @@ function _sincosf_big(x::Float32)
 end
 
 """
+    cr_sincos(x::Float32)
+
 Correctly-rounded sine and cosine of `Float32`.
 """
+cr_sincos(x::Float32) = cr_sincosf(x)
+
 function cr_sincosf(x::Float32)::Tuple{Float32, Float32}
     tu = reinterpret(UInt32, x)
     ax = tu << 1

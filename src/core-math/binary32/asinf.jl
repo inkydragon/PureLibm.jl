@@ -39,11 +39,42 @@ function _asinf_as_special(x::Float32)
 end
 
 """
+    cr_asin(x::Float32)
+
 Correctly-rounded arc-sine function for `Float32`.
 
-## Reference
-- https://gitlab.inria.fr/core-math/core-math/-/blob/2c08994e3cd967a63c4c1eed729353a1c3b9c798/src/binary32/asin/asinf.c
+# Examples
+```jldoctest
+julia> cr_asin(-1.0f0) / pi
+-0.5f0
+
+julia> cr_asin(-0.5f0) / pi  # -1/6
+-0.16666667f0
+
+julia> cr_asin(-0.0f0) / pi
+-0.0f0
+
+julia> cr_asin(0.0f0) / pi
+0.0f0
+
+julia> cr_asin(0.5f0) / pi
+0.16666667f0
+
+julia> cr_asin(1.0f0) / pi
+0.5f0
+
+julia> cr_asin(NaN32)
+NaN32
+
+julia> cr_asin(Inf32)
+NaN32
+```
+
+# Reference
+- [src/binary32/asin/asinf.c](https://gitlab.inria.fr/core-math/core-math/-/blob/2c08994e3cd967a63c4c1eed729353a1c3b9c798/src/binary32/asin/asinf.c)
 """
+cr_asin(x::Float32) = cr_asinf(x)
+
 function cr_asinf(x::Float32)::Float32
     # pi/2 constant
     pi2 = 0x1.921fb54442d18p+0

@@ -114,8 +114,12 @@ end
 
 
 """
+    cr_tan(x::Float32)
+
 Correctly-rounded tangent of `Float32`.
 """
+cr_tan(x::Float32) = cr_tanf(x)
+
 function cr_tanf(x::Float32)
     tu = reinterpret(UInt32, x)
     e = (tu >> 23) & 0xff

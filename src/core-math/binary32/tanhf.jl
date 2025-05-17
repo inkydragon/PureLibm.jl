@@ -39,8 +39,12 @@ const CR_TANHF_CD = NTuple{8, Float64}((
 
 
 """
+    cr_tanh(x::Float32)
+
 Correctly-rounded hyperbolic tangent function for `Float32`.
 """
+cr_tanh(x::Float32) = cr_tanhf(x)
+
 function cr_tanhf(x::Float32)::Float32
     ux = reinterpret(UInt32, x)
     e = (ux >> 23) & 0xff

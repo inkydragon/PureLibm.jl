@@ -25,12 +25,16 @@ const CR_COSHF_CP = NTuple{4, Float64}((
 ))
 
 """
+    cr_cosh(x::Float32)
+
 Correctly-rounded hyperbolic cosine of `Float32`.
 
 # Reference
 - [DLMF 4.28.2](https://dlmf.nist.gov/4.28#E2)
 - https://gitlab.inria.fr/core-math/core-math/-/blob/de59ecfbe35b4e2dddbad2849f3cdde7835d5a48/src/binary32/cosh/coshf.c
 """
+cr_cosh(x::Float32) = cr_coshf(x)
+
 function cr_coshf(x::Float32)
     iln2 = Float64(0x1.71547652b82fep+5)
 
