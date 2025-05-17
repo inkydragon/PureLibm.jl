@@ -100,8 +100,12 @@ function _acoshf_as_special(x::Float32)
 end
 
 """
+    cr_acosh(x::Float32)
+
 Correctly-rounded inverse hyperbolic cosine function for `Float32`.
 """
+cr_acosh(x::Float32) = cr_acoshf(x)
+
 function cr_acoshf(x::Float32)
     tu = reinterpret(UInt32, x)
     if @unlikely(tu <= 0x3f800000)

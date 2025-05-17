@@ -150,9 +150,15 @@ cr_tanpi
 """
     cr_acosh(x)
 
-Compute inverse hyperbolic cosine of `x`.
+Compute the inverse hyperbolic cosine of `x` in radians.
+
+Returns the tangent of `x`.
+- Returns `+0` if `x` is `1`
+- Returns `NaN` if `x` is `x < 1`
+- Returns `+∞` if `x` is `+∞`
+- Returns `NaN` if `x` is `NaN`
 """
-cr_acosh(x::Float32) = cr_acoshf(x)
+cr_acosh
 
 """
     cr_asinh(x)
