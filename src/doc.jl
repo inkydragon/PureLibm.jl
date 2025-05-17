@@ -212,9 +212,17 @@ cr_cosh
 """
     cr_sinh(x)
 
-Compute hyperbolic sine of `x`.
+Compute the hyperbolic sine of `x` in radians.
+
+Returns the hyperbolic sine of `x`.
+- Returns `±0` if `x` is `±0`
+- Returns `±∞` if `x` is `±∞`
+- Returns `NaN` if `x` is `NaN`
+
+# Reference
+- [DLMF: §4.28.1](https://dlmf.nist.gov/4.28#E1)
 """
-cr_sinh(x::Float32) = cr_sinhf(x)
+cr_sinh
 
 """
     cr_tanh(x)
