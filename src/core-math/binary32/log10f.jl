@@ -42,12 +42,15 @@ const CR_LOG10F_TL = Vector{Float64}([
     0x1.2622b0f52e49fp-2, 0x1.29b522a4c6314p-2, 0x1.2d404b0e30f8p-2, 0x1.30c4478f3fbe5p-2,
     0x1.34413509f7915p-2
 ])
-const CR_LOG10F_ST = NTuple{16, Float64}((
+const CR_LOG10F_ST_F32 = NTuple{16, Float32}((
     0x1p+0, 0x1.4p+3, 0x1.9p+6, 0x1.f4p+9,
-    0x1.388p+13, 0x1.86ap+16,0x1.e848p+19,0x1.312dp+23,
-    0x1.7d784p+26,0x1.dcd65p+29,0x1.2a05f2p+33,0,
-    0,0,0,0
+    0x1.388p+13, 0x1.86ap+16, 0x1.e848p+19, 0x1.312dp+23,
+    0x1.7d784p+26, 0x1.dcd65p+29, 0x1.2a05f2p+33, 0,
+    0, 0, 0, 0
 ))
+const CR_LOG10F_ST = NTuple{16, UInt32}([
+    reinterpret(UInt32, f32) for f32 in CR_LOG10F_ST_F32
+])
 const CR_LOG10F_B = NTuple{3, Float64}((
     0x1.bcb7b15c5a2f8p-2, -0x1.bcbb1dbb88ebap-3, 0x1.2871c39d521c6p-3
 ))
