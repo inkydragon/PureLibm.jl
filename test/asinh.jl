@@ -8,6 +8,7 @@ for T in [Float32, ]
         @test PureLibm.cr_asinh(T(-0.0)) == T(-0.0)
         # asinh(±∞) returns ±∞
         @test PureLibm.cr_asinh(T(Inf)) == T(Inf)
+        @test PureLibm.cr_asinh(-T(Inf)) == -T(Inf)
 
         # sanity check
         @test isnan(PureLibm.cr_asinh(T(NaN)))
