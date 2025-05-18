@@ -3,9 +3,31 @@
 for T in (Float32, )
     @testset "cr_log10($T)" begin
         # IEC 60559
+        @test isnan(PureLibm.cr_log10(T(NaN)))
+        # log10(±0) returns −∞ and raises the "divide-by-zero" floating-point exception.
+        @test PureLibm.cr_log10(T(0)) == -T(Inf)
+        @test PureLibm.cr_log10(-T(0)) == -T(Inf)
+        # log10(1) returns +0.
+        @test PureLibm.cr_log10(T(1)) == T(0)
+        # log10(x) returns a NaN and raises the "invalid" floating-point exception
+        #   for x < 0.
+        @test isnan(PureLibm.cr_log10(-T(0.1)))
+        @test isnan(PureLibm.cr_log10(-T(1)))
+        @test isnan(PureLibm.cr_log10(-T(10)))
+        @test isnan(PureLibm.cr_log10(-T(Inf)))
+        # log10(+∞) returns +∞.
+        @test PureLibm.cr_log10(T(Inf)) == T(Inf)
 
         # sanity check
-
+        # Note: prevfloat(typemax(Float32)) == 3.4028235f38
+        @test PureLibm.cr_log10(T(1e38)) == T(38)
+        @test PureLibm.cr_log10(T(100)) == T(2)
+        @test PureLibm.cr_log10(T(10)) == T(1)
+        @test PureLibm.cr_log10(T(1)) == T(0)
+        @test PureLibm.cr_log10(T(0.1)) == -T(1)
+        @test PureLibm.cr_log10(T(0.01)) == -T(2)
+        # Note: eps(Float32(0.0)) == 1.0f-45
+        @test PureLibm.cr_log10(T(1e-45)) == -T(45)
     end
 
     @testset "cr_log10(rand($T))" begin
