@@ -304,7 +304,13 @@ Compute biased argument natural logarithm `log(1+x)` of `x`.
 """
 cr_log1p(x::Float32) = cr_log1pf(x)
 # logp1
-# log2
+
+"""
+    cr_log2(x)
+
+Compute natural logarithm of `x`.
+"""
+cr_log2
 # log2p1
 
 
