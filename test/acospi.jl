@@ -16,10 +16,10 @@ for T in [Float32, ]
         @test isnan(PureLibm.cr_acospi(prevfloat(T(-1))))
         @test isnan(PureLibm.cr_acospi(T(2)))
         @test isnan(PureLibm.cr_acospi(T(-2)))
-
-        # sanity check
         @test isnan(PureLibm.cr_acospi(T(Inf)))
         @test isnan(PureLibm.cr_acospi(-T(Inf)))
+
+        # sanity check
         @test PureLibm.cr_acospi(-T(1)) == T(1)
         @test PureLibm.cr_acospi(-T(0.5)) == T(2) / 3
         @test PureLibm.cr_acospi(-T(0)) == T(1) / 2
