@@ -3,16 +3,16 @@
 for T in [Float32, ]
     @testset "cr_atan(::$T)" begin
         # IEC 60559
+        @test isnan(PureLibm.cr_atan(T(NaN)))
         # atan(±0) returns ±0
         @test PureLibm.cr_atan(T(0.0)) == T(0.0)
         @test PureLibm.cr_atan(T(-0.0)) == T(-0.0)
         # atan(±∞) returns ±π/2
-        @test PureLibm.cr_atan(T(Inf)) ≈ pi/2
-        @test PureLibm.cr_atan(T(-Inf)) ≈ -pi/2
-        @test isnan(PureLibm.cr_atan(T(NaN)))
-    
+        @test PureLibm.cr_atan(T(Inf)) == T(pi)/2
+        @test PureLibm.cr_atan(T(-Inf)) == -T(pi)/2
+
         # sanity check
-        @test PureLibm.cr_atan(T(1)) ≈ pi/4
+        @test PureLibm.cr_atan(T(1)) == T(pi)/4
 
         # Coverage
         if Float32 == T
