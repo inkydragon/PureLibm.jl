@@ -26,8 +26,8 @@ for T in (Float32, )
         @test PureLibm.cr_log10(T(1)) == T(0)
         @test PureLibm.cr_log10(T(0.1)) == -T(1)
         @test PureLibm.cr_log10(T(0.01)) == -T(2)
-        # Note: eps(Float32(0.0)) == 1.0f-45
-        @test PureLibm.cr_log10(T(1e-45)) == -T(45)
+        # Note: eps(Float32(0.0)) == 0x1p-149  # 1.401298464324817e-45
+        @test PureLibm.cr_log10(T(0x1p-149)) == -T(44.8534693539332)
     end
 
     @testset "cr_log10(rand($T))" begin
