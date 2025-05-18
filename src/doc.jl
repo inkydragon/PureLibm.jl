@@ -294,7 +294,13 @@ cr_expm1(x::Float32) = cr_expm1f(x)
 Compute natural logarithm of `x`.
 """
 cr_log(x::Float32) = cr_logf(x)
-# log10
+
+"""
+    cr_log10(x)
+
+Compute base 10 logarithm of `x`.
+"""
+cr_log10
 # log10p1
 
 """
