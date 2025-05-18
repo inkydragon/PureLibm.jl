@@ -134,7 +134,7 @@ function cr_log10f(x::Float32)
         ub = Float32(r)
         tzf = Float32(r)
         tzu = reinterpret(UInt32, tzf)
-        if (tzu & ((UInt32(1) << 28) - 1)) == 0
+        if (tzu & ((UInt32(1) << 28) - UInt32(1))) == 0
             dr = (el - r) + f
             r += dr * 32
             ub = Float32(r)
