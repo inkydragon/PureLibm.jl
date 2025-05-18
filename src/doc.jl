@@ -308,6 +308,7 @@ cr_tanh
 Compute natural exponential of `x`.
 
 # Reference
+- [DLMF: §4.2.19](https://dlmf.nist.gov/4.2#E19)
 - C23 F.10.3.1
 """
 cr_exp(x::Float32) = cr_expf(x)
@@ -364,6 +365,7 @@ cr_expm1(x::Float32) = cr_expm1f(x)
 Compute natural logarithm of `x`.
 
 # Reference
+- [DLMF: §4.2.2](https://dlmf.nist.gov/4.2#E2)
 - C23 F.10.3.11
 """
 cr_log(x::Float32) = cr_logf(x)
@@ -440,6 +442,7 @@ cr_cbrt
     cr_pow(x)
 
 # Reference
+- [DLMF: §4.2.28](https://dlmf.nist.gov/4.2#E28)
 - C23 F.10.4.5
 """
 # cr_pow
@@ -471,6 +474,7 @@ cr_rsqrt(x::Float32) = cr_rsqrtf(x)
     cr_erf(x)
 
 # Reference
+- [DLMF: §7.2.1](https://dlmf.nist.gov/7.2#E1)
 - C23 F.10.5.1
 """
 # cr_erf
@@ -479,6 +483,7 @@ cr_rsqrt(x::Float32) = cr_rsqrtf(x)
     cr_erfc(x)
 
 # Reference
+- [DLMF: §7.2.2](https://dlmf.nist.gov/7.2#E2)
 - C23 F.10.5.2
 """
 # cr_erfc
@@ -497,6 +502,7 @@ cr_rsqrt(x::Float32) = cr_rsqrtf(x)
 Computes the true gamma function of `x`.
     
 # Reference
+- [DLMF: §5.2.1](https://dlmf.nist.gov/5.2#E1)
 - C23 F.10.5.4
 """
 cr_tgamma(x::Float32) = cr_tgammaf(x)
