@@ -34,6 +34,12 @@ for T in (Float32, )
         test_x = T[
             eps(T(0.0)),
 
+            # Branch coverage
+            # (ub != lb)
+            1.1208f-35,
+            1.0031539f-34,
+            0.00038358592f0,
+            1.00264f0,
         ]
         @testset "cr_log10($x)" for x in test_x
             res = PureLibm.cr_log10(x)
