@@ -48,10 +48,13 @@ include("exp.jl")
 include("exp10.jl")
 include("exp2.jl")
 include("expm1.jl")
-# log10
-include("log1p.jl")
-# log2
 include("log.jl")
+# log10
+# log10p1
+include("log1p.jl")
+# logp1
+include("log2.jl")
+# log2p1
 
 # C99: Power and Absolute-value
 # pow
