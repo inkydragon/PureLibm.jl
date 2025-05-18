@@ -5,14 +5,17 @@ using Random
 @testset "cr_tgamma" begin
     @testset "$T" for T in [Float32, ]
         # IEC 60559
-        @test PureLibm.cr_tgamma(T(Inf)) == T(Inf)
-        # fp-invalid
-        @test isnan(PureLibm.cr_tgamma(T(-Inf)))
-        @test isnan(PureLibm.cr_tgamma(T(-1.0)))
-        # fp-divide-by-zero
+        @test isnan(PureLibm.cr_tgamma(T(NaN)))
+        # tgamma(±0) returns ±∞ and raises the "divide-by-zero" floating-point exception.
         @test PureLibm.cr_tgamma(T(+0.0)) == T(+Inf)
         @test PureLibm.cr_tgamma(T(-0.0)) == T(-Inf)
-        @test isnan(PureLibm.cr_tgamma(T(NaN)))
+        # tgamma(x) returns a NaN and raises the "invalid" floating-point exception
+        #   for x a negative integer.
+        @test isnan(PureLibm.cr_tgamma(T(-1.0)))
+        # tgamma(−∞) returns a NaN and raises the "invalid" floating-point exception.
+        @test isnan(PureLibm.cr_tgamma(T(-Inf)))
+        # tgamma(+∞) returns +∞
+        @test PureLibm.cr_tgamma(T(Inf)) == T(Inf)
 
         # sanity check
         @test PureLibm.cr_tgamma.(T.(1:5)) == T[1, 1, 2, 6, 24]

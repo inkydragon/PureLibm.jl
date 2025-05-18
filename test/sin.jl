@@ -6,7 +6,7 @@ for T in [Float32, ]
         # sin(±0) returns ±0
         @test PureLibm.cr_sin(T(0)) == T(0)
         @test PureLibm.cr_sin(-T(0)) == -T(0)
-        # sin(±∞) returns a NaN
+        # sin(±∞) returns a NaN and raises the "invalid" floating-point exception
         @test isnan(PureLibm.cr_sin(T(Inf)))
         @test isnan(PureLibm.cr_sin(T(-Inf)))
 

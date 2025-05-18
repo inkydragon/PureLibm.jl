@@ -6,7 +6,7 @@ for T in [Float32, ]
         # tan(±0) returns ±0
         @test PureLibm.cr_tan(T(0.0)) == T(0.0)
         @test PureLibm.cr_tan(T(-0.0)) == T(-0.0)
-        # tan(±∞) returns NaN
+        # tan(±∞) returns a NaN and raises the "invalid" floating-point exception
         @test isnan(PureLibm.cr_tan(T(Inf)))
         @test isnan(PureLibm.cr_tan(T(-Inf)))
 
