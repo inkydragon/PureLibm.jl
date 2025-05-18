@@ -215,6 +215,7 @@ Returns the inverse hyperbolic cosine of `x`.
 
 # Reference
 - [DLMF: §4.37.2](https://dlmf.nist.gov/4.37#E2)
+- C23 F.10.2.1
 """
 cr_acosh
 
@@ -230,6 +231,7 @@ Returns the inverse hyperbolic sine of `x`.
 
 # Reference
 - [DLMF: §4.37.1](https://dlmf.nist.gov/4.37#E1)
+- C23 F.10.2.2
 """
 cr_asinh
 
@@ -246,6 +248,7 @@ Returns the inverse hyperbolic tangent of `x`.
 
 # Reference
 - [DLMF: §4.37.3](https://dlmf.nist.gov/4.37#E3)
+- C23 F.10.2.3
 """
 cr_atanh
 
@@ -261,6 +264,7 @@ Returns the hyperbolic cosine of `x`.
 
 # Reference
 - [DLMF: §4.28.2](https://dlmf.nist.gov/4.28#E2)
+- C23 F.10.2.4
 """
 cr_cosh
 
@@ -276,6 +280,7 @@ Returns the hyperbolic sine of `x`.
 
 # Reference
 - [DLMF: §4.28.1](https://dlmf.nist.gov/4.28#E1)
+- C23 F.10.2.5
 """
 cr_sinh
 
@@ -286,11 +291,12 @@ Compute the hyperbolic tangent of `x` in radians.
 
 Returns the hyperbolic tangent of `x`.
 - Returns `±0` if `x` is `±0`
-- Returns `±∞` if `x` is `±1`
+- Returns `±1` if `x` is `±∞`
 - Returns `NaN` if `x` is `NaN`
 
 # Reference
 - [DLMF: §4.28.4](https://dlmf.nist.gov/4.28#E4)
+- C23 F.10.2.6
 """
 cr_tanh
 
