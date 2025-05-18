@@ -21,15 +21,30 @@ for T in (Float32, )
     @testset "cr_cbrt(random)" begin
         test_x = T[
             eps(T(0.0)),
-            rand_float(T(0.0), T(prevfloat(Float32(Inf))), 32)...,
+            rand_float(T(0.0), T(prevfloat(Float32(Inf))), 64)...,
 
+            # branch Coverage
+            # (ub == lb)
+            # ::Float32
+            1.1775089f38,
+            1.3836971f14,
+            0.021486675f0,
+            0.00019319354f0,
+            0.00049376907f0,
+            1.8966324f-5,
+            5.3827968f-8,
+            3.639484f-26,
+            4.544312f-28,
+            1.1460103f-34,
+            rand_float(T(0.0), T(1.0), 32)...,
         ]
         test_x = [test_x..., -test_x...]
         @testset "cr_cbrt($x)" for x in test_x
+            res = PureLibm.cr_cbrt(x)
             # Test against system libm
-            @test PureLibm.cr_cbrt(x) ≈ cbrt(x)
+            @test res ≈ cbrt(x)
             # Test against MPFR
-            @test PureLibm.cr_cbrt(x) === T(cbrt(BigFloat(x)))
+            @test res === T(cbrt(BigFloat(x)))
         end
     end
 end
