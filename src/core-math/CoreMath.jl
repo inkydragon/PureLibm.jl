@@ -39,6 +39,10 @@ include("binary32/log1pf.jl")
 include("binary32/logf.jl")
 
 # Power
+include("binary32/cbrtf.jl")
+# compoundn
+# hypot
+# pow
 include("binary64/rsqrt.jl")
 include("binary32/rsqrtf.jl")
 

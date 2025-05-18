@@ -309,7 +309,12 @@ cr_log1p(x::Float32) = cr_log1pf(x)
 
 
 #= Power and Absolute-value =#
-# cbrt
+"""
+    cr_cbrt(x)
+
+Compute cubic root of `x`.
+"""
+cr_cbrt
 # compoundn
 # hypot
 
