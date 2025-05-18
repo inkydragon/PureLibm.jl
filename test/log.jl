@@ -3,17 +3,20 @@
 for T in [Float32, ]
     @testset "cr_log(::$T)" begin
         # IEC 60559
+        @test isnan(PureLibm.cr_log(T(NaN)))
+        # log(±0) returns −∞ and raises the "divide-by-zero" floating-point exception
         @test PureLibm.cr_log(T(+0.0)) == T(-Inf)
         @test PureLibm.cr_log(T(-0.0)) == T(-Inf)
+        # log(1) returns +0
         @test PureLibm.cr_log(T(1)) == T(0)
-        # x < 0, log(x) == NaN
+        # log(x) returns a NaN and raises the "invalid" floating-point exception
+        #   for x < 0.
         @test isnan(PureLibm.cr_log(prevfloat(T(-0.0))))
         @test isnan(PureLibm.cr_log(T(-2)))
         @test isnan(PureLibm.cr_log(T(-1024)))
         @test isnan(PureLibm.cr_log(T(-Inf)))
+        # log(+∞) returns +∞
         @test PureLibm.cr_log(T(Inf)) == T(Inf)
-
-        @test isnan(PureLibm.cr_log(T(NaN)))
 
         # Coverage
         if Float32 == T
