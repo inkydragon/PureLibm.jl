@@ -17,8 +17,9 @@ for T in [Float32, ]
         # sanity check
         @test isnan(PureLibm.cr_acos(T(NaN)))
         # Special Values
-        @test PureLibm.cr_acos(T(-1)) == T(pi)
-        @test PureLibm.cr_acos(T(-0.5)) == T(pi) * 2/3
+        @test PureLibm.cr_acos(-T(1)) == T(pi)
+        @test PureLibm.cr_acos(-T(0.5)) == T(pi) * 2/3
+        @test PureLibm.cr_acos(-T(0)) == T(pi) / 2
         @test PureLibm.cr_acos(T(0)) == T(pi) / 2
         @test PureLibm.cr_acos(T(0.5)) == T(pi) / 3
         @test PureLibm.cr_acos(T(1)) == T(0)
