@@ -3,12 +3,14 @@
 for T in [Float32, ]
     @testset "cr_exp(::$T)" begin
         # IEC 60559
+        @test isnan(PureLibm.cr_exp(T(NaN)))
+        # exp(±0) returns 1
         @test PureLibm.cr_exp(T(0.0)) == T(1)
         @test PureLibm.cr_exp(T(-0.0)) == T(1)
+        # exp(−∞) returns +0
         @test PureLibm.cr_exp(T(-Inf)) == T(0)
+        # exp(+∞) returns +∞
         @test PureLibm.cr_exp(T(Inf)) == T(Inf)
-
-        @test isnan(PureLibm.cr_exp(T(NaN)))
 
         # Coverage
         @test PureLibm.cr_exp(T(1)) == T(Base.MathConstants.e)
