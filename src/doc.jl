@@ -421,12 +421,28 @@ cr_log2
     cr_cbrt(x)
 
 Compute cubic root of `x`.
+
+# Reference
+- C23 F.10.4.1
 """
 cr_cbrt
 # compoundn
-# hypot
 
-# pow
+"""
+    cr_hypot(x)
+
+# Reference
+- C23 F.10.4.4
+"""
+# cr_hypot
+
+"""
+    cr_pow(x)
+
+# Reference
+- C23 F.10.4.5
+"""
+# cr_pow
 # pown
 # powr
 # rootn
@@ -435,9 +451,19 @@ cr_cbrt
     cr_rsqrt(x)
 
 Computes the reciprocal square root of `x`.
+
+# Reference
+- C23 F.10.4.9
 """
 cr_rsqrt(x::Float32) = cr_rsqrtf(x)
-# sqrt
+
+"""
+    cr_sqrt(x)
+
+# Reference
+- C23 F.10.4.10
+"""
+# cr_sqrt
 
 
 #= Error and gamma =#
