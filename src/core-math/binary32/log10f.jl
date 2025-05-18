@@ -91,7 +91,7 @@ cr_log10(x::Float32) = cr_log10f(x)
 
 function cr_log10f(x::Float32)
     ux = reinterpret(UInt32, x)
-    if (ux < (UInt32(1) << 23) || ux >= 0x7f800000)
+    if @unlikely(ux < (UInt32(1) << 23) || ux >= 0x7f800000)
         if ux == 0 || ux >= 0x7f800000
             return _log10f_as_special(x)
         end
@@ -108,7 +108,7 @@ function cr_log10f(x::Float32)
     e = (reinterpret(Int32, ux) >> 23) - 127
     je = reinterpret(UInt32, Int32(e + 1))
     je = (je * 0x4d104d4) >> 28
-    if (ux == CR_LOG10F_ST[je+1])
+    if @unlikely(ux == CR_LOG10F_ST[je+1])
         return Float32(je)
     end
 
@@ -120,7 +120,7 @@ function cr_log10f(x::Float32)
     r = ((e * 0x1.34413509f79ffp-2 + l) + z * b[1]) + z2 * (b[2] + z * b[3])
     ub = Float32(r)
     lb = Float32(r + 0x1.b008p-34)
-    if (ub != lb)
+    if @unlikely(ub != lb)
         c = CR_LOG10F_C
         f =
             z * (
@@ -134,7 +134,7 @@ function cr_log10f(x::Float32)
         ub = Float32(r)
         tzf = Float32(r)
         tzu = reinterpret(UInt32, tzf)
-        if (tzu & ((UInt32(1) << 28) - UInt32(1))) == 0
+        if @unlikely(tzu & ((UInt32(1) << 28) - UInt32(1))) == 0
             dr = (el - r) + f
             r += dr * 32
             ub = Float32(r)
