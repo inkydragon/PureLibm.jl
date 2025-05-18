@@ -6,7 +6,8 @@ for T in [Float32, ]
         # asin(±0) returns +0
         @test PureLibm.cr_asin(T(0.0)) == T(0.0)
         @test PureLibm.cr_asin(T(-0.0)) == T(-0.0)
-        # asin(x), |x| > 1 returns a NaN
+        # asin(x) returns a NaN and raises the "invalid" floating-point exception
+        #   for |x| > 1
         @test isnan(PureLibm.cr_asin(nextfloat(T(1))))
         @test isnan(PureLibm.cr_asin(prevfloat(T(-1))))
         @test isnan(PureLibm.cr_asin(T(2)))
