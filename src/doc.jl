@@ -467,13 +467,36 @@ cr_rsqrt(x::Float32) = cr_rsqrtf(x)
 
 
 #= Error and gamma =#
-# erf
-# erfc
+"""
+    cr_erf(x)
 
-# lgamma
+# Reference
+- C23 F.10.5.1
+"""
+# cr_erf
+
+"""
+    cr_erfc(x)
+
+# Reference
+- C23 F.10.5.2
+"""
+# cr_erfc
+
+"""
+    cr_lgamma(x)
+
+# Reference
+- C23 F.10.5.3
+"""
+# cr_lgamma
+
 """
     cr_tgamma(x)
 
 Computes the true gamma function of `x`.
+    
+# Reference
+- C23 F.10.5.4
 """
 cr_tgamma(x::Float32) = cr_tgammaf(x)
