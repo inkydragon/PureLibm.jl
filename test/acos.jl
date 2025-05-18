@@ -5,7 +5,8 @@ for T in [Float32, ]
         # IEC 60559
         # acos(1) returns +0
         @test PureLibm.cr_acos(T(1)) == T(0)
-        # acos(x), |x| > 1 returns a NaN
+        # acos(x) returns a NaN and raises the "invalid" floating-point exception
+        #   for |x| > 1
         @test isnan(PureLibm.cr_acos(nextfloat(T(1))))
         @test isnan(PureLibm.cr_acos(prevfloat(T(-1))))
         @test isnan(PureLibm.cr_acos(T(2)))
