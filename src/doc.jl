@@ -52,6 +52,7 @@ cr_atan
     cr_atan2(x, y)
 
 # Reference
+- [atan2 - Wikipedia](https://en.wikipedia.org/wiki/Atan2)
 - C23 F.10.1.4
 """
 # cr_atan2
