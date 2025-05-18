@@ -54,7 +54,7 @@ cr_atan
 # Reference
 - C23 F.10.1.4
 """
-cr_atan2
+# cr_atan2
 
 """
     cr_cos(x)
@@ -147,7 +147,7 @@ cr_atanpi
 # Reference
 - C23 F.10.1.11
 """
-cr_atan2pi
+# cr_atan2pi
 
 """
     cr_cospi(x)
