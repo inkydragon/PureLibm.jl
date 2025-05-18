@@ -3,9 +3,12 @@
 for T in [Float32, ]
     @testset "cr_exp10(::$T)" begin
         # IEC 60559
+        # exp10(±0) returns 1
         @test PureLibm.cr_exp10(T(0.0)) == T(1)
         @test PureLibm.cr_exp10(T(-0.0)) == T(1)
+        # exp10(−∞) returns +0
         @test PureLibm.cr_exp10(T(-Inf)) == T(0)
+        # exp10(+∞) returns +∞
         @test PureLibm.cr_exp10(T(Inf)) == T(Inf)
 
         @test isnan(PureLibm.cr_exp10(T(NaN)))
