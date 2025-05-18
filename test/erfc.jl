@@ -24,19 +24,3 @@ for T in (Float32, )
     #     end
     # end
 end
-
-# pos_range = (lo=Float32(0.0), hi=prevfloat(Float32(Inf)))
-# neg_range = (lo=Float32(-0.0), hi=nextfloat(Float32(-Inf)))
-# if "cr_erfc.fast" in CheckExhaustive
-#     @testset "cr_erfc-exhaustive.fast" begin
-#         test_float_range(erfc, PureLibm.cr_erfc, lo=pos_range.lo, hi=pos_range.hi)
-#         test_float_range(erfc, PureLibm.cr_erfc, lo=neg_range.lo, hi=neg_range.hi)
-#     end
-# end
-# if "cr_erfc" in CheckExhaustive
-#     @testset "cr_erfc-exhaustive" begin
-#         test_float_range(erfc, PureLibm.cr_erfc, lo=pos_range.lo, hi=pos_range.hi, bigfloat=true)
-#         test_float_range(erfc, PureLibm.cr_erfc, lo=neg_range.lo, hi=neg_range.hi, bigfloat=true)
-#     end
-# end
-# ENV["PURELIBM_CHECK_EXHAUSTIVE"] = "cr_erfc.fast,cr_erfc"

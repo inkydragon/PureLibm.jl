@@ -13,19 +13,3 @@ for T in (Float32, )
         # @test PureLibm.cr_exp2m1(T(Inf)) == T(Inf)
     end
 end
-
-# pos_range = (lo=Float32(0.0), hi=Float32(128))
-# neg_range = (lo=Float32(-0.0), hi=Float32(-150))
-# if "cr_exp2m1.fast" in CheckExhaustive
-#     @testset "cr_exp2m1-exhaustive.fast" begin
-#         test_float_range(exp2m1, PureLibm.cr_exp2m1, lo=pos_range.lo, hi=pos_range.hi)
-#         test_float_range(exp2m1, PureLibm.cr_exp2m1, lo=neg_range.lo, hi=neg_range.hi)
-#     end
-# end
-# if "cr_exp2m1" in CheckExhaustive
-#     @testset "cr_exp2m1-exhaustive" begin
-#         test_float_range(exp2m1, PureLibm.cr_exp2m1, lo=pos_range.lo, hi=pos_range.hi, bigfloat=true)
-#         test_float_range(exp2m1, PureLibm.cr_exp2m1, lo=neg_range.lo, hi=neg_range.hi, bigfloat=true)
-#     end
-# end
-# ENV["PURELIBM_CHECK_EXHAUSTIVE"] = "cr_exp2m1.fast,cr_exp2m1"
