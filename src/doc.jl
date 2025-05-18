@@ -161,6 +161,7 @@ Returns the cosine of `x` in ranges `[-1, 1]`.
 - Returns `NaN` if `x` is `NaN`
 
 # Reference
+- [cospi - cppreference](https://en.cppreference.com/w/c/numeric/math/cospi)
 - C23 F.10.1.12
 """
 cr_cospi
@@ -177,6 +178,7 @@ Returns the sine of `x` in ranges `[-1, 1]`.
 - Returns `NaN` if `x` is `NaN`
 
 # Reference
+- [sinpi - cppreference](https://en.cppreference.com/w/c/numeric/math/sinpi)
 - C23 F.10.1.13
 """
 cr_sinpi
@@ -196,6 +198,7 @@ Returns the tangent of `x` in ranges `[-∞, ∞]`.
 - Returns `NaN` if `x` is `NaN`
 
 # Reference
+- [tanpi - cppreference](https://en.cppreference.com/w/c/numeric/math/tanpi)
 - C23 F.10.1.14
 """
 cr_tanpi
@@ -337,6 +340,7 @@ cr_exp10(x::Float32) = cr_exp10f(x)
 Compute `2^x` of `x`.
 
 # Reference
+- [exp2 - cppreference](https://en.cppreference.com/w/c/numeric/math/exp2)
 - C23 F.10.3.4
 """
 cr_exp2(x::Float32) = cr_exp2f(x)
@@ -355,6 +359,7 @@ cr_exp2(x::Float32) = cr_exp2f(x)
 Compute `exp(x) - 1` of `x`.
 
 # Reference
+- [expm1 - cppreference](https://en.cppreference.com/w/c/numeric/math/expm1)
 - C23 F.10.3.6
 """
 cr_expm1(x::Float32) = cr_expm1f(x)
@@ -376,6 +381,7 @@ cr_log(x::Float32) = cr_logf(x)
 Compute base 10 logarithm of `x`.
 
 # Reference
+- [log10 - cppreference](https://en.cppreference.com/w/c/numeric/math/log10)
 - C23 F.10.3.12
 """
 cr_log10
@@ -394,6 +400,7 @@ cr_log10
 Compute biased argument natural logarithm `log(1+x)` of `x`.
 
 # Reference
+- [log1p - cppreference](https://en.cppreference.com/w/c/numeric/math/log1p)
 - C23 F.10.3.14
 """
 cr_log1p(x::Float32) = cr_log1pf(x)
@@ -405,6 +412,7 @@ const cr_logp1 = cr_log1p
 Compute natural logarithm of `x`.
 
 # Reference
+- [log2 - cppreference](https://en.cppreference.com/w/c/numeric/math/log2)
 - C23 F.10.3.15
 """
 cr_log2
@@ -425,6 +433,7 @@ cr_log2
 Compute cubic root of `x`.
 
 # Reference
+- [cbrt - cppreference](https://en.cppreference.com/w/c/numeric/math/cbrt)
 - C23 F.10.4.1
 """
 cr_cbrt
@@ -434,6 +443,7 @@ cr_cbrt
     cr_hypot(x)
 
 # Reference
+- [hypot - cppreference](https://en.cppreference.com/w/c/numeric/math/hypot)
 - C23 F.10.4.4
 """
 # cr_hypot
@@ -464,6 +474,7 @@ cr_rsqrt(x::Float32) = cr_rsqrtf(x)
     cr_sqrt(x)
 
 # Reference
+- [sqrt - cppreference](https://en.cppreference.com/w/c/numeric/math/sqrt)
 - C23 F.10.4.10
 """
 # cr_sqrt
@@ -492,6 +503,7 @@ cr_rsqrt(x::Float32) = cr_rsqrtf(x)
     cr_lgamma(x)
 
 # Reference
+- [lgamma - cppreference](https://en.cppreference.com/w/c/numeric/math/lgamma)
 - C23 F.10.5.3
 """
 # cr_lgamma
