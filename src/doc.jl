@@ -306,6 +306,9 @@ cr_tanh
     cr_exp(x)
 
 Compute natural exponential of `x`.
+
+# Reference
+- C23 F.10.3.1
 """
 cr_exp(x::Float32) = cr_expf(x)
 
@@ -313,22 +316,45 @@ cr_exp(x::Float32) = cr_expf(x)
     cr_exp10(x)
 
 Compute `10^x` of `x`.
+
+# Reference
+- C23 F.10.3.2
 """
 cr_exp10(x::Float32) = cr_exp10f(x)
-# exp10m1
+
+"""
+    cr_exp10m1(x)
+
+# Reference
+- C23 F.10.3.3
+"""
+# cr_exp10m1
 
 """
     cr_exp2(x)
 
 Compute `2^x` of `x`.
+
+# Reference
+- C23 F.10.3.4
 """
 cr_exp2(x::Float32) = cr_exp2f(x)
-# exp2m1
+
+"""
+    cr_exp2m1(x)
+
+# Reference
+- C23 F.10.3.5
+"""
+# cr_exp2m1
 
 """
     cr_expm1(x)
 
 Compute `exp(x) - 1` of `x`.
+
+# Reference
+- C23 F.10.3.6
 """
 cr_expm1(x::Float32) = cr_expm1f(x)
 
@@ -336,6 +362,9 @@ cr_expm1(x::Float32) = cr_expm1f(x)
     cr_log(x)
 
 Compute natural logarithm of `x`.
+
+# Reference
+- C23 F.10.3.11
 """
 cr_log(x::Float32) = cr_logf(x)
 
@@ -343,25 +372,48 @@ cr_log(x::Float32) = cr_logf(x)
     cr_log10(x)
 
 Compute base 10 logarithm of `x`.
+
+# Reference
+- C23 F.10.3.12
 """
 cr_log10
-# log10p1
+
+"""
+    cr_log10p1(x)
+
+# Reference
+- C23 F.10.3.13
+"""
+# cr_log10p1
 
 """
     cr_log1p(x)
 
 Compute biased argument natural logarithm `log(1+x)` of `x`.
+
+# Reference
+- C23 F.10.3.14
 """
 cr_log1p(x::Float32) = cr_log1pf(x)
-# logp1
+const cr_logp1 = cr_log1p
 
 """
     cr_log2(x)
 
 Compute natural logarithm of `x`.
+
+# Reference
+- C23 F.10.3.15
 """
 cr_log2
-# log2p1
+
+"""
+    cr_log2p1(x)
+
+# Reference
+- C23 F.10.3.16
+"""
+# cr_log2p1
 
 
 #= Power and Absolute-value =#
