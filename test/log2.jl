@@ -3,7 +3,23 @@
 for T in (Float32, )
     @testset "cr_log2($T)" begin
         # IEC 60559
- 
+        @test isnan(PureLibm.cr_log2(T(NaN)))
+        # log2(±0) returns −∞ and raises the "divide-by-zero" floating-point exception.
+        @test PureLibm.cr_log2(T(0.0)) == -T(Inf)
+        @test PureLibm.cr_log2(T(-0.0)) == -T(Inf)
+        # log2(1) returns +0.
+        @test PureLibm.cr_log2(T(1)) == T(0.0)
+        # log2(x) returns a NaN and raises the "invalid" floating-point exception
+        #   for x < 0.
+        @test isnan(PureLibm.cr_log2(T(-0.1)))
+        @test isnan(PureLibm.cr_log2(T(-1)))
+        @test isnan(PureLibm.cr_log2(T(-Inf)))
+        # log2(+∞) returns +∞.
+        @test PureLibm.cr_log2(T(Inf)) == T(Inf)
+
+        # sanity check
+        @test PureLibm.cr_log2(T(2)) == T(1)
+        @test PureLibm.cr_log2(1/T(2)) == T(-1)
     end
 
     @testset "cr_log2(rand($T))" begin
