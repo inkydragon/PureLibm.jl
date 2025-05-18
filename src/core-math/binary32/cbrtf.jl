@@ -92,8 +92,7 @@ function cr_cbrtf(x::Float32)
     m1 = m0 >> 63
     if ((m0 ⊻ m1) < (Int64(1) << 31))
         cvt1u = (cvt1u + (UInt64(1) << 31)) & 0xffffffff00000000
-        cvt1f = reinterpret(Float64, cvt1u)
-        ub = Float32(cvt1f)
+        ub = Float32(reinterpret(Float64, cvt1u))
         # set_flags(flag)
     end
 
