@@ -12,6 +12,7 @@ Returns the arc-cosine of `x` in ranges `[0, pi]`.
 
 # Reference
 - [DLMF: §4.23.2](https://dlmf.nist.gov/4.23#E2)
+- C23 F.10.1.1
 """
 cr_acos
 
@@ -27,6 +28,7 @@ Returns the arc-sine of `x` in ranges `[-pi/2, pi/2]`.
 
 # Reference
 - [DLMF: §4.23.1](https://dlmf.nist.gov/4.23#E1)
+- C23 F.10.1.2
 """
 cr_asin
 
@@ -42,9 +44,17 @@ Returns the arc-tangent of `x` in ranges `[-pi/2, pi/2]`.
 
 # Reference
 - [DLMF: §4.23.3](https://dlmf.nist.gov/4.23#E3)
+- C23 F.10.1.3
 """
 cr_atan
-# cr_atan2
+
+"""
+    cr_atan2(x, y)
+
+# Reference
+- C23 F.10.1.4
+"""
+cr_atan2
 
 """
     cr_cos(x)
@@ -58,6 +68,7 @@ Returns the cosine of `x` in ranges `[-1, 1]`.
 
 # Reference
 - [DLMF: §4.14.2](https://dlmf.nist.gov/4.14#E2)
+- C23 F.10.1.5
 """
 cr_cos
 
@@ -73,6 +84,7 @@ Returns the sine of `x` in ranges `[-1, 1]`.
 
 # Reference
 - [DLMF: §4.14.1](https://dlmf.nist.gov/4.14#E1)
+- C23 F.10.1.6
 """
 cr_sin
 
@@ -95,6 +107,7 @@ Returns the tangent of `x` in ranges `[-∞, ∞]`.
 
 # Reference
 - [DLMF: §4.14.4](https://dlmf.nist.gov/4.14#E4)
+- C23 F.10.1.7
 """
 cr_tan
 
@@ -102,13 +115,19 @@ cr_tan
     cr_acospi(x)
 
 Compute the inverse cosine of `x` divided by `π`.
-"""
 
+# Reference
+- C23 F.10.1.8
+"""
 cr_acospi
+
 """
     cr_asinpi(x)
 
 Compute the inverse sine of `x` divided by `π`.
+
+# Reference
+- C23 F.10.1.9
 """
 cr_asinpi
 
@@ -116,9 +135,19 @@ cr_asinpi
     cr_atanpi(x)
 
 Compute the inverse tangent of `x` divided by `π`.
+
+# Reference
+- C23 F.10.1.10
 """
 cr_atanpi
-# atan2pi
+
+"""
+    cr_atan2pi(x)
+
+# Reference
+- C23 F.10.1.11
+"""
+cr_atan2pi
 
 """
     cr_cospi(x)
@@ -130,6 +159,9 @@ Returns the cosine of `x` in ranges `[-1, 1]`.
 - Returns `+0` if `x` is `n + 1/2`, for integers `n`
 - Returns `NaN` if `x` is `±∞`
 - Returns `NaN` if `x` is `NaN`
+
+# Reference
+- C23 F.10.1.12
 """
 cr_cospi
 
@@ -143,6 +175,9 @@ Returns the sine of `x` in ranges `[-1, 1]`.
 - Returns `±0` if `x` is `±n`, for positive integers `n`
 - Returns `NaN` if `x` is `±∞`
 - Returns `NaN` if `x` is `NaN`
+
+# Reference
+- C23 F.10.1.13
 """
 cr_sinpi
 
@@ -159,6 +194,9 @@ Returns the tangent of `x` in ranges `[-∞, ∞]`.
 - Returns `-∞` if `x` is `n + 1/2`, for odd integers `n`
 - Returns `NaN` if `x` is `±∞`
 - Returns `NaN` if `x` is `NaN`
+
+# Reference
+- C23 F.10.1.14
 """
 cr_tanpi
 
