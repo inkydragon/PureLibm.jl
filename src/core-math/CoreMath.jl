@@ -38,7 +38,7 @@ include("binary32/exp2f.jl")
 # exp2m1
 include("binary32/expm1f.jl")
 include("binary32/logf.jl")
-# log10
+include("binary32/log10f.jl")
 # log10p1
 include("binary32/log1pf.jl")
 # logp1

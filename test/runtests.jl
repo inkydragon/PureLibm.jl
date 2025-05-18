@@ -49,7 +49,7 @@ include("exp10.jl")
 include("exp2.jl")
 include("expm1.jl")
 include("log.jl")
-# log10
+include("log10.jl")
 # log10p1
 include("log1p.jl")
 # logp1
