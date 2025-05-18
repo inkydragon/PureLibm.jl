@@ -6,7 +6,7 @@ for T in [Float32, ]
         # cos(±0) returns 1
         @test PureLibm.cr_cos(T(0)) == T(1)
         @test PureLibm.cr_cos(-T(0)) == T(1)
-        # cos(±∞) returns a NaN
+        # cos(±∞) returns a NaN and raises the "invalid" floating-point exception
         @test isnan(PureLibm.cr_cos(T(Inf)))
         @test isnan(PureLibm.cr_cos(T(-Inf)))
 
