@@ -88,7 +88,7 @@ function cr_cbrtf(x::Float32)
     cvt1f = r
     cvt1u = reinterpret(UInt64, cvt1f)
     ub = Float32(r)
-    m0 = cvt1u << 19
+    m0 = reinterpret(Int64, cvt1u << 19)
     m1 = m0 >> 63
     if ((m0 ⊻ m1) < (Int64(1) << 31))
         cvt1u = (cvt1u + (UInt64(1) << 31)) & 0xffffffff00000000
