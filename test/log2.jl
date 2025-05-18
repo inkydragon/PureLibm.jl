@@ -25,7 +25,14 @@ for T in (Float32, )
     @testset "cr_log2(rand($T))" begin
         test_x = T[
             eps(T(0.0)),
-   
+            rand_float(T(0.0), T(1.0), 64)...,
+            rand_float(T(1.0), T(prevfloat(Float32(Inf))), 64)...,
+
+            # branch coverage
+            # (m == 0)
+            0.5f0,
+            1.0f0,
+            2.0f0,
         ]
         @testset "cr_log2($x)" for x in test_x
             res = PureLibm.cr_log2(x)
