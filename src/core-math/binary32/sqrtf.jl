@@ -13,5 +13,5 @@ Correctly-rounded reciprocal square root of binary32 value.
 cr_sqrt(x::Float32) = cr_sqrtf(x)
 
 function cr_sqrtf(x::Float32)
-    throw(ErrorException("Function Not Impl!"))
+    sqrt(x)
 end
