@@ -362,7 +362,7 @@ Returns ``10^x``
 # Reference
 - C23 F.10.3.2
 """
-cr_exp10(x::Float32) = cr_exp10f(x)
+cr_exp10
 
 """
     cr_exp10m1(x)
