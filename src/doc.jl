@@ -412,7 +412,7 @@ Returns ``e^x - 1``
 - [expm1 - cppreference](https://en.cppreference.com/w/c/numeric/math/expm1)
 - C23 F.10.3.6
 """
-cr_expm1(x::Float32) = cr_expm1f(x)
+cr_expm1
 
 """
     cr_log(x)
