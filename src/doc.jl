@@ -491,7 +491,7 @@ Returns ``\\log_2 (1+x)``
 # Reference
 - C23 F.10.3.16
 """
-# cr_log2p1
+cr_log2p1
 
 
 #= Power and Absolute-value =#

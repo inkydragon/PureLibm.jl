@@ -41,9 +41,9 @@ include("binary32/logf.jl")
 include("binary32/log10f.jl")
 # log10p1
 include("binary32/log1pf.jl")
-# logp1
+# cr_logp1 = cr_log1p
 include("binary32/log2f.jl")
-# log2p1
+include("binary32/log2p1f.jl")
 
 # Power
 include("binary32/cbrtf.jl")
