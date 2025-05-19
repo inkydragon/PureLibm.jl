@@ -67,7 +67,7 @@ include("sqrt.jl")
 # C99: Error and gamma
 # erf
 # erfc
-# lgamma
+include("lgamma.jl")
 include("tgamma.jl")
 
 @testset "PureLibm.jl" begin
