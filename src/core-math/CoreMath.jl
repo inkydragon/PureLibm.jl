@@ -52,6 +52,7 @@ include("binary32/cbrtf.jl")
 # pow
 include("binary64/rsqrt.jl")
 include("binary32/rsqrtf.jl")
+include("binary32/sqrtf.jl")
 
 # Error and gamma
 include("binary32/erff.jl")

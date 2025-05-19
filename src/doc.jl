@@ -562,7 +562,7 @@ Returns ``\\sqrt{x}``
 - [sqrt - cppreference](https://en.cppreference.com/w/c/numeric/math/sqrt)
 - C23 F.10.4.10
 """
-# cr_sqrt
+cr_sqrt
 
 
 #= Error and gamma =#
