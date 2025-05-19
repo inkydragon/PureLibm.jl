@@ -5,7 +5,7 @@ export cr_acos, cr_asin, cr_atan
 
 include("helper.jl")
 
-# Trigonometric
+#= Trigonometric =#
 include("binary32/acosf.jl")
 include("binary32/asinf.jl")
 include("binary32/atanf.jl")
@@ -22,7 +22,7 @@ include("binary32/cospif.jl")
 include("binary32/sinpif.jl")
 include("binary32/tanpif.jl")
 
-# Hyperbolic
+#= Hyperbolic =#
 include("binary32/acoshf.jl")
 include("binary32/asinhf.jl")
 include("binary32/atanhf.jl")
@@ -30,7 +30,7 @@ include("binary32/coshf.jl")
 include("binary32/sinhf.jl")
 include("binary32/tanhf.jl")
 
-# Exponential and logarithmic
+#= Exponential and logarithmic =#
 include("binary32/expf.jl")
 include("binary32/exp10f.jl")
 include("binary32/exp10m1f.jl")
@@ -45,7 +45,7 @@ include("binary32/log1pf.jl")
 include("binary32/log2f.jl")
 include("binary32/log2p1f.jl")
 
-# Power
+#= Power and Absolute-value =#
 include("binary32/cbrtf.jl")
 include("binary32/compoundnf.jl")
 include("binary32/hypotf.jl")
@@ -57,7 +57,7 @@ include("binary64/rsqrt.jl")
 include("binary32/rsqrtf.jl")
 include("binary32/sqrtf.jl")
 
-# Error and gamma
+#= Error and gamma =#
 include("binary32/erff.jl")
 include("binary32/erfcf.jl")
 include("binary32/lgammaf.jl")
