@@ -66,8 +66,12 @@ function _log1pf_as_special(x::Float32)
 end
 
 """
+    cr_log1p(x::Float32)
+
 Correctly-rounded biased argument natural logarithm function for `Float32`.
 """
+cr_log1p(x::Float32) = cr_log1pf(x)
+
 function cr_log1pf(x::Float32)::Float32
     z = Float64(x)
     ux = reinterpret(UInt32, x)

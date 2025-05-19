@@ -45,6 +45,8 @@ const CR_TGAMMAF_C = Vector{Float64}([
 
 Correctly-rounded true gamma function for `Float32`.
 """
+cr_tgamma(x::Float32) = cr_tgammaf(x)
+
 function cr_tgammaf(x::Float32)::Float32
     tb = CR_TGAMMAF_TB
 

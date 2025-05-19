@@ -30,8 +30,12 @@ const CR_EXP10F_C = NTuple{6, Float64}((
 
 
 """
+    cr_exp10(x::Float32)
+
 Correctly-rounded 10^x function for `Float32`.
 """
+cr_exp10(x::Float32) = cr_exp10f(x)
+
 function cr_exp10f(x::Float32)::Float32
     iln102 = 0x1.a934f0979a371p+6
     iln102h = 0x1.a934f09p+1

@@ -32,11 +32,15 @@ const CR_EXPM1F_B = NTuple{8, Float64}((
 ))
 
 """
+    cr_expm1(x::Float32)
+
 Correctly-rounded `exp(x) - 1` function for `Float32`.
 
 # Reference
 - https://gitlab.inria.fr/core-math/core-math/-/blob/345beda118d10da08ad2461fcac244e8e32d37de/src/binary32/expm1/expm1f.c
 """
+cr_expm1(x::Float32) = cr_expm1f(x)
+
 function cr_expm1f(x::Float32)
     iln2 = 0x1.71547652b82fep+5
     big = 0x1.8p52

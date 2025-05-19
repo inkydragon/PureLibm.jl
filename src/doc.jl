@@ -55,7 +55,7 @@ Returns `arctan(x)` in interval `[-π/2, π/2]` radians.
 cr_atan
 
 """
-    cr_atan2(x, y)
+    cr_atan2(y, x)
 
 Compute the arc tangent of `y/x`.
 
@@ -65,7 +65,7 @@ Returns `arctan(y/x)` in interval `[-π, π]` radians.
 - [atan2 - Wikipedia](https://en.wikipedia.org/wiki/Atan2)
 - C23 F.10.1.4
 """
-# cr_atan2
+cr_atan2
 
 """
     cr_cos(x)
@@ -174,7 +174,7 @@ Returns `arctan(y, x)/π` in interval `[-1, 1]`.
 # Reference
 - C23 F.10.1.11
 """
-# cr_atan2pi
+cr_atan2pi
 
 """
     cr_cospi(x)
@@ -350,7 +350,7 @@ Returns ``e^x``
 - [DLMF: §4.2.19](https://dlmf.nist.gov/4.2#E19)
 - C23 F.10.3.1
 """
-cr_exp(x::Float32) = cr_expf(x)
+cr_exp
 
 """
     cr_exp10(x)
@@ -362,7 +362,7 @@ Returns ``10^x``
 # Reference
 - C23 F.10.3.2
 """
-cr_exp10(x::Float32) = cr_exp10f(x)
+cr_exp10
 
 """
     cr_exp10m1(x)
@@ -374,7 +374,7 @@ Returns ``10^x - 1``
 # Reference
 - C23 F.10.3.3
 """
-# cr_exp10m1
+cr_exp10m1
 
 """
     cr_exp2(x)
@@ -387,7 +387,7 @@ Returns ``2^x``
 - [exp2 - cppreference](https://en.cppreference.com/w/c/numeric/math/exp2)
 - C23 F.10.3.4
 """
-cr_exp2(x::Float32) = cr_exp2f(x)
+cr_exp2
 
 """
     cr_exp2m1(x)
@@ -399,7 +399,7 @@ Returns ``2^x - 1``
 # Reference
 - C23 F.10.3.5
 """
-# cr_exp2m1
+cr_exp2m1
 
 """
     cr_expm1(x)
@@ -412,7 +412,7 @@ Returns ``e^x - 1``
 - [expm1 - cppreference](https://en.cppreference.com/w/c/numeric/math/expm1)
 - C23 F.10.3.6
 """
-cr_expm1(x::Float32) = cr_expm1f(x)
+cr_expm1
 
 """
     cr_log(x)
@@ -426,7 +426,7 @@ Returns ``\\log_e x``
 - [DLMF: §4.2.2](https://dlmf.nist.gov/4.2#E2)
 - C23 F.10.3.11
 """
-cr_log(x::Float32) = cr_logf(x)
+cr_log
 
 """
     cr_log10(x)
@@ -452,7 +452,7 @@ Returns ``\\log_{10} (1+x)``
 # Reference
 - C23 F.10.3.13
 """
-# cr_log10p1
+cr_log10p1
 
 """
     cr_log1p(x)
@@ -465,7 +465,7 @@ Returns ``\\log_e (1+x)``
 - [log1p - cppreference](https://en.cppreference.com/w/c/numeric/math/log1p)
 - C23 F.10.3.14
 """
-cr_log1p(x::Float32) = cr_log1pf(x)
+cr_log1p
 const cr_logp1 = cr_log1p
 
 """
@@ -491,7 +491,7 @@ Returns ``\\log_2 (1+x)``
 # Reference
 - C23 F.10.3.16
 """
-# cr_log2p1
+cr_log2p1
 
 
 #= Power and Absolute-value =#
@@ -507,7 +507,18 @@ Returns ``x^\\frac{1}{3}``
 - C23 F.10.4.1
 """
 cr_cbrt
-# compoundn
+
+"""
+    cr_compoundn(x, n)
+
+Compute `1 + x` raised to the power `n`.
+
+Returns ``(1+x)^n``
+
+# Reference
+- C23 7.12.7.2, F.10.4.2
+"""
+cr_compoundn
 
 """
     cr_hypot(x, y)
@@ -521,7 +532,7 @@ Returns ``\\sqrt{x^2+y^2}``
 - [hypot - cppreference](https://en.cppreference.com/w/c/numeric/math/hypot)
 - C23 F.10.4.4
 """
-# cr_hypot
+cr_hypot
 
 """
     cr_pow(x, y)
@@ -534,7 +545,7 @@ Returns ``\\x^y``
 - [DLMF: §4.2.28](https://dlmf.nist.gov/4.2#E28)
 - C23 F.10.4.5
 """
-# cr_pow
+cr_pow
 # pown
 # powr
 # rootn
@@ -549,7 +560,7 @@ Returns ``\\frac{1}{\\sqrt{x}}``
 # Reference
 - C23 F.10.4.9
 """
-cr_rsqrt(x::Float32) = cr_rsqrtf(x)
+cr_rsqrt
 
 """
     cr_sqrt(x)
@@ -562,7 +573,7 @@ Returns ``\\sqrt{x}``
 - [sqrt - cppreference](https://en.cppreference.com/w/c/numeric/math/sqrt)
 - C23 F.10.4.10
 """
-# cr_sqrt
+cr_sqrt
 
 
 #= Error and gamma =#
@@ -573,14 +584,14 @@ Computes the error function of `x`.
 
 Returns
 ```math
-\\erf(x) = \\frac{2}{\\sqrt{\\pi}} \\int_{0}^{x} e^{-t^2} dt
+\\tt{erf}(x) = \\frac{2}{\\sqrt{\\pi}} \\int_{0}^{x} e^{-t^2} dt
 ```
 
 # Reference
 - [DLMF: §7.2.1](https://dlmf.nist.gov/7.2#E1)
 - C23 F.10.5.1
 """
-# cr_erf
+cr_erf
 
 """
     cr_erfc(x)
@@ -589,8 +600,8 @@ Computes the complementary error function of `x`.
 
 Returns
 ```math
-\\erfc(x)
-= 1 - \\erf(x)
+\\tt{erfc}(x)
+= 1 - \\tt{erf}(x)
 = \\frac{2}{\\sqrt{\\pi}} \\int_{x}^{\\infty} e^{-t^2} dt
 ```
 
@@ -598,7 +609,7 @@ Returns
 - [DLMF: §7.2.2](https://dlmf.nist.gov/7.2#E2)
 - C23 F.10.5.2
 """
-# cr_erfc
+cr_erfc
 
 """
     cr_lgamma(x)
@@ -611,7 +622,7 @@ Returns ``\\log_e |\\Gamma(x)|``
 - [lgamma - cppreference](https://en.cppreference.com/w/c/numeric/math/lgamma)
 - C23 F.10.5.3
 """
-# cr_lgamma
+cr_lgamma
 
 """
     cr_tgamma(x)
@@ -624,4 +635,4 @@ Returns ``\\Gamma(x)``
 - [DLMF: §5.2.1](https://dlmf.nist.gov/5.2#E1)
 - C23 F.10.5.4
 """
-cr_tgamma(x::Float32) = cr_tgammaf(x)
+cr_tgamma

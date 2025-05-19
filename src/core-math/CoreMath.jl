@@ -5,11 +5,11 @@ export cr_acos, cr_asin, cr_atan
 
 include("helper.jl")
 
-# Trigonometric
+#= Trigonometric =#
 include("binary32/acosf.jl")
 include("binary32/asinf.jl")
 include("binary32/atanf.jl")
-# atan2f
+include("binary32/atan2f.jl")
 include("binary32/cosf.jl")
 include("binary32/sinf.jl")
 include("binary32/sincosf.jl")
@@ -17,12 +17,12 @@ include("binary32/tanf.jl")
 include("binary32/acospif.jl")
 include("binary32/asinpif.jl")
 include("binary32/atanpif.jl")
-# atan2pi
+include("binary32/atan2pif.jl")
 include("binary32/cospif.jl")
 include("binary32/sinpif.jl")
 include("binary32/tanpif.jl")
 
-# Hyperbolic
+#= Hyperbolic =#
 include("binary32/acoshf.jl")
 include("binary32/asinhf.jl")
 include("binary32/atanhf.jl")
@@ -30,28 +30,35 @@ include("binary32/coshf.jl")
 include("binary32/sinhf.jl")
 include("binary32/tanhf.jl")
 
-# Exponential and logarithmic
+#= Exponential and logarithmic =#
 include("binary32/expf.jl")
 include("binary32/exp10f.jl")
-# exp10m1
+include("binary32/exp10m1f.jl")
 include("binary32/exp2f.jl")
-# exp2m1
+include("binary32/exp2m1f.jl")
 include("binary32/expm1f.jl")
 include("binary32/logf.jl")
 include("binary32/log10f.jl")
-# log10p1
+include("binary32/log10p1f.jl")
 include("binary32/log1pf.jl")
-# logp1
+# cr_logp1 = cr_log1p
 include("binary32/log2f.jl")
-# log2p1
+include("binary32/log2p1f.jl")
 
-# Power
+#= Power and Absolute-value =#
 include("binary32/cbrtf.jl")
-# compoundn
-# hypot
-# pow
+include("binary32/compoundnf.jl")
+include("binary32/hypotf.jl")
+include("binary32/powf.jl")
+# pown
+# powr
+# rootn
 include("binary64/rsqrt.jl")
 include("binary32/rsqrtf.jl")
+include("binary32/sqrtf.jl")
 
-# Error and gamma
+#= Error and gamma =#
+include("binary32/erff.jl")
+include("binary32/erfcf.jl")
+include("binary32/lgammaf.jl")
 include("binary32/tgammaf.jl")

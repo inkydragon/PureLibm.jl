@@ -74,8 +74,12 @@ function _logf_as_special(x::Float32)::Float32
 end
 
 """
+    cr_log(x::Float32)
+
 Correctly-rounded logarithm function for `Float32`.
 """
+cr_log(x::Float32) = cr_logf(x)
+
 function cr_logf(x::Float32)::Float32
     ux = reinterpret(UInt32, x)
     if @unlikely(ux < (UInt32(1) << 23) || ux >= 0x7f800000)
