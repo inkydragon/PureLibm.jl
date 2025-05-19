@@ -624,4 +624,4 @@ Returns ``\\Gamma(x)``
 - [DLMF: §5.2.1](https://dlmf.nist.gov/5.2#E1)
 - C23 F.10.5.4
 """
-cr_tgamma(x::Float32) = cr_tgammaf(x)
+cr_tgamma
