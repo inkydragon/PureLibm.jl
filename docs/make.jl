@@ -3,10 +3,6 @@ using Documenter
 
 DocMeta.setdocmeta!(PureLibm, :DocTestSetup, :(using PureLibm); recursive=true)
 
-math_functions = Any[
-    "math/index.md",
-]
-
 makedocs(;
     modules=[PureLibm],
     authors="Chengyu HAN <cyhan.dev@outlook.com> and contributors",
@@ -25,7 +21,6 @@ makedocs(;
             "reference/f32.md",
             "reference/f64.md"
         ],
-        "Math Functions" => math_functions,
         "Tech Notes" => Any[
             "notes/index.md",
             "C Standards" => Any[
