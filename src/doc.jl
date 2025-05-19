@@ -235,9 +235,11 @@ cr_tanpi
 """
     cr_acosh(x)
 
-Compute the inverse hyperbolic cosine of `x` in radians.
+Compute the (nonnegative) arc hyperbolic cosine of `x`,
+`acosh` is the inverse function of `cosh`,
+`x = cosh(acosh(x))`.
 
-Returns the inverse hyperbolic cosine of `x`.
+Returns `arccosh(x)` in interval `[0, ∞]`.
 - Returns `+0` if `x` is `1`
 - Returns `NaN` if `x` is `x < 1`
 - Returns `+∞` if `x` is `+∞`
@@ -252,9 +254,11 @@ cr_acosh
 """
     cr_asinh(x)
 
-Compute the inverse hyperbolic sine of `x` in radians.
+Compute the arc hyperbolic sine of `x`,
+`asinh` is the inverse function of `sinh`,
+`x = sinh(asinh(x))`.
 
-Returns the inverse hyperbolic sine of `x`.
+Returns `arcsinh(x)` in interval `[-∞, ∞]`.
 - Returns `±0` if `x` is `±0`
 - Returns `±∞` if `x` is `±∞`
 - Returns `NaN` if `x` is `NaN`
@@ -268,9 +272,11 @@ cr_asinh
 """
     cr_atanh(x)
 
-Compute the inverse hyperbolic tangent of `x` in radians.
+Compute the arc hyperbolic tangent of `x`,
+`atanh` is the inverse function of `tanh`,
+`x = tanh(atanh(x))`.
 
-Returns the inverse hyperbolic tangent of `x`.
+Returns `arctanh(x)` in interval `[-∞, ∞]`.
 - Returns `±0` if `x` is `±0`
 - Returns `±∞` if `x` is `±1`
 - Returns `NaN` if `x` is `|x| > 1`
@@ -285,9 +291,9 @@ cr_atanh
 """
     cr_cosh(x)
 
-Compute the hyperbolic cosine of `x` in radians.
+Compute the hyperbolic cosine of `x`.
 
-Returns the hyperbolic cosine of `x`.
+Returns `cosh(x)` in interval `[1, ∞]`.
 - Returns `1` if `x` is `±0`
 - Returns `+∞` if `x` is `±∞`
 - Returns `NaN` if `x` is `NaN`
@@ -301,9 +307,9 @@ cr_cosh
 """
     cr_sinh(x)
 
-Compute the hyperbolic sine of `x` in radians.
+Compute the hyperbolic sine of `x`.
 
-Returns the hyperbolic sine of `x`.
+Returns `sinh(x)` in interval `[-∞, ∞]`.
 - Returns `±0` if `x` is `±0`
 - Returns `±∞` if `x` is `±∞`
 - Returns `NaN` if `x` is `NaN`
@@ -317,9 +323,9 @@ cr_sinh
 """
     cr_tanh(x)
 
-Compute the hyperbolic tangent of `x` in radians.
+Compute the hyperbolic tangent of `x`.
 
-Returns the hyperbolic tangent of `x`.
+Returns `tanh(x)` in interval `[-1, 1]`.
 - Returns `±0` if `x` is `±0`
 - Returns `±1` if `x` is `±∞`
 - Returns `NaN` if `x` is `NaN`
