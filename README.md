@@ -18,8 +18,7 @@
     - Avoid complex bit manipulations, and if possible use the corresponding functions instead of them.
         Or wrap the corresponding operations in a function.
 3. Performance should be considered after the implementation is complete, with a lower priority than correctness.
-    - If refactoring the algorithm improves performance,
-        implementations that match the original reference are retained as references for testing purposes.
+
 
 ## Implementation Status
 
