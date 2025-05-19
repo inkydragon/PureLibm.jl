@@ -18,7 +18,7 @@ include("utils/const.jl")
 include("utils/llvm_intrinsics.jl")
 include("utils/ranges.jl")
 
-# Trigonometric
+#= Trigonometric =#
 include("acos.jl")
 include("asin.jl")
 include("atan.jl")
@@ -35,7 +35,7 @@ include("cospi.jl")
 include("sinpi.jl")
 include("tanpi.jl")
 
-# C99: Hyperbolic
+#= Hyperbolic =#
 include("acosh.jl")
 include("asinh.jl")
 include("atanh.jl")
@@ -43,7 +43,7 @@ include("cosh.jl")
 include("sinh.jl")
 include("tanh.jl")
 
-# Exponential and logarithmic
+#= Exponential and logarithmic =#
 include("exp.jl")
 include("exp10.jl")
 include("exp2.jl")
@@ -56,15 +56,18 @@ include("log1p.jl")
 include("log2.jl")
 include("log2p1.jl")
 
-# Power and Absolute-value
+#= Power and Absolute-value =#
 include("cbrt.jl")
 include("compoundn.jl")
 include("hypot.jl")
 include("pow.jl")
+# pown
+# powr
+# rootn
 include("rsqrt.jl")
 include("sqrt.jl")
 
-# Error and gamma
+#= Error and gamma =#
 include("erf.jl")
 include("erfc.jl")
 include("lgamma.jl")
