@@ -174,7 +174,7 @@ Returns `arctan(y, x)/π` in interval `[-1, 1]`.
 # Reference
 - C23 F.10.1.11
 """
-# cr_atan2pi
+cr_atan2pi
 
 """
     cr_cospi(x)
