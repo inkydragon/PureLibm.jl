@@ -36,10 +36,6 @@ makedocs(;
                 "Core Math [MIT]" => "notes/core-math.md",
                 "RLibm [MIT]" => "notes/rlibm.md",
             ],
-            # libm
-            # "BSD Libm [BSD]" => "notes/bsd.md",
-            "Zig [MIT]" => "notes/zig.md",
-            # "AOCL-LibM [BSD-3]" => "notes/aocl.md",
         ],
     ],
 )
