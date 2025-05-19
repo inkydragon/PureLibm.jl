@@ -426,7 +426,7 @@ Returns ``\\log_e x``
 - [DLMF: §4.2.2](https://dlmf.nist.gov/4.2#E2)
 - C23 F.10.3.11
 """
-cr_log(x::Float32) = cr_logf(x)
+cr_log
 
 """
     cr_log10(x)
