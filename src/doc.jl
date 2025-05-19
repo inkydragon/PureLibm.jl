@@ -498,7 +498,9 @@ Returns ``\\log_2 (1+x)``
 """
     cr_cbrt(x)
 
-Compute cubic root of `x`.
+Compute the real cube root of `x`.
+
+Returns ``x^\\frac{1}{3}``
 
 # Reference
 - [cbrt - cppreference](https://en.cppreference.com/w/c/numeric/math/cbrt)
@@ -508,7 +510,12 @@ cr_cbrt
 # compoundn
 
 """
-    cr_hypot(x)
+    cr_hypot(x, y)
+
+Compute the square root of the sum of the squares of `x` and `y`,
+without undue overflow or underflow.
+
+Returns ``\\sqrt{x^2+y^2}``
 
 # Reference
 - [hypot - cppreference](https://en.cppreference.com/w/c/numeric/math/hypot)
@@ -517,7 +524,11 @@ cr_cbrt
 # cr_hypot
 
 """
-    cr_pow(x)
+    cr_pow(x, y)
+
+Compute `x` raised to the power `y`.
+
+Returns ``\\x^y``
 
 # Reference
 - [DLMF: §4.2.28](https://dlmf.nist.gov/4.2#E28)
@@ -531,7 +542,9 @@ cr_cbrt
 """
     cr_rsqrt(x)
 
-Computes the reciprocal square root of `x`.
+Computes the reciprocal of the nonnegative square root of `x`.
+
+Returns ``\\frac{1}{\\sqrt{x}}``
 
 # Reference
 - C23 F.10.4.9
@@ -540,6 +553,10 @@ cr_rsqrt(x::Float32) = cr_rsqrtf(x)
 
 """
     cr_sqrt(x)
+
+Computes the nonnegative square root of `x`.
+
+Returns ``\\sqrt{x}``
 
 # Reference
 - [sqrt - cppreference](https://en.cppreference.com/w/c/numeric/math/sqrt)
