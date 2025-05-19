@@ -26,25 +26,25 @@ makedocs(;
             "reference/f64.md"
         ],
         "Math Functions" => math_functions,
-        "Impl Ref" => Any[
-            "ref/index.md",
+        "Tech Notes" => Any[
+            "notes/index.md",
             "C Standards" => Any[
                 # C std
-                "ref/std-c99.md",
-                "ref/std-c11.md",
-                "ref/std-c23.md",
+                "notes/std-c99.md",
+                "notes/std-c11.md",
+                "notes/std-c23.md",
                 # IEEE 754
-                "IEEE 754" => "ref/ieee754.md",
+                "IEEE 754" => "notes/ieee754.md",
             ],
             "Correctly Rounded" => Any[
-                "LLVM Libc [Apache]" => "ref/llvm-libc.md",
-                "Core Math [MIT]" => "ref/core-math.md",
-                "RLibm [MIT]" => "ref/rlibm.md",
+                "LLVM Libc [Apache]" => "notes/llvm-libc.md",
+                "Core Math [MIT]" => "notes/core-math.md",
+                "RLibm [MIT]" => "notes/rlibm.md",
             ],
             # libm
-            # "BSD Libm [BSD]" => "ref/bsd.md",
-            "Zig [MIT]" => "ref/zig.md",
-            # "AOCL-LibM [BSD-3]" => "ref/aocl.md",
+            # "BSD Libm [BSD]" => "notes/bsd.md",
+            "Zig [MIT]" => "notes/zig.md",
+            # "AOCL-LibM [BSD-3]" => "notes/aocl.md",
         ],
     ],
 )
