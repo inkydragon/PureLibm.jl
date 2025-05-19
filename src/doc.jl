@@ -521,7 +521,7 @@ Returns ``\\sqrt{x^2+y^2}``
 - [hypot - cppreference](https://en.cppreference.com/w/c/numeric/math/hypot)
 - C23 F.10.4.4
 """
-# cr_hypot
+cr_hypot
 
 """
     cr_pow(x, y)
