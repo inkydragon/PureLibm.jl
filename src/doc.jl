@@ -507,7 +507,18 @@ Returns ``x^\\frac{1}{3}``
 - C23 F.10.4.1
 """
 cr_cbrt
-# compoundn
+
+"""
+    cr_compoundn(x, n)
+
+Compute `1 + x` raised to the power `n`.
+
+Returns ``(1+x)^n``
+
+# Reference
+- C23 7.12.7.2, F.10.4.2
+"""
+cr_compoundn
 
 """
     cr_hypot(x, y)

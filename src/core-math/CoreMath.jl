@@ -47,7 +47,7 @@ include("binary32/log2p1f.jl")
 
 # Power
 include("binary32/cbrtf.jl")
-# compoundn
+include("binary32/compoundnf.jl")
 include("binary32/hypotf.jl")
 include("binary32/powf.jl")
 # pown
