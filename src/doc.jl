@@ -341,7 +341,10 @@ cr_tanh
 """
     cr_exp(x)
 
-Compute natural exponential of `x`.
+Compute the base-`e` exponential of `x`,
+a.k.a. natural exponential.
+
+Returns ``e^x``
 
 # Reference
 - [DLMF: §4.2.19](https://dlmf.nist.gov/4.2#E19)
@@ -352,7 +355,9 @@ cr_exp(x::Float32) = cr_expf(x)
 """
     cr_exp10(x)
 
-Compute `10^x` of `x`.
+Compute the base-`10` exponential of `x`.
+
+Returns ``10^x``
 
 # Reference
 - C23 F.10.3.2
@@ -362,6 +367,10 @@ cr_exp10(x::Float32) = cr_exp10f(x)
 """
     cr_exp10m1(x)
 
+Compute the base-`10` exponential of `x`, minus 1.
+
+Returns ``10^x - 1``
+
 # Reference
 - C23 F.10.3.3
 """
@@ -370,7 +379,9 @@ cr_exp10(x::Float32) = cr_exp10f(x)
 """
     cr_exp2(x)
 
-Compute `2^x` of `x`.
+Compute the base-`2` exponential of `x`.
+
+Returns ``2^x``
 
 # Reference
 - [exp2 - cppreference](https://en.cppreference.com/w/c/numeric/math/exp2)
@@ -381,6 +392,10 @@ cr_exp2(x::Float32) = cr_exp2f(x)
 """
     cr_exp2m1(x)
 
+Compute the base-`2` exponential of `x`, minus 1.
+
+Returns ``2^x - 1``
+
 # Reference
 - C23 F.10.3.5
 """
@@ -389,7 +404,9 @@ cr_exp2(x::Float32) = cr_exp2f(x)
 """
     cr_expm1(x)
 
-Compute `exp(x) - 1` of `x`.
+Compute the base-`e` exponential of `x`, minus 1.
+
+Returns ``e^x - 1``
 
 # Reference
 - [expm1 - cppreference](https://en.cppreference.com/w/c/numeric/math/expm1)
@@ -400,7 +417,10 @@ cr_expm1(x::Float32) = cr_expm1f(x)
 """
     cr_log(x)
 
-Compute natural logarithm of `x`.
+Compute the base-`e` logarithm of `x`,
+a.k.a. natural logarithm.
+
+Returns ``\\log_e x``
 
 # Reference
 - [DLMF: §4.2.2](https://dlmf.nist.gov/4.2#E2)
@@ -411,7 +431,10 @@ cr_log(x::Float32) = cr_logf(x)
 """
     cr_log10(x)
 
-Compute base 10 logarithm of `x`.
+Compute the base-`10` logarithm of `x`,
+a.k.a. common logarithm.
+
+Returns ``\\log_{10} x``
 
 # Reference
 - [log10 - cppreference](https://en.cppreference.com/w/c/numeric/math/log10)
@@ -422,6 +445,10 @@ cr_log10
 """
     cr_log10p1(x)
 
+Compute the base-`10` logarithm of `1 + x`.
+
+Returns ``\\log_{10} (1+x)``
+
 # Reference
 - C23 F.10.3.13
 """
@@ -430,7 +457,9 @@ cr_log10
 """
     cr_log1p(x)
 
-Compute biased argument natural logarithm `log(1+x)` of `x`.
+Compute the base-`e` logarithm of `1 + x`.
+
+Returns ``\\log_e (1+x)``
 
 # Reference
 - [log1p - cppreference](https://en.cppreference.com/w/c/numeric/math/log1p)
@@ -442,7 +471,9 @@ const cr_logp1 = cr_log1p
 """
     cr_log2(x)
 
-Compute natural logarithm of `x`.
+Compute the base-`2` logarithm of `x`.
+
+Returns ``\\log_2 x``
 
 # Reference
 - [log2 - cppreference](https://en.cppreference.com/w/c/numeric/math/log2)
@@ -452,6 +483,10 @@ cr_log2
 
 """
     cr_log2p1(x)
+
+Compute the base-`2` logarithm of `1 + x`.
+
+Returns ``\\log_2 (1+x)``
 
 # Reference
 - C23 F.10.3.16
