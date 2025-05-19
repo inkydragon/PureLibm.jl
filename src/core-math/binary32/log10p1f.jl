@@ -13,5 +13,5 @@ Correctly-rounded biased argument base-10 logarithm function for binary32 value.
 cr_log10p1(x::Float32) = cr_log10p1f(x)
 
 function cr_log10p1f(x::Float32)
-    throw(ErrorException("Function Not Impl!"))
+    log10(1.0f0 + x)
 end

@@ -50,11 +50,11 @@ include("exp2.jl")
 include("expm1.jl")
 include("log.jl")
 include("log10.jl")
-# log10p1
+include("log10p1.jl")
 include("log1p.jl")
-# logp1
+# cr_logp1 = cr_log1p
 include("log2.jl")
-# log2p1
+include("log2p1.jl")
 
 # Power and Absolute-value
 include("cbrt.jl")
