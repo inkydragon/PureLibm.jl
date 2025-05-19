@@ -5,7 +5,7 @@
 """
     cr_log10p1(x::Float32)
 
-Correctly-rounded log2(1+x) function for binary32 value.
+Correctly-rounded biased argument base-10 logarithm function for binary32 value.
 
 !!! warning
     This function is not implemented yet
