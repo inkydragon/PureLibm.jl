@@ -611,7 +611,7 @@ Returns ``\\log_e |\\Gamma(x)|``
 - [lgamma - cppreference](https://en.cppreference.com/w/c/numeric/math/lgamma)
 - C23 F.10.5.3
 """
-# cr_lgamma
+cr_lgamma
 
 """
     cr_tgamma(x)
