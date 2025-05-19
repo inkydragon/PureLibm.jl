@@ -46,6 +46,7 @@ include("tanh.jl")
 #= Exponential and logarithmic =#
 include("exp.jl")
 include("exp10.jl")
+include("exp10m1.jl")
 include("exp2.jl")
 include("exp2m1.jl")
 include("expm1.jl")
