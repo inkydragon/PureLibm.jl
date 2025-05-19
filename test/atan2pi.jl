@@ -3,6 +3,7 @@
 for T in (Float32,)
     @testset "cr_atan2pi($T)" begin
         # IEC 60559
+        @test_throws ErrorException PureLibm.cr_atan2pi(T(0), T(0))
         # @test isnan(PureLibm.cr_atan2pi(T(NaN)))
         # atan2pi(±0, −0) returns ±1
         # atan2pi(±0, +0) returns ±0

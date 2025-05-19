@@ -3,6 +3,7 @@
 for T in (Float32, )
     @testset "cr_atan2($T)" begin
         # IEC 60559
+        @test_throws ErrorException PureLibm.cr_atan2(T(0), T(0))
         # atan2(±0, −0) returns ±π
         # atan2(±0, +0) returns ±0
         # atan2(±0, x) returns ±π for x < 0
