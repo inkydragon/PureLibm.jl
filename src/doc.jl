@@ -569,6 +569,13 @@ Returns ``\\sqrt{x}``
 """
     cr_erf(x)
 
+Computes the error function of `x`.
+
+Returns
+```math
+\\erf(x) = \\frac{2}{\\sqrt{\\pi}} \\int_{0}^{x} e^{-t^2} dt
+```
+
 # Reference
 - [DLMF: §7.2.1](https://dlmf.nist.gov/7.2#E1)
 - C23 F.10.5.1
@@ -578,6 +585,15 @@ Returns ``\\sqrt{x}``
 """
     cr_erfc(x)
 
+Computes the complementary error function of `x`.
+
+Returns
+```math
+\\erfc(x)
+= 1 - \\erf(x)
+= \\frac{2}{\\sqrt{\\pi}} \\int_{x}^{\\infty} e^{-t^2} dt
+```
+
 # Reference
 - [DLMF: §7.2.2](https://dlmf.nist.gov/7.2#E2)
 - C23 F.10.5.2
@@ -586,6 +602,10 @@ Returns ``\\sqrt{x}``
 
 """
     cr_lgamma(x)
+
+Computes the natural logarithm of the absolute value of gamma of `x`.
+
+Returns ``\\log_e |\\Gamma(x)|``
 
 # Reference
 - [lgamma - cppreference](https://en.cppreference.com/w/c/numeric/math/lgamma)
@@ -597,7 +617,9 @@ Returns ``\\sqrt{x}``
     cr_tgamma(x)
 
 Computes the true gamma function of `x`.
-    
+
+Returns ``\\Gamma(x)``
+
 # Reference
 - [DLMF: §5.2.1](https://dlmf.nist.gov/5.2#E1)
 - C23 F.10.5.4
