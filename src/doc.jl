@@ -3,9 +3,11 @@
 """
     cr_acos(x)
 
-Compute the inverse cosine of `x` in radians.
+Compute the principal value of the arc cosine of `x`,
+`acos` is the inverse function of `cos`,
+`x = cos(acos(x))`.
 
-Returns the arc-cosine of `x` in ranges `[0, pi]`.
+Returns `arccos(x)` in interval `[0, π]` radians.
 - Returns `+0` if `x` is `1`
 - Returns `NaN` if `x` is `|x| > 1`
 - Returns `NaN` if `x` is `NaN`
@@ -19,9 +21,11 @@ cr_acos
 """
     cr_asin(x)
 
-Compute the inverse sine of `x` in radians.
+Compute the principal value of the arc sine of `x`,
+`asin` is the inverse function of `sin`,
+`x = sin(asin(x))`.
 
-Returns the arc-sine of `x` in ranges `[-pi/2, pi/2]`.
+Returns `arcsin(x)` in interval `[-π/2, π/2]` radians.
 - Returns `±0` if `x` is `±0`
 - Returns `NaN` if `x` is `|x| > 1`
 - Returns `NaN` if `x` is `NaN`
@@ -35,9 +39,11 @@ cr_asin
 """
     cr_atan(x)
 
-Compute the inverse tangent of `x` in radians.
+Compute the principal value of the arc tangent of `x`,
+`atan` is the inverse function of `tan`,
+`x = tan(atan(x))`.
 
-Returns the arc-tangent of `x` in ranges `[-pi/2, pi/2]`.
+Returns `arctan(x)` in interval `[-π/2, π/2]` radians.
 - Returns `±0` if `x` is `±0`
 - Returns `±π/2` if `x` is `±∞`
 - Returns `NaN` if `x` is `NaN`
@@ -51,6 +57,10 @@ cr_atan
 """
     cr_atan2(x, y)
 
+Compute the arc tangent of `y/x`.
+
+Returns `arctan(y/x)` in interval `[-π, π]` radians.
+
 # Reference
 - [atan2 - Wikipedia](https://en.wikipedia.org/wiki/Atan2)
 - C23 F.10.1.4
@@ -60,9 +70,9 @@ cr_atan
 """
     cr_cos(x)
 
-Compute the cosine of `x` in radians.
+Compute the cosine of `x` expressed in radians.
 
-Returns the cosine of `x` in ranges `[-1, 1]`.
+Returns `cos(x)` in interval `[-1, 1]`.
 - Returns `1` if `x` is `±0`
 - Returns `NaN` if `x` is `±∞`
 - Returns `NaN` if `x` is `NaN`
@@ -76,9 +86,9 @@ cr_cos
 """
     cr_sin(x)
 
-Compute the sine of `x` in radians.
+Compute the sine of `x` expressed in radians.
 
-Returns the sine of `x` in ranges `[-1, 1]`.
+Returns `sin(x)` in interval `[-1, 1]`.
 - Returns `±0` if `x` is `±0`
 - Returns `NaN` if `x` is `±∞`
 - Returns `NaN` if `x` is `NaN`
@@ -92,16 +102,18 @@ cr_sin
 """
     cr_sincos(x)
 
-Compute the sine and cosine of `x` in radians.
+Compute the sine and cosine of `x` expressed in radians.
+
+Returns `(sin(x), cos(x))` in interval `[-1, 1]`.
 """
 cr_sincos
 
 """
     cr_tan(x)
 
-Compute the tangent of `x` in radians.
+Compute the tangent of `x` expressed in radians.
 
-Returns the tangent of `x` in ranges `[-∞, ∞]`.
+Returns `tan(x)` in interval `[-∞, ∞]`.
 - Returns `±0` if `x` is `±0`
 - Returns `NaN` if `x` is `±∞`
 - Returns `NaN` if `x` is `NaN`
@@ -115,7 +127,10 @@ cr_tan
 """
     cr_acospi(x)
 
-Compute the inverse cosine of `x` divided by `π`.
+Compute the principal value of the arc cosine of `x`, divided by `π`,
+thus measuring the angle in half-revolutions.
+
+Returns `arccos(x)/π` in interval `[0, 1]`.
 
 # Reference
 - C23 F.10.1.8
@@ -125,7 +140,10 @@ cr_acospi
 """
     cr_asinpi(x)
 
-Compute the inverse sine of `x` divided by `π`.
+Compute the principal value of the arc sine of `x`, divided by `π`,
+thus measuring the angle in half-revolutions.
+
+Returns `arcsin(x)/π` in interval `[-1/2, 1/2]`.
 
 # Reference
 - C23 F.10.1.9
@@ -135,7 +153,10 @@ cr_asinpi
 """
     cr_atanpi(x)
 
-Compute the inverse tangent of `x` divided by `π`.
+Compute the principal value of the arc tangent of `x`, divided by `π`,
+thus measuring the angle in half-revolutions.
+
+Returns `arctan(x)/π` in interval `[-1/2, 1/2]`.
 
 # Reference
 - C23 F.10.1.10
@@ -143,7 +164,12 @@ Compute the inverse tangent of `x` divided by `π`.
 cr_atanpi
 
 """
-    cr_atan2pi(x)
+    cr_atan2pi(y, x)
+
+Compute the principal value of the arc tangent of `y/x`, divided by `π`,
+thus measuring the angle in half-revolutions.
+
+Returns `arctan(y, x)/π` in interval `[-1, 1]`.
 
 # Reference
 - C23 F.10.1.11
@@ -153,9 +179,9 @@ cr_atanpi
 """
     cr_cospi(x)
 
-Compute the cosine of `x*pi` in radians.
+Compute the cosine of `π*x` expressed in half-revolutions.
 
-Returns the cosine of `x` in ranges `[-1, 1]`.
+Returns `cos(π*x)` in interval `[-1, 1]`.
 - Returns `1` if `x` is `±0`
 - Returns `+0` if `x` is `n + 1/2`, for integers `n`
 - Returns `NaN` if `x` is `±∞`
@@ -170,9 +196,9 @@ cr_cospi
 """
     cr_sinpi(x)
 
-Compute the sine of `x*pi` in radians.
+Compute the sine of `π*x` expressed in half-revolutions.
 
-Returns the sine of `x` in ranges `[-1, 1]`.
+Returns `sin(π*x)` in interval `[-1, 1]`.
 - Returns `±0` if `x` is `±0`
 - Returns `±0` if `x` is `±n`, for positive integers `n`
 - Returns `NaN` if `x` is `±∞`
@@ -187,9 +213,9 @@ cr_sinpi
 """
     cr_tanpi(x)
 
-Compute the tangent of `x*pi` in radians.
+Compute the tangent of `π*x` expressed in half-revolutions.
 
-Returns the tangent of `x` in ranges `[-∞, ∞]`.
+Returns `tan(π*x)` in interval `[-∞, ∞]`.
 - Returns `±0` if `x` is `±0`
 - Returns `+0` if `x` is `n`, for positive even and negative odd integers `n`
 - Returns `-0` if `x` is `n`, for positive odd and negative even integers `n`
