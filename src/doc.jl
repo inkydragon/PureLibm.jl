@@ -549,7 +549,7 @@ Returns ``\\frac{1}{\\sqrt{x}}``
 # Reference
 - C23 F.10.4.9
 """
-cr_rsqrt(x::Float32) = cr_rsqrtf(x)
+cr_rsqrt
 
 """
     cr_sqrt(x)

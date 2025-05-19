@@ -3,8 +3,12 @@
 # CORE-MATH project Copyright (c) 2022-2023 Alexei Sibidanov.
 
 """
+    cr_rsqrt(x::Float32)
+
 Correctly-rounded reciprocal square root of Float32
 """
+cr_rsqrt(x::Float32) = cr_rsqrtf(x)
+
 function cr_rsqrtf(x::Float32)::Float32
     xd = Float64(x)
     ixu = reinterpret(UInt32, x)
