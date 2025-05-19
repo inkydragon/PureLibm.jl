@@ -399,7 +399,7 @@ Returns ``2^x - 1``
 # Reference
 - C23 F.10.3.5
 """
-# cr_exp2m1
+cr_exp2m1
 
 """
     cr_expm1(x)
