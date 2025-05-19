@@ -64,9 +64,9 @@ include("cbrt.jl")
 include("rsqrt.jl")
 include("sqrt.jl")
 
-# C99: Error and gamma
-# erf
-# erfc
+# Error and gamma
+include("erf.jl")
+include("erfc.jl")
 include("lgamma.jl")
 include("tgamma.jl")
 
