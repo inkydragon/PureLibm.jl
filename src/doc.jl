@@ -452,7 +452,7 @@ Returns ``\\log_{10} (1+x)``
 # Reference
 - C23 F.10.3.13
 """
-# cr_log10p1
+cr_log10p1
 
 """
     cr_log1p(x)

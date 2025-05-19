@@ -39,7 +39,7 @@ include("binary32/exp2f.jl")
 include("binary32/expm1f.jl")
 include("binary32/logf.jl")
 include("binary32/log10f.jl")
-# log10p1
+include("binary32/log10p1f.jl")
 include("binary32/log1pf.jl")
 # cr_logp1 = cr_log1p
 include("binary32/log2f.jl")
