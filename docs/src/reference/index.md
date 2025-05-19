@@ -1,6 +1,9 @@
 # API
 
-
+```@contents
+Pages = ["index.md"]
+Depth = 3
+```
 
 ## Index
 
