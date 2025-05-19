@@ -350,7 +350,7 @@ Returns ``e^x``
 - [DLMF: §4.2.19](https://dlmf.nist.gov/4.2#E19)
 - C23 F.10.3.1
 """
-cr_exp(x::Float32) = cr_expf(x)
+cr_exp
 
 """
     cr_exp10(x)

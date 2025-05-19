@@ -33,8 +33,12 @@ const CR_EXPF_C = NTuple{6, Float64}((
 
 
 """
+    cr_exp(x::Float32)
+
 Correctly-rounded natural exponential function for `Float32`.
 """
+cr_exp(x::Float32) = cr_expf(x)
+
 function cr_expf(x::Float32)::Float32
     iln2 = 0x1.71547652b82fep+0
     big = 0x1.8p46
