@@ -374,7 +374,7 @@ Returns ``10^x - 1``
 # Reference
 - C23 F.10.3.3
 """
-# cr_exp10m1
+cr_exp10m1
 
 """
     cr_exp2(x)
