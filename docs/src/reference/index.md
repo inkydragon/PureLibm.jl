@@ -47,9 +47,7 @@ PureLibm.cr_acosh
 PureLibm.cr_atanh
 ```
 
-## Exponential and logarithmic
-
-### Exponential functions
+## Exponential functions
 
 ```@docs
 PureLibm.cr_exp
@@ -60,7 +58,7 @@ PureLibm.cr_exp10
 PureLibm.cr_exp10m1
 ```
 
-### Logarithmic functions
+## Logarithmic functions
 
 ```@docs
 PureLibm.cr_log
