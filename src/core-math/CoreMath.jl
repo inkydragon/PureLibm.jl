@@ -9,7 +9,7 @@ include("helper.jl")
 include("binary32/acosf.jl")
 include("binary32/asinf.jl")
 include("binary32/atanf.jl")
-# atan2f
+include("binary32/atan2f.jl")
 include("binary32/cosf.jl")
 include("binary32/sinf.jl")
 include("binary32/sincosf.jl")

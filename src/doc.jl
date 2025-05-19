@@ -55,7 +55,7 @@ Returns `arctan(x)` in interval `[-π/2, π/2]` radians.
 cr_atan
 
 """
-    cr_atan2(x, y)
+    cr_atan2(y, x)
 
 Compute the arc tangent of `y/x`.
 
@@ -65,7 +65,7 @@ Returns `arctan(y/x)` in interval `[-π, π]` radians.
 - [atan2 - Wikipedia](https://en.wikipedia.org/wiki/Atan2)
 - C23 F.10.1.4
 """
-# cr_atan2
+cr_atan2
 
 """
     cr_cos(x)
