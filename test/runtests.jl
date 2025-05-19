@@ -59,8 +59,8 @@ include("log2.jl")
 # Power and Absolute-value
 include("cbrt.jl")
 # compoundn
-# hypot
-# pow
+include("hypot.jl")
+include("pow.jl")
 include("rsqrt.jl")
 include("sqrt.jl")
 
