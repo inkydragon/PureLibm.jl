@@ -55,6 +55,6 @@ include("binary32/rsqrtf.jl")
 
 # Error and gamma
 include("binary32/erff.jl")
-# cr_erfc
+include("binary32/erfcf.jl")
 include("binary32/lgammaf.jl")
 include("binary32/tgammaf.jl")

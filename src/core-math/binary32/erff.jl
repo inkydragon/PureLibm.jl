@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
-# Based on core-math/src/binary32/atan2/atan2f.c
-# CORE-MATH project Copyright (c) 2022-2025 Alexei Sibidanov and Paul Zimmermann.
+# Based on core-math/src/binary32/erf/erff.c
+# CORE-MATH project Copyright (c) 2022-2025 Alexei Sibidanov.
 
 """
     cr_erf(x::Float32)

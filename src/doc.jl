@@ -598,7 +598,7 @@ Returns
 - [DLMF: §7.2.2](https://dlmf.nist.gov/7.2#E2)
 - C23 F.10.5.2
 """
-# cr_erfc
+cr_erfc
 
 """
     cr_lgamma(x)
