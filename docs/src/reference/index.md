@@ -1,5 +1,13 @@
 # API
 
+
+
+## Index
+
+```@index
+Pages = ["index.md"]
+```
+
 ## Trigonometric functions
 
 ```@docs
