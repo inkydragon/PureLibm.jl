@@ -573,7 +573,7 @@ Computes the error function of `x`.
 
 Returns
 ```math
-\\erf(x) = \\frac{2}{\\sqrt{\\pi}} \\int_{0}^{x} e^{-t^2} dt
+\\tt{erf}(x) = \\frac{2}{\\sqrt{\\pi}} \\int_{0}^{x} e^{-t^2} dt
 ```
 
 # Reference
@@ -589,8 +589,8 @@ Computes the complementary error function of `x`.
 
 Returns
 ```math
-\\erfc(x)
-= 1 - \\erf(x)
+\\tt{erfc}(x)
+= 1 - \\tt{erf}(x)
 = \\frac{2}{\\sqrt{\\pi}} \\int_{x}^{\\infty} e^{-t^2} dt
 ```
 
