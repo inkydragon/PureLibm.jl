@@ -16,12 +16,15 @@ makedocs(;
         edit_link="main",
         assets=String[],
     ),
+    warnonly=true,
+    checkdocs=:exports,
     pages=[
         "Home" => "index.md",
-        "Math Functions" => math_functions,
-        "function-index.md",
-        "docs.md",
         "Reference" => Any[
+            "reference/index.md",
+        ],
+        "Math Functions" => math_functions,
+        "Impl Ref" => Any[
             "ref/index.md",
             "C Standards" => Any[
                 # C std
