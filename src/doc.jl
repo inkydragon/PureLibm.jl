@@ -580,7 +580,7 @@ Returns
 - [DLMF: §7.2.1](https://dlmf.nist.gov/7.2#E1)
 - C23 F.10.5.1
 """
-# cr_erf
+cr_erf
 
 """
     cr_erfc(x)
