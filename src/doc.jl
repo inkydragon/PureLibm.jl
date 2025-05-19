@@ -465,7 +465,7 @@ Returns ``\\log_e (1+x)``
 - [log1p - cppreference](https://en.cppreference.com/w/c/numeric/math/log1p)
 - C23 F.10.3.14
 """
-cr_log1p(x::Float32) = cr_log1pf(x)
+cr_log1p
 const cr_logp1 = cr_log1p
 
 """
