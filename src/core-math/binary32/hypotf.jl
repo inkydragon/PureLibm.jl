@@ -3,15 +3,15 @@
 # CORE-MATH project Copyright (c) 2022-2025 Alexei Sibidanov.
 
 """
-    cr_hypot(x::Float32)
+    cr_hypot(x::Float32, y::Float32)
 
 Correctly-rounded Euclidean distance function (hypot) for binary32 values.
 
 !!! warning
     This function is not implemented yet
 """
-cr_hypot(x::Float32) = cr_hypotf(x)
+cr_hypot(x::Float32, y::Float32) = cr_hypotf(x, y)
 
-function cr_hypotf(x::Float32)
-    throw(ErrorException("Function Not Impl!"))
+function cr_hypotf(x::Float32, y::Float32)
+    hypot(x, y)
 end

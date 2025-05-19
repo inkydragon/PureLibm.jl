@@ -13,5 +13,5 @@ Correctly-rounded log2(1+x) function for binary32 value.
 cr_log2p1(x::Float32) = cr_log2p1f(x)
 
 function cr_log2p1f(x::Float32)
-    throw(ErrorException("Function Not Impl!"))
+    log2(1.0f0 + x)
 end

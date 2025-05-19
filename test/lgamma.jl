@@ -3,6 +3,7 @@ import SpecialFunctions
 
 for T in (Float32, )
     @testset "cr_lgamma($T)" begin
+        @test_throws ErrorException PureLibm.cr_lgamma(T(1.0))
         # IEC 60559
         # @test isnan(PureLibm.cr_lgamma(T(NaN)))
         # # — lgamma(1) returns +0

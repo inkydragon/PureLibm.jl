@@ -13,5 +13,5 @@ Correctly-rounded base-2 exponent function biased by 1 for binary32 value.
 cr_exp2m1(x::Float32) = cr_exp2m1f(x)
 
 function cr_exp2m1f(x::Float32)
-    throw(ErrorException("Function Not Impl!"))
+    exp2(x) - 1.0f0
 end

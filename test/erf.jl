@@ -2,6 +2,7 @@
 
 for T in (Float32, )
     @testset "cr_erf($T)" begin
+        @test_throws ErrorException PureLibm.cr_erf(T(1.0))
         # IEC 60559
         # @test isnan(PureLibm.cr_erf(T(NaN)))
         # # erf(±0) returns ±0

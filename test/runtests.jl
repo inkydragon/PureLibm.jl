@@ -18,11 +18,11 @@ include("utils/const.jl")
 include("utils/llvm_intrinsics.jl")
 include("utils/ranges.jl")
 
-# Trigonometric
+#= Trigonometric =#
 include("acos.jl")
 include("asin.jl")
 include("atan.jl")
-# atan2
+include("atan2.jl")
 include("cos.jl")
 include("sin.jl")
 include("sincos.jl")
@@ -30,12 +30,12 @@ include("tan.jl")
 include("acospi.jl")
 include("asinpi.jl")
 include("atanpi.jl")
-# atan2pi
+include("atan2pi.jl")
 include("cospi.jl")
 include("sinpi.jl")
 include("tanpi.jl")
 
-# C99: Hyperbolic
+#= Hyperbolic =#
 include("acosh.jl")
 include("asinh.jl")
 include("atanh.jl")
@@ -43,31 +43,36 @@ include("cosh.jl")
 include("sinh.jl")
 include("tanh.jl")
 
-# Exponential and logarithmic
+#= Exponential and logarithmic =#
 include("exp.jl")
 include("exp10.jl")
+include("exp10m1.jl")
 include("exp2.jl")
+include("exp2m1.jl")
 include("expm1.jl")
 include("log.jl")
 include("log10.jl")
-# log10p1
+include("log10p1.jl")
 include("log1p.jl")
-# logp1
+# cr_logp1 = cr_log1p
 include("log2.jl")
-# log2p1
+include("log2p1.jl")
 
-# Power and Absolute-value
+#= Power and Absolute-value =#
 include("cbrt.jl")
-# compoundn
-# hypot
-# pow
+include("compoundn.jl")
+include("hypot.jl")
+include("pow.jl")
+# pown
+# powr
+# rootn
 include("rsqrt.jl")
 include("sqrt.jl")
 
-# C99: Error and gamma
-# erf
-# erfc
-# lgamma
+#= Error and gamma =#
+include("erf.jl")
+include("erfc.jl")
+include("lgamma.jl")
 include("tgamma.jl")
 
 @testset "PureLibm.jl" begin
