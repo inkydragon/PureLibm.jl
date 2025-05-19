@@ -387,7 +387,7 @@ Returns ``2^x``
 - [exp2 - cppreference](https://en.cppreference.com/w/c/numeric/math/exp2)
 - C23 F.10.3.4
 """
-cr_exp2(x::Float32) = cr_exp2f(x)
+cr_exp2
 
 """
     cr_exp2m1(x)

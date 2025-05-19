@@ -66,8 +66,12 @@ function _exp2f_as_special(x::Float32)
 end
 
 """
+    cr_exp2(x::Float32)
+
 Correctly-rounded 2^x function for `Float32`.
 """
+cr_exp2(x::Float32) = cr_exp2f(x)
+
 function cr_exp2f(x::Float32)::Float32
     tu = reinterpret(UInt32, x)
 
