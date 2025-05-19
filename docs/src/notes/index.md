@@ -1,4 +1,4 @@
-# Tech Notes Index
+# Tech Notes
 
 ## Libm impl
 
