@@ -49,7 +49,10 @@ include("binary32/log2f.jl")
 include("binary32/cbrtf.jl")
 # compoundn
 # hypot
-# pow
+include("binary32/powf.jl")
+# pown
+# powr
+# rootn
 include("binary64/rsqrt.jl")
 include("binary32/rsqrtf.jl")
 include("binary32/sqrtf.jl")

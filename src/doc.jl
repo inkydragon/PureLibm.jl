@@ -534,7 +534,7 @@ Returns ``\\x^y``
 - [DLMF: §4.2.28](https://dlmf.nist.gov/4.2#E28)
 - C23 F.10.4.5
 """
-# cr_pow
+cr_pow
 # pown
 # powr
 # rootn
