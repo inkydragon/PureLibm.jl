@@ -22,6 +22,7 @@ makedocs(;
         "Home" => "index.md",
         "Reference" => Any[
             "reference/index.md",
+            "reference/f32.md"
         ],
         "Math Functions" => math_functions,
         "Impl Ref" => Any[
