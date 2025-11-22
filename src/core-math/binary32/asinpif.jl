@@ -46,8 +46,23 @@ const CR_ASINPIF_CH = Vector{NTuple{8, Float64}}([
 Correctly-rounded half-revolution arc-sine function for `Float32` value.
 This function computes `asin(x)/π`
 
+# Examples
+```jldoctest
+julia> PureLibm.cr_asinpi(0.0f0)
+0.0f0
+
+julia> PureLibm.cr_asinpi.((1.0f0, -1.0f0))
+(0.5f0, -0.5f0)
+
+julia> PureLibm.cr_asinpi(nextfloat(1.0f0))
+NaN32
+
+julia> PureLibm.cr_asinpi(Inf32)
+NaN32
+```
+
 # Reference
-- [src/binary32/asinpi/asinpif.c](https://gitlab.inria.fr/core-math/core-math/-/blob/03c15350fdcc286625bc5fe9b57e47a2275af293/src/binary32/asinpi/asinpif.c)
+- [core-math/src/binary32/asinpi/asinpif.c](https://github.com/inkydragon/core-math/blob/7c7afc5d93cc3af4ff584f40f4a20af71488122a/src/binary32/asinpi/asinpif.c)
 """
 cr_asinpi(x::Float32) = cr_asinpif(x)
 
