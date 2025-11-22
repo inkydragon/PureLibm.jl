@@ -76,7 +76,7 @@ NaN32
 ```
 
 # Reference
-- [src/binary32/acos/acosf.c](https://gitlab.inria.fr/core-math/core-math/-/blob/f786e13fb0595adee545d7b29931d283f658ba0a/src/binary32/acos/acosf.c)
+- [src/binary32/acos/acosf.c](https://github.com/inkydragon/core-math/blob/24e4667a4c638fb5323d1492bf662ffebbc961e2/src/binary32/acos/acosf.c)
 """
 cr_acos(x::Float32) = cr_acosf(x)
 
@@ -100,11 +100,9 @@ function cr_acosf(x::Float32)::Float32
         # avoid spurious underflow
         if @unlikely(ax < 0x40000000)
             # |x| < 1.0842022f-19 (2^-63)
-            #= GCC <= 11 wrongly assumes the rounding is to nearest and
-                performs a constant folding here:
-                https://gcc.gnu.org/bugzilla/show_bug.cgi?id=57245
-            =#
-            return Float32(pi2)
+            pi2h = Float32(0x1.921fb6p+0)
+            pi2l = Float32(-0x1.777a5cp-25)
+            return pi2h + pi2l
         end
 
         z = xs
