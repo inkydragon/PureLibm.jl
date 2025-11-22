@@ -185,6 +185,9 @@ Compute the principal value of the arc tangent of `x`, divided by `π`,
 thus measuring the angle in half-revolutions.
 
 Returns `arctan(x)/π` in interval `[-1/2, 1/2]`.
+- Returns `±0` if `x` is `±0`
+- Returns `±1/2` if `x` is `±∞`
+- Returns `NaN` if `x` is `NaN`
 
 # Reference
 - C23 F.10.1.10
