@@ -713,6 +713,10 @@ Returns
 \\tt{erf}(x) = \\frac{2}{\\sqrt{\\pi}} \\int_{0}^{x} e^{-t^2} dt
 ```
 
+- Returns `±0` if `x` is `±0`
+- Returns `±1` if `x` is `±∞`
+- Returns `NaN` if `x` is `NaN`
+
 # Reference
 - [DLMF: §7.2.1](https://dlmf.nist.gov/7.2#E1)
 - C23 F.10.5.1
@@ -731,6 +735,10 @@ Returns
 = \\frac{2}{\\sqrt{\\pi}} \\int_{x}^{\\infty} e^{-t^2} dt
 ```
 
+- Returns `2` if `x` is `-∞`
+- Returns `+0` if `x` is `+∞`
+- Returns `NaN` if `x` is `NaN`
+
 # Reference
 - [DLMF: §7.2.2](https://dlmf.nist.gov/7.2#E2)
 - C23 F.10.5.2
@@ -744,6 +752,12 @@ Computes the natural logarithm of the absolute value of gamma of `x`.
 
 Returns ``\\log_e |\\Gamma(x)|``
 
+- Returns `+0` if `x` is `1`
+- Returns `+0` if `x` is `2`
+- Returns `+∞` if `x` is a negative integer or zero, and raises the "divide-by-zero" floating-point exception
+- Returns `+∞` if `x` is `±∞`
+- Returns `NaN` if `x` is `NaN`
+
 # Reference
 - [lgamma - cppreference](https://en.cppreference.com/w/c/numeric/math/lgamma)
 - C23 F.10.5.3
@@ -756,6 +770,12 @@ cr_lgamma
 Computes the true gamma function of `x`.
 
 Returns ``\\Gamma(x)``
+
+- Returns `±∞` if `x` is `±0` and raises the "divide-by-zero" floating-point exception
+- Returns `NaN` if `x` is a negative integer
+- Returns `NaN` if `x` is `-∞`
+- Returns `+∞` if `x` is `+∞`
+- Returns `NaN` if `x` is `NaN`
 
 # Reference
 - [DLMF: §5.2.1](https://dlmf.nist.gov/5.2#E1)
