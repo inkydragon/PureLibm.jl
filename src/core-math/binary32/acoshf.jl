@@ -84,18 +84,25 @@ const CR_ACOSHF_CP = NTuple{6, Float64}((
 ))
 
 
+"""
+Special cases for `acoshf` when `|x| <= 1` or `x in (NaN, Inf)`
+"""
 function _acoshf_as_special(x::Float32)
     tu = reinterpret(UInt32, x)
     if tu == 0x3f800000
+        # acosh(1.0) = 0.0
         return 0.0f0
     end
     if (tu << 1) > 0xff000000
-        return x + x  # NaN
+        # acosh(NaN) = NaN
+        return x + x
     end
     if tu == 0x7f800000
-        return x  # Inf
+        # acosh(Inf) = Inf
+        return x
     end
 
+    # |x| < 1.0:  acosh(x) = NaN
     return NaN32
 end
 
@@ -103,6 +110,24 @@ end
     cr_acosh(x::Float32)
 
 Correctly-rounded inverse hyperbolic cosine function for `Float32`.
+
+# Examples
+```jldoctest
+julia> PureLibm.cr_acosh(1.0f0)
+0.0f0
+
+julia> PureLibm.cr_acosh(2.0f0)
+1.316958f0
+
+julia> PureLibm.cr_acosh(0.9999f0)
+NaN32
+
+julia> PureLibm.cr_acosh(Inf32)
+Inf32
+```
+
+# Reference
+- [src/binary32/acos/acosf.c](https://github.com/inkydragon/core-math/blob/6d735574dce9039b2b5585e1ec944fc8602782c8/src/binary32/acosh/acoshf.c)
 """
 cr_acosh(x::Float32) = cr_acoshf(x)
 
@@ -152,10 +177,10 @@ function cr_acoshf(x::Float32)
             ln2h = 0x1.62e4p-1
             Lh = ln2h * e
             Ll = ln2l * e
-            rf = fma(z, c0, Ll + lix[j+1]) + Lh
+            rf = (z*c0 + Ll + lix[j+1]) + Lh
             ru = reinterpret(UInt64, rf) 
             if @unlikely((ru & UInt64(0xfffffff)) == 0)
-                h = fma(z, c0, Ll + lix[j+1]) + (Lh - rf)
+                h = (z*c0 + Ll + lix[j+1]) + (Lh - rf)
                 rf = rf + 64.0 * h
             end
 
