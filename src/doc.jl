@@ -265,8 +265,8 @@ Returns `tan(π*x)` in interval `[-∞, ∞]`.
 - Returns `±0` if `x` is `±0`
 - Returns `+0` if `x` is `n`, for positive even and negative odd integers `n`
 - Returns `-0` if `x` is `n`, for positive odd and negative even integers `n`
-- Returns `+∞` if `x` is `n + 1/2`, for even integers `n`
-- Returns `-∞` if `x` is `n + 1/2`, for odd integers `n`
+- Returns `+∞` if `x` is `n + 1/2`, for even integers `n` and raises the "divide-by-zero" floating-point exception
+- Returns `-∞` if `x` is `n + 1/2`, for odd integers `n` and raises the "divide-by-zero" floating-point exception
 - Returns `NaN` if `x` is `±∞`
 - Returns `NaN` if `x` is `NaN`
 
@@ -324,7 +324,7 @@ Compute the arc hyperbolic tangent of `x`,
 
 Returns `arctanh(x)` in interval `[-∞, ∞]`.
 - Returns `±0` if `x` is `±0`
-- Returns `±∞` if `x` is `±1`
+- Returns `±∞` if `x` is `±1`, and raises the "divide-by-zero" floating-point exception
 - Returns `NaN` if `x` is `|x| > 1`
 - Returns `NaN` if `x` is `NaN`
 
@@ -498,7 +498,7 @@ a.k.a. natural logarithm.
 
 Returns ``\\log_e x``
 
-- Returns `-∞` if `x` is `±0`
+- Returns `-∞` if `x` is `±0`, and raises the "divide-by-zero" floating-point exception
 - Returns `+0` if `x` is `1`
 - Returns `NaN` if `x` is `x < 0`
 - Returns `+∞` if `x` is `+∞`
@@ -518,7 +518,7 @@ a.k.a. common logarithm.
 
 Returns ``\\log_{10} x``
 
-- Returns `-∞` if `x` is `±0`
+- Returns `-∞` if `x` is `±0`, and raises the "divide-by-zero" floating-point exception
 - Returns `+0` if `x` is `1`
 - Returns `NaN` if `x` is `x < 0`
 - Returns `+∞` if `x` is `+∞`
@@ -537,7 +537,7 @@ Compute the base-`10` logarithm of `1 + x`.
 
 Returns ``\\log_{10} (1+x)``
 
-- Returns `±0` if `x` is `±0`
+- Returns `±0` if `x` is `±0`, and raises the "divide-by-zero" floating-point exception
 - Returns `-∞` if `x` is `-1`
 - Returns `NaN` if `x` is `x < -1`
 - Returns `+∞` if `x` is `+∞`
@@ -555,7 +555,7 @@ Compute the base-`e` logarithm of `1 + x`.
 
 Returns ``\\log_e (1+x)``
 
-- Returns `±0` if `x` is `±0`
+- Returns `±0` if `x` is `±0`, and raises the "divide-by-zero" floating-point exception
 - Returns `-∞` if `x` is `-1`
 - Returns `NaN` if `x` is `x < -1`
 - Returns `+∞` if `x` is `+∞`
@@ -575,7 +575,7 @@ Compute the base-`2` logarithm of `x`.
 
 Returns ``\\log_2 x``
 
-- Returns `-∞` if `x` is `±0`
+- Returns `-∞` if `x` is `±0`, and raises the "divide-by-zero" floating-point exception
 - Returns `+0` if `x` is `1`
 - Returns `NaN` if `x` is `x < 0`
 - Returns `+∞` if `x` is `+∞`
@@ -594,7 +594,7 @@ Compute the base-`2` logarithm of `1 + x`.
 
 Returns ``\\log_2 (1+x)``
 
-- Returns `±0` if `x` is `±0`
+- Returns `±0` if `x` is `±0`, and raises the "divide-by-zero" floating-point exception
 - Returns `-∞` if `x` is `-1`
 - Returns `NaN` if `x` is `x < -1`
 - Returns `+∞` if `x` is `+∞`
@@ -673,7 +673,7 @@ Computes the reciprocal of the nonnegative square root of `x`.
 
 Returns ``\\frac{1}{\\sqrt{x}}``
 
-- Returns `+∞` if `x` is `±0` and raises the "divide-by-zero" floating-point exception
+- Returns `+∞` if `x` is `±0`, and raises the "divide-by-zero" floating-point exception
 - Returns `NaN` if `x < 0`
 - Returns `+0` if `x` is `+∞`
 - Returns `NaN` if `x` is `NaN`
