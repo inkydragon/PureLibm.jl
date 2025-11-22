@@ -120,6 +120,13 @@ cr_sin
 Compute the sine and cosine of `x` expressed in radians.
 
 Returns `(sin(x), cos(x))` in interval `[-1, 1]`.
+- Returns `(±0, 1)` if `x` is `±0`
+- Returns `(NaN, NaN)` if `x` is `±∞`
+- Returns `(NaN, NaN)` if `x` is `NaN`
+
+# Reference
+- sin: C23 F.10.1.6
+- cos: C23 F.10.1.5
 """
 cr_sincos
 
