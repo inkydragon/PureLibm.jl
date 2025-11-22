@@ -61,6 +61,21 @@ Compute the arc tangent of `y/x`.
 
 Returns `arctan(y/x)` in interval `[-π, π]` radians.
 
+- Returns `±π` if `(y = ±0, x = -0)`
+- Returns `±0` if `(y = ±0, x = +0)`
+- Returns `±π` if `(y = ±0, x < 0)`
+- Returns `±0` if `(y = ±0, x > 0)`
+- Returns `-π/2` if `(y < 0, x = ±0)`
+- Returns `+π/2` if `(y > 0, x = ±0)`
+- Returns `+π` if `(y > 0, x = -∞)` and `y` is finite
+- Returns `-π` if `(y < 0, x = -∞)` and `y` is finite
+- Returns `+0` if `(y > 0, x = +∞)` and `y` is finite
+- Returns `-0` if `(y < 0, x = +∞)` and `y` is finite
+- Returns `± π/2` if `(y = ±∞, x)` and `x` is finite
+- Returns `±3π/4` if `(y = ±∞, x = -∞)`
+- Returns `± π/4` if `(y = ±∞, x = +∞)`
+- Returns `NaN` if `x` is `NaN` or `y` is `NaN`
+
 # Reference
 - [atan2 - Wikipedia](https://en.wikipedia.org/wiki/Atan2)
 - C23 F.10.1.4
