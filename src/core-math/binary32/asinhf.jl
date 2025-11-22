@@ -89,6 +89,27 @@ const CR_ASINHF_CP = NTuple{6, Float64}((
     cr_asinh(x::Float32)
 
 Correctly-rounded inverse hyperbolic sine function for `Float32`.
+
+# Examples
+```jldoctest
+julia> PureLibm.cr_asinh.((0.0f0, -0.0f0))
+(0.0f0, -0.0f0)
+
+julia> PureLibm.cr_asinh.((1.0f0, -1.0f0))
+(0.8813736f0, -0.8813736f0)
+
+julia> PureLibm.cr_asinh.((2.0f0, -2.0f0))
+(1.4436355f0, -1.4436355f0)
+
+julia> PureLibm.cr_asinh(-10f0) == -PureLibm.cr_asinh(10f0)
+true
+
+julia> PureLibm.cr_asinh.((Inf32, -Inf32))
+(Inf32, -Inf32)
+```
+
+# Reference
+- [core-math/src/binary32/asinh/asinhf.c](https://github.com/inkydragon/core-math/blob/e2166966c0e4a8f7ea0f5405891e3574d0a084a1/src/binary32/asinh/asinhf.c)
 """
 cr_asinh(x::Float32) = cr_asinhf(x)
 
@@ -104,6 +125,17 @@ function cr_asinhf(x::Float32)
                 return x
             end
             res = fma(x, Float32(-0x1p-25), x)
+            #=
+                The Taylor expansion of asinh(x) at x=0 is x - x^3/6 + o(x^3).
+                For |x| > 2^-126 we have no underflow, whatever the rounding mode.
+                For |x| < 2^-126, since |asinh(x)| < |x|, we always have underflow.
+                For |x| = 2^-126, we have underflow for rounding towards zero,
+                i.e., when asinh(x) rounds to nextbelow(2^-126).
+                In summary, we have underflow whenever |x| < 2^-126 or |res| < 2^-126.
+            =#
+            # if (abs(x) < Float32(0x1p-126) || abs(res) < Float32(0x1p-126))
+            #     errno = ERANGE  # underflow
+            # end
             return res
         end
 
