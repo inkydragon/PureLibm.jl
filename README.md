@@ -1,12 +1,13 @@
 # PureLibm
+
 [![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://inkydragon.github.io/PureLibm.jl/dev/)
 [![Build Status](https://github.com/inkydragon/PureLibm.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/inkydragon/PureLibm.jl/actions/workflows/CI.yml?query=branch%3Amain)
 [![codecov](https://codecov.io/gh/inkydragon/PureLibm.jl/graph/badge.svg?token=bxtVgfRQ7R)](https://codecov.io/gh/inkydragon/PureLibm.jl)
 
 > A correctly rounded maths library in pure Julia.
 
-
 ## Implementation Goals
+
 1. As accurate as possible.
     - The input of `Float32` should pass the exhaustive checking
     - The result of `Float64` should match the output of CORE-MATH.
@@ -19,16 +20,17 @@
         Or wrap the corresponding operations in a function.
 3. Performance should be considered after the implementation is complete, with a lower priority than correctness.
 
-
 ## Implementation Status
 
 Check the API docs:
+
 - [Float32 API](https://inkydragon.github.io/PureLibm.jl/dev/reference/f32/)
 - [Float64 API](https://inkydragon.github.io/PureLibm.jl/dev/reference/f64/)
 
 ## Dev Memo
 
 ### Run tests
+
 ```sh
 # The following command will init test project in the `test/` directory.
 #   You only need to run this line once.
@@ -37,6 +39,7 @@ julia --project=test -e "using Pkg; Pkg.test(\"PureLibm\");"
 ```
 
 ### Build docs
+
 ```sh
 # The following command will init docs project in the `docs/` directory.
 #   You only need to run this line once.
@@ -46,6 +49,7 @@ julia --project=docs docs/make.jl
 ```
 
 ### Gen Test Coverage
+
 > - You need [`lcov`](https://github.com/linux-test-project/lcov)
 >   in your `PATH` to gen test coverage report.
 > - See also: [JuliaCI/LocalCoverage.jl](https://github.com/JuliaCI/LocalCoverage.jl)
@@ -57,6 +61,7 @@ julia --project=test
 ```
 
 In Julia REPL:
+
 ```jl
 # In Julia REPL
 using Pkg; using LocalCoverage; Pkg.add(url=".");  html_coverage(generate_coverage("PureLibm"; run_test=true); dir = "../cov")
@@ -68,6 +73,7 @@ using Pkg; using LocalCoverage; Pkg.add(url=".", rev="dev");  html_coverage(gene
 ```
 
 ### Run exhaustive tests
+
 ```sh
 julia --project=test -e "using Pkg; Pkg.develop(PackageSpec(path=pwd())); Pkg.instantiate();"
 
@@ -81,8 +87,8 @@ export PURELIBM_CHECK_EXHAUSTIVE="cr_acos"
 julia --project=test -e "using Pkg; Pkg.test(\"PureLibm\");"
 ```
 
-
 ## License
+
 ```c
 // SPDX-License-Identifier: MIT OR Apache-2.0
 ```
