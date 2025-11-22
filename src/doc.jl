@@ -614,6 +614,10 @@ Compute the real cube root of `x`.
 
 Returns ``x^\\frac{1}{3}``
 
+- Returns `±0` if `x` is `±0`
+- Returns `±∞` if `x` is `±∞`
+- Returns `NaN` if `x` is `NaN`
+
 # Reference
 - [cbrt - cppreference](https://en.cppreference.com/w/c/numeric/math/cbrt)
 - C23 F.10.4.1
@@ -651,7 +655,7 @@ cr_hypot
 
 Compute `x` raised to the power `y`.
 
-Returns ``\\x^y``
+Returns ``x^y``
 
 # Reference
 - [DLMF: §4.2.28](https://dlmf.nist.gov/4.2#E28)
@@ -669,6 +673,11 @@ Computes the reciprocal of the nonnegative square root of `x`.
 
 Returns ``\\frac{1}{\\sqrt{x}}``
 
+- Returns `+∞` if `x` is `±0` and raises the "divide-by-zero" floating-point exception
+- Returns `NaN` if `x < 0`
+- Returns `+0` if `x` is `+∞`
+- Returns `NaN` if `x` is `NaN`
+
 # Reference
 - C23 F.10.4.9
 """
@@ -680,6 +689,11 @@ cr_rsqrt
 Computes the nonnegative square root of `x`.
 
 Returns ``\\sqrt{x}``
+
+- Returns `±0` if `x` is `±0`
+- Returns `+∞` if `x` is `+∞`
+- Returns `NaN` if `x < 0`
+- Returns `NaN` if `x` is `NaN`
 
 # Reference
 - [sqrt - cppreference](https://en.cppreference.com/w/c/numeric/math/sqrt)
