@@ -43,8 +43,29 @@ const CR_ACOSPIF_CH = Vector{NTuple{8, Float64}}([
 Correctly-rounded half-revolution arc-cosine function for `Float32` value.
 This function computes `acos(x)/π`
 
+# Examples
+```jldoctest
+julia> PureLibm.cr_acospi(1.0f0)
+0.0f0
+
+julia> PureLibm.cr_acospi(-1.0f0)
+1.0f0
+
+julia> PureLibm.cr_acospi(0.0f0)
+0.5f0
+
+julia> PureLibm.cr_acospi(0.5f0)
+0.33333334f0
+
+julia> PureLibm.cr_acospi(Float32(1.0001))
+NaN32
+
+julia> PureLibm.cr_acospi(Inf32)
+NaN32
+```
+
 # Reference
-- [src/binary32/acospi/acospif.c](https://gitlab.inria.fr/core-math/core-math/-/blob/03c15350fdcc286625bc5fe9b57e47a2275af293/src/binary32/acospi/acospif.c)
+- [src/binary32/acospi/acospif.c](https://github.com/inkydragon/core-math/blob/7c7afc5d93cc3af4ff584f40f4a20af71488122a/src/binary32/acospi/acospif.c)
 """
 cr_acospi(x::Float32) = cr_acospif(x)
 
@@ -54,16 +75,23 @@ function cr_acospif(x::Float32)
     z = Float64(x)
     tu = reinterpret(UInt32, x)
     e = (tu >> 23) & UInt32(0xff)
+
+    # Special cases
     if @unlikely(e >= 127)
+        # |x| >= 1
         if x == 1.0f0
+            # acospi(+1) = 0
             return 0.0f0
         elseif x == -1.0f0
+            # acospi(-1) = 1
             return 1.0f0
         elseif e == 0xff && (tu << 9) != 0
-            return x + x  # NaN
+            # acospi(NaN) = NaN
+            return x + x
         end
         # errno = EDOM
         # raise FE_INVALID
+        # |x| > 1, acospi(x) = NaN
         return NaN32
     end
 
@@ -87,7 +115,13 @@ function cr_acospif(x::Float32)
             underflow exception, we use an FMA instead, where c4 * z4 does not
             underflow. 
         =#
-        c0 = fma(c4 * z4, z4, c0)
+        # if !isdefined(Base, :fma)
+        #     if ax > Float32(0x1.0fd288p-127)
+        #         c0 = ((c4 * z4)*z4 + c0)
+        #     end
+        # else
+            c0 = fma(c4 * z4, z4, c0)
+        # end
         r = 0.5 - z * c0
         return Float32(r)
     else
