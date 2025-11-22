@@ -61,6 +61,21 @@ Compute the arc tangent of `y/x`.
 
 Returns `arctan(y/x)` in interval `[-π, π]` radians.
 
+- Returns `±π` if `(y = ±0, x = -0)`
+- Returns `±0` if `(y = ±0, x = +0)`
+- Returns `±π` if `(y = ±0, x < 0)`
+- Returns `±0` if `(y = ±0, x > 0)`
+- Returns `-π/2` if `(y < 0, x = ±0)`
+- Returns `+π/2` if `(y > 0, x = ±0)`
+- Returns `+π` if `(y > 0, x = -∞)` and `y` is finite
+- Returns `-π` if `(y < 0, x = -∞)` and `y` is finite
+- Returns `+0` if `(y > 0, x = +∞)` and `y` is finite
+- Returns `-0` if `(y < 0, x = +∞)` and `y` is finite
+- Returns `± π/2` if `(y = ±∞, x)` and `x` is finite
+- Returns `±3π/4` if `(y = ±∞, x = -∞)`
+- Returns `± π/4` if `(y = ±∞, x = +∞)`
+- Returns `NaN` if `x` is `NaN` or `y` is `NaN`
+
 # Reference
 - [atan2 - Wikipedia](https://en.wikipedia.org/wiki/Atan2)
 - C23 F.10.1.4
@@ -105,6 +120,13 @@ cr_sin
 Compute the sine and cosine of `x` expressed in radians.
 
 Returns `(sin(x), cos(x))` in interval `[-1, 1]`.
+- Returns `(±0, 1)` if `x` is `±0`
+- Returns `(NaN, NaN)` if `x` is `±∞`
+- Returns `(NaN, NaN)` if `x` is `NaN`
+
+# Reference
+- sin: C23 F.10.1.6
+- cos: C23 F.10.1.5
 """
 cr_sincos
 
@@ -131,6 +153,9 @@ Compute the principal value of the arc cosine of `x`, divided by `π`,
 thus measuring the angle in half-revolutions.
 
 Returns `arccos(x)/π` in interval `[0, 1]`.
+- Returns `+0` if `x` is `1`
+- Returns `NaN` if `x` is `|x| > 1`
+- Returns `NaN` if `x` is `NaN`
 
 # Reference
 - C23 F.10.1.8
@@ -144,6 +169,9 @@ Compute the principal value of the arc sine of `x`, divided by `π`,
 thus measuring the angle in half-revolutions.
 
 Returns `arcsin(x)/π` in interval `[-1/2, 1/2]`.
+- Returns `±0` if `x` is `±0`
+- Returns `NaN` if `x` is `|x| > 1`
+- Returns `NaN` if `x` is `NaN`
 
 # Reference
 - C23 F.10.1.9
@@ -157,6 +185,9 @@ Compute the principal value of the arc tangent of `x`, divided by `π`,
 thus measuring the angle in half-revolutions.
 
 Returns `arctan(x)/π` in interval `[-1/2, 1/2]`.
+- Returns `±0` if `x` is `±0`
+- Returns `±1/2` if `x` is `±∞`
+- Returns `NaN` if `x` is `NaN`
 
 # Reference
 - C23 F.10.1.10
@@ -170,6 +201,21 @@ Compute the principal value of the arc tangent of `y/x`, divided by `π`,
 thus measuring the angle in half-revolutions.
 
 Returns `arctan(y, x)/π` in interval `[-1, 1]`.
+
+- Returns `±1` if `(y = ±0, x = -0)`
+- Returns `±0` if `(y = ±0, x = +0)`
+- Returns `±1` if `(y = ±0, x < 0)`
+- Returns `±0` if `(y = ±0, x > 0)`
+- Returns `-1/2` if `(y < 0, x = ±0)`
+- Returns `+1/2` if `(y > 0, x = ±0)`
+- Returns `+1` if `(y > 0, x = -∞)` and `y` is finite
+- Returns `-1` if `(y < 0, x = -∞)` and `y` is finite
+- Returns `+0` if `(y > 0, x = +∞)` and `y` is finite
+- Returns `-0` if `(y < 0, x = +∞)` and `y` is finite
+- Returns `±1/2` if `(y = ±∞, x)` and `x` is finite
+- Returns `±3/4` if `(y = ±∞, x = -∞)`
+- Returns `±1/4` if `(y = ±∞, x = +∞)`
+- Returns `NaN` if `x` is `NaN` or `y` is `NaN`
 
 # Reference
 - C23 F.10.1.11
@@ -219,8 +265,8 @@ Returns `tan(π*x)` in interval `[-∞, ∞]`.
 - Returns `±0` if `x` is `±0`
 - Returns `+0` if `x` is `n`, for positive even and negative odd integers `n`
 - Returns `-0` if `x` is `n`, for positive odd and negative even integers `n`
-- Returns `+∞` if `x` is `n + 1/2`, for even integers `n`
-- Returns `-∞` if `x` is `n + 1/2`, for odd integers `n`
+- Returns `+∞` if `x` is `n + 1/2`, for even integers `n` and raises the "divide-by-zero" floating-point exception
+- Returns `-∞` if `x` is `n + 1/2`, for odd integers `n` and raises the "divide-by-zero" floating-point exception
 - Returns `NaN` if `x` is `±∞`
 - Returns `NaN` if `x` is `NaN`
 
@@ -278,7 +324,7 @@ Compute the arc hyperbolic tangent of `x`,
 
 Returns `arctanh(x)` in interval `[-∞, ∞]`.
 - Returns `±0` if `x` is `±0`
-- Returns `±∞` if `x` is `±1`
+- Returns `±∞` if `x` is `±1`, and raises the "divide-by-zero" floating-point exception
 - Returns `NaN` if `x` is `|x| > 1`
 - Returns `NaN` if `x` is `NaN`
 
@@ -346,6 +392,11 @@ a.k.a. natural exponential.
 
 Returns ``e^x``
 
+- Returns `1` if `x` is `±0`
+- Returns `+0` if `x` is `-∞`
+- Returns `+∞` if `x` is `+∞`
+- Returns `NaN` if `x` is `NaN`
+
 # Reference
 - [DLMF: §4.2.19](https://dlmf.nist.gov/4.2#E19)
 - C23 F.10.3.1
@@ -359,6 +410,11 @@ Compute the base-`10` exponential of `x`.
 
 Returns ``10^x``
 
+- Returns `1` if `x` is `±0`
+- Returns `+0` if `x` is `-∞`
+- Returns `+∞` if `x` is `+∞`
+- Returns `NaN` if `x` is `NaN`
+
 # Reference
 - C23 F.10.3.2
 """
@@ -371,6 +427,11 @@ Compute the base-`10` exponential of `x`, minus 1.
 
 Returns ``10^x - 1``
 
+- Returns `±0` if `x` is `±0`
+- Returns `-1` if `x` is `-∞`
+- Returns `+∞` if `x` is `+∞`
+- Returns `NaN` if `x` is `NaN`
+
 # Reference
 - C23 F.10.3.3
 """
@@ -382,6 +443,11 @@ cr_exp10m1
 Compute the base-`2` exponential of `x`.
 
 Returns ``2^x``
+
+- Returns `1` if `x` is `±0`
+- Returns `+0` if `x` is `-∞`
+- Returns `+∞` if `x` is `+∞`
+- Returns `NaN` if `x` is `NaN`
 
 # Reference
 - [exp2 - cppreference](https://en.cppreference.com/w/c/numeric/math/exp2)
@@ -396,6 +462,11 @@ Compute the base-`2` exponential of `x`, minus 1.
 
 Returns ``2^x - 1``
 
+- Returns `±0` if `x` is `±0`
+- Returns `-1` if `x` is `-∞`
+- Returns `+∞` if `x` is `+∞`
+- Returns `NaN` if `x` is `NaN`
+
 # Reference
 - C23 F.10.3.5
 """
@@ -407,6 +478,11 @@ cr_exp2m1
 Compute the base-`e` exponential of `x`, minus 1.
 
 Returns ``e^x - 1``
+
+- Returns `±0` if `x` is `±0`
+- Returns `-1` if `x` is `-∞`
+- Returns `+∞` if `x` is `+∞`
+- Returns `NaN` if `x` is `NaN`
 
 # Reference
 - [expm1 - cppreference](https://en.cppreference.com/w/c/numeric/math/expm1)
@@ -422,6 +498,12 @@ a.k.a. natural logarithm.
 
 Returns ``\\log_e x``
 
+- Returns `-∞` if `x` is `±0`, and raises the "divide-by-zero" floating-point exception
+- Returns `+0` if `x` is `1`
+- Returns `NaN` if `x` is `x < 0`
+- Returns `+∞` if `x` is `+∞`
+- Returns `NaN` if `x` is `NaN`
+
 # Reference
 - [DLMF: §4.2.2](https://dlmf.nist.gov/4.2#E2)
 - C23 F.10.3.11
@@ -436,6 +518,12 @@ a.k.a. common logarithm.
 
 Returns ``\\log_{10} x``
 
+- Returns `-∞` if `x` is `±0`, and raises the "divide-by-zero" floating-point exception
+- Returns `+0` if `x` is `1`
+- Returns `NaN` if `x` is `x < 0`
+- Returns `+∞` if `x` is `+∞`
+- Returns `NaN` if `x` is `NaN`
+
 # Reference
 - [log10 - cppreference](https://en.cppreference.com/w/c/numeric/math/log10)
 - C23 F.10.3.12
@@ -449,6 +537,12 @@ Compute the base-`10` logarithm of `1 + x`.
 
 Returns ``\\log_{10} (1+x)``
 
+- Returns `±0` if `x` is `±0`, and raises the "divide-by-zero" floating-point exception
+- Returns `-∞` if `x` is `-1`
+- Returns `NaN` if `x` is `x < -1`
+- Returns `+∞` if `x` is `+∞`
+- Returns `NaN` if `x` is `NaN`
+
 # Reference
 - C23 F.10.3.13
 """
@@ -460,6 +554,12 @@ cr_log10p1
 Compute the base-`e` logarithm of `1 + x`.
 
 Returns ``\\log_e (1+x)``
+
+- Returns `±0` if `x` is `±0`, and raises the "divide-by-zero" floating-point exception
+- Returns `-∞` if `x` is `-1`
+- Returns `NaN` if `x` is `x < -1`
+- Returns `+∞` if `x` is `+∞`
+- Returns `NaN` if `x` is `NaN`
 
 # Reference
 - [log1p - cppreference](https://en.cppreference.com/w/c/numeric/math/log1p)
@@ -475,6 +575,12 @@ Compute the base-`2` logarithm of `x`.
 
 Returns ``\\log_2 x``
 
+- Returns `-∞` if `x` is `±0`, and raises the "divide-by-zero" floating-point exception
+- Returns `+0` if `x` is `1`
+- Returns `NaN` if `x` is `x < 0`
+- Returns `+∞` if `x` is `+∞`
+- Returns `NaN` if `x` is `NaN`
+
 # Reference
 - [log2 - cppreference](https://en.cppreference.com/w/c/numeric/math/log2)
 - C23 F.10.3.15
@@ -487,6 +593,12 @@ cr_log2
 Compute the base-`2` logarithm of `1 + x`.
 
 Returns ``\\log_2 (1+x)``
+
+- Returns `±0` if `x` is `±0`, and raises the "divide-by-zero" floating-point exception
+- Returns `-∞` if `x` is `-1`
+- Returns `NaN` if `x` is `x < -1`
+- Returns `+∞` if `x` is `+∞`
+- Returns `NaN` if `x` is `NaN`
 
 # Reference
 - C23 F.10.3.16
@@ -501,6 +613,10 @@ cr_log2p1
 Compute the real cube root of `x`.
 
 Returns ``x^\\frac{1}{3}``
+
+- Returns `±0` if `x` is `±0`
+- Returns `±∞` if `x` is `±∞`
+- Returns `NaN` if `x` is `NaN`
 
 # Reference
 - [cbrt - cppreference](https://en.cppreference.com/w/c/numeric/math/cbrt)
@@ -539,7 +655,7 @@ cr_hypot
 
 Compute `x` raised to the power `y`.
 
-Returns ``\\x^y``
+Returns ``x^y``
 
 # Reference
 - [DLMF: §4.2.28](https://dlmf.nist.gov/4.2#E28)
@@ -557,6 +673,11 @@ Computes the reciprocal of the nonnegative square root of `x`.
 
 Returns ``\\frac{1}{\\sqrt{x}}``
 
+- Returns `+∞` if `x` is `±0`, and raises the "divide-by-zero" floating-point exception
+- Returns `NaN` if `x < 0`
+- Returns `+0` if `x` is `+∞`
+- Returns `NaN` if `x` is `NaN`
+
 # Reference
 - C23 F.10.4.9
 """
@@ -568,6 +689,11 @@ cr_rsqrt
 Computes the nonnegative square root of `x`.
 
 Returns ``\\sqrt{x}``
+
+- Returns `±0` if `x` is `±0`
+- Returns `+∞` if `x` is `+∞`
+- Returns `NaN` if `x < 0`
+- Returns `NaN` if `x` is `NaN`
 
 # Reference
 - [sqrt - cppreference](https://en.cppreference.com/w/c/numeric/math/sqrt)
@@ -587,6 +713,10 @@ Returns
 \\tt{erf}(x) = \\frac{2}{\\sqrt{\\pi}} \\int_{0}^{x} e^{-t^2} dt
 ```
 
+- Returns `±0` if `x` is `±0`
+- Returns `±1` if `x` is `±∞`
+- Returns `NaN` if `x` is `NaN`
+
 # Reference
 - [DLMF: §7.2.1](https://dlmf.nist.gov/7.2#E1)
 - C23 F.10.5.1
@@ -605,6 +735,10 @@ Returns
 = \\frac{2}{\\sqrt{\\pi}} \\int_{x}^{\\infty} e^{-t^2} dt
 ```
 
+- Returns `2` if `x` is `-∞`
+- Returns `+0` if `x` is `+∞`
+- Returns `NaN` if `x` is `NaN`
+
 # Reference
 - [DLMF: §7.2.2](https://dlmf.nist.gov/7.2#E2)
 - C23 F.10.5.2
@@ -618,6 +752,12 @@ Computes the natural logarithm of the absolute value of gamma of `x`.
 
 Returns ``\\log_e |\\Gamma(x)|``
 
+- Returns `+0` if `x` is `1`
+- Returns `+0` if `x` is `2`
+- Returns `+∞` if `x` is a negative integer or zero, and raises the "divide-by-zero" floating-point exception
+- Returns `+∞` if `x` is `±∞`
+- Returns `NaN` if `x` is `NaN`
+
 # Reference
 - [lgamma - cppreference](https://en.cppreference.com/w/c/numeric/math/lgamma)
 - C23 F.10.5.3
@@ -630,6 +770,12 @@ cr_lgamma
 Computes the true gamma function of `x`.
 
 Returns ``\\Gamma(x)``
+
+- Returns `±∞` if `x` is `±0` and raises the "divide-by-zero" floating-point exception
+- Returns `NaN` if `x` is a negative integer
+- Returns `NaN` if `x` is `-∞`
+- Returns `+∞` if `x` is `+∞`
+- Returns `NaN` if `x` is `NaN`
 
 # Reference
 - [DLMF: §5.2.1](https://dlmf.nist.gov/5.2#E1)
