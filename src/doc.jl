@@ -153,6 +153,9 @@ Compute the principal value of the arc cosine of `x`, divided by `π`,
 thus measuring the angle in half-revolutions.
 
 Returns `arccos(x)/π` in interval `[0, 1]`.
+- Returns `+0` if `x` is `1`
+- Returns `NaN` if `x` is `|x| > 1`
+- Returns `NaN` if `x` is `NaN`
 
 # Reference
 - C23 F.10.1.8
