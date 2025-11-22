@@ -392,6 +392,11 @@ a.k.a. natural exponential.
 
 Returns ``e^x``
 
+- Returns `1` if `x` is `±0`
+- Returns `+0` if `x` is `-∞`
+- Returns `+∞` if `x` is `+∞`
+- Returns `NaN` if `x` is `NaN`
+
 # Reference
 - [DLMF: §4.2.19](https://dlmf.nist.gov/4.2#E19)
 - C23 F.10.3.1
@@ -405,6 +410,11 @@ Compute the base-`10` exponential of `x`.
 
 Returns ``10^x``
 
+- Returns `1` if `x` is `±0`
+- Returns `+0` if `x` is `-∞`
+- Returns `+∞` if `x` is `+∞`
+- Returns `NaN` if `x` is `NaN`
+
 # Reference
 - C23 F.10.3.2
 """
@@ -417,6 +427,11 @@ Compute the base-`10` exponential of `x`, minus 1.
 
 Returns ``10^x - 1``
 
+- Returns `±0` if `x` is `±0`
+- Returns `-1` if `x` is `-∞`
+- Returns `+∞` if `x` is `+∞`
+- Returns `NaN` if `x` is `NaN`
+
 # Reference
 - C23 F.10.3.3
 """
@@ -428,6 +443,11 @@ cr_exp10m1
 Compute the base-`2` exponential of `x`.
 
 Returns ``2^x``
+
+- Returns `1` if `x` is `±0`
+- Returns `+0` if `x` is `-∞`
+- Returns `+∞` if `x` is `+∞`
+- Returns `NaN` if `x` is `NaN`
 
 # Reference
 - [exp2 - cppreference](https://en.cppreference.com/w/c/numeric/math/exp2)
@@ -442,6 +462,11 @@ Compute the base-`2` exponential of `x`, minus 1.
 
 Returns ``2^x - 1``
 
+- Returns `±0` if `x` is `±0`
+- Returns `-1` if `x` is `-∞`
+- Returns `+∞` if `x` is `+∞`
+- Returns `NaN` if `x` is `NaN`
+
 # Reference
 - C23 F.10.3.5
 """
@@ -453,6 +478,11 @@ cr_exp2m1
 Compute the base-`e` exponential of `x`, minus 1.
 
 Returns ``e^x - 1``
+
+- Returns `±0` if `x` is `±0`
+- Returns `-1` if `x` is `-∞`
+- Returns `+∞` if `x` is `+∞`
+- Returns `NaN` if `x` is `NaN`
 
 # Reference
 - [expm1 - cppreference](https://en.cppreference.com/w/c/numeric/math/expm1)
@@ -468,6 +498,12 @@ a.k.a. natural logarithm.
 
 Returns ``\\log_e x``
 
+- Returns `-∞` if `x` is `±0`
+- Returns `+0` if `x` is `1`
+- Returns `NaN` if `x` is `x < 0`
+- Returns `+∞` if `x` is `+∞`
+- Returns `NaN` if `x` is `NaN`
+
 # Reference
 - [DLMF: §4.2.2](https://dlmf.nist.gov/4.2#E2)
 - C23 F.10.3.11
@@ -482,6 +518,12 @@ a.k.a. common logarithm.
 
 Returns ``\\log_{10} x``
 
+- Returns `-∞` if `x` is `±0`
+- Returns `+0` if `x` is `1`
+- Returns `NaN` if `x` is `x < 0`
+- Returns `+∞` if `x` is `+∞`
+- Returns `NaN` if `x` is `NaN`
+
 # Reference
 - [log10 - cppreference](https://en.cppreference.com/w/c/numeric/math/log10)
 - C23 F.10.3.12
@@ -495,6 +537,12 @@ Compute the base-`10` logarithm of `1 + x`.
 
 Returns ``\\log_{10} (1+x)``
 
+- Returns `±0` if `x` is `±0`
+- Returns `-∞` if `x` is `-1`
+- Returns `NaN` if `x` is `x < -1`
+- Returns `+∞` if `x` is `+∞`
+- Returns `NaN` if `x` is `NaN`
+
 # Reference
 - C23 F.10.3.13
 """
@@ -506,6 +554,12 @@ cr_log10p1
 Compute the base-`e` logarithm of `1 + x`.
 
 Returns ``\\log_e (1+x)``
+
+- Returns `±0` if `x` is `±0`
+- Returns `-∞` if `x` is `-1`
+- Returns `NaN` if `x` is `x < -1`
+- Returns `+∞` if `x` is `+∞`
+- Returns `NaN` if `x` is `NaN`
 
 # Reference
 - [log1p - cppreference](https://en.cppreference.com/w/c/numeric/math/log1p)
@@ -521,6 +575,12 @@ Compute the base-`2` logarithm of `x`.
 
 Returns ``\\log_2 x``
 
+- Returns `-∞` if `x` is `±0`
+- Returns `+0` if `x` is `1`
+- Returns `NaN` if `x` is `x < 0`
+- Returns `+∞` if `x` is `+∞`
+- Returns `NaN` if `x` is `NaN`
+
 # Reference
 - [log2 - cppreference](https://en.cppreference.com/w/c/numeric/math/log2)
 - C23 F.10.3.15
@@ -533,6 +593,12 @@ cr_log2
 Compute the base-`2` logarithm of `1 + x`.
 
 Returns ``\\log_2 (1+x)``
+
+- Returns `±0` if `x` is `±0`
+- Returns `-∞` if `x` is `-1`
+- Returns `NaN` if `x` is `x < -1`
+- Returns `+∞` if `x` is `+∞`
+- Returns `NaN` if `x` is `NaN`
 
 # Reference
 - C23 F.10.3.16
