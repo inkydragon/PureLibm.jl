@@ -23,7 +23,7 @@ const CR_ASINF_C2 = NTuple{12, Float64}((
 
 
 """
-Special cases for `acosf` when `|x| > 1`
+Special cases for `asinf` when `|x| > 1`
 """
 function _asinf_as_special(x::Float32)
     tu = reinterpret(UInt32, x)
@@ -71,7 +71,7 @@ NaN32
 ```
 
 # Reference
-- [src/binary32/asin/asinf.c](https://gitlab.inria.fr/core-math/core-math/-/blob/2c08994e3cd967a63c4c1eed729353a1c3b9c798/src/binary32/asin/asinf.c)
+- [src/binary32/asin/asinf.c](https://github.com/inkydragon/core-math/blob/2c08994e3cd967a63c4c1eed729353a1c3b9c798/src/binary32/asin/asinf.c)
 """
 cr_asin(x::Float32) = cr_asinf(x)
 
@@ -104,7 +104,7 @@ function cr_asinf(x::Float32)::Float32
                 In summary, we have underflow whenever |x| < 2^-126. 
             =#
             # if x != 0 && abs(x) < Float32(0x1p-126)
-            #     nothing  # underflow
+            #     errno = ERANGE  # underflow
             # end
             return fma(x, Float32(0x1p-25), x)
         end
