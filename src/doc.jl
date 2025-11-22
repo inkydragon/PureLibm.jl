@@ -202,6 +202,21 @@ thus measuring the angle in half-revolutions.
 
 Returns `arctan(y, x)/π` in interval `[-1, 1]`.
 
+- Returns `±1` if `(y = ±0, x = -0)`
+- Returns `±0` if `(y = ±0, x = +0)`
+- Returns `±1` if `(y = ±0, x < 0)`
+- Returns `±0` if `(y = ±0, x > 0)`
+- Returns `-1/2` if `(y < 0, x = ±0)`
+- Returns `+1/2` if `(y > 0, x = ±0)`
+- Returns `+1` if `(y > 0, x = -∞)` and `y` is finite
+- Returns `-1` if `(y < 0, x = -∞)` and `y` is finite
+- Returns `+0` if `(y > 0, x = +∞)` and `y` is finite
+- Returns `-0` if `(y < 0, x = +∞)` and `y` is finite
+- Returns `±1/2` if `(y = ±∞, x)` and `x` is finite
+- Returns `±3/4` if `(y = ±∞, x = -∞)`
+- Returns `±1/4` if `(y = ±∞, x = +∞)`
+- Returns `NaN` if `x` is `NaN` or `y` is `NaN`
+
 # Reference
 - C23 F.10.1.11
 """
