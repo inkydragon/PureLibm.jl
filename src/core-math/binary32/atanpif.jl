@@ -63,7 +63,7 @@ function cr_atanpif(x::Float32)
         end
         # Warning: 0x1.45f306p-2f / x underflows for |x| >= 0x1.45f306p+124
         if abs(x) >= Float32(0x1.45f306p+124)
-            return f - copysign(Float32(0x1p-126), x)
+            return f - copysign(Float32(0x1p-26), x)
         else
             return f - Float32(0x1.45f306p-2) / x
         end
