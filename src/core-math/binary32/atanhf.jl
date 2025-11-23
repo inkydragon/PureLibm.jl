@@ -64,18 +64,24 @@ const CR_ATANHF_C2 = NTuple{7, Float64}((
 ))
 #! format: on
 
+
+"""
+Special cases for `|x| >= 1`
+"""
 function _atanhf_as_special(x::Float32)
     ux = reinterpret(UInt32, x)
     ax = ux << 1
     if ax == 0x7f000000
-        # +-1
         # errno = ERANGE
+        # atanh(±1) = ±∞
         return x / 0.0f0  # raise FE_DIVBYZERO
     end
     if ax > 0xff000000
-        return x + x  # NaN
+        # atanh(NaN) = NaN
+        return x + x
     end
     # errno = EDOM
+    # atanh(±∞) = NaN
     return 0.0f0 / 0.0f0  # raise FE_INVALID
 end
 
@@ -83,6 +89,24 @@ end
     cr_atanh(x::Float32)
 
 Correctly-rounded inverse hyperbolic tangent of `Float32`.
+
+# Examples
+```jldoctest
+julia> PureLibm.cr_atanh.((0.0f0, -0.0f0))
+(0.0f0, -0.0f0)
+
+julia> PureLibm.cr_atanh.((0.5f0, -0.5f0))
+(0.54930615f0, -0.54930615f0)
+
+julia> PureLibm.cr_atanh(-0.5f0) == -PureLibm.cr_atanh(0.5f0)
+true
+
+julia> PureLibm.cr_atanh.((1.0f0, -1.0f0))
+(Inf32, -Inf32)
+```
+
+# Reference
+- [core-math/src/binary32/atanh/atanhf.c](https://github.com/inkydragon/core-math/blob/4d6192d21a311e412b8cc76bd33c7ba4d41ccbab/src/binary32/atanh/atanhf.c)
 """
 cr_atanh(x::Float32) = cr_atanhf(x)
 
@@ -90,18 +114,30 @@ function cr_atanhf(x::Float32)
     ux = reinterpret(UInt32, x)
     ax = ux << 1
     if @unlikely(ax < 0x7a300000 || ax >= 0x7f000000)
-        # |x| < 0x1.3p-5 or x is NaN/Inf
+        # |x| < 0x1.3p-5 or |x| >= 1 (NaN/Inf)
         if @unlikely(ax >= 0x7f000000)
-            # NaN/Inf
+            # |x| >= 1 (NaN/Inf)
             return _atanhf_as_special(x)
         end
         if @unlikely(ax < 0x73713744)
             # |x| < 0.000352112 (0x1.713744p-12)
             if ax == 0
-                # x = +-0
+                # atanh(±0) = ±0
                 return x
             end
-            # errno = ERANGE
+            #=
+                The Taylor expansion of atanh(x) at x=0 is x + x^3/3 + o(x^3),
+                thus for |x| >= 2^-126 we have no underflow, whatever the
+                rounding mode.
+                For |x| < 2^-126 and rounding towards zero, we have underflow.
+                For x = nextbelow(2^-126) = 0x1.fffffcp-127, atanh(x) would round
+                upward to 0x1.fffffep-127 with unbounded exponent range, which is not
+                representable, thus we have underflow too.
+                In summary, we have underflow whenever |x| < 2^-126.
+            =#
+            # if abs(x) < Float32(0x1p-126)
+            #     errno = ERANGE  # underflow
+            # end
             return fma(x, Float32(0x1p-25), x)
         else
             # 0x1.713744p-12 <= |x| < 0x1.3p-5
@@ -110,11 +146,11 @@ function cr_atanhf(x::Float32)
             z4 = z2 * z2
             c = CR_ATANHF_C1
             r = c[1] + z2 * c[2] + z4 * (c[3] + z2 * c[4])
-            return Float32(z + z * z2 * r)
+            return Float32(z + (z * z2) * r)
         end
     end
 
-    # |x| >= 0x1.3p-5
+    # 0x1.3p-5 <= |x| < 1.0
     s = (1.0, -1.0)
     sgn = s[(ux>>31)+1]
     e = UInt32(ax >> 24)
