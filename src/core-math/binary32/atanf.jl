@@ -70,7 +70,7 @@ NaN32
 ```
 
 # Reference
-- [src/binary32/atan/atanf.c](https://gitlab.inria.fr/core-math/core-math/-/blob/69a32feab0759dc073a5e99cb6ee300e9739b607/src/binary32/atan/atanf.c)
+- [core-math/src/binary32/atan/atanf.c](https://github.com/inkydragon/core-math/blob/2c08994e3cd967a63c4c1eed729353a1c3b9c798/src/binary32/atan/atanf.c)
 """
 cr_atan(x::Float32) = cr_atanf(x)
 
@@ -98,8 +98,19 @@ function cr_atanf(x::Float32)::Float32
             if (tu << UInt32(1)) == 0
                 return x
             end
-
-            return fma(-x, abs(x), x)
+            res = fma(-x, abs(x), x)
+            #=
+                The Taylor expansion of atan(x) at x=0 is x - x^3/3 + o(x^3).
+                For |x| > 2^-126 we have no underflow, whatever the rounding mode.
+                For |x| < 2^-126, since |atan(x)| < |x|, we always have underflow.
+                For |x| = 2^-126, we have underflow for rounding towards zero,
+                i.e., when atan(x) rounds to nextbelow(2^-126).
+                In summary, we have underflow whenever |x|<2^-126 or |res|<2^-126.
+            =#
+            # if (abs(x) < Float32(0x1p-126) || abs(res) < Float32(0x1p-126))
+            #     errno = ERANGE  # underflow
+            # end
+            return res
         end
 
         return fma(Float32(-0x1.5555555555555p-2) * x, x * x, x)
