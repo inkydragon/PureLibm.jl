@@ -21,14 +21,30 @@ const CR_ATANPIF_CD = NTuple{7,Float64}((
     0x1.dadf2ca0acb43p-14,
 ))
 
+
 """
     cr_atanpi(x::Float32)
 
 Correctly-rounded half-revolution arc-tangent of `Float32` value.
-This function computes `atan(x)/π`
+This function computes `atan(x)/π`.
+
+# Examples
+```jldoctest
+julia> PureLibm.cr_atanpi.((0.0f0, -0.0f0))
+(0.0f0, -0.0f0)
+
+julia> PureLibm.cr_atanpi.((0.5f0, -0.5f0))
+(0.14758362f0, -0.14758362f0)
+
+julia> PureLibm.cr_atanpi(-0.5f0) == -PureLibm.cr_atanpi(0.5f0)
+true
+
+julia> PureLibm.cr_atanpi.((1.0f0, -1.0f0))
+(0.25f0, -0.25f0)
+```
 
 # Reference
-- [src/binary32/atanpi/atanpif.c](https://gitlab.inria.fr/core-math/core-math/-/blob/03c15350fdcc286625bc5fe9b57e47a2275af293/src/binary32/atanpi/atanpif.c)
+- [core-math/src/binary32/atanpi/atanpif.c](https://github.com/inkydragon/core-math/blob/9f7bf82f5abdf032f3a4733e97ee4a8069bdbed6/src/binary32/atanpi/atanpif.c)
 """
 cr_atanpi(x::Float32) = cr_atanpif(x)
 
@@ -75,7 +91,7 @@ function cr_atanpif(x::Float32)
             # end
             return Float32(sx)
         end
-        return Float32(sx - (0x1.5555555555555p-2 * sx) * (x * x))
+        return Float32(sx - (0x1.5555555555555p-2 * sx) * (z * z))
     end
 
     ax = tu & (~UInt32(0) >> 1)
