@@ -26,7 +26,7 @@ for T in (Float32, )
             append!(test_x, T[
                 # if tu > 0xc07547ca
                 #   and not:  if tu >= 0xff800000
-                # x > -3.8325067f0
+                # x < -3.8325067f0
                 -3.8325067f0,
                 rand_float(-3.8325067f0, T(-Inf), 16)...,
                 # if tu == 0xb76c9f62
