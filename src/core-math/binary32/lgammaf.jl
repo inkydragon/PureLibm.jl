@@ -34,7 +34,7 @@ const CR_LGAMMAF_TB = Vector{Tuple{UInt32, Float32, Float32}}([
     (reinterpret(UInt32, Float32(-0x1.580c1ep+1)), Float32(-0x1.5787c6p-4), Float32(0x1p-29)),
     (reinterpret(UInt32, Float32(-0x1.69d628p+3)), Float32(-0x1.0eac2ap+4), Float32(-0x1p-21)),
     (reinterpret(UInt32, Float32(-0x1.627346p+7)), Float32(-0x1.73235ep+9), Float32(-0x1p-16)),
-    (reinterpret(UInt32, Float32(-0x1.efc2a2p+14)), Float32(-0x1.222dbcp+18), Float32(-0x1p-7))
+    (reinterpret(UInt32, Float32(-0x1.efc2a2p+14)), Float32(-0x1.222dbcp+18), Float32(-0x1p-7)),
 ])
 #! format: on
 
@@ -163,6 +163,7 @@ function cr_lgammaf(x::Float32)::Float32
             # +-inf
             return 1.0f0 / 0.0f0
         end
+
         # NaN
         return x + x
     end
@@ -179,6 +180,7 @@ function cr_lgammaf(x::Float32)::Float32
             # errno = ERANGE
             return 1.0f0 / 0.0f0
         end
+
         if x == 1.0f0 || x == 2.0f0
             signgam = 1
             return 0.0f0
@@ -205,12 +207,12 @@ function cr_lgammaf(x::Float32)::Float32
         # |x| < 0.66015625f0
         rn = NTuple{8, Float64}((
             -0x1.505bdf4b65acp+4, -0x1.51c80eb47e068p+2, 0x1.0000000007cb8p+0, -0x1.4ac529250a1fcp+1,
-            -0x1.a8c99dbe1621ap+0, -0x1.4abdcc74115eap+0, -0x1.1b87fe5a5b923p+0, -0x1.05b8a4d47ff64p+0
+            -0x1.a8c99dbe1621ap+0, -0x1.4abdcc74115eap+0, -0x1.1b87fe5a5b923p+0, -0x1.05b8a4d47ff64p+0,
         ))
         c0 = 0x1.0fc0fad268c4dp+2
         rd = NTuple{8, Float64}((
-        -0x1.4db2cfe9a5265p+5, -0x1.062e99d1c4f27p+3, -0x1.c81bc2ecf25f6p+1, -0x1.108e55c10091bp+1,
-        -0x1.7dd25af0b83d4p+0, -0x1.36bf1880125fcp+0, -0x1.1379fc8023d9cp+0, -0x1.03712e41525d2p+0
+            -0x1.4db2cfe9a5265p+5, -0x1.062e99d1c4f27p+3, -0x1.c81bc2ecf25f6p+1, -0x1.108e55c10091bp+1,
+            -0x1.7dd25af0b83d4p+0, -0x1.36bf1880125fcp+0, -0x1.1379fc8023d9cp+0, -0x1.03712e41525d2p+0,
         ))
         f = (c0 * s) * _lgam_as_r8(s, rn) / _lgam_as_r8(s, rd) - _lgam_as_ln(z)
     else
@@ -367,5 +369,6 @@ function cr_lgammaf(x::Float32)::Float32
             return tb[a][2] + tb[a][3]
         end
     end
+
     return r
 end
