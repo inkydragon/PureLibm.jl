@@ -92,14 +92,45 @@ end
     cr_lgamma(x::Float32)
 
 Correctly-rounded logarithm of the absolute value of the gamma function for `Float32`.
+
 # Examples
 ```jldoctest
-julia> cr_lgamma(2.0f0)
+julia> PureLibm.cr_lgamma(1.0f0)
 0.0f0
+
+julia> PureLibm.cr_lgamma(2.0f0)
+0.0f0
+
+julia> PureLibm.cr_lgamma(3.0f0)
+0.6931472f0
+
+julia> PureLibm.cr_lgamma(0.0f0)
+Inf32
+
+julia> PureLibm.cr_lgamma.(Float32[0.5, 1, 1.5, 2, 3, 10])
+6-element Vector{Float32}:
+  0.5723649
+  0.0
+ -0.12078224
+  0.0
+  0.6931472
+ 12.801827
+
+julia> PureLibm.cr_lgamma(Inf32)
+Inf32
+
+julia> PureLibm.cr_lgamma.(Float32[-0.0, -1, -2, -3, -10, -Inf])
+6-element Vector{Float32}:
+ Inf
+ Inf
+ Inf
+ Inf
+ Inf
+ Inf
 ```
 
-# Reference:
-- [IEEEX754-2019](https://ieeexplore.ieee.org/document/8683059)
+# Reference
+- [core-math/src/binary32/lgamma/lgammaf.c](https://github.com/inkydragon/core-math/blob/062fb094d9137bc7cb057f20dc372078df4b3292/src/binary32/lgamma/lgammaf.c)
 """
 cr_lgamma(x::Float32) = cr_lgammaf(x)
 
