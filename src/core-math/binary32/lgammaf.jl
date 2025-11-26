@@ -353,8 +353,8 @@ function cr_lgammaf(x::Float32)::Float32
         tu = reinterpret(UInt32, x)
         tb = CR_LGAMMAF_TB
         a = 1
-        b = length(tb)
-        #= invariant: t.u < tb[0].x.u or tb[a].x.u <= t.u < tb[b].x.u =#
+        b = length(tb) + 1
+        #= invariant: t.u < tb[1].x.u or tb[a].x.u <= t.u < tb[b].x.u =#
         while (a + 1) < b
             i = (a + b) ÷ 2
             if tu < tb[i][1]
