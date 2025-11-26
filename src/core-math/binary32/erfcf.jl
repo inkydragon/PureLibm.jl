@@ -67,6 +67,33 @@ const CR_ERFCF_LN2L = 0x1.cf79abd6f5dc8p-47
     cr_erfc(x::Float32)
 
 Correctly-rounded complementary error function for `Float32`.
+
+# Examples
+```jldoctest
+julia> PureLibm.cr_erfc.(Float32[0.0, 1, 2, 8, 16])
+5-element Vector{Float32}:
+ 1.0
+ 0.1572992
+ 0.004677735
+ 1.1224297f-29
+ 0.0
+
+julia> PureLibm.cr_erfc(Inf32)
+0.0f0
+
+julia> PureLibm.cr_erfc(-Inf32)
+2.0f0
+
+julia> PureLibm.cr_erfc.(Float32[-4, -2, -1, -0.0])
+4-element Vector{Float32}:
+ 2.0
+ 1.9953222
+ 1.8427008
+ 1.0
+```
+
+# Reference
+- [core-math/src/binary32/erfc/erfcf.c](https://github.com/inkydragon/core-math/blob/7b790f465c8048dbc5bf4cd116cd5128b67c1a67/src/binary32/erfc/erfcf.c)
 """
 cr_erfc(x::Float32) = cr_erfcf(x)
 
