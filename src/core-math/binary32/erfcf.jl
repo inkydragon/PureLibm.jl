@@ -154,7 +154,7 @@ function cr_erfcf(x::Float32)::Float32
     i_idx = at > 0x40051000 ? 2 : 1
     jt = x2 * CR_ERFCF_ILN2 - Float64(0x1.00004p+10)
     ju = reinterpret(UInt64, jt)
-    j = Int((ju << 12) >> 48)
+    j = Int(reinterpret(Int64, ju << 12) >> 48)
     S_bits = (UInt64((j >> 7) + (0x3ff | (sgn << 11)))) << 52
     S = reinterpret(Float64, S_bits)
     ch = CR_ERFCF_CH
