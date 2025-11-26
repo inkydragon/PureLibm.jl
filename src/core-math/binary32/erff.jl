@@ -79,6 +79,20 @@ Correctly-rounded error function for `Float32`.
 
 # Examples
 ```jldoctest
+julia> PureLibm.cr_erf.(Float32[-0.0, 0.0, 0.5, 1, 2, 3, 4])
+7-element Vector{Float32}:
+ -0.0
+  0.0
+  0.5204999
+  0.8427008
+  0.9953223
+  0.9999779
+  1.0
+
+julia> PureLibm.cr_erf.([-Inf32, Inf32])
+2-element Vector{Float32}:
+ -1.0
+  1.0
 ```
 
 # Reference
