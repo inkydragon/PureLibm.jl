@@ -181,7 +181,7 @@ function cr_lgammaf(x::Float32)::Float32
                     and does not overflow for x = 0x1.895f1cp+121 and rounding
                     towards zero
                 =#
-                r = fmaf(x, Float32(0x1.4d3398p+6), Float32(0x1.10f35ep+103))
+                r = fma(x, Float32(0x1.4d3398p+6), Float32(0x1.10f35ep+103))
                 # if (x > Float32(0x1.895f1cp+121)
                 #     || (x == Float32(0x1.895f1cp+121)
                 #         && x * 5.0f0 >= Float32(0x1.ebb6e4p+123)))
