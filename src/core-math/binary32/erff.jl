@@ -10,7 +10,7 @@ const CR_ERFF_SMALL_C = NTuple{8,Float64}([
 
 """
 for 7 <= i < 63, C[i-7] is a degree-7 polynomial approximation of
-erf(i/16+1/32+x) for -1/32 <= x <= 1/
+erf(i/16+1/32+x) for -1/32 <= x <= 1/32
 """
 const CR_ERFF_C = Vector{NTuple{8,Float64}}([
     (0x1.f86faa9428f9cp-2, 0x1.cfc41e36c7dfap-1, -0x1.b2c7dc53508b9p-2, -0x1.5a9de93fa556ep-3, 0x1.731793dbb01b5p-3, 0x1.133e06426cf18p-6, -0x1.a12a6289cafd8p-5, 0x1.717d6f1d6f557p-9),
