@@ -2,6 +2,7 @@
 # Based on core-math/src/binary32/tgamma/tgammaf.c
 # CORE-MATH project Copyright (c) 2023-2024 Alexei Sibidanov.
 
+#! format: off
 """
 List of exceptional cases.
 """
@@ -38,7 +39,7 @@ const CR_TGAMMAF_C = Vector{Float64}([
     0x1.1fd0051a0525bp-10, 0x1.9808a8b96c37ep-13, 0x1.b3f78e01152b5p-15, 0x1.49c85a7e1fd04p-18,
     0x1.471ca49184475p-19, -0x1.368f0b7ed9e36p-23, 0x1.882222f9049efp-23, -0x1.a69ed2042842cp-25
 ])
-
+#! format: on
 
 """
     cr_tgammaf(x::Float32)
@@ -63,8 +64,9 @@ function cr_tgammaf(x::Float32)::Float32
             return x
         end
         #= tgammaf(NaN) = NaN =#
-        return x + x  #= `x+x` ensures the "Invalid operation" exception is set
-                            if x is sNaN,  and it yields a qNaN =# 
+        #= `x+x` ensures the "Invalid operation" exception is set
+            if x is sNaN,  and it yields a qNaN =#
+        return x + x
     end
 
     z = Float64(x)
@@ -132,7 +134,7 @@ function cr_tgammaf(x::Float32)::Float32
         #= The C standard says that if the function underflows,
             errno is set to ERANGE. =#
         # errno = ERANGE
-        return Float32(0x1p-127) * sgn[k & 1 + 1]
+        return Float32(0x1p-127) * sgn[k&1+1]
     end
 
     #= x non-integer
@@ -149,13 +151,14 @@ function cr_tgammaf(x::Float32)::Float32
     d8 = d4 * d4
     c = CR_TGAMMAF_C
     f = (
-        (c[1] + d * c[2])
-        + d2 * (c[3] + d * c[4])
-        + d4 * ((c[5] + d * c[6]) + d2 * (c[7] + d * c[8]))
-        + d8 * (
-            (c[9] + d * c[10]) 
-            + d2 * (c[11] + d * c[12]) 
-            + d4 * ((c[13] + d * c[14]) + d2 * (c[15] + d * c[16])))
+        (c[1] + d * c[2]) +
+        d2 * (c[3] + d * c[4]) +
+        d4 * ((c[5] + d * c[6]) + d2 * (c[7] + d * c[8])) +
+        d8 * (
+            (c[9] + d * c[10]) +
+            d2 * (c[11] + d * c[12]) +
+            d4 * ((c[13] + d * c[14]) + d2 * (c[15] + d * c[16]))
+        )
     )
 
     jm = trunc(Int, abs(i))
