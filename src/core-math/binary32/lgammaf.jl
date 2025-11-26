@@ -156,6 +156,7 @@ function cr_lgammaf(x::Float32)::Float32
     f = 0.0
     s = Float64(x)
     if @unlikely(ax < Float32(0x1.52p-1))
+        # |x| < 0.66015625f0
         rn = [
             -0x1.505bdf4b65acp+4, -0x1.51c80eb47e068p+2, 0x1.0000000007cb8p+0, -0x1.4ac529250a1fcp+1,
             -0x1.a8c99dbe1621ap+0, -0x1.4abdcc74115eap+0, -0x1.1b87fe5a5b923p+0, -0x1.05b8a4d47ff64p+0
@@ -167,9 +168,11 @@ function cr_lgammaf(x::Float32)::Float32
         ]
         f = (c0 * s) * _lgam_as_r8(s, rn) / _lgam_as_r8(s, rd) - _lgam_as_ln(z)
     else
-        # |x| >= 0x1.52p-1
+        # |x| >= 0.66015625f0
         if ax > Float32(0x1.afc1ap+1)
+            # |x| > 3.3730965f0
             if @unlikely(x >= Float32(0x1.895f1cp+121))
+                # x >= 4.0850034f36
                 #=
                     for x=0x1.895f1cp+121, lgamma(x) < 2^128, thus there is no
                     overflow for rounding towards zero or downwards.
@@ -187,21 +190,28 @@ function cr_lgammaf(x::Float32)::Float32
                 return r
             end
 
+            # 3.3730965f0 < |x| and x < 4.0850034f36
+            #   (-Inf, -3.3730965f0) and (3.3730965f0, 4.0850034f36)
             lz = _lgam_as_ln(z)
             f = (z - 0.5) * (lz - 1.0) + 0x1.acfe390c97d69p-2
             if ax < Float32(0x1.0p+20)
+                # 3.3730965f0 < |x| < 1.048576f6
                 iz = 1.0 / z
                 iz2 = iz * iz
                 if ax > 1198.0f0
+                    # 1198.0f0 < |x| < 1.048576f6
                     f += iz * (1.0 / 12.0)
                 elseif ax > Float32(0x1.279a7p+6)
+                    # 73.90082f0 < |x| <= 1198.0f0 
                     c = [0x1.555555547fbadp-4, -0x1.6c0fd270c465p-9]
                     f += iz * (c[1] + iz2 * c[2])
                 elseif ax > Float32(0x1.555556p+3)
+                    # 10.666667f0 < |x| <= 73.90082f0
                     c = [0x1.555555554de0bp-4, -0x1.6c16bdc45944fp-9, 0x1.a0077f300ecb3p-11, -0x1.2e9cfff3b29c2p-11]
                     iz4 = iz2 * iz2
                     f += iz * ((c[1] + iz2 * c[2]) + iz4 * (c[3] + iz2 * c[4]))
                 else
+                    # 3.3730965f0 < |x| <= 10.666667f0
                     c = [
                         0x1.5555555551286p-4, -0x1.6c16c0e7c4cf4p-9, 0x1.a0193267fe6f2p-11, -0x1.37e87ec19cb45p-11,
                         0x1.b40011dfff081p-11, -0x1.c16c8946b19b6p-10, 0x1.e9f47ace150d8p-9, -0x1.4f5843a71a338p-8,
@@ -213,11 +223,13 @@ function cr_lgammaf(x::Float32)::Float32
                 end
             end
             if x < 0.0f0
+                # x in (-Inf, -3.3730965f0)
                 f = 0x1.250d048e7a1bdp+0 - f - lz
                 lp = _lgam_as_ln(_lgam_as_sinpi(Float64(x - fx)))
                 f -= lp
             end
         else
+            # 0.66015625f0 <= |x| <= 3.3730965f0
             rn = [
                 -0x1.667923ff14df7p+5, -0x1.2d35f25ad8f64p+3, -0x1.b8c9eab9d5bd3p+1, -0x1.7a4a97f494127p+0,
                 -0x1.3a6c8295b4445p-1, -0x1.da44e8b810024p-3, -0x1.9061e81c77e4ap-5,
@@ -229,7 +241,9 @@ function cr_lgammaf(x::Float32)::Float32
             ]
             f = (z - 1.0) * (z - 2.0) * c0 * _lgam_as_r7(z, rn) / _lgam_as_r8(z, rd)
             if x < 0.0f0
+                # x in (-3.3730965f0, -0.66015625f0)
                 if @unlikely(tu < 0x40301b93 && tu > 0x402f95c2)
+                    # |x| in (2.7435155f0, 2.751683f0)
                     h = (s + 0x1.5fb410a1bd901p+1) - 0x1.a19a96d2e6f85p-54
                     h2 = h * h
                     h4 = h2 * h2
@@ -239,6 +253,7 @@ function cr_lgammaf(x::Float32)::Float32
                     ]
                     f = h * ((c[1] + h * c[2]) + h2 * (c[3] + h * c[4]) + h4 * ((c[5] + h * c[6]) + h2 * (c[7] + h * c[8])))
                 elseif @unlikely(tu > 0x401ceccb && tu < 0x401d95ca)
+                    # |x| in (2.4519527f0, 2.4622674f0)
                     h = (s + 0x1.3a7fc9600f86cp+1) + 0x1.55f64f98af8dp-55
                     h2 = h * h
                     h4 = h2 * h2
@@ -248,6 +263,7 @@ function cr_lgammaf(x::Float32)::Float32
                     ]
                     f = h * ((c[1] + h * c[2]) + h2 * (c[3] + h * c[4]) + h4 * ((c[5] + h * c[6]) + h2 * (c[7])))
                 elseif @unlikely(tu > 0x40492009 && tu < 0x404940ef)
+                    # |x| in (3.1425803f0, 3.1445882f0)
                     h = (s + 0x1.9260dbc9e59afp+1) + 0x1.f717cd335a7b3p-53
                     h2 = h * h
                     h4 = h2 * h2
@@ -257,7 +273,9 @@ function cr_lgammaf(x::Float32)::Float32
                     ]
                     f = h * ((c[1] + h * c[2]) + h2 * (c[3] + h * c[4]) + h4 * ((c[5] + h * c[6]) + h2 * (c[7])))
                 else
-                    f = 0x1.250d048e7a1bdp+0 - f
+                    # log(pi)
+                    ln_pi = 0x1.250d048e7a1bdp+0
+                    f = ln_pi - f
                     lp = _lgam_as_ln(_lgam_as_sinpi(Float64(x - fx)) * z)
                     f -= lp
                 end
