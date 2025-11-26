@@ -4,7 +4,13 @@
 
 #! format: off
 """
-Const CR_LGAMMAF_TB, `[ (.x.u, .f, .df) ]`
+Lookup table for lgamma special cases.
+
+Each entry is a tuple of `(bit_pattern, value, correction)`, where:
+
+- `bit_pattern (.x.u)`: the UInt32 representation of the input,
+- `value (.f)`: the main result (Float32),
+- `correction (.df)`: a small adjustment (Float32).
 """
 const CR_LGAMMAF_TB = Vector{Tuple{UInt32, Float32, Float32}}([
     # the entries of tb[] should be ordered by increasing .u value
@@ -50,6 +56,10 @@ function _lgam_as_r8(x::Float64, c::NTuple{8,Float64})::Float64
            (((x - c[5]) * (x - c[6])) * ((x - c[7]) * (x - c[8])))
 end
 
+"""
+Approximation of `sin(πx)` on [0,1] using an even polynomial after shifting `x → x - 0.5`.
+Used in reflection terms for negative `x` when evaluating `lgamma`.
+"""
 function _lgam_as_sinpi(x::Float64)::Float64
     c = NTuple{8, Float64}((
         0x1p+2, -0x1.de9e64df22ea4p+1, 0x1.472be122401f8p+0, -0x1.d4fcd82df91bp-3,
@@ -67,6 +77,10 @@ function _lgam_as_sinpi(x::Float64)::Float64
     )
 end
 
+"""
+Core `ln(x)` with 4-bit table-based range reduction and an 8-term polynomial.
+Provides a fast, accurate backbone for large-`x` `lgamma` asymptotics and reflection.
+"""
 function _lgam_as_ln(x::Float64)::Float64
     tu = reinterpret(UInt64, x)
     e = trunc(Int, (tu >> 52)) - 0x3ff
@@ -150,7 +164,7 @@ julia> PureLibm.cr_lgamma.(Float32[-0.0, -1, -2, -3, -10, -Inf])
 cr_lgamma(x::Float32) = cr_lgammaf(x)
 
 function cr_lgammaf(x::Float32)::Float32
-    #= In C:  #include <math.h> // for signgam =#
+    # NOTE: `signgam` is specified in POSIX.1-2001, but not in C99.
     signgam = 0
     fx = floor(x)
     ax = abs(x)
@@ -250,7 +264,7 @@ function cr_lgammaf(x::Float32)::Float32
                     # 1198.0f0 < |x| < 1.048576f6
                     f += iz * (1.0 / 12.0)
                 elseif ax > Float32(0x1.279a7p+6)
-                    # 73.90082f0 < |x| <= 1198.0f0 
+                    # 73.90082f0 < |x| <= 1198.0f0
                     c = NTuple{2,Float64}((0x1.555555547fbadp-4, -0x1.6c0fd270c465p-9))
                     f += iz * (c[1] + iz2 * c[2])
                 elseif ax > Float32(0x1.555556p+3)
