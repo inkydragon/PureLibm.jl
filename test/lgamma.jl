@@ -83,3 +83,19 @@ for T in (Float32, )
         end
     end
 end
+
+pos_range = (lo=Float32(0.0), hi=nextfloat(Float32(0x1.895f1cp+121)))
+neg_range = (lo=Float32(-0.0), hi=nextfloat(-Float32(Inf)))
+if "cr_lgamma.fast" in CheckExhaustive
+    @testset "cr_lgamma-exhaustive.fast" begin
+        test_float_range(SpecialFunctions.lgamma, PureLibm.cr_lgamma, lo=pos_range.lo, hi=pos_range.hi)
+        test_float_range(SpecialFunctions.lgamma, PureLibm.cr_lgamma, lo=neg_range.lo, hi=neg_range.hi)
+    end
+end
+if "cr_lgamma" in CheckExhaustive
+    @testset "cr_lgamma-exhaustive" begin
+        test_float_range(SpecialFunctions.lgamma, PureLibm.cr_lgamma, lo=pos_range.lo, hi=pos_range.hi, bigfloat=true)
+        test_float_range(SpecialFunctions.lgamma, PureLibm.cr_lgamma, lo=neg_range.lo, hi=neg_range.hi, bigfloat=true)
+    end
+end
+# ENV["PURELIBM_CHECK_EXHAUSTIVE"] = "cr_lgamma.fast,cr_lgamma"
