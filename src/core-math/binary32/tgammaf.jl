@@ -2,6 +2,7 @@
 # Based on core-math/src/binary32/tgamma/tgammaf.c
 # CORE-MATH project Copyright (c) 2023-2024 Alexei Sibidanov.
 
+#! format: off
 """
 List of exceptional cases.
 """
@@ -38,12 +39,33 @@ const CR_TGAMMAF_C = Vector{Float64}([
     0x1.1fd0051a0525bp-10, 0x1.9808a8b96c37ep-13, 0x1.b3f78e01152b5p-15, 0x1.49c85a7e1fd04p-18,
     0x1.471ca49184475p-19, -0x1.368f0b7ed9e36p-23, 0x1.882222f9049efp-23, -0x1.a69ed2042842cp-25
 ])
+#! format: on
 
 
 """
     cr_tgammaf(x::Float32)
 
 Correctly-rounded true gamma function for `Float32`.
+
+# Examples
+```jldoctest
+julia> PureLibm.cr_tgammaf.(Float32[1, 2, 3, 4, 5])
+5-element Vector{Float32}:
+  1.0
+  1.0
+  2.0
+  6.0
+ 24.0
+
+julia> PureLibm.cr_tgammaf(0.0f0)
+Inf32
+
+julia> PureLibm.cr_tgammaf(Inf32)
+Inf32
+```
+
+# Reference
+- [core-math/src/binary32/tgamma/tgammaf.c](https://github.com/inkydragon/core-math/blob/9f7bf82f5abdf032f3a4733e97ee4a8069bdbed6/src/binary32/tgamma/tgammaf.c)
 """
 cr_tgamma(x::Float32) = cr_tgammaf(x)
 
@@ -59,12 +81,15 @@ function cr_tgammaf(x::Float32)::Float32
                 #= tgammaf(-Inf) = NaN =#
                 return x / x  # will raise the "Invalid operation" exception
             end
+
             # tgammaf(+Inf) = +Inf
             return x
         end
+
         #= tgammaf(NaN) = NaN =#
-        return x + x  #= `x+x` ensures the "Invalid operation" exception is set
-                            if x is sNaN,  and it yields a qNaN =# 
+        #= `x+x` ensures the "Invalid operation" exception is set
+            if x is sNaN,  and it yields a qNaN =#
+        return x + x
     end
 
     z = Float64(x)
@@ -72,8 +97,17 @@ function cr_tgammaf(x::Float32)::Float32
         d = (0x1.fa658c23b1578p-1 - 0x1.d0a118f324b63p-1 * z) * z - 0x1.2788cfc6fb619p-1
         f = 1.0 / z + d
         r = Float32(f)
-        # if abs(r) > Float32(0x1.fffffep+127)
-        #     errno = ERANGE
+        #=
+            tgamma(x) overflows for:
+            0 <= x < 0x1p-128 whatever the rounding mode
+            x = 0x1p-128 and rounding to nearest or away from zero
+            (in which case the result is +Inf)
+            -0x1p-128 <= x <= 0 whatever the rounding mode
+        =#
+        # if (abs(x) < Float32(0x1p-128)
+        #     || (x == Float32(0x1p-128) && r > Float32(0x1.fffffep+127))
+        #     || x == -Float32(0x1p-128))
+        #     errno = ERANGE  # overflow
         # end
         rtu = reinterpret(UInt64, f)
         if @unlikely(((rtu + 2) & 0x0fff_ffff) < 4)
@@ -83,6 +117,7 @@ function cr_tgammaf(x::Float32)::Float32
                 end
             end
         end
+
         return r
     end
 
@@ -105,12 +140,20 @@ function cr_tgammaf(x::Float32)::Float32
 
     #= compute k only after the overflow check,
         otherwise the case to integer might overflow =#
-    k = trunc(Int, fx)
+    if @unlikely(x <= Float32(-0x1p+31))
+        # NOTE: we use `1:(k-1)` in loop and `[k&1+1]` later
+        k = typemin(Int32) + 2
+        @assert k < 1
+        @assert (k & 1) == typemin(Int) & 1 == 0
+    else
+        k = trunc(Int, fx)
+    end
     if @unlikely(fx == x)  # x is integer
         if x == 0.0
             # errno = ERANGE
             return Float32(1.0) / x
         end
+
         if x < 0.0
             # errno = EDOM
             #= should raise the "Invalid operation" exception =#
@@ -132,7 +175,7 @@ function cr_tgammaf(x::Float32)::Float32
         #= The C standard says that if the function underflows,
             errno is set to ERANGE. =#
         # errno = ERANGE
-        return Float32(0x1p-127) * sgn[k & 1 + 1]
+        return Float32(0x1p-127) * sgn[k&1+1]
     end
 
     #= x non-integer
@@ -149,13 +192,14 @@ function cr_tgammaf(x::Float32)::Float32
     d8 = d4 * d4
     c = CR_TGAMMAF_C
     f = (
-        (c[1] + d * c[2])
-        + d2 * (c[3] + d * c[4])
-        + d4 * ((c[5] + d * c[6]) + d2 * (c[7] + d * c[8]))
-        + d8 * (
-            (c[9] + d * c[10]) 
-            + d2 * (c[11] + d * c[12]) 
-            + d4 * ((c[13] + d * c[14]) + d2 * (c[15] + d * c[16])))
+        (c[1] + d * c[2]) +
+        d2 * (c[3] + d * c[4]) +
+        d4 * ((c[5] + d * c[6]) + d2 * (c[7] + d * c[8])) +
+        d8 * (
+            (c[9] + d * c[10]) +
+            d2 * (c[11] + d * c[12]) +
+            d4 * ((c[13] + d * c[14]) + d2 * (c[15] + d * c[16]))
+        )
     )
 
     jm = trunc(Int, abs(i))
@@ -175,8 +219,8 @@ function cr_tgammaf(x::Float32)::Float32
 
     rtu = reinterpret(UInt64, f)
     r = Float32(f)
-    # if @unlikely(r == 0.0)
-    #     errno = ERANGE
+    # if abs(r) < Float32(0x1p-126)
+    #     errno = ERANGE  # underflow
     # end
     #= Deal with exceptional cases =#
     if @unlikely(((rtu + 2) & 0xfffffff) < 8)
@@ -186,5 +230,6 @@ function cr_tgammaf(x::Float32)::Float32
             end
         end
     end
+
     return r
 end
