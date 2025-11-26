@@ -49,14 +49,14 @@ pos_range = (lo=Float32(0.0), hi=Float32(4.0))
 neg_range = (lo=Float32(-0.0), hi=Float32(-4.0))
 if "cr_erf.fast" in CheckExhaustive
     @testset "cr_erf-exhaustive.fast" begin
-        test_float_range(erf, PureLibm.cr_erf, lo=pos_range.lo, hi=pos_range.hi)
-        test_float_range(erf, PureLibm.cr_erf, lo=neg_range.lo, hi=neg_range.hi)
+        test_float_range(SpecialFunctions.erf, PureLibm.cr_erf, lo=pos_range.lo, hi=pos_range.hi)
+        test_float_range(SpecialFunctions.erf, PureLibm.cr_erf, lo=neg_range.lo, hi=neg_range.hi)
     end
 end
 if "cr_erf" in CheckExhaustive
     @testset "cr_erf-exhaustive" begin
-        test_float_range(erf, PureLibm.cr_erf, lo=pos_range.lo, hi=pos_range.hi, bigfloat=true)
-        test_float_range(erf, PureLibm.cr_erf, lo=neg_range.lo, hi=neg_range.hi, bigfloat=true)
+        test_float_range(SpecialFunctions.erf, PureLibm.cr_erf, lo=pos_range.lo, hi=pos_range.hi, bigfloat=true)
+        test_float_range(SpecialFunctions.erf, PureLibm.cr_erf, lo=neg_range.lo, hi=neg_range.hi, bigfloat=true)
     end
 end
 # ENV["PURELIBM_CHECK_EXHAUSTIVE"] = "cr_erf.fast,cr_erf"
