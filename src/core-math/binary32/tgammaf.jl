@@ -45,6 +45,9 @@ const CR_TGAMMAF_C = Vector{Float64}([
     cr_tgammaf(x::Float32)
 
 Correctly-rounded true gamma function for `Float32`.
+
+# Reference
+- [core-math/src/binary32/tgamma/tgammaf.c](https://github.com/inkydragon/core-math/blob/9f7bf82f5abdf032f3a4733e97ee4a8069bdbed6/src/binary32/tgamma/tgammaf.c)
 """
 cr_tgamma(x::Float32) = cr_tgammaf(x)
 
@@ -60,9 +63,11 @@ function cr_tgammaf(x::Float32)::Float32
                 #= tgammaf(-Inf) = NaN =#
                 return x / x  # will raise the "Invalid operation" exception
             end
+
             # tgammaf(+Inf) = +Inf
             return x
         end
+
         #= tgammaf(NaN) = NaN =#
         #= `x+x` ensures the "Invalid operation" exception is set
             if x is sNaN,  and it yields a qNaN =#
@@ -74,8 +79,17 @@ function cr_tgammaf(x::Float32)::Float32
         d = (0x1.fa658c23b1578p-1 - 0x1.d0a118f324b63p-1 * z) * z - 0x1.2788cfc6fb619p-1
         f = 1.0 / z + d
         r = Float32(f)
-        # if abs(r) > Float32(0x1.fffffep+127)
-        #     errno = ERANGE
+        #=
+            tgamma(x) overflows for:
+            0 <= x < 0x1p-128 whatever the rounding mode
+            x = 0x1p-128 and rounding to nearest or away from zero
+            (in which case the result is +Inf)
+            -0x1p-128 <= x <= 0 whatever the rounding mode
+        =#
+        # if (abs(x) < Float32(0x1p-128)
+        #     || (x == Float32(0x1p-128) && r > Float32(0x1.fffffep+127))
+        #     || x == -Float32(0x1p-128))
+        #     errno = ERANGE  # overflow
         # end
         rtu = reinterpret(UInt64, f)
         if @unlikely(((rtu + 2) & 0x0fff_ffff) < 4)
@@ -85,6 +99,7 @@ function cr_tgammaf(x::Float32)::Float32
                 end
             end
         end
+
         return r
     end
 
@@ -107,12 +122,20 @@ function cr_tgammaf(x::Float32)::Float32
 
     #= compute k only after the overflow check,
         otherwise the case to integer might overflow =#
-    k = trunc(Int, fx)
+    if @unlikely(x <= Float32(-0x1p+31))
+        # NOTE: we use `1:(k-1)` in loop and `[k&1+1]` later
+        k = typemin(Int32) + 2
+        @assert k < 1
+        @assert (k & 1) == typemin(Int) & 1 == 0
+    else
+        k = trunc(Int, fx)
+    end
     if @unlikely(fx == x)  # x is integer
         if x == 0.0
             # errno = ERANGE
             return Float32(1.0) / x
         end
+
         if x < 0.0
             # errno = EDOM
             #= should raise the "Invalid operation" exception =#
@@ -178,8 +201,8 @@ function cr_tgammaf(x::Float32)::Float32
 
     rtu = reinterpret(UInt64, f)
     r = Float32(f)
-    # if @unlikely(r == 0.0)
-    #     errno = ERANGE
+    # if abs(r) < Float32(0x1p-126)
+    #     errno = ERANGE  # underflow
     # end
     #= Deal with exceptional cases =#
     if @unlikely(((rtu + 2) & 0xfffffff) < 8)
@@ -189,5 +212,6 @@ function cr_tgammaf(x::Float32)::Float32
             end
         end
     end
+
     return r
 end
