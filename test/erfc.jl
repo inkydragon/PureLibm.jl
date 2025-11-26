@@ -5,30 +5,38 @@ for T in (Float32, )
     @testset "cr_erfc($T)" begin
         # IEC 60559
         @test isnan(PureLibm.cr_erfc(T(NaN)))
+        @test isnan(PureLibm.cr_erfc(-T(NaN)))
         # erfc(−∞) returns 2
         @test PureLibm.cr_erfc(T(-Inf)) == T(2)
         # erfc(+∞) returns +0
         @test PureLibm.cr_erfc(T(Inf)) == T(0)
+
+        # sanitize check
+        @test PureLibm.cr_erfc(T(0.0)) == T(1.0)
+        @test PureLibm.cr_erfc(-T(0.0)) == T(1.0)
     end
 
     @testset "cr_erfc(rand($T))" begin
         test_x = T[
             eps(T(0.0)),
-            rand_float(T(0.0), T(Inf), 64)...,
+            rand_float(T(0.0), T(Inf), 128)...,
         ]
         if Float32 == T
             # Branch cov
             append!(test_x, T[
-                # if @unlikely(uax > 0x407ad444)
-                #   |x| > 3.9192057f0 (0x1.f5a888p+1)
-                3.9192057f0, nextfloat(3.9192057f0),
-                rand_float(T(3.9), T(Inf), 32)...,
-                # if @unlikely(uax < 0x3ee0_0000)
-                #   |x| < 0.4375f0 (0x1.cp-2)
-                prevfloat(0.4375f0),
-                0.4375f0,
-                nextfloat(0.4375f0),
-                rand_float(T(0.0), 0.4375f0, 32)...,
+                # if tu > 0xc07547ca
+                #   and not:  if tu >= 0xff800000
+                # x > -3.8325067f0
+                -3.8325067f0,
+                rand_float(-3.8325067f0, T(-Inf), 16)...,
+                # if tu == 0xb76c9f62
+                # x = -0x1.d93ec4p-17
+                T(-0x1.d93ec4p-17),
+
+                # now -0x1.ea8f94p+1 <= x <= 0x1.41bbf8p+3, with |x| > 0x1.7p-4
+                -0x1.ea8f94p+1, 0x1.41bbf8p+3, 0x1.7p-4,
+                rand_float(0.08984375f0, 10.054195f0, 16)...,
+                rand_float(-0.08984375f0, -3.8325067f0, 16)...,
             ])
         end
         @testset "cr_erfc($(repr(x)))" for x in test_x
