@@ -38,13 +38,16 @@ const CR_LGAMMAF_TB = Vector{Tuple{UInt32, Float32, Float32}}([
 ])
 #! format: on
 
-
-function _lgam_as_r7(x::Float64, c::NTuple{7, Float64})::Float64
-    return ((x - c[1]) * (x - c[2])) * ((x - c[3]) * (x - c[4])) * (((x - c[5]) * (x - c[6])) * (x - c[7]))
+function _lgam_as_r7(x::Float64, c::NTuple{7,Float64})::Float64
+    return ((x - c[1]) * (x - c[2])) *
+           ((x - c[3]) * (x - c[4])) *
+           (((x - c[5]) * (x - c[6])) * (x - c[7]))
 end
 
-function _lgam_as_r8(x::Float64, c::NTuple{8, Float64})::Float64
-    return ((x - c[1]) * (x - c[2])) * ((x - c[3]) * (x - c[4])) * (((x - c[5]) * (x - c[6])) * ((x - c[7]) * (x - c[8])))
+function _lgam_as_r8(x::Float64, c::NTuple{8,Float64})::Float64
+    return ((x - c[1]) * (x - c[2])) *
+           ((x - c[3]) * (x - c[4])) *
+           (((x - c[5]) * (x - c[6])) * ((x - c[7]) * (x - c[8])))
 end
 
 function _lgam_as_sinpi(x::Float64)::Float64
@@ -57,7 +60,11 @@ function _lgam_as_sinpi(x::Float64)::Float64
     x2 = x * x
     x4 = x2 * x2
     x8 = x4 * x4
-    return (0.25 - x2) * ((c[1] + x2 * c[2]) + x4 * (c[3] + x2 * c[4]) + x8 * ((c[5] + x2 * c[6]) + x4 * (c[7] + x2 * c[8])))
+    return (0.25 - x2) * (
+        (c[1] + x2 * c[2]) +
+        x4 * (c[3] + x2 * c[4]) +
+        x8 * ((c[5] + x2 * c[6]) + x4 * (c[7] + x2 * c[8]))
+    )
 end
 
 function _lgam_as_ln(x::Float64)::Float64
@@ -87,9 +94,14 @@ function _lgam_as_ln(x::Float64)::Float64
     z = ix[i] * tf - 1.0
     z2 = z * z
     z4 = z2 * z2
-    return e * 0x1.62e42fefa39efp-1 + il[i] + z * ((c[1] + z * c[2]) + z2 * (c[3] + z * c[4]) + z4 * ((c[5] + z * c[6]) + z2 * (c[7] + z * c[8])))
+    return e * 0x1.62e42fefa39efp-1 +
+           il[i] +
+           z * (
+               (c[1] + z * c[2]) +
+               z2 * (c[3] + z * c[4]) +
+               z4 * ((c[5] + z * c[6]) + z2 * (c[7] + z * c[8]))
+           )
 end
-
 
 """
     cr_lgamma(x::Float32)
@@ -154,13 +166,13 @@ function cr_lgammaf(x::Float32)::Float32
         # NaN
         return x + x
     end
-    
+
     if @unlikely(fx == x)
         # x integer
         if x <= 0.0f0
             tu = reinterpret(UInt32, x)
             if (tu << 1) != 1
-                signgam = 1 - 2*(tu >> 31)
+                signgam = 1 - 2 * (tu >> 31)
             end
 
             #= gamma(+0) = +Inf, gamma(-0) = -Inf =#
@@ -172,7 +184,7 @@ function cr_lgammaf(x::Float32)::Float32
             return 0.0f0
         end
     end
-    
+
     #=
         Check the value of fx to avoid a spurious invalid exception.
         Note that for a binary32 |x| >= 2^23, x is necessarily an integer,
@@ -237,7 +249,7 @@ function cr_lgammaf(x::Float32)::Float32
                     f += iz * (1.0 / 12.0)
                 elseif ax > Float32(0x1.279a7p+6)
                     # 73.90082f0 < |x| <= 1198.0f0 
-                    c = NTuple{2, Float64}((0x1.555555547fbadp-4, -0x1.6c0fd270c465p-9))
+                    c = NTuple{2,Float64}((0x1.555555547fbadp-4, -0x1.6c0fd270c465p-9))
                     f += iz * (c[1] + iz2 * c[2])
                 elseif ax > Float32(0x1.555556p+3)
                     # 10.666667f0 < |x| <= 73.90082f0
@@ -252,7 +264,9 @@ function cr_lgammaf(x::Float32)::Float32
                     ))
                     iz4 = iz2 * iz2
                     iz8 = iz4 * iz4
-                    p = ((c[1] + iz2 * c[2]) + iz4 * (c[3] + iz2 * c[4])) + iz8 * ((c[5] + iz2 * c[6]) + iz4 * (c[7] + iz2 * c[8]))
+                    p =
+                        ((c[1] + iz2 * c[2]) + iz4 * (c[3] + iz2 * c[4])) +
+                        iz8 * ((c[5] + iz2 * c[6]) + iz4 * (c[7] + iz2 * c[8]))
                     f += iz * p
                 end
             end
@@ -285,7 +299,12 @@ function cr_lgammaf(x::Float32)::Float32
                         -0x1.ea12da904b18cp+0, 0x1.3267f3c265a54p+3, -0x1.4185ac30cadb3p+4, 0x1.f504accc3f2e4p+5,
                         -0x1.8588444c679b4p+7, 0x1.43740491dc22p+9, -0x1.12400ea23f9e6p+11, 0x1.dac829f365795p+12,
                     ))
-                    f = h * ((c[1] + h * c[2]) + h2 * (c[3] + h * c[4]) + h4 * ((c[5] + h * c[6]) + h2 * (c[7] + h * c[8])))
+                    f =
+                        h * (
+                            (c[1] + h * c[2]) +
+                            h2 * (c[3] + h * c[4]) +
+                            h4 * ((c[5] + h * c[6]) + h2 * (c[7] + h * c[8]))
+                        )
                 elseif @unlikely(tu > 0x401ceccb && tu < 0x401d95ca)
                     # |x| in (2.4519527f0, 2.4622674f0)
                     h = (s + 0x1.3a7fc9600f86cp+1) + 0x1.55f64f98af8dp-55
@@ -295,7 +314,12 @@ function cr_lgammaf(x::Float32)::Float32
                         0x1.83fe966af535fp+0, 0x1.36eebb002f61ap+2, 0x1.694a60589a0b3p+0, 0x1.1718d7aedb0b5p+3,
                         0x1.733a045eca0d3p+2, 0x1.8d4297421205bp+4, 0x1.7feea5fb29965p+4,
                     ))
-                    f = h * ((c[1] + h * c[2]) + h2 * (c[3] + h * c[4]) + h4 * ((c[5] + h * c[6]) + h2 * (c[7])))
+                    f =
+                        h * (
+                            (c[1] + h * c[2]) +
+                            h2 * (c[3] + h * c[4]) +
+                            h4 * ((c[5] + h * c[6]) + h2 * (c[7]))
+                        )
                 elseif @unlikely(tu > 0x40492009 && tu < 0x404940ef)
                     # |x| in (3.1425803f0, 3.1445882f0)
                     h = (s + 0x1.9260dbc9e59afp+1) + 0x1.f717cd335a7b3p-53
@@ -305,7 +329,12 @@ function cr_lgammaf(x::Float32)::Float32
                         0x1.f20a65f2fac55p+2, 0x1.9d4d297715105p+4, 0x1.c1137124d5b21p+6, 0x1.267203d24de38p+9,
                         0x1.99a63399a0b44p+11, 0x1.2941214faaf0cp+14, 0x1.bb912c0c9cdd1p+16,
                     ))
-                    f = h * ((c[1] + h * c[2]) + h2 * (c[3] + h * c[4]) + h4 * ((c[5] + h * c[6]) + h2 * (c[7])))
+                    f =
+                        h * (
+                            (c[1] + h * c[2]) +
+                            h2 * (c[3] + h * c[4]) +
+                            h4 * ((c[5] + h * c[6]) + h2 * (c[7]))
+                        )
                 else
                     # log(pi)
                     ln_pi = 0x1.250d048e7a1bdp+0
