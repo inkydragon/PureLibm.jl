@@ -60,7 +60,7 @@ end
 
 function _lgam_as_ln(x::Float64)::Float64
     tu = reinterpret(UInt64, x)
-    e = trunc(Int, (tu >> 52) - UInt64(0x3ff))
+    e = trunc(Int, (tu >> 52)) - 0x3ff
     c = (
         0x1.fffffffffff24p-1, -0x1.ffffffffd1d67p-2, 0x1.55555537802dep-2, -0x1.ffffeca81b866p-3,
         0x1.999611761d772p-3, -0x1.54f3e581b61bfp-3, 0x1.1e642b4cb5143p-3, -0x1.9115a5af1e1edp-4,
