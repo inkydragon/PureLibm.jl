@@ -38,6 +38,14 @@ const CR_ERFCF_E = NTuple{128,Float64}([
     0x1.f7bfdad9cbe14p+0, 0x1.fa7c1819e90d8p+0, 0x1.fd3c22b8f71f1p+0,
 ])
 
+const CR_ERFCF_C_SMALL = NTuple{5,Float64}([
+    0x1.20dd750429b6dp+0, -0x1.812746b03610bp-2, 0x1.ce2f218831d2fp-4, -0x1.b82c609607dcbp-6, 0x1.553af09b8008ep-8,
+])
+
+const CR_ERFCF_ILN2 = 0x1.71547652b82fep+0
+const CR_ERFCF_LN2H = 0x1.62e42fefap-8
+const CR_ERFCF_LN2L = 0x1.cf79abd6f5dc8p-47
+
 const CR_ERFCF_CH = NTuple{4,Float64}([
     -0x1.ffffffffff333p-2, 0x1.5555555556a14p-3, -0x1.55556666659b4p-5, 0x1.1111074cc7b22p-7,
 ])
@@ -56,10 +64,6 @@ const CR_ERFCF_CT = Vector{NTuple{16,Float64}}([
         0x1.33923b4102981p-18, -0x1.1dfd161e3f984p-19, -0x1.c87618fcae3b3p-23, 0x1.e8a6ffa0ba2c7p-23
     ),
 ])
-
-const CR_ERFCF_ILN2 = 0x1.71547652b82fep+0
-const CR_ERFCF_LN2H = 0x1.62e42fefap-8
-const CR_ERFCF_LN2L = 0x1.cf79abd6f5dc8p-47
 #! format: on
 
 
@@ -166,30 +170,26 @@ function cr_erfcf(x::Float32)::Float32
         end
 
         # around 0, erfc(x) behaves as 1 - (odd polynomial)
-        c = NTuple{5,Float64}([
-            0x1.20dd750429b6dp+0,
-            -0x1.812746b03610bp-2,
-            0x1.ce2f218831d2fp-4,
-            -0x1.b82c609607dcbp-6,
-            0x1.553af09b8008ep-8,
-        ])
+        c = CR_ERFCF_C_SMALL
         f0 = Float64(x) * (c[1] + x2 * (c[2] + x2 * (c[3] + x2 * (c[4] + x2 * c[5]))))
         return Float32(1.0 - f0)
     end
 
     # now -0x1.ea8f94p+1 <= x <= 0x1.41bbf8p+3, with |x| > 0x1.7p-4
-    i_idx = at > 0x40051000 ? 2 : 1
-    jt = x2 * CR_ERFCF_ILN2 - Float64(0x1.00004p+10)
-    ju = reinterpret(UInt64, jt)
-    j = Int(reinterpret(Int64, ju << 12) >> 48)
-    S_bits = (UInt64((j >> 7) + (0x3ff | (sgn << 11)))) << 52
-    S = reinterpret(Float64, S_bits)
+    jtf = x2 * CR_ERFCF_ILN2 - 0x1.00004p+10
+    jtu = reinterpret(UInt64, jtf)
+    j = Int(reinterpret(Int64, jtu << 12) >> 48)
+    su = (UInt64((j >> 7) + (0x3ff | (sgn << 11)))) << 52
+    sf = reinterpret(Float64, su)
+
     ch = CR_ERFCF_CH
     d = (x2 + CR_ERFCF_LN2H * Float64(j)) + CR_ERFCF_LN2L * Float64(j)
     d2 = d * d
     e0 = CR_ERFCF_E[(j & 127) + 1]
     f = d + d2 * ((ch[1] + d * ch[2]) + d2 * (ch[3] + d * ch[4]))
-    ct = CR_ERFCF_CT[i_idx]
+
+    ct_idx = at > 0x40051000 ? 2 : 1
+    ct = CR_ERFCF_CT[ct_idx]
     z = (axd - ct[1]) / (axd + ct[2])
     z2 = z * z
     z4 = z2 * z2
@@ -197,13 +197,14 @@ function cr_erfcf(x::Float32)::Float32
     s = (((ct[4] + z * ct[5]) + z2 * (ct[6] + z * ct[7])) + z4 * ((ct[8] + z * ct[9]) + z2 * (ct[10] + z * ct[11]))) +
         z8 * (((ct[12] + z * ct[13]) + z2 * (ct[14] + z * ct[15])) + z4 * (ct[16]))
     s = ct[3] + z * s
-    r = (S * (e0 - f * e0)) * s
+    r = (sf * (e0 - f * e0)) * s
+
     off = (0.0, 2.0)
     y = off[sgn + 1] + r
-
     # For x >= 0x1.2639cp+3, erfc(x) underflows for all rounding modes.
     # if (x >= Float32(0x1.2639cp+3))
     #     errno = ERANGE  # underflow
     # end
+
     return Float32(y)
 end
