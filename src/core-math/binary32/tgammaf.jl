@@ -41,10 +41,28 @@ const CR_TGAMMAF_C = Vector{Float64}([
 ])
 #! format: on
 
+
 """
     cr_tgammaf(x::Float32)
 
 Correctly-rounded true gamma function for `Float32`.
+
+# Examples
+```jldoctest
+julia> PureLibm.cr_tgammaf.(Float32[1, 2, 3, 4, 5])
+5-element Vector{Float32}:
+  1.0
+  1.0
+  2.0
+  6.0
+ 24.0
+
+julia> PureLibm.cr_tgammaf(0.0f0)
+Inf32
+
+julia> PureLibm.cr_tgammaf(Inf32)
+Inf32
+```
 
 # Reference
 - [core-math/src/binary32/tgamma/tgammaf.c](https://github.com/inkydragon/core-math/blob/9f7bf82f5abdf032f3a4733e97ee4a8069bdbed6/src/binary32/tgamma/tgammaf.c)
