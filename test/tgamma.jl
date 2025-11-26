@@ -2,8 +2,14 @@
 import SpecialFunctions
 using Random
 
-@testset "cr_tgamma" begin
-    @testset "$T" for T in [Float32, ]
+
+function filter_DomainError(x)
+    bad = x < 0 && (isinteger(x) || isinf(x))
+    !bad
+end
+
+for T in (Float32, )
+    @testset "cr_tgamma($T)" begin
         # IEC 60559
         @test isnan(PureLibm.cr_tgamma(T(NaN)))
         # tgamma(±0) returns ±∞ and raises the "divide-by-zero" floating-point exception.
@@ -24,38 +30,40 @@ using Random
         @test PureLibm.cr_tgamma(T(1/2)) ≈ T(sqrt(π))
         @test PureLibm.cr_tgamma(T(-1/2)) ≈ T(-2sqrt(π))
 
-        # --- compare test
-        for x in 1:36
-            @test PureLibm.cr_tgamma(T(x)) ≈ SpecialFunctions.gamma(T(x))
-        end
-        # tgammaf(0.38)=1.937f  ~  tgammaf(3.0)=2.0f
-        xlo = reinterpret(UInt32, Float32(0.38))
-        xhi = reinterpret(UInt32, Float32(3.0))
-        for xu in rand(xlo:xhi, 10^3)
-            x = reinterpret(Float32, xu)
-            @test PureLibm.cr_tgamma(x) ≈ SpecialFunctions.gamma(x)
-        end
-        
-        # Coverage
+        # Branch cov
+        # if @unlikely(x <= Float32(-0x1p+31))
+        @test isnan(PureLibm.cr_tgamma(Float32(-0x1p+31)))
+    end
+
+    @testset "cr_tgamma(random)" begin
+        test_x = T[
+            eps(T(0.0)),
+            rand_float(T(0.0), T(1.0), 16)...,
+            rand_float(T(0.38), T(3.0), 128)...,
+            1:36...,
+        ]
         if Float32 == T
-            # Upper if tu == tb[i][1]
-            @test PureLibm.cr_tgamma(T(6.1763377f-15)) == T(1.6190824f14)
-            @test PureLibm.cr_tgamma(T(-2.8004695f-6)) == T(-357083.56f0)
-            # Lower if tu == tb[j][1]
-            @test PureLibm.cr_tgamma(T(0.015363082f0)) == T(64.52887f0)
-            @test PureLibm.cr_tgamma(T(-3.6221597f0)) == T(0.24537095f0)
-            # if @unlikely(x < -42.0)  # negative non-integer
-            @test PureLibm.cr_tgamma(T(-42.1)) == T(0)
-            @test PureLibm.cr_tgamma(T(-43.1)) == -T(0)
+            # Branch cov
+            append!(test_x, T[
+                # if @unlikely(x < -42.0)  # negative non-integer
+                -42.1f0, -43.1f0,
+
+                # Upper:  if tu == tb[i][1]
+                6.1763377f-15, -2.8004695f-6,
+                # Lower:  if tu == tb[j][1]
+                0.015363082f0, -3.6221597f0,
+            ])
+        end
+        test_x = [test_x..., -test_x...]
+        @testset "cr_tgamma($(repr(x)))" for x in Iterators.filter(filter_DomainError, test_x)
+            # Test against system libm
+            @test PureLibm.cr_tgamma(x) ≈ SpecialFunctions.gamma(x)
+            # Test against MPFR
+            @test PureLibm.cr_tgamma(x) === T(SpecialFunctions.gamma(BigFloat(x)))
         end
     end
 end
 
-
-function filter_DomainError(x)
-    bad = x < 0 && (isinteger(x) || isinf(x))
-    !bad
-end
 
 function test_float_range_filter(ref, impl; lo::T, hi::T, bigfloat=false) where T
     UIntBaseType = Base.uinttype(T)
@@ -63,7 +71,7 @@ function test_float_range_filter(ref, impl; lo::T, hi::T, bigfloat=false) where 
     xu_hi = reinterpret(UIntBaseType, hi)
     xu_range = xu_lo:xu_hi
     x_range = Iterators.map(xu->reinterpret(T, xu), xu_range)
-    x_range = Iterators.filter(filter_DomainError, x_range)
+    x_range = Iterators.filter(filter_DomainError, x_range)  # XXX: filter bad tests
 
     libmname = "libm"
     ref_fun = ref
@@ -77,16 +85,18 @@ function test_float_range_filter(ref, impl; lo::T, hi::T, bigfloat=false) where 
     @info "tested $(length(xu_range)) cases"
 end
 
+pos_range = (lo=Float32(0.0), hi=Float32(50.0))
+neg_range = (lo=Float32(-0.0), hi=Float32(-50.0))
 if "cr_tgamma.fast" in CheckExhaustive
     @testset "cr_tgamma-exhaustive.fast" begin
-        test_float_range_filter(SpecialFunctions.gamma, PureLibm.cr_tgamma, lo=Float32(0.0), hi=Float32(50.0))
-        test_float_range_filter(SpecialFunctions.gamma, PureLibm.cr_tgamma, lo=Float32(-0.0), hi=Float32(-50.0))
+        test_float_range_filter(SpecialFunctions.gamma, PureLibm.cr_tgamma, lo=pos_range.lo, hi=pos_range.hi)
+        test_float_range_filter(SpecialFunctions.gamma, PureLibm.cr_tgamma, lo=neg_range.lo, hi=neg_range.hi)
     end
 end
 if "cr_tgamma" in CheckExhaustive
     @testset "cr_tgamma-exhaustive" begin
-        test_float_range_filter(SpecialFunctions.gamma, PureLibm.cr_tgamma, lo=Float32(0.0), hi=Float32(50.0), bigfloat=true)
-        test_float_range_filter(SpecialFunctions.gamma, PureLibm.cr_tgamma, lo=Float32(-0.0), hi=Float32(-50.0), bigfloat=true)
+        test_float_range_filter(SpecialFunctions.gamma, PureLibm.cr_tgamma, lo=pos_range.lo, hi=pos_range.hi, bigfloat=true)
+        test_float_range_filter(SpecialFunctions.gamma, PureLibm.cr_tgamma, lo=neg_range.lo, hi=neg_range.hi, bigfloat=true)
     end
 end
 # ENV["PURELIBM_CHECK_EXHAUSTIVE"] = "cr_tgamma.fast,cr_tgamma"
