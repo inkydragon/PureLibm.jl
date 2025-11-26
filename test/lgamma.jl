@@ -42,10 +42,24 @@ for T in (Float32, )
         @test PureLibm.cr_lgamma(T(1//3)) + PureLibm.cr_lgamma(T(2//3)) ≈ T(log(2π) - log(sqrt(3)))
         # Γ(1/4)Γ(3/4) = π√2
         @test PureLibm.cr_lgamma(T(1//4)) + PureLibm.cr_lgamma(T(3//4)) ≈ T(log(π) + log(sqrt(2)))
+    end
 
-        # --- compare test
-        for x in 1:100
-            @test PureLibm.cr_lgamma(T(x)) ≈ SpecialFunctions.lgamma(T(x))
+    @testset "cr_lgamma(random)" begin
+        test_x = T[
+            eps(T(0.0)),
+            rand_float(T(0.0), T(1.0), 16)...,
+            rand_float(T(1.0), T(2.0), 64)...,
+            rand_float(T(1), T(100), 64)...,
+            1:100...,
+
+            ## Branch cov
+        ]
+        test_x = [test_x..., -test_x...]
+        @testset "cr_lgamma($x)" for x in test_x
+            # Test against system libm
+            @test PureLibm.cr_lgamma(x) ≈ SpecialFunctions.lgamma(x)
+            # Test against MPFR
+            @test PureLibm.cr_lgamma(x) === T(SpecialFunctions.lgamma(BigFloat(x)))
         end
     end
 end
