@@ -8,9 +8,20 @@ const CR_EXP10M1F_C = NTuple{6,Float64}([
     0x1.3b2ad1b1716a2p-23, 0x1.5d7472718ce9dp-30, 0x1.4a1d7f457ac56p-37,
 ])
 
+"""
+`tb[j] = 2^(j/16), j = 0..15;`
+
+## `tb` generation
+
+```julia
+tb = [ @sprintf("%a",Float64( 2^(BigInt(j)/16)) ) for j in 0:15 ]
+join(tb, ", ")
+```
+"""
 const CR_EXP10M1F_TB = NTuple{16,Float64}([
     0x1p+0, 0x1.0b5586cf9890fp+0, 0x1.172b83c7d517bp+0, 0x1.2387a6e756238p+0,
     0x1.306fe0a31b715p+0, 0x1.3dea64c123422p+0, 0x1.4bfdad5362a27p+0, 0x1.5ab07dd485429p+0,
+    # TODO: verify that  tb[end-5] ???==        0x1.8ace5422aa0dbp+0
     0x1.6a09e667f3bcdp+0, 0x1.7a11473eb0187p+0, 0x1.8ace5422aa0dap+0, 0x1.9c49182a3f09p+0,
     0x1.ae89f995ad3adp+0, 0x1.c199bdd85529cp+0, 0x1.d5818dcfba487p+0, 0x1.ea4afa2a490dap+0,
 ])
@@ -20,7 +31,17 @@ const CR_EXP10M1F_Q = NTuple{2,NTuple{2,Float32}}((
     (Float32(-1.0), Float32(0x1p-26)),
 ))
 
+"""
+    CR_EXP10M1F_ILN10H
+
+high part of `iln10 = 16 / ln(10)`.
+"""
 const CR_EXP10M1F_ILN10H = 0x1.a934f09p+1 * 16
+"""
+    CR_EXP10M1F_ILN10L
+
+low part of `iln10 = 16 / ln(10)`
+"""
 const CR_EXP10M1F_ILN10L = 0x1.e68dc57f2496p-29 * 16
 
 # Small-range polynomial coefficient tables (cp) extracted
@@ -215,6 +236,7 @@ function cr_exp10m1f(x::Float32)::Float32
                 elseif k == 11
                     return Float32(10000000.0) - Float32(1.0)
                 end
+                # NOTE: eps(1.0f7) == 1;  eps(1.0f8) == 8
             end
         end
 
