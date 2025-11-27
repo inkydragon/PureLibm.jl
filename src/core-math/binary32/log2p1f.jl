@@ -130,9 +130,9 @@ function cr_log2p1f(x::Float32)::Float32
     z = Float64(x)
     ux = reinterpret(UInt32, x)
     ax = ux & (~UInt32(0) >> 1)
-    if @unlikely(ux > (UInt32(0x17f) << 23))
+    if @unlikely(ux >= (UInt32(0x17f) << 23))
         # x <= -1.0f0
-        if x == -1.0f0
+        if ux == (UInt32(0x17f) << 23)
             # errno = ERANGE
             # log2p1(-1.0f0) = -Inf32
             return -1.0f0 / 0.0f0
