@@ -101,17 +101,20 @@ Correctly-rounded biased argument base-10 logarithm function for `Float32`.
 
 # Examples
 ```jldoctest
-julia> cr_log10p1(0.0f0)
+julia> PureLibm.cr_log10p1(0.0f0)
 0.0f0
 
-julia> cr_log10p1(-1.0f0)
+julia> PureLibm.cr_log10p1(9.0f0)
+1.0f0
+
+julia> PureLibm.cr_log10p1(999.0f0)
+3.0f0
+
+julia> PureLibm.cr_log10p1(Inf32)
+Inf32
+
+julia> PureLibm.cr_log10p1(-1.0f0)
 -Inf32
-
-julia> isnan(cr_log10p1(-1.0001f0))
-true
-
-julia> cr_log10p1(3.0f0) == Float32(log10(1 + 3.0))
-true
 ```
 
 # Reference
