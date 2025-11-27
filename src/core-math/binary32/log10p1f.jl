@@ -136,8 +136,10 @@ function cr_log10p1f(x::Float32)
     je = (ie - UInt32(126))
     je = trunc(UInt32, (UInt64(je) * 0x9a209a8) >> 29)
     idx = Int(je) + 1
-    @assert 1 <= idx && idx <= length(CR_LOG10P1F_ST)
-    if @unlikely(x == CR_LOG10P1F_ST[idx])
+    # @assert 1 <= idx && idx <= length(CR_LOG10P1F_ST)
+    if @unlikely(1 <= idx
+        && idx <= length(CR_LOG10P1F_ST)
+        && (x == CR_LOG10P1F_ST[idx]))
         return Float32(je)
     end
 
@@ -148,7 +150,7 @@ function cr_log10p1f(x::Float32)
     e = trunc(Int32, Int64(tzu >> 52) - 1023)
     j = trunc(Int32, (m + (UInt64(1) << 45)) >> 46)
     tzu = m | (UInt64(0x3ff) << 52)
-    tzf = reinterpret(Float32, tzu)
+    tzf = reinterpret(Float64, tzu)
     ix = CR_LOG10P1F_TR[j+1]
     l = CR_LOG10P1F_TL[j+1]
     v = tzf * ix - 1.0
