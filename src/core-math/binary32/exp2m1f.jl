@@ -67,27 +67,30 @@ function cr_exp2m1f(x::Float32)::Float32
     ax = ux & 0x7fffffff
 
     if @unlikely(ux >= 0xc1c80000)
-        # x <= -25
+        # x <= -25.0f0
         if ax > (UInt32(0xff) << 23)
-            # nan
+            # exp2m1(NaN) = NaN
             return x + x
         end
 
         # avoid spurious inexact exception for -Inf
         if ux == 0xff800000
+            # exp2m1(-Inf) = -1.0f0
             return CR_EXP2M1F_Q[3][1]
         else
+            # x in (-Inf, -25)
             return CR_EXP2M1F_Q[3][1] + CR_EXP2M1F_Q[3][2]
         end
     elseif @unlikely(ax >= 0x43000000)
-        # |x| >= 128
+        # |x| >= 128.0f0
         if ax > (UInt32(0xff) << 23)
-            # nan
+            # exp2m1(NaN) = NaN
             return x + x
         end
 
         # avoid spurious inexact exception for +Inf
         if ux == 0x7f800000
+            # exp2m1(Inf) = Inf
             return x
         end
 
@@ -98,21 +101,21 @@ function cr_exp2m1f(x::Float32)::Float32
         q_idx = special ? 2 : 1
         return Float32(CR_EXP2M1F_Q[q_idx][1] + CR_EXP2M1F_Q[q_idx][2])
     elseif @unlikely(ax < 0x3df95f1f)
-        # |x| < 8.44e-2/log(2)
+        # |x| < 8.44e-2/log(2) == 0.12176346f0
         z2 = z * z
         r = 0.0
         if @unlikely(ax < 0x3d67a4cc)
-            # |x| < 3.92e-2/log(2)
+            # |x| < 3.92e-2/log(2) == 0.056553647f0
             if @unlikely(ax < 0x3caa2fee)
-                # |x| < 1.44e-2/log(2)
+                # |x| < 1.44e-2/log(2) == 0.020774808f0
                 if @unlikely(ax < 0x3bac1405)
-                    # |x| < 3.64e-3/log(2)
+                    # |x| < 3.64e-3/log(2) == 0.00525141f0
                     if @unlikely(ax < 0x37d32ef6)
-                        # |x| < 4.8e-4/log(2)
+                        # |x| < 4.8e-4/log(2) == 0.00069249363f0
                         if @unlikely(ax < 0x331fdd82)
-                            # |x| < 1.745e-5/log(2)
+                            # |x| < 1.745e-5/log(2) == 2.5175028f-5
                             if @unlikely(ax < 0x2538aa3b)
-                                # |x| < 2.58e-8/log(2)
+                                # |x| < 2.58e-8/log(2) == 3.7221533f-8
                                 #= exp2m1(x) underflows:
                                     for |x| <= 0x1.715476p-126 for rounding toward zero
                                     for |x| <= 0x1.715474p-126 for rounding to nearest/away
@@ -120,13 +123,17 @@ function cr_exp2m1f(x::Float32)::Float32
                                 # errno = ERANGE  # underflow
                                 r = 0x1.62e42fefa39efp-1
                             else
+                                # x in [3.7221533f-8, 2.5175028f-5)
                                 r = 0x1.62e42fefa39fp-1 + z * 0x1.ebfbdff82c58fp-3
                             end
                         else
+                            # x in [2.5175028f-5, 0.00069249363f0)
                             if @unlikely(ux == 0xb3d85005)
+                                # x = -1.0072839f-7
                                 return Float32(-0x1.2bdf76p-24 - 0x1.8p-77)
                             end
                             if @unlikely(ux == 0x3338428d)
+                                # x = 4.2901366f-8
                                 return Float32(0x1.fee08ap-26 + 0x1p-80)
                             end
 
@@ -134,7 +141,9 @@ function cr_exp2m1f(x::Float32)::Float32
                             r = c[1] + z * (c[2] + z * c[3])
                         end
                     else
+                        # x in [0.00069249363f0, 0.00525141f0)
                         if @unlikely(ux == 0x388bca4f)
+                            # x = 6.6657194f-5
                             return Float32(0x1.839702p-15 - 0x1.8p-68)
                         end
 
@@ -142,14 +151,17 @@ function cr_exp2m1f(x::Float32)::Float32
                         r = (c[1] + z * c[2]) + z2 * (c[3] + z * c[4])
                     end
                 else
+                    # x in [0.00525141f0, 0.020774808f0)
                     c = CR_EXP2M1F_C_5
                     r = (c[1] + z * c[2]) + z2 * (c[3] + z * (c[4] + z * c[5]))
                 end
             else
+                # x in [0.020774808f0, 0.056553647f0)
                 c = CR_EXP2M1F_C_6
                 r = (c[1] + z * c[2]) + z2 * ((c[3] + z * c[4]) + z2 * (c[5] + z * c[6]))
             end
         else
+            # x in [0.056553647f0, 0.12176346f0)
             c = CR_EXP2M1F_C_7
             r =
                 (c[1] + z * c[2]) +
@@ -159,6 +171,7 @@ function cr_exp2m1f(x::Float32)::Float32
         return Float32(r)
     else
         # general range
+        #   x in (-25.0f0, -0.12176346f0] and [0.12176346f0, 128.0f0)
 
         a = 16.0 * z
         ia = floor(a)
