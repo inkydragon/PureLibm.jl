@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
-# Based on core-math/src/binary32/erfc/erfcf.c
+# Based on core-math/src/binary32/exp10m1/exp10m1f.c
 # CORE-MATH project Copyright (c) 2022-2025 Alexei Sibidanov, Paul Zimmermann.
 
 #! format: off
