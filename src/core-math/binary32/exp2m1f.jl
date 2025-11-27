@@ -55,6 +55,26 @@ const CR_EXP2M1F_TB = NTuple{16,Float64}((
 
 Correctly-rounded base-2 exponent function biased by 1 for `Float32`.
 
+# Examples
+```jldoctest
+julia> PureLibm.cr_exp2m1.(Float32[0, 1, 2, 3, 4])
+5-element Vector{Float32}:
+  0.0
+  1.0
+  3.0
+  7.0
+ 15.0
+
+julia> PureLibm.cr_exp2m1(0.5f0)
+0.41421357f0
+
+julia> PureLibm.cr_exp2m1(Inf32)
+Inf32
+
+julia> PureLibm.cr_exp2m1(-Inf32)
+-1.0f0
+```
+
 # Reference
 - [core-math/src/binary32/exp2m1/exp2m1f.c](https://github.com/inkydragon/core-math/blob/03c15350fdcc286625bc5fe9b57e47a2275af293/src/binary32/exp2m1/exp2m1f.c)
 """
