@@ -103,8 +103,8 @@ for T in (Float32, )
     end
 end
 
-pos_range = (lo=Float32(0.0), hi=Float32(39))
-neg_range = (lo=Float32(-0.0), hi=Float32(-39))
+pos_range = (lo=Float32(0.0), hi=nextfloat(Float32(128)))
+neg_range = (lo=Float32(-0.0), hi=-nextfloat(Float32(128)))
 if "cr_exp2m1.fast" in CheckExhaustive
     @testset "cr_exp2m1-exhaustive.fast" begin
         test_float_range(exp2m1_ref, PureLibm.cr_exp2m1, lo=pos_range.lo, hi=pos_range.hi)
