@@ -40,27 +40,31 @@ for T in (Float32, )
                 # ---- if @unlikely(ub != lb)
 
                 # if ax < 0x3d32743e
-                # |x| < 0.04356789f0 (0x1.64e87cp-5f)
+                #   |x| < 0.04356789f0 (0x1.64e87cp-5f)
                 0.04356789f0,
-                rand_float(0.0f0, 0.04356789f0, 16)...,
+                rand_float(0.0f0, 0.04356789f0, 32)...,
                 # if @unlikely(ux == 0xa6aba8af)
-                # x = -1.191123f-15
+                #   x = -1.191123f-15
                 -1.191123f-15,
                 # if @unlikely(ux == 0xaf39b9a7)
-                # x = -1.6891609f-10
+                #   x = -1.6891609f-10
                 -1.6891609f-10,
                 # if @unlikely(ux == 0x399a7c00)
-                # x = 0.00029465556f0
+                #   x = 0.00029465556f0
                 0.00029465556f0,
 
                 # - else
-                # |x| >= 0.04356789f0
-                rand_float(0.04356789f0, T(Inf), 128)...,
-                #  if @unlikely(ux == 0x7956ba5e)
-                # x = 6.968322f34
+                #   |x| >= 0.04356789f0
+                rand_float(0.04356789f0, 0.5f0, 1024)...,
+                rand_float(0.5f0, 1.0f0, 1024)...,
+                rand_float(1.0f0, 1.0f9, 1024)...,
+                rand_float(1.0f9, T(Inf), 1024)...,
+                # TODO: find some stable hard to round cases
+                # if @unlikely(ux == 0x7956ba5e)
+                #   x = 6.968322f34
                 6.968322f34,
                 # if @unlikely(ux == 0xbd86ffb9)
-                # x = -0.06591744f0
+                #   x = -0.06591744f0
                 -0.06591744f0,
             ])
         end
