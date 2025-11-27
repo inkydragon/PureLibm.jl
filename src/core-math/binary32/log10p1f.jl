@@ -113,6 +113,9 @@ true
 julia> cr_log10p1(3.0f0) == Float32(log10(1 + 3.0))
 true
 ```
+
+# Reference
+- [core-math/src/binary32/log10p1/log10p1f.c](https://github.com/inkydragon/core-math/blob/7c7afc5d93cc3af4ff584f40f4a20af71488122a/src/binary32/log10p1/log10p1f.c)
 """
 cr_log10p1(x::Float32) = cr_log10p1f(x)
 
