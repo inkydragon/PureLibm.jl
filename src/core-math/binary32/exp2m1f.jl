@@ -86,20 +86,17 @@ function cr_exp2m1f(x::Float32)::Float32
             return x + x
         end
 
+        # avoid spurious inexact exception for +Inf
+        if ux == 0x7f800000
+            return x
+        end
+
         # for x=128 and rounding downward or to zero, there is no overflow
         special =
             (x == Float32(128.0)) &&
             (Float32(CR_EXP2M1F_Q[2][1] + CR_EXP2M1F_Q[2][2]) == CR_EXP2M1F_Q[2][1])
-        # avoid spurious inexact exception for +Inf
-        if ux == 0x7f800000
-            return x
-        else
-            if special
-                return Float32(CR_EXP2M1F_Q[2][1] + CR_EXP2M1F_Q[2][2])
-            else
-                return Float32(CR_EXP2M1F_Q[1][1] + CR_EXP2M1F_Q[1][2])
-            end
-        end
+        q_idx = special ? 2 : 1
+        return Float32(CR_EXP2M1F_Q[q_idx][1] + CR_EXP2M1F_Q[q_idx][2])
     elseif @unlikely(ax < 0x3df95f1f)
         # |x| < 8.44e-2/log(2)
         z2 = z * z
