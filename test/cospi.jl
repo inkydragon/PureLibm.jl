@@ -2,6 +2,12 @@
 
 for T in [Float32]
     @testset "cr_cospi(::$T)" begin
+        float_gen = Data.Floats{T}(; nans=false, infs=false)
+        # cospi Domain
+        @testset "cospi(x) in [-1, 1], for finite x" begin
+            @check cospi_domain(f = float_gen) = -1 <= PureLibm.cr_cospi(f) <= 1
+        end
+
         # IEC 60559
         # cospi(±0) returns 1
         @test PureLibm.cr_cospi(T(0.0)) == T(1.0)
@@ -10,6 +16,12 @@ for T in [Float32]
         for n in rand(1:10^6, 8)
             @test PureLibm.cr_cospi(n + T(0.5)) == T(0.0)
             @test PureLibm.cr_cospi(-n + T(0.5)) == T(0.0)
+        end
+        @testset "cospi(x+1/2) = 0, for integer x" begin
+            int_gen = Data.Integers{Int64}()
+            f_domain = map(x -> x + T(1)/2, int_gen)
+            f_domain = filter(x -> eps(x) <= T(1)/2, f_domain)
+            @check cospi_domain(f = f_domain) = PureLibm.cr_cospi(f) == T(0)
         end
         # cospi(±∞) returns a NaN and raises the "invalid" floating-point exception
         @test isnan(PureLibm.cr_cospi(T(Inf)))
