@@ -6,7 +6,7 @@ for T in [Float32, ]
         # asin Domain
         @testset "asin(x) in [-π/2, π/2], for |x| <= 1" begin
             f_domain = filter(x -> abs(x) <= 1, float_all)
-            @check asin_domain(f32 = f_domain) = -π/2 <= PureLibm.cr_asin(f32) <= π/2
+            @check asin_domain(f = f_domain) = -π/2 <= PureLibm.cr_asin(f) <= π/2
         end
 
         # IEC 60559
@@ -23,7 +23,7 @@ for T in [Float32, ]
         @test isnan(PureLibm.cr_asin(T(-Inf)))
         @testset "asin(x) = NaN, for |x| > 1" begin
             f_gt1 = filter(x -> abs(x) > 1, float_all)
-            @check asin_nan(f32 = f_gt1) = isnan(PureLibm.cr_asin(f32))
+            @check asin_nan(f = f_gt1) = isnan(PureLibm.cr_asin(f))
         end
 
         # sanity check

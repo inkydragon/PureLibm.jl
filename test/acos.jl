@@ -6,7 +6,7 @@ for T in [Float32, ]
         # acos Domain
         @testset "acos(x) in [0, π], for |x| <= 1" begin
             f_domain = filter(x -> abs(x) <= 1, float_all)
-            @check acos_domain(f32 = f_domain) = 0 <= PureLibm.cr_acos(f32) <= π
+            @check acos_domain(f = f_domain) = 0 <= PureLibm.cr_acos(f) <= π
         end
 
         # IEC 60559
@@ -22,7 +22,7 @@ for T in [Float32, ]
         @test isnan(PureLibm.cr_acos(T(-Inf)))
         @testset "acos(x) = NaN, for |x| > 1" begin
             f_gt1 = filter(x -> abs(x) > 1, float_all)
-            @check acos_nan(f32 = f_gt1) = isnan(PureLibm.cr_acos(f32))
+            @check acos_nan(f = f_gt1) = isnan(PureLibm.cr_acos(f))
         end
 
         # sanity check
