@@ -1,6 +1,8 @@
 using PureLibm
 using Test
 using Printf
+# property based testing (PBT)
+using Supposition, Supposition.Data
 
 # TODO: copy tests to LibmTest.jl
 
