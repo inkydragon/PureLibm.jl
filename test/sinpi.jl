@@ -17,7 +17,7 @@ for T in [Float32, ]
             @test PureLibm.cr_sinpi(T(n)) == T(0)
             @test PureLibm.cr_sinpi(-T(n)) == -T(0)
         end
-        @testset "sinpi(x+1/2) = 0, for integer x" begin
+        @testset "sinpi(±x) = ±0, for integer x" begin
             int_gen = Data.Integers{Int64}()
             pos_int_gen = filter(x -> x > 0, int_gen)
             neg_int_gen = filter(x -> x < 0, int_gen)
