@@ -2,6 +2,20 @@
 
 for T in [Float32, ]
     @testset "cr_sin(::$T)" begin
+        float_gen = Data.Floats{T}(; nans=false, infs=false)
+        # sin Domain
+        @testset "sin(x) in [-1, 1], for finite x" begin
+            @check sin_domain(f = float_gen) = -1 <= PureLibm.cr_sin(f) <= 1
+        end
+        @testset "sin(x) >= 0, for x in [0, π]" begin
+            f_domain = filter(x -> 0 <= x <= π, float_gen)
+            @check sin_domain(f = f_domain) = PureLibm.cr_sin(f) >= 0
+        end
+        @testset "sin(x) <= 0, for x in [π, 2π]" begin
+            f_domain = filter(x -> π <= x <= 2π, float_gen)
+            @check sin_domain(f = f_domain) = PureLibm.cr_sin(f) <= 0
+        end
+
         # IEC 60559
         # sin(±0) returns ±0
         @test PureLibm.cr_sin(T(0)) == T(0)
