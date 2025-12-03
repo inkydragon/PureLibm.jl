@@ -2,6 +2,20 @@
 
 for T in [Float32, ]
     @testset "cr_cos(::$T)" begin
+        float_gen = Data.Floats{T}(; nans=false, infs=false)
+        # cos Domain
+        @testset "cos(x) in [-1, 1], for finite x" begin
+            @check cos_domain(f = float_gen) = -1 <= PureLibm.cr_cos(f) <= 1
+        end
+        @testset "cos(x) >= 0, for |x| <= π/2" begin
+            f_domain = filter(x -> abs(x) <= π/2, float_gen)
+            @check cos_domain(f = f_domain) = PureLibm.cr_cos(f) >= 0
+        end
+        @testset "cos(x) <= 0, for x in [π/2, 3π/2]" begin
+            f_domain = filter(x -> π/2 <= x <= 3π/2, float_gen)
+            @check cos_domain(f = f_domain) = PureLibm.cr_cos(f) <= 0
+        end
+
         # IEC 60559
         # cos(±0) returns 1
         @test PureLibm.cr_cos(T(0)) == T(1)
