@@ -2,6 +2,12 @@
 
 for T in [Float32, ]
     @testset "cr_tanpi(::$T)" begin
+        float_gen = Data.Floats{T}(; nans=false, infs=false)
+        # tanpi Domain
+        @testset "tanpi(x) in [-∞, ∞], for finite x" begin
+            @check tanpi_domain(f = float_gen) = !isnan(PureLibm.cr_tanpi(f))
+        end
+
         # IEC 60559
         # tanpi(±0) returns ±0
         @test PureLibm.cr_tanpi(T(0.0)) == T(0.0)
@@ -26,6 +32,34 @@ for T in [Float32, ]
             #   for odd integers n
             @test PureLibm.cr_tanpi(T(odd + 0.5)) == T(-Inf)
             @test PureLibm.cr_tanpi(T(-odd + 0.5)) == T(-Inf)
+        end
+        @testset "tanpi(x) = +0, for +even and -odd integers x" begin
+            int_gen = Data.Integers{Int64}()
+            pos_even_gen = filter(x -> x > 0 && iseven(x), int_gen)
+            neg_odd_gen = filter(x -> x < 0 && isodd(x), int_gen)
+            @check tanpi_domain(f = pos_even_gen) = PureLibm.cr_tanpi(T(f)) == T(0)
+            @check tanpi_domain(f = neg_odd_gen) = PureLibm.cr_tanpi(T(f)) == T(0)
+        end
+        @testset "tanpi(x) = -0, for -even and +odd integers x" begin
+            int_gen = Data.Integers{Int64}()
+            neg_even_gen = filter(x -> x < 0 && iseven(x), int_gen)
+            pos_odd_gen = filter(x -> x > 0 && isodd(x), int_gen)
+            @check tanpi_domain(f = neg_even_gen) = PureLibm.cr_tanpi(T(f)) == -T(0)
+            @check tanpi_domain(f = pos_odd_gen) = PureLibm.cr_tanpi(T(f)) == -T(0)
+        end
+        @testset "tanpi(x+1/2) = +Inf, for even integer x" begin
+            int_gen = Data.Integers{Int64}()
+            even_int_gen = filter(x -> iseven(x), int_gen)
+            f_domain = map(x -> x + T(1)/2, even_int_gen)
+            f_domain = filter(x -> eps(x) <= T(1)/2, f_domain)
+            @check tanpi_domain(f = f_domain) = PureLibm.cr_tanpi(f) == T(Inf)
+        end
+        @testset "tanpi(x+1/2) = -Inf, for odd integer x" begin
+            int_gen = Data.Integers{Int64}()
+            odd_int_gen = filter(x -> isodd(x), int_gen)
+            f_domain = map(x -> x + T(1)/2, odd_int_gen)
+            f_domain = filter(x -> eps(x) <= T(1)/2, f_domain)
+            @check tanpi_domain(f = f_domain) = PureLibm.cr_tanpi(f) == -T(Inf)
         end
         # tanpi(±∞) returns a NaN and raises the "invalid" floating-point exception
         @test isnan(PureLibm.cr_tanpi(T(Inf)))
