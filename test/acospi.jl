@@ -6,6 +6,13 @@ _acospi(x::T) where {T<:AbstractFloat} = T(acos(x) / pi)
 
 for T in [Float32, ]
     @testset "cr_acospi(::$T)" begin
+        float_all = Data.Floats{T}()
+        # acospi Domain
+        @testset "acospi(x) in [0, 1], for |x| <= 1" begin
+            f_domain = filter(x -> abs(x) <= 1, float_all)
+            @check acospi_domain(f = f_domain) = 0 <= PureLibm.cr_acospi(f) <= 1
+        end
+
         # IEC 60559
         @test isnan(PureLibm.cr_acospi(T(NaN)))
         # acospi(+1) returns +0.
@@ -18,6 +25,10 @@ for T in [Float32, ]
         @test isnan(PureLibm.cr_acospi(T(-2)))
         @test isnan(PureLibm.cr_acospi(T(Inf)))
         @test isnan(PureLibm.cr_acospi(-T(Inf)))
+        @testset "acospi(x) = NaN, for |x| > 1" begin
+            f_gt1 = filter(x -> abs(x) > 1, float_all)
+            @check acospi_nan(f = f_gt1) = isnan(PureLibm.cr_acospi(f))
+        end
 
         # sanity check
         @test PureLibm.cr_acospi(-T(1)) == T(1)
