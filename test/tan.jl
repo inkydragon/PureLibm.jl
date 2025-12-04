@@ -2,6 +2,20 @@
 
 for T in [Float32, ]
     @testset "cr_tan(::$T)" begin
+        float_gen = Data.Floats{T}(; nans=false, infs=false)
+        # tan Domain
+        @testset "tan(x) in [-∞, ∞], for finite x" begin
+            @check tan_domain(f = float_gen) = !isnan(PureLibm.cr_tan(f))
+        end
+        @testset "tan(x) >= 0, for x in [0, π/2]" begin
+            f_domain = filter(x -> 0 <= x <= π/2, float_gen)
+            @check tan_domain(f = f_domain) = PureLibm.cr_tan(f) >= 0
+        end
+        @testset "tan(x) <= 0, for x in [-π/2, 0]" begin
+            f_domain = filter(x -> -π/2 <= x <= 0, float_gen)
+            @check tan_domain(f = f_domain) = PureLibm.cr_tan(f) <= 0
+        end
+
         # IEC 60559
         # tan(±0) returns ±0
         @test PureLibm.cr_tan(T(0.0)) == T(0.0)

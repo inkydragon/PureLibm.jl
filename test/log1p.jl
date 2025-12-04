@@ -2,6 +2,17 @@
 
 for T in [Float32, ]
     @testset "cr_log1p(::$T)" begin
+        float_gen = Data.Floats{T}(; nans=false, infs=true)
+        # log1p Domain
+        @testset "log1p(x) >= 0, for x >= 0" begin
+            f_domain = filter(x -> x >= 0, float_gen)
+            @check log_domain(f = f_domain) = 0 <= PureLibm.cr_log1p(f)
+        end
+        @testset "log1p(x) <= 0, for -1 <= x <= 0" begin
+            f_domain = filter(x -> -1 <= x <= 0, float_gen)
+            @check log_domain(f = f_domain) = PureLibm.cr_log1p(f) <= 0
+        end
+
         # IEC 60559
         @test PureLibm.cr_log1p(T(+0.0)) == T(+0.0)
         @test PureLibm.cr_log1p(T(-0.0)) == T(-0.0)
@@ -12,6 +23,10 @@ for T in [Float32, ]
         @test isnan(PureLibm.cr_log1p(T(-1024)))
         @test isnan(PureLibm.cr_log1p(T(-Inf)))
         @test PureLibm.cr_log1p(T(Inf)) == T(Inf)
+        @testset "log1p(x) = NaN, for x < -1" begin    
+            f_domain = filter(x -> x < -1, float_gen)
+            @check log_domain(f = f_domain) = isnan(PureLibm.cr_log1p(f))
+        end
 
         @test isnan(PureLibm.cr_log1p(T(NaN)))
 

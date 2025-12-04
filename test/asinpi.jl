@@ -5,6 +5,13 @@ _asinpi(x::T) where {T<:AbstractFloat} = T(asin(x) / pi)
 
 for T in [Float32, ]
     @testset "cr_asinpi(::$T)" begin
+        float_all = Data.Floats{T}()
+        # asinpi Domain
+        @testset "asinpi(x) in [-1/2, 1/2], for |x| <= 1" begin
+            f_domain = filter(x -> abs(x) <= 1, float_all)
+            @check asinpi_domain(f = f_domain) = -T(1) / 2 <= PureLibm.cr_asinpi(f) <= T(1) / 2
+        end
+
         # IEC 60559
         @test isnan(PureLibm.cr_asinpi(T(NaN)))
         # asinpi(±0) returns ±0.
@@ -18,6 +25,10 @@ for T in [Float32, ]
         @test isnan(PureLibm.cr_asinpi(T(-2)))
         @test isnan(PureLibm.cr_asinpi(T(Inf)))
         @test isnan(PureLibm.cr_asinpi(T(-Inf)))
+        @testset "asinpi(x) = NaN, for |x| > 1" begin
+            f_gt1 = filter(x -> abs(x) > 1, float_all)
+            @check asinpi_nan(f = f_gt1) = isnan(PureLibm.cr_asinpi(f))
+        end
     
         # sanity check
         @test PureLibm.cr_asinpi(-T(1.0)) == -T(1) / 2

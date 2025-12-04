@@ -2,6 +2,17 @@
 
 for T in [Float32, ]
     @testset "cr_asinh(::$T)" begin
+        float_gen = Data.Floats{T}(; nans=false, infs=true)
+        # asinh Domain
+        @testset "asinh(x) >= 0, for x >= 0" begin
+            f_domain = filter(x -> x >= 0, float_gen)
+            @check asinh_domain(f = f_domain) = PureLibm.cr_asinh(f) >= 0
+        end
+        @testset "asinh(x) <= 0, for x <= 0" begin
+            f_domain = filter(x -> x <= 0, float_gen)
+            @check asinh_domain(f = f_domain) = PureLibm.cr_asinh(f) <= 0
+        end
+    
         # IEC 60559
         # asinh(±0) returns ±0
         @test PureLibm.cr_asinh(T(0.0)) == T(0.0)

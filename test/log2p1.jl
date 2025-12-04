@@ -7,6 +7,17 @@ log2p1_ref(x::Float32) = Float32(log2p1_ref(BigFloat(x)))
 
 for T in (Float32, )
     @testset "cr_log2p1($T)" begin
+        float_gen = Data.Floats{T}(; nans=false, infs=true)
+        # log2p1 Domain
+        @testset "log2p1(x) >= 0, for x >= 0" begin
+            f_domain = filter(x -> x >= 0, float_gen)
+            @check log_domain(f = f_domain) = 0 <= PureLibm.cr_log2p1(f)
+        end
+        @testset "log2p1(x) <= 0, for -1 < x <= 0" begin
+            f_domain = filter(x -> -1 < x <= 0, float_gen)
+            @check log_domain(f = f_domain) = PureLibm.cr_log2p1(f) <= 0
+        end
+
         # IEC 60559
         @test isnan(PureLibm.cr_log2p1(T(NaN)))
         @test isnan(PureLibm.cr_log2p1(-T(NaN)))
@@ -19,6 +30,10 @@ for T in (Float32, )
         @test isnan(PureLibm.cr_log2p1(-T(1.1)))
         @test isnan(PureLibm.cr_log2p1(-T(2.0)))
         @test isnan(PureLibm.cr_log2p1(-T(100)))
+        @testset "log2p1(x) = NaN, for x < −1" begin
+            f_domain = filter(x -> x < -1, float_gen)
+            @check log_domain(f = f_domain) = isnan(PureLibm.cr_log2p1(f))
+        end
         # log2p1(+∞) returns +∞
         @test PureLibm.cr_log2p1(T(Inf)) == T(Inf)
     end

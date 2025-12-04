@@ -2,6 +2,8 @@
 
 for T in [Float32, Float64]
     @testset "cr_rsqrt($T)" begin
+        float_gen = Data.Floats{T}(; nans=false, infs=true)
+ 
         # IEC 60559
         @test isnan(PureLibm.cr_rsqrt(T(NaN)))
         @test isnan(PureLibm.cr_rsqrt(T(-NaN)))
@@ -12,6 +14,10 @@ for T in [Float32, Float64]
         #   for x < 0.
         @test isnan(PureLibm.cr_rsqrt(T(-1)))
         @test isnan(PureLibm.cr_rsqrt(T(-Inf)))
+        @testset "rsqrt(x) = NaN, for x < 0" begin
+            f_domain = filter(x -> x < 0, float_gen)
+            @check rsqrt_domain(f = f_domain) = isnan(PureLibm.cr_rsqrt(f))
+        end
         # rSqrt(+∞) is +0 with no exception. 
         @test PureLibm.cr_rsqrt(T(+Inf)) === T(+0.0)
 

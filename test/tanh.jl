@@ -2,6 +2,20 @@
 
 for T in [Float32, ]
     @testset "cr_tanh(::$T)" begin
+        float_gen = Data.Floats{T}(; nans=false, infs=true)
+        # tanh Domain
+        @testset "tanh(x) in [-1, 1], for all x" begin
+            @check tanh_domain(f = float_gen) = -1 <= PureLibm.cr_tanh(f) <= 1
+        end
+        @testset "tanh(x) in [0, 1], for x >= 0" begin
+            f_gt0 = filter(x -> x >= 0, float_gen)
+            @check tanh_domain(f = f_gt0) = 0 <= PureLibm.cr_tanh(f) <= 1
+        end
+        @testset "tanh(x) in [-1, 0], for x <= 0" begin
+            f_lt0 = filter(x -> x <= 0, float_gen)
+            @check tanh_domain(f = f_lt0) = -1 <= PureLibm.cr_tanh(f) <= 0
+        end
+
         # IEC 60559, F.10.2.6
         #   tanh(±0) returns ±0.
         @test PureLibm.cr_tanh(T(+0.0)) ≈ +0.0

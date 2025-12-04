@@ -2,6 +2,17 @@
 
 for T in [Float32, ]
     @testset "cr_atanh($T)" begin
+        float_gen = Data.Floats{T}(; nans=false, infs=true)
+        # atanh Domain
+        @testset "atanh(x) >= 0, for 0 <= x <= 1" begin
+            f_domain = filter(x -> 0 <= x <= 1, float_gen)
+            @check atanh_domain(f = f_domain) = PureLibm.cr_atanh(f) >= 0
+        end
+        @testset "atanh(x) <= 0, for -1 <= x <= 0" begin
+            f_domain = filter(x -> -1 <= x <= 0, float_gen)
+            @check atanh_domain(f = f_domain) = PureLibm.cr_atanh(f) <= 0
+        end
+
         # IEC 60559
         @test isnan(PureLibm.cr_atanh(T(NaN)))
         # atanh(±0) returns ±0.
@@ -20,7 +31,11 @@ for T in [Float32, ]
         end
         @test isnan(PureLibm.cr_atanh(T(Inf)))
         @test isnan(PureLibm.cr_atanh(T(-Inf)))
-    
+        @testset "atanh(x) = NaN, for |x| > 1" begin
+            f_domain = filter(x -> abs(x) > 1, float_gen)
+            @check atanh_domain(f = f_domain) = isnan(PureLibm.cr_atanh(f))
+        end
+
         # sanity check
     end
 

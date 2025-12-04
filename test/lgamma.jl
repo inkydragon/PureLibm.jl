@@ -1,6 +1,10 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
 import SpecialFunctions
 
+_loggamma(x::BigFloat) = SpecialFunctions.logabsgamma(x)[1]
+_loggamma(x::Float64) = SpecialFunctions.logabsgamma(x)[1]
+_loggamma(x::Float32) = SpecialFunctions.logabsgamma(x)[1]
+
 for T in (Float32, )
     @testset "cr_lgamma($T)" begin
         # IEC 60559
@@ -16,6 +20,11 @@ for T in (Float32, )
         @test PureLibm.cr_lgamma(-T(1)) == T(Inf)
         @test PureLibm.cr_lgamma(-T(2)) == T(Inf)
         @test PureLibm.cr_lgamma(-T(100)) == T(Inf)
+        @testset "lgamma(x) = Inf, for negative integer or zero x" begin
+            int_gen = Data.Integers{Int64}()
+            f_domain = filter(x -> x <= 0, int_gen)
+            @check lgamma_domain(f = f_domain) = PureLibm.cr_lgamma(T(f)) == T(Inf)
+        end
         # — lgamma(−∞) returns +∞
         @test PureLibm.cr_lgamma(T(-Inf)) == T(Inf)
         # — lgamma(+∞) returns +∞
@@ -82,7 +91,7 @@ for T in (Float32, )
             #   x in [4.0850034f36, -3.1435504f0, -2.4569082f0]
             # TODO: @test PureLibm.cr_lgamma(x) ≈ SpecialFunctions.lgamma(x)
             # Test against MPFR
-            @test PureLibm.cr_lgamma(x) === T(SpecialFunctions.lgamma(BigFloat(x)))
+            @test PureLibm.cr_lgamma(x) === T(_loggamma(BigFloat(x)))
         end
     end
 end
@@ -91,14 +100,14 @@ pos_range = (lo=Float32(0.0), hi=nextfloat(Float32(0x1.895f1cp+121)))
 neg_range = (lo=Float32(-0.0), hi=nextfloat(-Float32(Inf)))
 if "cr_lgamma.fast" in CheckExhaustive
     @testset "cr_lgamma-exhaustive.fast" begin
-        test_float_range(SpecialFunctions.lgamma, PureLibm.cr_lgamma, lo=pos_range.lo, hi=pos_range.hi)
-        test_float_range(SpecialFunctions.lgamma, PureLibm.cr_lgamma, lo=neg_range.lo, hi=neg_range.hi)
+        test_float_range(_loggamma, PureLibm.cr_lgamma, lo=pos_range.lo, hi=pos_range.hi)
+        test_float_range(_loggamma, PureLibm.cr_lgamma, lo=neg_range.lo, hi=neg_range.hi)
     end
 end
 if "cr_lgamma" in CheckExhaustive
     @testset "cr_lgamma-exhaustive" begin
-        test_float_range(SpecialFunctions.lgamma, PureLibm.cr_lgamma, lo=pos_range.lo, hi=pos_range.hi, bigfloat=true)
-        test_float_range(SpecialFunctions.lgamma, PureLibm.cr_lgamma, lo=neg_range.lo, hi=neg_range.hi, bigfloat=true)
+        test_float_range(_loggamma, PureLibm.cr_lgamma, lo=pos_range.lo, hi=pos_range.hi, bigfloat=true)
+        test_float_range(_loggamma, PureLibm.cr_lgamma, lo=neg_range.lo, hi=neg_range.hi, bigfloat=true)
     end
 end
 # ENV["PURELIBM_CHECK_EXHAUSTIVE"] = "cr_lgamma.fast,cr_lgamma"

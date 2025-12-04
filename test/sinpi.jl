@@ -2,6 +2,12 @@
 
 for T in [Float32, ]
     @testset "cr_sinpi(::$T)" begin
+        float_gen = Data.Floats{T}(; nans=false, infs=false)
+        # sinpi Domain
+        @testset "sinpi(x) in [-1, 1], for finite x" begin
+            @check sinpi_domain(f = float_gen) = -1 <= PureLibm.cr_sinpi(f) <= 1
+        end
+
         # IEC 60559
         # sinpi(±0) returns ±0
         @test PureLibm.cr_sinpi(T(0)) == T(0)
@@ -10,6 +16,13 @@ for T in [Float32, ]
         for n in 1:10
             @test PureLibm.cr_sinpi(T(n)) == T(0)
             @test PureLibm.cr_sinpi(-T(n)) == -T(0)
+        end
+        @testset "sinpi(±x) = ±0, for integer x" begin
+            int_gen = Data.Integers{Int64}()
+            pos_int_gen = filter(x -> x > 0, int_gen)
+            neg_int_gen = filter(x -> x < 0, int_gen)
+            @check sinpi_domain_gt0(f = pos_int_gen) = PureLibm.cr_sinpi(T(f)) == T(0)
+            @check sinpi_domain_lt0(f = neg_int_gen) = PureLibm.cr_sinpi(T(f)) == -T(0)
         end
         # sinpi(±∞) returns a NaN
         @test isnan(PureLibm.cr_sinpi(T(Inf)))

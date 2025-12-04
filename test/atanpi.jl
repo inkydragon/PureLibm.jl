@@ -5,6 +5,13 @@ _atanpi(x::T) where {T<:AbstractFloat} = T(atan(x) / pi)
 
 for T in [Float32]
     @testset "cr_atanpi($T)" begin
+        float_all = Data.Floats{T}()
+        # atanpi Domain
+        @testset "atanpi(x) in [-1/2, 1/2], for |x| <= 1" begin
+            f_domain = filter(x -> abs(x) <= 1, float_all)
+            @check atanpi_domain(f = f_domain) = -T(1)/2 <= PureLibm.cr_atanpi(f) <= T(1)/2
+        end
+
         # IEC 60559
         @test isnan(PureLibm.cr_atanpi(T(NaN)))
         # atanpi(±0) returns ±0

@@ -18,6 +18,11 @@ for T in (Float32, )
         # tgamma(x) returns a NaN and raises the "invalid" floating-point exception
         #   for x a negative integer.
         @test isnan(PureLibm.cr_tgamma(T(-1.0)))
+        @testset "tgamma(x) = NaN, for negative integer x" begin
+            int_gen = Data.Integers{Int64}()
+            f_domain = filter(x -> x < 0, int_gen)
+            @check tgamma_domain(f = f_domain) = isnan(PureLibm.cr_tgamma(T(f)))
+        end
         # tgamma(−∞) returns a NaN and raises the "invalid" floating-point exception.
         @test isnan(PureLibm.cr_tgamma(T(-Inf)))
         # tgamma(+∞) returns +∞

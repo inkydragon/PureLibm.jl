@@ -2,6 +2,13 @@
 
 for T in [Float32, ]
     @testset "cr_atan(::$T)" begin
+        float_all = Data.Floats{T}()
+        # atan Domain
+        @testset "atan(x) in [-π/2, π/2], for |x| <= 1" begin
+            f_domain = filter(x -> abs(x) <= 1, float_all)
+            @check atan_domain(f = f_domain) = -π/2 <= PureLibm.cr_atan(f) <= π/2
+        end
+
         # IEC 60559
         @test isnan(PureLibm.cr_atan(T(NaN)))
         # atan(±0) returns ±0
