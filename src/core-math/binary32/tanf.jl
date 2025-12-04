@@ -2,14 +2,13 @@
 # Based on core-math/src/binary32/atan/atanf.c
 # CORE-MATH project Copyright (c) 2022 Alexei Sibidanov.
 
+#! format: off
 const CR_TANF_CN = NTuple{4, Float64}((
-    0x1.921fb54442d18p+0, -0x1.fd226e573289fp-2,
-    0x1.b7a60c8dac9f6p-6, -0x1.725beb40f33e5p-13
+    0x1.921fb54442d18p+0, -0x1.fd226e573289fp-2, 0x1.b7a60c8dac9f6p-6, -0x1.725beb40f33e5p-13
 ))
 
 const CR_TANF_CD = NTuple{4, Float64}((
-    0x1p+0, -0x1.2395347fb829dp+0,
-    0x1.2313660f29c36p-3, -0x1.9a707ab98d1c1p-9
+    0x1p+0, -0x1.2395347fb829dp+0, 0x1.2313660f29c36p-3, -0x1.9a707ab98d1c1p-9
 ))
 
 const CR_TANF_ST = Vector{Tuple{UInt32, Float32, Float32}}([
@@ -24,7 +23,7 @@ const CR_TANF_ST = Vector{Tuple{UInt32, Float32, Float32}}([
 ])
 
 const CR_TANF_IPI = CR_SINF_IPI
-
+#! format: on
 
 """
 argument reduction
@@ -112,11 +111,17 @@ function _tanf_database(tu::UInt32, r1::Float32)
     return r1
 end
 
-
 """
     cr_tan(x::Float32)
 
 Correctly-rounded tangent of `Float32`.
+
+# Examples
+```jldoctest
+```
+
+# Reference
+- [core-math/src/binary32/tan/tanf.c](https://github.com/inkydragon/core-math/blob/7c7afc5d93cc3af4ff584f40f4a20af71488122a/src/binary32/tan/tanf.c)
 """
 cr_tan(x::Float32) = cr_tanf(x)
 
@@ -125,9 +130,12 @@ function cr_tanf(x::Float32)
     e = (tu >> 23) & 0xff
 
     z, i = Float64(0.0), Int64(0)
-    if @likely(e < (127 + 28))  # |x| < 2^28
-        if @unlikely(e < 115)  # |x| < 2^-13
-            if @unlikely(e < 102)  # |x| < 2^-26
+    if @likely(e < (127 + 28))
+        # |x| < 2^28
+        if @unlikely(e < 115)
+            # |x| < 2^-13
+            if @unlikely(e < 102)
+                # |x| < 2^-26
                 #= The Taylor expansion of tan(x) at x=0 is x + x^3/3 + o(x^3),
                     thus for |x| >= 2^-126 we have no underflow, whatever the
                     rounding mode.
@@ -147,12 +155,17 @@ function cr_tanf(x::Float32)
         end
         z, i = _tanf_rltl(x)
     elseif e < 0xff
+        # e in [127+28, 127+127]
+        #   |x| in [2^28, ?*2^127]
         z, i = _tanf_rbig(tu)
     else
+        # e = 0xff:  NaN, Inf
         if (tu << 9) != 0
-            return x + x  # NaN
+            # tan(NaN) = NaN
+            return x + x
         end
         # errno = EDOM
+        # tan(Inf) = NaN
         return NaN32
     end
 
@@ -160,7 +173,7 @@ function cr_tanf(x::Float32)
     z4 = z2 * z2
     cn = CR_TANF_CN
     cd = CR_TANF_CD
-    s  = (0.0, 1.0)
+    s = (0.0, 1.0)
     n = cn[1] + z2 * cn[2]
     n2 = cn[3] + z2 * cn[4]
     n += z4 * n2
@@ -168,8 +181,8 @@ function cr_tanf(x::Float32)
     d2 = cd[3] + z2 * cd[4]
     d += z4 * d2
     n *= z
-    s0 = s[(i & 1) + 1]
-    s1 = s[1 - (i & 1) + 1]
+    s0 = s[(i&1)+1]
+    s1 = s[1-(i&1)+1]
     r1 = (n * s1 - d * s0) / (n * s0 + d * s1)
 
     tru = reinterpret(UInt64, r1)
