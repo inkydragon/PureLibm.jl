@@ -67,7 +67,7 @@ for T in (Float32, )
 end
 
 
-function test_float_range_filter(ref, impl; lo::T, hi::T, bigfloat=false) where T
+function _test_float_range_filter(ref, impl; lo::T, hi::T, bigfloat=false) where T
     UIntBaseType = Base.uinttype(T)
     xu_lo = reinterpret(UIntBaseType, lo)
     xu_hi = reinterpret(UIntBaseType, hi)
@@ -86,19 +86,21 @@ function test_float_range_filter(ref, impl; lo::T, hi::T, bigfloat=false) where 
     __main_test_loop(x_range, ref_fun, impl)
     @info "tested $(length(xu_range)) cases"
 end
+_test_float_range_filter(ref, impl, test_range::@NamedTuple{lo::T, hi::T}; bigfloat=false) where T =
+    _test_float_range_filter(ref, impl; lo=test_range.lo, hi=test_range.hi, bigfloat=bigfloat)
 
-pos_range = (lo=Float32(0.0), hi=Float32(50.0))
-neg_range = (lo=Float32(-0.0), hi=Float32(-50.0))
+pos_range = (lo=+Float32(0.0), hi=+Float32(36))       # 35.0401f0
+neg_range = (lo=-Float32(0.0), hi=-Float32(42.0))
 if "cr_tgamma.fast" in CheckExhaustive
     @testset "cr_tgamma-exhaustive.fast" begin
-        test_float_range_filter(SpecialFunctions.gamma, PureLibm.cr_tgamma, lo=pos_range.lo, hi=pos_range.hi)
-        test_float_range_filter(SpecialFunctions.gamma, PureLibm.cr_tgamma, lo=neg_range.lo, hi=neg_range.hi)
+        _test_float_range_filter(SpecialFunctions.gamma, PureLibm.cr_tgamma, pos_range)
+        _test_float_range_filter(SpecialFunctions.gamma, PureLibm.cr_tgamma, neg_range)
     end
 end
 if "cr_tgamma" in CheckExhaustive
     @testset "cr_tgamma-exhaustive" begin
-        test_float_range_filter(SpecialFunctions.gamma, PureLibm.cr_tgamma, lo=pos_range.lo, hi=pos_range.hi, bigfloat=true)
-        test_float_range_filter(SpecialFunctions.gamma, PureLibm.cr_tgamma, lo=neg_range.lo, hi=neg_range.hi, bigfloat=true)
+        _test_float_range_filter(SpecialFunctions.gamma, PureLibm.cr_tgamma, pos_range, bigfloat=true)
+        _test_float_range_filter(SpecialFunctions.gamma, PureLibm.cr_tgamma, neg_range, bigfloat=true)
     end
 end
 # ENV["PURELIBM_CHECK_EXHAUSTIVE"] = "cr_tgamma.fast,cr_tgamma"
