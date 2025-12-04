@@ -1,7 +1,4 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
-import SpecialFunctions
-using Random
-
 
 function filter_DomainError(x)
     bad = x < 0 && (isinteger(x) || isinf(x))

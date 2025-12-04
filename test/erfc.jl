@@ -1,5 +1,4 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
-import SpecialFunctions
 
 for T in (Float32, )
     @testset "cr_erfc($T)" begin

@@ -1,5 +1,4 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
-import SpecialFunctions
 
 _loggamma(x::BigFloat) = SpecialFunctions.logabsgamma(x)[1]
 _loggamma(x::Float64) = SpecialFunctions.logabsgamma(x)[1]

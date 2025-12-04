@@ -1,6 +1,8 @@
 using PureLibm
 using Test
 using Printf
+using Random
+import SpecialFunctions
 # property based testing (PBT)
 using Supposition, Supposition.Data
 
