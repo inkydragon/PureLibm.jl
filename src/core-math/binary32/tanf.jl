@@ -118,6 +118,20 @@ Correctly-rounded tangent of `Float32`.
 
 # Examples
 ```jldoctest
+julia> PureLibm.cr_tan(0f0)
+0.0f0
+
+julia> PureLibm.cr_tan(pi/4f0)
+1.0f0
+
+julia> PureLibm.cr_tan(pi/6f0) ≈ inv(sqrt(3))
+true
+
+julia> PureLibm.cr_tan(-0.75f0) == -PureLibm.cr_tan(0.75f0)
+true
+
+julia> isnan(PureLibm.cr_tan(Inf32))
+true
 ```
 
 # Reference
