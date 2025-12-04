@@ -36,16 +36,19 @@ for T in [Float32, ]
     end
 end
 
+const ATANF_INF_LIMIT = nextfloat(Float32(0x1.e00a3p+25))
+pos_range = (lo=+Float32(0.0), hi=+ATANF_INF_LIMIT)
+neg_range = (lo=-Float32(0.0), hi=-ATANF_INF_LIMIT)
 if "cr_atan.fast" in CheckExhaustive
     @testset "cr_atan-exhaustive.fast" begin
-        test_float_range(atan, PureLibm.cr_atan, lo=Float32(0.0), hi=Float32(4pi))
-        test_float_range(atan, PureLibm.cr_atan, lo=Float32(-0.0), hi=Float32(-4pi))
+        test_float_range(atan, PureLibm.cr_atan, pos_range)
+        test_float_range(atan, PureLibm.cr_atan, neg_range)
     end
 end
 if "cr_atan" in CheckExhaustive
     @testset "cr_atan-exhaustive" begin
-        test_float_range(atan, PureLibm.cr_atan, lo=Float32(0.0), hi=Float32(4pi), bigfloat=true)
-        test_float_range(atan, PureLibm.cr_atan, lo=Float32(-0.0), hi=Float32(-4pi), bigfloat=true)
+        test_float_range(atan, PureLibm.cr_atan, pos_range, bigfloat=true)
+        test_float_range(atan, PureLibm.cr_atan, neg_range, bigfloat=true)
     end
 end
 # ENV["PURELIBM_CHECK_EXHAUSTIVE"] = "cr_atan.fast,cr_atan"

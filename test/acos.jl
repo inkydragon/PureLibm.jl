@@ -63,18 +63,18 @@ for T in [Float32, ]
     end
 end
 
-pos_range = (lo=Float32(0.0), hi=prevfloat(Float32(1.0)))
-neg_range = (lo=Float32(-0.0), hi=nextfloat(Float32(-1.0)))
+pos_range = (lo=Float32(0.0), hi=Float32(1.0))
+neg_range = (lo=Float32(-0.0), hi=Float32(-1.0))
 if "cr_acos.fast" in CheckExhaustive
     @testset "cr_acos-exhaustive.fast" begin
-        test_float_range(acos, PureLibm.cr_acos, lo=pos_range.lo, hi=pos_range.hi)
-        test_float_range(acos, PureLibm.cr_acos, lo=neg_range.lo, hi=neg_range.hi)
+        test_float_range(acos, PureLibm.cr_acos, pos_range)
+        test_float_range(acos, PureLibm.cr_acos, neg_range)
     end
 end
 if "cr_acos" in CheckExhaustive
     @testset "cr_acos-exhaustive" begin
-        test_float_range(acos, PureLibm.cr_acos, lo=pos_range.lo, hi=pos_range.hi, bigfloat=true)
-        test_float_range(acos, PureLibm.cr_acos, lo=neg_range.lo, hi=neg_range.hi, bigfloat=true)
+        test_float_range(acos, PureLibm.cr_acos, pos_range, bigfloat=true)
+        test_float_range(acos, PureLibm.cr_acos, neg_range, bigfloat=true)
     end
 end
 # ENV["PURELIBM_CHECK_EXHAUSTIVE"] = "cr_acos.fast,cr_acos"
