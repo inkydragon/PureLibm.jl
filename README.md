@@ -79,11 +79,37 @@ julia --project=test -e "using Pkg; Pkg.develop(PackageSpec(path=pwd())); Pkg.in
 
 # --- fast mode: compare with system libm (takes serval seconds/minutes)
 # Set ENV and run
-export PURELIBM_CHECK_EXHAUSTIVE="cr_acos.fast"
+export PURELIBM_CHECK_EXHAUSTIVE=""
+# Trigonometric
+PURELIBM_CHECK_EXHAUSTIVE+=",cr_acos.fast,cr_asin.fast,cr_atan.fast,cr_atan2.fast,cr_cos.fast,cr_sin.fast,cr_tan.fast"
+PURELIBM_CHECK_EXHAUSTIVE+=",cr_acospi.fast,cr_asinpi.fast,cr_atanpi.fast,cr_atan2pi.fast,cr_cospi.fast,cr_sinpi.fast,cr_tanpi.fast"
+# Hyperbolic
+PURELIBM_CHECK_EXHAUSTIVE+=",cr_acosh.fast,cr_asinh.fast,cr_atanh.fast,cr_cosh.fast,cr_sinh.fast,cr_tanh.fast"
+# Exponential and logarithmic
+PURELIBM_CHECK_EXHAUSTIVE+=",cr_exp.fast,cr_exp10.fast,cr_exp10m1.fast,cr_exp2.fast,cr_exp2m1.fast,cr_expm1.fast"
+PURELIBM_CHECK_EXHAUSTIVE+=",cr_log.fast,cr_log10.fast,cr_log10p1.fast,cr_log1p.fast,cr_log2.fast,cr_log2p1.fast"
+# Power and Absolute-value
+# PURELIBM_CHECK_EXHAUSTIVE+=",cr_cbrt.fast,cr_compoundn.fast,cr_hypot.fast,cr_pow.fast,cr_rsqrt.fast,cr_sqrt.fast"
+PURELIBM_CHECK_EXHAUSTIVE+=",cr_cbrt.fast,cr_rsqrt.fast,cr_sqrt.fast"
+# Error and gamma
+PURELIBM_CHECK_EXHAUSTIVE+=",cr_erf.fast,cr_erfc.fast,cr_lgamma.fast,cr_tgamma.fast"
 julia --project=test -e "using Pkg; Pkg.test(\"PureLibm\");"
 
 # --- slow mode: compare with MPFR (takes hours)
-export PURELIBM_CHECK_EXHAUSTIVE="cr_acos"
+export PURELIBM_CHECK_EXHAUSTIVE=""
+# Trigonometric
+PURELIBM_CHECK_EXHAUSTIVE+=",cr_acos,cr_asin,cr_atan,cr_atan2,cr_cos,cr_sin,cr_tan"
+PURELIBM_CHECK_EXHAUSTIVE+=",cr_acospi,cr_asinpi,cr_atanpi,cr_atan2pi,cr_cospi,cr_sinpi,cr_tanpi"
+# Hyperbolic
+PURELIBM_CHECK_EXHAUSTIVE+=",cr_acosh,cr_asinh,cr_atanh,cr_cosh,cr_sinh,cr_tanh"
+# Exponential and logarithmic
+PURELIBM_CHECK_EXHAUSTIVE+=",cr_exp,cr_exp10,cr_exp10m1,cr_exp2,cr_exp2m1,cr_expm1"
+PURELIBM_CHECK_EXHAUSTIVE+=",cr_log,cr_log10,cr_log10p1,cr_log1p,cr_log2,cr_log2p1"
+# Power and Absolute-value
+# PURELIBM_CHECK_EXHAUSTIVE+=",cr_cbrt,cr_compoundn,cr_hypot,cr_pow,cr_rsqrt,cr_sqrt"
+PURELIBM_CHECK_EXHAUSTIVE+=",cr_cbrt,cr_rsqrt,cr_sqrt"
+# Error and gamma
+PURELIBM_CHECK_EXHAUSTIVE+=",cr_erf,cr_erfc,cr_lgamma,cr_tgamma"
 julia --project=test -e "using Pkg; Pkg.test(\"PureLibm\");"
 ```
 
