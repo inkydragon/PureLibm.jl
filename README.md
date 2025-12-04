@@ -77,7 +77,7 @@ using Pkg; using LocalCoverage; Pkg.add(url=".", rev="dev");  html_coverage(gene
 ```sh
 julia --project=test -e "using Pkg; Pkg.develop(PackageSpec(path=pwd())); Pkg.instantiate();"
 
-# --- fast mode: compare with system libm (takes serval seconds/minutes)
+# --- fast mode: compare with system libm (takes several seconds/minutes)
 # Set ENV and run
 export PURELIBM_CHECK_EXHAUSTIVE=""
 # Trigonometric
