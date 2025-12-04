@@ -106,18 +106,17 @@ for T in (Float32, )
     end
 end
 
-pos_range = (lo=Float32(0.0), hi=Float32(Inf))
-neg_range = (lo=Float32(-0.0), hi=-nextfloat(Float32(1.0)))
+neg_range = (lo=-Float32(0.0), hi=-Float32(1))
 if "cr_log2p1.fast" in CheckExhaustive
     @testset "cr_log2p1-exhaustive.fast" begin
-        test_float_range(log2p1_ref, PureLibm.cr_log2p1, lo=pos_range.lo, hi=pos_range.hi)
-        test_float_range(log2p1_ref, PureLibm.cr_log2p1, lo=neg_range.lo, hi=neg_range.hi)
+        test_float_range(log2p1_ref, PureLibm.cr_log2p1, neg_range)
+        test_float_range(log2p1_ref, PureLibm.cr_log2p1, F32_POS_RANGE)
     end
 end
 if "cr_log2p1" in CheckExhaustive
     @testset "cr_log2p1-exhaustive" begin
-        test_float_range(log2p1_ref, PureLibm.cr_log2p1, lo=pos_range.lo, hi=pos_range.hi, bigfloat=true)
-        test_float_range(log2p1_ref, PureLibm.cr_log2p1, lo=neg_range.lo, hi=neg_range.hi, bigfloat=true)
+        test_float_range(log2p1_ref, PureLibm.cr_log2p1, neg_range, bigfloat=true)
+        test_float_range(log2p1_ref, PureLibm.cr_log2p1, F32_POS_RANGE, bigfloat=true)
     end
 end
 # ENV["PURELIBM_CHECK_EXHAUSTIVE"] = "cr_log2p1.fast,cr_log2p1"

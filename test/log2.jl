@@ -59,15 +59,14 @@ for T in (Float32, )
     end
 end
 
-pos_range = (lo=Float32(+0.0), hi=Float32(Inf))
 if "cr_log2.fast" in CheckExhaustive
     @testset "cr_log2-exhaustive.fast" begin
-        test_float_range(log2, PureLibm.cr_log2, lo=pos_range.lo, hi=pos_range.hi)
+        test_float_range(log2, PureLibm.cr_log2, F32_POS_RANGE)
     end
 end
 if "cr_log2" in CheckExhaustive
     @testset "cr_log2-exhaustive" begin
-        test_float_range(log2, PureLibm.cr_log2, lo=pos_range.lo, hi=pos_range.hi, bigfloat=true)
+        test_float_range(log2, PureLibm.cr_log2, F32_POS_RANGE, bigfloat=true)
     end
 end
 # ENV["PURELIBM_CHECK_EXHAUSTIVE"] = "cr_log2.fast,cr_log2"
