@@ -2,6 +2,17 @@
 
 for T in (Float32, )
     @testset "cr_log10($T)" begin
+        float_gen = Data.Floats{T}(; nans=false, infs=true)
+        # log10 Domain
+        @testset "log10(x) >= 0, for x >= 1" begin
+            f_domain = filter(x -> x >= 1, float_gen)
+            @check log_domain(f = f_domain) = 0 <= PureLibm.cr_log10(f)
+        end
+        @testset "log10(x) <= 0, for 0 < x <= 1" begin
+            f_domain = filter(x -> 0 < x <= 1, float_gen)
+            @check log_domain(f = f_domain) = PureLibm.cr_log10(f) <= 0
+        end
+
         # IEC 60559
         @test isnan(PureLibm.cr_log10(T(NaN)))
         # log10(±0) returns −∞ and raises the "divide-by-zero" floating-point exception.
@@ -15,6 +26,10 @@ for T in (Float32, )
         @test isnan(PureLibm.cr_log10(-T(1)))
         @test isnan(PureLibm.cr_log10(-T(10)))
         @test isnan(PureLibm.cr_log10(-T(Inf)))
+        @testset "log10(x) = NaN, for x < 0" begin
+            f_domain = filter(x -> x < 0, float_gen)
+            @check log_domain(f = f_domain) = isnan(PureLibm.cr_log10(f))
+        end
         # log10(+∞) returns +∞.
         @test PureLibm.cr_log10(T(Inf)) == T(Inf)
 
