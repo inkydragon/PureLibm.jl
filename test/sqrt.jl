@@ -20,4 +20,29 @@ for T in (Float32, )
         #     @check sqrt_domain(f = f_domain) = isnan(PureLibm.cr_sqrt(f))
         # end
     end
+
+    @testset "cr_sqrt(random)" begin
+        test_x = T[
+            eps(T(0.0)),
+            (i^2 for i in 1:128)...,
+        ]
+        @testset "cr_sqrt($(repr(x))))" for x in test_x
+            # Test against system libm
+            @test PureLibm.cr_sqrt(x) ≈ sqrt(x)
+            # Test against MPFR
+            @test PureLibm.cr_sqrt(x) === T(sqrt(BigFloat(x)))
+        end
+    end
 end
+
+if "cr_sqrt.fast" in CheckExhaustive
+    @testset "cr_sqrt-exhaustive.fast" begin
+        test_float_range(sqrt, PureLibm.cr_sqrt, F32_POS_RANGE)
+    end
+end
+if "cr_sqrt" in CheckExhaustive
+    @testset "cr_sqrt-exhaustive" begin
+        test_float_range(sqrt, PureLibm.cr_sqrt, F32_POS_RANGE, bigfloat=true)
+    end
+end
+# ENV["PURELIBM_CHECK_EXHAUSTIVE"] = "cr_sqrt.fast,cr_sqrt"
