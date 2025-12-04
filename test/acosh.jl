@@ -61,12 +61,12 @@ end
 pos_range = (lo=Float32(1.0), hi=prevfloat(Float32(Inf)))
 if "cr_acosh.fast" in CheckExhaustive
     @testset "cr_acosh-exhaustive.fast" begin
-        test_float_range(acosh, PureLibm.cr_acosh, lo=pos_range.lo, hi=pos_range.hi)
+        test_float_range(acosh, PureLibm.cr_acosh, pos_range)
     end
 end
 if "cr_acosh" in CheckExhaustive
     @testset "cr_acosh-exhaustive" begin
-        test_float_range(acosh, PureLibm.cr_acosh, lo=pos_range.lo, hi=pos_range.hi, bigfloat=true)
+        test_float_range(acosh, PureLibm.cr_acosh, pos_range, bigfloat=true)
     end
 end
 # ENV["PURELIBM_CHECK_EXHAUSTIVE"] = "cr_acosh.fast,cr_acosh"
