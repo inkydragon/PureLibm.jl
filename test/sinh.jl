@@ -2,6 +2,17 @@
 
 for T in [Float32, ]
     @testset "cr_sinh(::$T)" begin
+        float_gen = Data.Floats{T}(; nans=false, infs=true)
+        # sinh Domain
+        @testset "sinh(x) >= 0, for x >= 0" begin
+            f_gt0 = filter(x -> x >= 0, float_gen)
+            @check sinh_domain(f = f_gt0) = PureLibm.cr_sinh(f) >= 0
+        end
+        @testset "sinh(x) <= 0, for x <= 0" begin
+            f_lt0 = filter(x -> x <= 0, float_gen)
+            @check sinh_domain(f = f_lt0) = PureLibm.cr_sinh(f) <= 0
+        end
+
         # IEC 60559
         # sinh(±0) returns ±0
         @test PureLibm.cr_sinh(T(0.0)) == T(0.0)
