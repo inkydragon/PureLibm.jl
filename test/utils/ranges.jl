@@ -54,8 +54,6 @@ end
 Test with float range
 """
 function test_float_range(ref, impl; lo::T, hi::T, bigfloat=false) where T
-    @assert abs(lo) <= abs(hi) "lo=$(repr(lo)) <= hi=$(repr(hi))"
-
     UIntBaseType = Base.uinttype(T)
     xu_lo = reinterpret(UIntBaseType, lo)
     xu_hi = reinterpret(UIntBaseType, hi)
