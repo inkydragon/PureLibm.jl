@@ -37,15 +37,15 @@ for T in [Float32, ]
             int_gen = Data.Integers{Int64}()
             pos_even_gen = filter(x -> x > 0 && iseven(x), int_gen)
             neg_odd_gen = filter(x -> x < 0 && isodd(x), int_gen)
-            @check tanpi_domain(f = pos_even_gen) = PureLibm.cr_tanpi(T(f)) == T(0)
-            @check tanpi_domain(f = neg_odd_gen) = PureLibm.cr_tanpi(T(f)) == T(0)
+            @check tanpi_domain_pos(f = pos_even_gen) = PureLibm.cr_tanpi(T(f)) == T(0)
+            @check tanpi_domain_neg(f = neg_odd_gen) = PureLibm.cr_tanpi(T(f)) == T(0)
         end
         @testset "tanpi(x) = -0, for -even and +odd integers x" begin
             int_gen = Data.Integers{Int64}()
             neg_even_gen = filter(x -> x < 0 && iseven(x), int_gen)
             pos_odd_gen = filter(x -> x > 0 && isodd(x), int_gen)
-            @check tanpi_domain(f = neg_even_gen) = PureLibm.cr_tanpi(T(f)) == -T(0)
-            @check tanpi_domain(f = pos_odd_gen) = PureLibm.cr_tanpi(T(f)) == -T(0)
+            @check tanpi_domain_pos(f = neg_even_gen) = PureLibm.cr_tanpi(T(f)) == -T(0)
+            @check tanpi_domain_neg(f = pos_odd_gen) = PureLibm.cr_tanpi(T(f)) == -T(0)
         end
         @testset "tanpi(x+1/2) = +Inf, for even integer x" begin
             int_gen = Data.Integers{Int64}()
