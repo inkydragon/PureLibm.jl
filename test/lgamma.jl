@@ -20,7 +20,7 @@ for T in (Float32, )
         @test PureLibm.cr_lgamma(-T(1)) == T(Inf)
         @test PureLibm.cr_lgamma(-T(2)) == T(Inf)
         @test PureLibm.cr_lgamma(-T(100)) == T(Inf)
-        @testset "lgamma(x) = -Inf, for negative integer or zero x" begin
+        @testset "lgamma(x) = Inf, for negative integer or zero x" begin
             int_gen = Data.Integers{Int64}()
             f_domain = filter(x -> x <= 0, int_gen)
             @check lgamma_domain(f = f_domain) = PureLibm.cr_lgamma(T(f)) == T(Inf)
