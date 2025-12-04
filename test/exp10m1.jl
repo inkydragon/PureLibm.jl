@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
 
-exp10m1_ref(x::BigFloat) = exp10(x) - big"1"
+exp10m1_ref(x::BigFloat) = exp10(x) - BigFloat(1)
 exp10m1_ref(x::Float64) = Float64(exp10m1_ref(BigFloat(x)))
 exp10m1_ref(x::Float32) = Float32(exp10m1_ref(BigFloat(x)))
 
@@ -97,18 +97,18 @@ for T in (Float32, )
     end
 end
 
-pos_range = (lo=Float32(0.0), hi=Float32(39))
-neg_range = (lo=Float32(-0.0), hi=Float32(-39))
+pos_range = (lo=+Float32(0.0), hi=+Float32(39)) # 38.531837f0
+neg_range = (lo=-Float32(0.0), hi=-Float32(9))  # -7.5257497f0
 if "cr_exp10m1.fast" in CheckExhaustive
     @testset "cr_exp10m1-exhaustive.fast" begin
-        test_float_range(exp10m1_ref, PureLibm.cr_exp10m1, lo=pos_range.lo, hi=pos_range.hi)
-        test_float_range(exp10m1_ref, PureLibm.cr_exp10m1, lo=neg_range.lo, hi=neg_range.hi)
+        test_float_range(exp10m1_ref, PureLibm.cr_exp10m1, pos_range)
+        test_float_range(exp10m1_ref, PureLibm.cr_exp10m1, neg_range)
     end
 end
 if "cr_exp10m1" in CheckExhaustive
     @testset "cr_exp10m1-exhaustive" begin
-        test_float_range(exp10m1_ref, PureLibm.cr_exp10m1, lo=pos_range.lo, hi=pos_range.hi, bigfloat=true)
-        test_float_range(exp10m1_ref, PureLibm.cr_exp10m1, lo=neg_range.lo, hi=neg_range.hi, bigfloat=true)
+        test_float_range(exp10m1_ref, PureLibm.cr_exp10m1, pos_range, bigfloat=true)
+        test_float_range(exp10m1_ref, PureLibm.cr_exp10m1, neg_range, bigfloat=true)
     end
 end
 # ENV["PURELIBM_CHECK_EXHAUSTIVE"] = "cr_exp10m1.fast,cr_exp10m1"

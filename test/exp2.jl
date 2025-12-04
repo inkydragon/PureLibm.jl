@@ -35,19 +35,18 @@ for T in [Float32, ]
     end
 end
 
-pos_range = (lo=Float32(0.0), hi=Float32(128))
-neg_range = (lo=Float32(-0.0), hi=Float32(-150))
+pos_range = (lo=+Float32(0.0), hi=+Float32(128))
+neg_range = (lo=-Float32(0.0), hi=-Float32(150))
 if "cr_exp2.fast" in CheckExhaustive
     @testset "cr_exp2-exhaustive.fast" begin
-        test_float_range(exp2, PureLibm.cr_exp2, lo=pos_range.lo, hi=pos_range.hi)
-        test_float_range(exp2, PureLibm.cr_exp2, lo=neg_range.lo, hi=neg_range.hi)
+        test_float_range(exp2, PureLibm.cr_exp2, pos_range)
+        test_float_range(exp2, PureLibm.cr_exp2, neg_range)
     end
 end
 if "cr_exp2" in CheckExhaustive
     @testset "cr_exp2-exhaustive" begin
-        test_float_range(exp2, PureLibm.cr_exp2, lo=pos_range.lo, hi=pos_range.hi, bigfloat=true)
-        test_float_range(exp2, PureLibm.cr_exp2, lo=neg_range.lo, hi=neg_range.hi, bigfloat=true)
+        test_float_range(exp2, PureLibm.cr_exp2, pos_range, bigfloat=true)
+        test_float_range(exp2, PureLibm.cr_exp2, neg_range, bigfloat=true)
     end
 end
-# ~ 18s / 71min
 # ENV["PURELIBM_CHECK_EXHAUSTIVE"] = "cr_exp2.fast,cr_exp2"

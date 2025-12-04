@@ -67,16 +67,14 @@ for T in [Float32, ]
     end
 end
 
-pos_range = (lo=Float32(0.0), hi=prevfloat(Float32(Inf)))
-neg_range = (lo=Float32(-0.0), hi=nextfloat(Float32(-Inf)))
 if "cr_sincos.fast" in CheckExhaustive
     @testset "cr_sincos-exhaustive.fast" begin
         _cr_sin(x) = PureLibm.cr_sincos(x)[1]
         _cr_cos(x) = PureLibm.cr_sincos(x)[2]
-        test_float_range(sin, _cr_sin, lo=pos_range.lo, hi=pos_range.hi)
-        test_float_range(sin, _cr_sin, lo=neg_range.lo, hi=neg_range.hi)
-        test_float_range(cos, _cr_cos, lo=pos_range.lo, hi=pos_range.hi)
-        test_float_range(cos, _cr_cos, lo=neg_range.lo, hi=neg_range.hi)
+        test_float_range(sin, _cr_sin, F32_POS_FINITE_RANGE)
+        test_float_range(sin, _cr_sin, F32_NEG_FINITE_RANGE)
+        test_float_range(cos, _cr_cos, F32_POS_FINITE_RANGE)
+        test_float_range(cos, _cr_cos, F32_NEG_FINITE_RANGE)
     end
 end
 if "cr_sincos" in CheckExhaustive
@@ -84,10 +82,10 @@ if "cr_sincos" in CheckExhaustive
     @testset "cr_sincos-exhaustive" begin
         _cr_sin(x) = PureLibm.cr_sincos(x)[1]
         _cr_cos(x) = PureLibm.cr_sincos(x)[2]
-        test_float_range(sin, _cr_sin, lo=pos_range.lo, hi=pos_range.hi, bigfloat=true)
-        test_float_range(sin, _cr_sin, lo=neg_range.lo, hi=neg_range.hi, bigfloat=true)
-        test_float_range(cos, _cr_cos, lo=pos_range.lo, hi=pos_range.hi, bigfloat=true)
-        test_float_range(cos, _cr_cos, lo=neg_range.lo, hi=neg_range.hi, bigfloat=true)
+        test_float_range(sin, _cr_sin, F32_POS_FINITE_RANGE, bigfloat=true)
+        test_float_range(sin, _cr_sin, F32_NEG_FINITE_RANGE, bigfloat=true)
+        test_float_range(cos, _cr_cos, F32_POS_FINITE_RANGE, bigfloat=true)
+        test_float_range(cos, _cr_cos, F32_NEG_FINITE_RANGE, bigfloat=true)
     end
 end
 # ENV["PURELIBM_CHECK_EXHAUSTIVE"] = "cr_sincos.fast,cr_sincos"

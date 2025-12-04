@@ -1,5 +1,15 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
 
+"""Float32 [0.0, Inf]"""
+const F32_POS_RANGE = (lo=+Float32(0.0), hi=+Float32(Inf))
+"""Float32 [0.0, Inf)"""
+const F32_POS_FINITE_RANGE = (lo=+Float32(0.0), hi=+prevfloat(Float32(Inf)))
+"""Float32 [-Inf, -0.0]"""
+const F32_NEG_RANGE = (lo=-Float32(0.0), hi=-Float32(Inf))
+"""Float32 (-Inf, -0.0]"""
+const F32_NEG_FINITE_RANGE = (lo=-Float32(0.0), hi=-prevfloat(Float32(Inf)))
+
+
 function asfloat(u::UInt32)
     reinterpret(Float32, u)
 end

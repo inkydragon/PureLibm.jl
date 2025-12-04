@@ -59,21 +59,19 @@ for T in [Float32]
     end
 end
 
-pos_range = (lo=Float32(0.0), hi=prevfloat(Float32(Inf)))
-neg_range = (lo=Float32(-0.0), hi=nextfloat(Float32(-Inf)))
 if "cr_atanpi.fast" in CheckExhaustive
     @testset "cr_atanpi-exhaustive.fast" begin
-        test_float_range(_atanpi, PureLibm.cr_atanpi; lo=pos_range.lo, hi=pos_range.hi)
-        test_float_range(_atanpi, PureLibm.cr_atanpi; lo=neg_range.lo, hi=neg_range.hi)
+        test_float_range(_atanpi, PureLibm.cr_atanpi, F32_POS_FINITE_RANGE)
+        test_float_range(_atanpi, PureLibm.cr_atanpi, F32_NEG_FINITE_RANGE)
     end
 end
 if "cr_atanpi" in CheckExhaustive
     @testset "cr_atanpi-exhaustive" begin
         test_float_range(
-            _atanpi, PureLibm.cr_atanpi; lo=pos_range.lo, hi=pos_range.hi, bigfloat=true
+            _atanpi, PureLibm.cr_atanpi, F32_POS_FINITE_RANGE, bigfloat=true
         )
         test_float_range(
-            _atanpi, PureLibm.cr_atanpi; lo=neg_range.lo, hi=neg_range.hi, bigfloat=true
+            _atanpi, PureLibm.cr_atanpi, F32_NEG_FINITE_RANGE, bigfloat=true
         )
     end
 end

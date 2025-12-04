@@ -53,17 +53,19 @@ for T in [Float32, ]
     end
 end
 
-
+const TANHF_INF_LIMIT = Float32(4pi)
+pos_range = (lo=+Float32(0.0), hi=+TANHF_INF_LIMIT)
+neg_range = (lo=-Float32(0.0), hi=-TANHF_INF_LIMIT)
 if "cr_tanh.fast" in CheckExhaustive
     @testset "cr_tanh-exhaustive.fast" begin
-        test_float_range(tanh, PureLibm.cr_tanh, lo=Float32(0.0), hi=Float32(4pi))
-        test_float_range(tanh, PureLibm.cr_tanh, lo=Float32(-0.0), hi=Float32(-4pi))
+        test_float_range(tanh, PureLibm.cr_tanh, pos_range)
+        test_float_range(tanh, PureLibm.cr_tanh, neg_range)
     end
 end
 if "cr_tanh" in CheckExhaustive
     @testset "cr_tanh-exhaustive" begin
-        test_float_range(tanh, PureLibm.cr_tanh, lo=Float32(0.0), hi=Float32(4pi), bigfloat=true)
-        test_float_range(tanh, PureLibm.cr_tanh, lo=Float32(-0.0), hi=Float32(-4pi), bigfloat=true)
+        test_float_range(tanh, PureLibm.cr_tanh, pos_range, bigfloat=true)
+        test_float_range(tanh, PureLibm.cr_tanh, neg_range, bigfloat=true)
     end
 end
 # ENV["PURELIBM_CHECK_EXHAUSTIVE"] = "cr_tanh.fast,cr_tanh"

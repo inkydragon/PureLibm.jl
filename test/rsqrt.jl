@@ -1,5 +1,7 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
 
+ref_rsqrt(x::T) where {T<:AbstractFloat} = T(1) / sqrt(x)
+
 for T in [Float32, Float64]
     @testset "cr_rsqrt($T)" begin
         float_gen = Data.Floats{T}(; nans=false, infs=true)
@@ -41,9 +43,9 @@ for T in [Float32, Float64]
             end
 
             # Test against system libm
-            @test PureLibm.cr_rsqrt(x) ≈ 1/sqrt(x)
+            @test PureLibm.cr_rsqrt(x) ≈ ref_rsqrt(x)
             # Test against MPFR
-            @test PureLibm.cr_rsqrt(x) === T(1/sqrt(BigFloat(x)))
+            @test PureLibm.cr_rsqrt(x) === T(ref_rsqrt(BigFloat(x)))
         end
     end
 end
@@ -71,16 +73,14 @@ end
     end
 end
 
-pos_range = (lo=Float32(0.0), hi=Float32(Inf))
-ref_rsqrt(x) = 1 / sqrt(x)
 if "cr_rsqrt.fast" in CheckExhaustive
     @testset "cr_rsqrt-exhaustive.fast" begin
-        test_float_range(ref_rsqrt, PureLibm.cr_rsqrt, lo=pos_range.lo, hi=pos_range.hi)
+        test_float_range(ref_rsqrt, PureLibm.cr_rsqrt, F32_POS_RANGE)
     end
 end
 if "cr_rsqrt" in CheckExhaustive
     @testset "cr_rsqrt-exhaustive" begin
-        test_float_range(ref_rsqrt, PureLibm.cr_rsqrt, lo=pos_range.lo, hi=pos_range.hi, bigfloat=true)
+        test_float_range(ref_rsqrt, PureLibm.cr_rsqrt, F32_POS_RANGE, bigfloat=true)
     end
 end
 # ENV["PURELIBM_CHECK_EXHAUSTIVE"] = "cr_rsqrt.fast,cr_rsqrt"

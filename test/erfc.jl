@@ -48,18 +48,18 @@ for T in (Float32, )
     end
 end
 
-pos_range = (lo=Float32(0.0), hi=Float32(Inf))
-neg_range = (lo=Float32(-0.0), hi=Float32(-Inf))
+pos_range = (lo=+Float32(0.0), hi=+Float32(11))     # 10.05, 0x1.41bbf8p+3
+neg_range = (lo=-Float32(0.0), hi=-Float32(4.0))    # -3.83, -0x1.ea8f94p+1
 if "cr_erfc.fast" in CheckExhaustive
     @testset "cr_erfc-exhaustive.fast" begin
-        test_float_range(SpecialFunctions.erfc, PureLibm.cr_erfc, lo=pos_range.lo, hi=pos_range.hi)
-        test_float_range(SpecialFunctions.erfc, PureLibm.cr_erfc, lo=neg_range.lo, hi=neg_range.hi)
+        test_float_range(SpecialFunctions.erfc, PureLibm.cr_erfc, pos_range)
+        test_float_range(SpecialFunctions.erfc, PureLibm.cr_erfc, neg_range)
     end
 end
 if "cr_erfc" in CheckExhaustive
     @testset "cr_erfc-exhaustive" begin
-        test_float_range(SpecialFunctions.erfc, PureLibm.cr_erfc, lo=pos_range.lo, hi=pos_range.hi, bigfloat=true)
-        test_float_range(SpecialFunctions.erfc, PureLibm.cr_erfc, lo=neg_range.lo, hi=neg_range.hi, bigfloat=true)
+        test_float_range(SpecialFunctions.erfc, PureLibm.cr_erfc, pos_range, bigfloat=true)
+        test_float_range(SpecialFunctions.erfc, PureLibm.cr_erfc, neg_range, bigfloat=true)
     end
 end
 # ENV["PURELIBM_CHECK_EXHAUSTIVE"] = "cr_erfc.fast,cr_erfc"

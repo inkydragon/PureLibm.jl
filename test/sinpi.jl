@@ -59,19 +59,16 @@ for T in [Float32, ]
     end
 end
 
-pos_range = (lo=Float32(0.0), hi=prevfloat(Float32(Inf)))
-neg_range = (lo=Float32(-0.0), hi=nextfloat(Float32(-Inf)))
 if "cr_sinpi.fast" in CheckExhaustive
     @testset "cr_sinpi-exhaustive.fast" begin
-        test_float_range(sinpi, PureLibm.cr_sinpi, lo=pos_range.lo, hi=pos_range.hi)
-        test_float_range(sinpi, PureLibm.cr_sinpi, lo=neg_range.lo, hi=neg_range.hi)
+        test_float_range(sinpi, PureLibm.cr_sinpi, F32_POS_FINITE_RANGE)
+        test_float_range(sinpi, PureLibm.cr_sinpi, F32_NEG_FINITE_RANGE)
     end
 end
 if "cr_sinpi" in CheckExhaustive
     @testset "cr_sinpi-exhaustive" begin
-        test_float_range(sinpi, PureLibm.cr_sinpi, lo=pos_range.lo, hi=pos_range.hi, bigfloat=true)
-        test_float_range(sinpi, PureLibm.cr_sinpi, lo=neg_range.lo, hi=neg_range.hi, bigfloat=true)
+        test_float_range(sinpi, PureLibm.cr_sinpi, F32_POS_FINITE_RANGE, bigfloat=true)
+        test_float_range(sinpi, PureLibm.cr_sinpi, F32_NEG_FINITE_RANGE, bigfloat=true)
     end
 end
-# ~
 # ENV["PURELIBM_CHECK_EXHAUSTIVE"] = "cr_sinpi.fast,cr_sinpi"
