@@ -2,6 +2,12 @@
 
 for T in [Float32, ]
     @testset "cr_cosh(::$T)" begin
+        float_gen = Data.Floats{T}(; nans=false, infs=true)
+        # cosh Domain
+        @testset "cosh(x) in [1, ∞], for finite x" begin
+            @check cosh_domain(f = float_gen) = 1 <= PureLibm.cr_cosh(f)
+        end
+
         # IEC 60559
         # cosh(±0) returns 1.
         @test PureLibm.cr_cosh(T(0.0)) == T(1.0)
