@@ -2,6 +2,13 @@
 
 for T in [Float32, ]
     @testset "cr_acosh(::$T)" begin
+        float_gen = Data.Floats{T}(; nans=false, infs=false)
+        # acosh Domain
+        @testset "acosh(x) in [0, ∞], for x >= 1" begin
+            f_domain = filter(x -> x >= 1, float_gen)
+            @check acosh_domain(f = f_domain) = PureLibm.cr_acosh(f) >= 0
+        end
+
         # IEC 60559
         # acosh(1) returns +0
         @test PureLibm.cr_acosh(T(1.0)) == T(0.0)
@@ -12,6 +19,10 @@ for T in [Float32, ]
         @test isnan(PureLibm.cr_acosh(T(-0.0)))
         @test isnan(PureLibm.cr_acosh(T(-0.9)))
         @test isnan(PureLibm.cr_acosh(T(-Inf)))
+        @testset "acosh(x) = NaN, for |x| < 1" begin
+            f_range = filter(x -> abs(x) < 1, float_gen)
+            @check acosh_domain(f = f_range) = isnan(PureLibm.cr_acosh(f))
+        end
         # acosh(+∞) returns +∞
         @test PureLibm.cr_acosh(T(Inf)) == T(Inf)
 
