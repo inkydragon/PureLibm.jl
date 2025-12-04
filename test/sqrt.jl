@@ -26,7 +26,7 @@ for T in (Float32, )
             eps(T(0.0)),
             (i^2 for i in 1:128)...,
         ]
-        @testset "cr_sqrt($(repr(x))))" for x in test_x
+        @testset "cr_sqrt($(repr(x)))" for x in test_x
             # Test against system libm
             @test PureLibm.cr_sqrt(x) ≈ sqrt(x)
             # Test against MPFR
