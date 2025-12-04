@@ -54,6 +54,8 @@ end
 Test with float range
 """
 function test_float_range(ref, impl; lo::T, hi::T, bigfloat=false) where T
+    @assert abs(lo) <= abs(hi)
+
     UIntBaseType = Base.uinttype(T)
     xu_lo = reinterpret(UIntBaseType, lo)
     xu_hi = reinterpret(UIntBaseType, hi)
@@ -71,3 +73,6 @@ function test_float_range(ref, impl; lo::T, hi::T, bigfloat=false) where T
     __main_test_loop(x_range, ref_fun, impl)
     @info "tested $(length(xu_range)) cases"
 end
+
+test_float_range(ref, impl, test_range::@NamedTuple{lo::T, hi::T}; bigfloat=false) where T =
+    test_float_range(ref, impl; lo=test_range.lo, hi=test_range.hi, bigfloat=bigfloat)
