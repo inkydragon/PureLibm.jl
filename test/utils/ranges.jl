@@ -54,11 +54,14 @@ end
 Test with float range
 """
 function test_float_range(ref, impl; lo::T, hi::T, bigfloat=false) where T
-    @assert abs(lo) <= abs(hi)
+    @assert abs(lo) <= abs(hi) "lo=$(repr(lo)) <= hi=$(repr(hi))"
 
     UIntBaseType = Base.uinttype(T)
     xu_lo = reinterpret(UIntBaseType, lo)
     xu_hi = reinterpret(UIntBaseType, hi)
+    @assert(xu_lo <= xu_hi,
+        "xu_lo=$(repr(xu_lo)) ($(repr(lo))) <= xu_hi=$(repr(xu_hi)) ($(repr(hi)))")
+
     xu_range = xu_lo:xu_hi
     x_range = Iterators.map(xu->reinterpret(T, xu), xu_range)
 
@@ -69,7 +72,7 @@ function test_float_range(ref, impl; lo::T, hi::T, bigfloat=false) where T
         ref_fun = x -> T(ref(BigFloat(x)))
     end
 
-    @info "testing `$impl` against `$libmname.$ref` in $lo:$hi ($xu_range)"
+    @info "testing `$impl` against `$libmname.$ref` in $(repr(lo)):$(repr(hi)) ($xu_range)"
     __main_test_loop(x_range, ref_fun, impl)
     @info "tested $(length(xu_range)) cases"
 end
