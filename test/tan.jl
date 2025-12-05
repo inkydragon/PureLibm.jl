@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
 
-for T in [Float32, ]
+for T in (Float32, )
     @testset "cr_tan(::$T)" begin
         float_gen = Data.Floats{T}(; nans=false, infs=false)
         # tan Domain
@@ -30,15 +30,18 @@ for T in [Float32, ]
         @test PureLibm.cr_tan(T(-pi/4)) == T(-1)
         @test PureLibm.cr_tan(T(pi/4)) == T(1)
         # @test PureLibm.cr_tan(T(pi)) == T(0)
-        
-        # Coverage test
-        @testset "cr_tan(random)" begin
-            test_x = T[
-                eps(T(0.0)),
-                # 0 ~ pi/2
-                rand_float(Float32(0.0), Float32(pi/2), 8)...,
 
-                # Branch coverage
+    end
+
+    @testset "cr_tan(random)" begin
+        test_x = T[
+            eps(T(0.0)),
+            # 0 ~ pi/2
+            rand_float(Float32(0.0), Float32(pi/2), 8)...,
+        ]
+        if Float32 == T
+            # Branch coverage
+            append!(test_x, T[
                 # cr_tanf: `elseif e < 0xff`
                 rand_float(Float32(0x1p+28), prevfloat(Float32(0x1p+128)), 8)...,
                 # _tanf_rbig: `elseif s == 64`
@@ -53,15 +56,14 @@ for T in [Float32, ]
                 Float32(0x1.f90dfcp+72),
                 Float32(0x1.cc4e22p+85),
                 Float32(0x1.a6ce12p+86),
-                Float32(0x1.6a0b76p+102),                
-            ]
-            test_x = [test_x..., -test_x...]
-            @testset "cr_tan($x)" for x in test_x
-                # Test against system libm
-                @test PureLibm.cr_tan(x) ≈ tan(x)
-                # Test against MPFR
-                @test PureLibm.cr_tan(x) === T(tan(BigFloat(x)))
-            end
+                Float32(0x1.6a0b76p+102),  
+            ])
+        end
+        test_x = [test_x..., -test_x...]
+        @testset "cr_tan($(repr(x)))" for x in test_x
+            y = PureLibm.cr_tan(x)
+            @test y ≈ tan(x)
+            @test y === T(tan(BigFloat(x)))
         end
     end
 end
