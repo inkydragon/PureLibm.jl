@@ -158,6 +158,28 @@ end
 
 Correctly-rounded sine of `Float32`.
 
+# Examples
+```jldoctest
+julia> PureLibm.cr_sin(0.0f0)
+0.0f0
+
+julia> PureLibm.cr_sin(pi/6f0)
+0.5f0
+
+julia> PureLibm.cr_sin(deg2rad(30f0))
+0.5f0
+
+julia> PureLibm.cr_sin(pi/2f0)
+1.0f0
+
+julia> PureLibm.cr_sin(Inf32)
+NaN32
+```
+
+See also: [`cr_sincos`](@ref),
+[`cr_sinpi`](@ref), [`cr_sinh`](@ref),
+[`cr_asin`](@ref)
+
 # Reference
 - [core-math/src/binary32/sin/sinf.c](https://github.com/inkydragon/core-math/blob/bbfabd993a71b049c210b0febfd06d18369fadc1/src/binary32/sin/sinf.c)
 """
