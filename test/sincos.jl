@@ -25,6 +25,7 @@ for T in [Float32, ]
     end
 
     # Coverage test
+    @test _sincosf_database(0f0, Float32(pi), exp(0f0)) == (Float32(pi), exp(0f0))
     @testset "cr_sincos(rand($T))" begin
         test_x = T[
             eps(T(0.0)),
