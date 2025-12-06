@@ -107,7 +107,7 @@ pos_range = (lo=+Float32(0.0), hi=+Float32(130))    # 128.0f0
 neg_range = (lo=-Float32(0.0), hi=-Float32(26))     # -25.0f0
 if "cr_exp2m1.fast" in CheckExhaustive
     @testset "cr_exp2m1-exhaustive.fast (skip)" begin
-        @test_broken exp2m1(NaN)
+        @test_throws UndefVarError exp2m1(NaN)
         # test_float_range(exp2m1_ref, PureLibm.cr_exp2m1, pos_range)
         # test_float_range(exp2m1_ref, PureLibm.cr_exp2m1, neg_range)
     end
