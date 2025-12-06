@@ -33,7 +33,7 @@ for T in [Float32, ]
     end
 
     # Coverage test
-    @test _cosf_database(0f0, Float64(pi)) == Float32(pi)
+    @test PureLibm._cosf_database(0f0, Float64(pi)) == Float32(pi)
     @testset "cr_cos(rand($T))" begin
         test_x = T[
             eps(T(0.0)),

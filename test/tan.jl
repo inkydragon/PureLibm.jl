@@ -33,7 +33,7 @@ for T in (Float32, )
 
     end
 
-    @test _tanf_database(UInt32(0), Float32(pi)) == Float32(pi)
+    @test PureLibm._tanf_database(UInt32(0), Float32(pi)) == Float32(pi)
     @testset "cr_tan(random)" begin
         test_x = T[
             eps(T(0.0)),

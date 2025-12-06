@@ -33,7 +33,7 @@ for T in [Float32, ]
     end
 
     # Coverage test
-    @test _sinf_database(0f0, Float32(pi)) == Float32(pi)
+    @test PureLibm._sinf_database(0f0, Float32(pi)) == Float32(pi)
     @testset "cr_sin(random)" begin
         test_x = T[
             eps(T(0.0)),
