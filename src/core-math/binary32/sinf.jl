@@ -176,9 +176,8 @@ julia> PureLibm.cr_sin(Inf32)
 NaN32
 ```
 
-See also: [`cr_sincos`](@ref),
-[`cr_sinpi`](@ref), [`cr_sinh`](@ref),
-[`cr_asin`](@ref)
+See also: [`cr_sincos(::Float32)`](@ref),
+[`cr_sinpi(::Float32)`](@ref), [`cr_asin(::Float32)`](@ref)
 
 # Reference
 - [core-math/src/binary32/sin/sinf.c](https://github.com/inkydragon/core-math/blob/bbfabd993a71b049c210b0febfd06d18369fadc1/src/binary32/sin/sinf.c)
