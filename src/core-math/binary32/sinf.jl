@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
 # Based on core-math/src/binary32/sin/sinf.c
-# CORE-MATH project Copyright (c) 2022-2023 Alexei Sibidanov.
+# CORE-MATH project Copyright (c) 2022-2025 Alexei Sibidanov.
 
 const CR_SINF_IPI = NTuple{4, UInt64}((
     0xfe5163abdebbc562, 0xdb6295993c439041,
@@ -92,11 +92,14 @@ end
 function _sinf_big(x::Float32)::Float32
     tu = reinterpret(UInt32, x)
     ax = tu << 1
-    if @unlikely(ax >= (UInt32(0xff) << 24))  # nan or +-inf
+    if @unlikely(ax >= (UInt32(0xff) << 24))
+        # nan or +-inf
         if (ax << 8) != 0
-            return x + x  # NaN
+            # NaN
+            return x + x
         end
-        return 0.0f0 / 0.0f0 # to raise FE_INVALID
+        # to raise FE_INVALID
+        return 0.0f0 / 0.0f0
     end
 
     z, ia = _sinf_rbig(tu)
@@ -154,6 +157,9 @@ end
     cr_sin(x::Float32)
 
 Correctly-rounded sine of `Float32`.
+
+# Reference
+- [core-math/src/binary32/sin/sinf.c](https://github.com/inkydragon/core-math/blob/bbfabd993a71b049c210b0febfd06d18369fadc1/src/binary32/sin/sinf.c)
 """
 cr_sin(x::Float32) = cr_sinf(x)
 
@@ -161,13 +167,27 @@ function cr_sinf(x::Float32)::Float32
     tu = reinterpret(UInt32, x)
     ax = tu << 1
     if @unlikely(ax > 0x99000000 || ax < 0x73000000)
-        # |x| > 6.7108864f7 (0x1p+26)
+        # |x| > 0x1p+26 or |x| < 0x1p-12
+        # |x| > 6.7108864f7 or |x| < 0.00024414062f0
         if @likely(ax < 0x73000000)
+            # |x| < 0x1p-12
             if @unlikely(ax < 0x66000000)
+                # |x| < 0x1p-25
                 if @unlikely(ax == 0)
                     return x
                 end
-                return fma(-x, abs(x), x)
+                res = fma(-x, abs(x), x)
+                #= The Taylor expansion of sin(x) at x=0 is x - x^3/6 + o(x^3).
+                    For |x| > 2^-126 we have no underflow, whatever the rounding mode.
+                    For |x| < 2^-126, since |sin(x)| < |x|, we always have underflow.
+                    For |x| = 2^-126, we have underflow for rounding towards zero,
+                    i.e., when sin(x) rounds to nextbelow(2^-126).
+                    In summary, we have underflow whenever |x|<2^-126 or |res|<2^-126.
+                =#
+                # if abs(x) < 0x1p-126 || abs(res) < 0x1p-126
+                #     errno = ERANGE  # underflow
+                # end
+                return res
             end
             return (-0x1.555556p-3 * x) * (x * x) + x
         end
