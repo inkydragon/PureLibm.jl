@@ -12,7 +12,7 @@
 """Quiet NaN16"""
 const QNaN16 = reinterpret(Float16, 0x7fff)
 """Signaling NaN16"""
-const SNaN16 = reinterpret(Float16, 0x7f81)
+const SNaN16 = reinterpret(Float16, 0x7c01)
 """Quiet NaN32"""
 const QNaN32 = reinterpret(Float32, 0x7fffffff)
 """Signaling NaN32"""
