@@ -177,12 +177,15 @@ Compute the principal value of the arc sine of `x`, divided by `π`,
 thus measuring the angle in half-revolutions.
 
 Returns `arcsin(x)/π` in interval `[-1/2, 1/2]`.
+
 - Returns `±0` if `x` is `±0`
+- Returns `±1/2` if `x` is `±1`
 - Returns `NaN` if `x` is `|x| > 1`
 - Returns `NaN` if `x` is `NaN`
 
 # Reference
 - C23 F.10.1.9
+- [oneapi::math::vm::asinpi](https://uxlfoundation.github.io/oneAPI-spec/spec/elements/oneMath/source/domains/vm/asinpi.html#onemath-vm-asinpi)
 """
 cr_asinpi
 
