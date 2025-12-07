@@ -688,7 +688,7 @@ Computes the reciprocal of the nonnegative square root of `x`.
 
 Returns ``\\frac{1}{\\sqrt{x}}``
 
-- Returns `+∞` if `x` is `±0`, and raises the "divide-by-zero" floating-point exception
+- Returns `±∞` if `x` is `±0`, and raises the "divide-by-zero" floating-point exception
 - Returns `NaN` if `x < 0`
 - Returns `+0` if `x` is `+∞`
 - Returns `NaN` if `x` is `NaN`
