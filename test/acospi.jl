@@ -15,6 +15,11 @@ for T in [Float32, ]
 
         # IEC 60559
         @test isnan(PureLibm.cr_acospi(T(NaN)))
+        # acospi(-1) = +1
+        @test PureLibm.cr_acospi(-T(1)) == T(1)
+        # acospi(±0) = +1/2
+        @test PureLibm.cr_acospi(T(0)) == T(1) / 2
+        @test PureLibm.cr_acospi(-T(0)) == T(1) / 2
         # acospi(+1) returns +0.
         @test PureLibm.cr_acospi(T(1.0)) == T(0.0)
         # acospi(x) returns a NaN and raises the "invalid" floating-point exception
