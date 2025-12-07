@@ -8,13 +8,16 @@ Compute the principal value of the arc cosine of `x`,
 `x = cos(acos(x))`.
 
 Returns `arccos(x)` in interval `[0, π]` radians.
-- Returns `+0` if `x` is `1`
-- Returns `NaN` if `x` is `|x| > 1`
+- Returns `+π` if `x` is `-1`
+- Returns `+π/2` if `x` is `±0`
+- Returns `+0` if `x` is `+1`
+- Returns `NaN` if `x` is `|x| > 1`, `status::errdom`
 - Returns `NaN` if `x` is `NaN`
 
 # Reference
 - [DLMF: §4.23.2](https://dlmf.nist.gov/4.23#E2)
 - C23 F.10.1.1
+- [oneapi::math::vm::acos](https://uxlfoundation.github.io/oneAPI-spec/spec/elements/oneMath/source/domains/vm/acos.html)
 """
 cr_acos
 
