@@ -1,11 +1,10 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
 
-export cr_acos, cr_asin, cr_atan
-
-
 include("helper.jl")
 
 #= Trigonometric =#
+export cr_acos, cr_asin, cr_atan
+export cr_sin
 include("binary32/acosf.jl")
 include("binary32/asinf.jl")
 include("binary32/atanf.jl")
