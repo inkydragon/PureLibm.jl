@@ -57,13 +57,9 @@ for T in [Float32, ]
             1.7269983f20,
         ]
         @testset "cr_sincos($x)" for x in test_x
-            # Test against system libm
-            s, c = PureLibm.cr_sincos(x)
-            @test s ≈ sin(x)
-            @test c ≈ cos(x)
-            # Test against MPFR
-            big_x = BigFloat(x)
-            @test PureLibm.cr_sincos(x) === (T(sin(big_x)), T(cos(big_x)))
+            yy = PureLibm.cr_sincos(x)
+            @test all(yy .≈ sincos(x))
+            @test yy === T.(sincos(BigFloat(x)))
         end
     end
 end
