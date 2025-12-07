@@ -134,6 +134,8 @@ julia> isnan(cr_tan(Inf32))
 true
 ```
 
+See also: [`cr_tanpi(::Float32)`](@ref), [`cr_atan(::Float32)`](@ref)
+
 # Reference
 - [core-math/src/binary32/tan/tanf.c](https://github.com/inkydragon/core-math/blob/7c7afc5d93cc3af4ff584f40f4a20af71488122a/src/binary32/tan/tanf.c)
 """
