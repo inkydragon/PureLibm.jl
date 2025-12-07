@@ -68,6 +68,27 @@ end
 
 Correctly-rounded sine and cosine of `Float32`.
 
+# Examples
+```jldoctest
+julia> cr_sincos(0.0f0)
+(0.0f0, 1.0f0)
+
+julia> cr_sincos(pi/6f0)
+(0.5f0, 0.8660254f0)
+
+julia> cr_sincos(pi/3f0)
+(0.86602545f0, 0.49999997f0)
+
+julia> cr_sincos(pi/2f0)
+(1.0f0, -4.371139f-8)
+
+julia> cr_sincos(Float32(pi))
+(-8.742278f-8, -1.0f0)
+
+julia> cr_sincos(Inf32)
+(NaN32, NaN32)
+```
+
 See also: [`cr_sin(::Float32)`](@ref), [`cr_cos(::Float32)`](@ref)
 
 # Reference
