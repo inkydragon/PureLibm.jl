@@ -9,7 +9,9 @@ const F32_NEG_RANGE = (lo=-Float32(0.0), hi=-Float32(Inf))
 """Float32 (-Inf, -0.0]"""
 const F32_NEG_FINITE_RANGE = (lo=-Float32(0.0), hi=-prevfloat(Float32(Inf)))
 
+
 asfloat(u::UInt32) = reinterpret(Float32, u)
+asfloat(u::UInt64) = reinterpret(Float64, u)
 
 """
 NO   Name           Hex         hex: %a             base2               base10
@@ -56,4 +58,25 @@ NO   Name           Hex          hex: %a             base2               base10
     @test asfloat(0xff7fffff) === -PureLibm.normal_max(Float32)
     @test isnan(-PureLibm.SNaN32)
     @test isnan(-PureLibm.QNaN32)
+end
+
+@testset "Const :: Float64" begin
+    # NOTE: DoNot use `===` to compare NaN
+    @test isnan(PureLibm.QNaN64)
+    @test isnan(PureLibm.SNaN64)
+    @test isnan(PureLibm.quiet_nan(Float64))
+    @test isnan(PureLibm.signaling_nan(Float64))
+    @test PureLibm.normal_max(Float64) === Float64(0x1.fffffffffffffp+1023)
+    @test PureLibm.normal_min(Float64) === Float64(0x1p-1022)
+    @test PureLibm.subnormal_max(Float64) === Float64(0x1.ffffffffffffep-1023)
+    @test PureLibm.subnormal_min(Float64) === Float64(0x1p-1074)
+    @test zero(Float64) === Float64(0x0p+0)
+    # <0
+    @test asfloat(0x80000000_00000000) === -zero(Float64) 
+    @test asfloat(0x80000000_00000001) === -PureLibm.subnormal_min(Float64)
+    @test asfloat(0x800fffff_ffffffff) === -PureLibm.subnormal_max(Float64)
+    @test asfloat(0x80100000_00000000) === -PureLibm.normal_min(Float64)
+    @test asfloat(0xffefffff_ffffffff) === -PureLibm.normal_max(Float64)
+    @test isnan(-PureLibm.SNaN64)
+    @test isnan(-PureLibm.QNaN64)
 end
