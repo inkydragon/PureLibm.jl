@@ -22,7 +22,6 @@ const QNaN64 = reinterpret(Float64, 0x7fffffff_ffffffff)
 """Signaling NaN64"""
 const SNaN64 = reinterpret(Float64, 0x7ff00000_00000001)
 
-
 """Quiet NaN"""
 quiet_nan
 quiet_nan(::Type{Float16}) = QNaN16
