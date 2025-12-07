@@ -82,6 +82,27 @@ end
 
 Correctly-rounded cosine of `Float32`.
 
+# Examples
+```jldoctest
+julia> PureLibm.cr_cos(0.0f0)
+1.0f0
+
+julia> PureLibm.cr_cos(pi/3f0)
+0.49999997f0
+
+julia> PureLibm.cr_cos(deg2rad(60f0))
+0.49999997f0
+
+julia> PureLibm.cr_cos(pi/2f0)
+-4.371139f-8
+
+julia> PureLibm.cr_cos(Float32(pi))
+-1.0f0
+
+julia> PureLibm.cr_cos(Inf32)
+NaN32
+```
+
 See also: [`cr_sincos(::Float32)`](@ref),
 [`cr_cospi(::Float32)`](@ref), [`cr_acos(::Float32)`](@ref)
 
