@@ -11,8 +11,8 @@
 1. As accurate as possible.
     - The input of `Float32` should pass the exhaustive checking
     - The result of `Float64` should match the output of CORE-MATH.
-    - Rounding mode: Only `FE_TONEAREST` for now.
-    - Other rounding modes will be considered after the `FE_TONEAREST` mode is implemented.
+    - Rounding mode: Only `RoundNearest` for now.
+    - Other `RoundingMode` will be considered after the `RoundNearest` mode is implemented.
 2. Code readability.
     - Magic numbers should not be used, use named constant.
     - Whenever possible, give the origin of the magic number, and the process of calculating it.
