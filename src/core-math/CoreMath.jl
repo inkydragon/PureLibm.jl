@@ -4,7 +4,7 @@ include("helper.jl")
 
 #= Trigonometric =#
 export cr_acos, cr_asin, cr_atan
-export cr_cos, cr_sin
+export cr_cos, cr_sin, cr_tan
 include("binary32/acosf.jl")
 include("binary32/asinf.jl")
 include("binary32/atanf.jl")
