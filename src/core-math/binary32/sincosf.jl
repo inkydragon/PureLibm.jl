@@ -19,7 +19,7 @@ function _sincosf_database(x::Float32, s0::Float32, c0::Float32)
     tu = reinterpret(UInt32, x)
     ax = tu & (~UInt32(0) >> 1)
     for (uarg, sh, sl, ch, cl) in CR_SINCOSF_ST
-        if @unlikely(ax == uarg)  # true: 1.45%
+        if @unlikely(ax == uarg)
             sout = add_sign(x, sh, sl)
             cout = ch + cl
             return sout, cout
@@ -32,11 +32,13 @@ end
 function _sincosf_big(x::Float32)
     tu = reinterpret(UInt32, x)
     ax = tu << 1
-    if @unlikely(ax >= (UInt32(0xff) << 24))  # nan or +-inf
+    if @unlikely(ax >= (UInt32(0xff) << 24))
+        # nan or +-inf
         if (ax << 8) != 0
             sout = x + x
             cout = x + x
-            return sout, cout  # NaN
+            # NaN
+            return sout, cout
         end
         # to raise FE_INVALID
         sout = 0.0f0 / 0.0f0
@@ -54,7 +56,7 @@ function _sincosf_big(x::Float32)
 
     tru = reinterpret(UInt64, c)
     tail = (tru + UInt64(6)) & (~UInt64(0) >> 36);
-    if @unlikely(tail <= 12)  # true: < 0.1%
+    if @unlikely(tail <= 12)
         return _sincosf_database(x, sout, cout)
     end
 
@@ -65,6 +67,11 @@ end
     cr_sincos(x::Float32)
 
 Correctly-rounded sine and cosine of `Float32`.
+
+See also: [`cr_sin(::Float32)`](@ref), [`cr_cos(::Float32)`](@ref)
+
+# Reference
+- [core-math/src/binary32/sincos/sincosf.c](https://github.com/inkydragon/core-math/blob/14f515f28f322f7f00b17c1be438104c0d50e328/src/binary32/sincos/sincosf.c)
 """
 cr_sincos(x::Float32) = cr_sincosf(x)
 
@@ -76,18 +83,25 @@ function cr_sincosf(x::Float32)::Tuple{Float32, Float32}
     z0 = Float64(x)
     z = 0.0
     sout, cout = Float32(0.0), Float32(0.0)
-    # |x| < 0x1.2d97c8p+3
-    if @likely(ax < 0x822d97c8)  # true: 51.0% (full range, not nan/inf)
-        # |x| < 0x1p-12
+    if @likely(ax < 0x822d97c8)
+        # |x| < 0x1.2d97c8p+3
         if @unlikely(ax < 0x73000000)
-            # |x| < 0x1p-25
+            # |x| < 0x1p-12
             if @unlikely(ax < 0x66000000)
+                # |x| < 0x1p-25
                 if @unlikely(ax == 0)
                     sout = x
                     cout = Float32(1.0)
                 else
                     sout = -x * abs(x) + x
                     cout = Float32(1.0) - Float32(0x1p-25)
+                    #= We have underflow when |x| <= 0x1p-126 for rounding towards zero,
+                        and when |x| < 0x1p-126 for rounding to nearest or away from zero.
+                        In all cases this is when |sout| < 0x1p-126.
+                    =#
+                    # if abs(sout) < 0x1p-126
+                    #     errno = ERANGE  # underflow
+                    # end
                 end
             else
                 sout = (-Float32(0x1.555556p-3) * x) * (x * x) + x
@@ -112,7 +126,6 @@ function cr_sincosf(x::Float32)::Tuple{Float32, Float32}
         z, ia = rltl(z0)
     end
 
-    # 14.9% (full range, not nan/inf)
     aa, bb, s0, c0 = _sinf_absc(z, ia)
     z2 = z * z
     aa = aa * z
