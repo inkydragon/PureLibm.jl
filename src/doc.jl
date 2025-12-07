@@ -335,13 +335,15 @@ Compute the arc hyperbolic tangent of `x`,
 
 Returns `arctanh(x)` in interval `[-∞, ∞]`.
 - Returns `±0` if `x` is `±0`
-- Returns `±∞` if `x` is `±1`, and raises the "divide-by-zero" floating-point exception
-- Returns `NaN` if `x` is `|x| > 1`
+- Returns `±∞` if `x` is `±1`,
+    and raises the "divide-by-zero" floating-point exception (`status::sing`)
+- Returns `NaN` if `x` is `|x| > 1`, `status::errdom`
 - Returns `NaN` if `x` is `NaN`
 
 # Reference
 - [DLMF: §4.37.3](https://dlmf.nist.gov/4.37#E3)
 - C23 F.10.2.3
+- [oneapi::math::vm::atanh](https://uxlfoundation.github.io/oneAPI-spec/spec/elements/oneMath/source/domains/vm/atanh.html#onemath-vm-atanh)
 """
 cr_atanh
 
