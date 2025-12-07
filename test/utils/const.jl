@@ -9,10 +9,7 @@ const F32_NEG_RANGE = (lo=-Float32(0.0), hi=-Float32(Inf))
 """Float32 (-Inf, -0.0]"""
 const F32_NEG_FINITE_RANGE = (lo=-Float32(0.0), hi=-prevfloat(Float32(Inf)))
 
-
-function asfloat(u::UInt32)
-    reinterpret(Float32, u)
-end
+asfloat(u::UInt32) = reinterpret(Float32, u)
 
 """
 NO   Name           Hex         hex: %a             base2               base10
@@ -40,16 +37,23 @@ NO   Name           Hex          hex: %a             base2               base10
 20   NaN (-max)     0xffffffff   nan
 """
 
-@testset "Float32  Const" begin
-    # Different representations
-    @test asfloat(PureLibm.F32_POS_ZERO) === Float32(0x0p+0)
-    @test asfloat(PureLibm.F32_MIN_SUBNORMAL) === Float32(0x1p-149)
-    @test asfloat(PureLibm.F32_MAX_SUBNORMAL) === Float32(0x1.fffffcp-127)
-    @test asfloat(PureLibm.F32_MIN_NORMAL) === Float32(0x1p-126)
-    @test asfloat(PureLibm.F32_MAX_NORMAL) === Float32(0x1.fffffep+127)
-    @test asfloat(PureLibm.F32_MAX_FINITE) === Float32(0x1.fffffep+127)
-    @test asfloat(PureLibm.F32_POS_INF) === Float32(+Inf)
+@testset "Const :: Float32" begin
     # NOTE: DoNot use `===` to compare NaN
-    @test asfloat(PureLibm.F32_MIN_NAN) |> isnan
-    @test asfloat(PureLibm.F32_MAX_NAN) |> isnan
+    @test isnan(PureLibm.QNaN32)
+    @test isnan(PureLibm.SNaN32)
+    @test isnan(PureLibm.quiet_nan(Float32))
+    @test isnan(PureLibm.signaling_nan(Float32))
+    @test PureLibm.normal_max(Float32) === Float32(0x1.fffffep+127)
+    @test PureLibm.normal_min(Float32) === Float32(0x1p-126)
+    @test PureLibm.subnormal_max(Float32) === Float32(0x1.fffffcp-127)
+    @test PureLibm.subnormal_min(Float32) === Float32(0x1p-149)
+    @test zero(Float32) === Float32(0x0p+0)
+    # <0
+    @test asfloat(0x80000000) === -zero(Float32) 
+    @test asfloat(0x80000001) === -PureLibm.subnormal_min(Float32)
+    @test asfloat(0x807fffff) === -PureLibm.subnormal_max(Float32)
+    @test asfloat(0x80800000) === -PureLibm.normal_min(Float32)
+    @test asfloat(0xff7fffff) === -PureLibm.normal_max(Float32)
+    @test isnan(-PureLibm.SNaN32)
+    @test isnan(-PureLibm.QNaN32)
 end
