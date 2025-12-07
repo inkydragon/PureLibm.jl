@@ -180,7 +180,7 @@ Returns `arcsin(x)/π` in interval `[-1/2, 1/2]`.
 
 - Returns `±0` if `x` is `±0`
 - Returns `±1/2` if `x` is `±1`
-- Returns `NaN` if `x` is `|x| > 1`
+- Returns `NaN` if `x` is `|x| > 1`, `status::errdom`
 - Returns `NaN` if `x` is `NaN`
 
 # Reference
