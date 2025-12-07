@@ -28,11 +28,14 @@ end
 function _cosf_big(x::Float32)::Float32
     tu = reinterpret(UInt32, x)
     ax = tu << 1
-    if @unlikely(ax >= (UInt32(0xff) << 24))  # nan or +-inf
+    if @unlikely(ax >= (UInt32(0xff) << 24))
+        # nan or +-inf
         if (ax << 8) != 0
-            return x + x  # NaN
+            # NaN
+            return x + x  
         end
-        return 0.0f0 / 0.0f0 # to raise FE_INVALID
+        # to raise FE_INVALID
+        return 0.0f0 / 0.0f0 
     end
 
     z, ia = _sinf_rbig(tu)
@@ -78,6 +81,12 @@ end
     cr_cos(x::Float32)
 
 Correctly-rounded cosine of `Float32`.
+
+See also: [`cr_sincos(::Float32)`](@ref),
+[`cr_cospi(::Float32)`](@ref), [`cr_acos(::Float32)`](@ref)
+
+# Reference
+- [core-math/src/binary32/cos/cosf.c](https://github.com/inkydragon/core-math/blob/4fe2d75ae1c6e59fb90db461ec2053276b33684b/src/binary32/cos/cosf.c)
 """
 cr_cos(x::Float32) = cr_cosf(x)
 
