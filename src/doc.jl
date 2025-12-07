@@ -30,12 +30,14 @@ Compute the principal value of the arc sine of `x`,
 
 Returns `arcsin(x)` in interval `[-π/2, π/2]` radians.
 - Returns `±0` if `x` is `±0`
-- Returns `NaN` if `x` is `|x| > 1`
+- Returns `±π/2` if `x` is `±1`
+- Returns `NaN` if `x` is `|x| > 1`, `status::errdom`
 - Returns `NaN` if `x` is `NaN`
 
 # Reference
 - [DLMF: §4.23.1](https://dlmf.nist.gov/4.23#E1)
 - C23 F.10.1.2
+- [oneapi::math::vm::asin](https://uxlfoundation.github.io/oneAPI-spec/spec/elements/oneMath/source/domains/vm/asin.html#onemath-vm-asin)
 """
 cr_asin
 
