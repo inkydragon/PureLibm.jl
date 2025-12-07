@@ -511,15 +511,17 @@ a.k.a. natural logarithm.
 
 Returns ``\\log_e x``
 
-- Returns `-∞` if `x` is `±0`, and raises the "divide-by-zero" floating-point exception
+- Returns `-∞` if `x` is `±0`,
+    and raises the "divide-by-zero" floating-point exception (`status::sing`)
 - Returns `+0` if `x` is `1`
-- Returns `NaN` if `x` is `x < 0`
+- Returns `NaN` if `x` is `x < 0`, `status::errdom`
 - Returns `+∞` if `x` is `+∞`
 - Returns `NaN` if `x` is `NaN`
 
 # Reference
 - [DLMF: §4.2.2](https://dlmf.nist.gov/4.2#E2)
 - C23 F.10.3.11
+- [oneapi::math::vm::ln](https://uxlfoundation.github.io/oneAPI-spec/spec/elements/oneMath/source/domains/vm/ln.html#onemath-vm-ln)
 """
 cr_log
 
