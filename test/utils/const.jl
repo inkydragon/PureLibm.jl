@@ -10,8 +10,29 @@ const F32_NEG_RANGE = (lo=-Float32(0.0), hi=-Float32(Inf))
 const F32_NEG_FINITE_RANGE = (lo=-Float32(0.0), hi=-prevfloat(Float32(Inf)))
 
 
+asfloat(u::UInt16) = reinterpret(Float16, u)
 asfloat(u::UInt32) = reinterpret(Float32, u)
 asfloat(u::UInt64) = reinterpret(Float64, u)
+
+@testset "Const :: Float16" begin
+    @test isnan(PureLibm.QNaN16)
+    @test isnan(PureLibm.SNaN16)
+    @test isnan(PureLibm.quiet_nan(Float16))
+    @test isnan(PureLibm.signaling_nan(Float16))
+    @test PureLibm.normal_max(Float16) === Float16(0x1.ffcp+15)
+    @test PureLibm.normal_min(Float16) === Float16(0x1p-14)
+    @test PureLibm.subnormal_max(Float16) === Float16(0x1.ff8p-15)
+    @test PureLibm.subnormal_min(Float16) === Float16(0x1p-24)
+    @test zero(Float16) === Float16(0x0p+0)
+    # <0
+    @test asfloat(0x8000) === -zero(Float16) 
+    @test asfloat(0x8001) === -PureLibm.subnormal_min(Float16)
+    @test asfloat(0x83ff) === -PureLibm.subnormal_max(Float16)
+    @test asfloat(0x8400) === -PureLibm.normal_min(Float16)
+    @test asfloat(0xfbff) === -PureLibm.normal_max(Float16)
+    @test isnan(-PureLibm.SNaN16)
+    @test isnan(-PureLibm.QNaN16)
+end
 
 """
 NO   Name           Hex         hex: %a             base2               base10
