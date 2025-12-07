@@ -9,7 +9,12 @@ for T in [Float32, ]
             @check acos_domain(f = f_domain) = 0 <= PureLibm.cr_acos(f) <= π
         end
 
-        # IEC 60559
+        # IEC 60559, oneAPI
+        # acos(-1) = +π
+        @test PureLibm.cr_acos(-T(1)) == T(pi)
+        # acos(±0) = +π/2
+        @test PureLibm.cr_acos(T(0)) == T(pi) / 2
+        @test PureLibm.cr_acos(-T(0)) == T(pi) / 2
         # acos(1) returns +0
         @test PureLibm.cr_acos(T(1)) == T(0)
         # acos(x) returns a NaN and raises the "invalid" floating-point exception

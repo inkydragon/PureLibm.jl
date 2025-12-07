@@ -9,10 +9,13 @@ for T in [Float32, ]
             @check asin_domain(f = f_domain) = -π/2 <= PureLibm.cr_asin(f) <= π/2
         end
 
-        # IEC 60559
+        # IEC 60559, oneAPI
         # asin(±0) returns ±0
         @test PureLibm.cr_asin(T(0.0)) == T(0.0)
         @test PureLibm.cr_asin(T(-0.0)) == -T(0.0)
+        # asin(±1) = ±π/2
+        @test PureLibm.cr_asin(T(1.0)) == T(pi) / 2
+        @test PureLibm.cr_asin(-T(1.0)) == -T(pi) / 2
         # asin(x) returns a NaN and raises the "invalid" floating-point exception
         #   for |x| > 1
         @test isnan(PureLibm.cr_asin(nextfloat(T(1))))

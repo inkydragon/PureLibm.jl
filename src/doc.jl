@@ -8,13 +8,16 @@ Compute the principal value of the arc cosine of `x`,
 `x = cos(acos(x))`.
 
 Returns `arccos(x)` in interval `[0, π]` radians.
-- Returns `+0` if `x` is `1`
-- Returns `NaN` if `x` is `|x| > 1`
+- Returns `+π` if `x` is `-1`
+- Returns `+π/2` if `x` is `±0`
+- Returns `+0` if `x` is `+1`
+- Returns `NaN` if `x` is `|x| > 1`, `status::errdom`
 - Returns `NaN` if `x` is `NaN`
 
 # Reference
 - [DLMF: §4.23.2](https://dlmf.nist.gov/4.23#E2)
 - C23 F.10.1.1
+- [oneapi::math::vm::acos](https://uxlfoundation.github.io/oneAPI-spec/spec/elements/oneMath/source/domains/vm/acos.html)
 """
 cr_acos
 
@@ -27,12 +30,14 @@ Compute the principal value of the arc sine of `x`,
 
 Returns `arcsin(x)` in interval `[-π/2, π/2]` radians.
 - Returns `±0` if `x` is `±0`
-- Returns `NaN` if `x` is `|x| > 1`
+- Returns `±π/2` if `x` is `±1`
+- Returns `NaN` if `x` is `|x| > 1`, `status::errdom`
 - Returns `NaN` if `x` is `NaN`
 
 # Reference
 - [DLMF: §4.23.1](https://dlmf.nist.gov/4.23#E1)
 - C23 F.10.1.2
+- [oneapi::math::vm::asin](https://uxlfoundation.github.io/oneAPI-spec/spec/elements/oneMath/source/domains/vm/asin.html#onemath-vm-asin)
 """
 cr_asin
 
@@ -153,12 +158,15 @@ Compute the principal value of the arc cosine of `x`, divided by `π`,
 thus measuring the angle in half-revolutions.
 
 Returns `arccos(x)/π` in interval `[0, 1]`.
-- Returns `+0` if `x` is `1`
-- Returns `NaN` if `x` is `|x| > 1`
+- Returns `+1` if `x` is `-1`
+- Returns `+1/2` if `x` is `±0`
+- Returns `+0` if `x` is `+1`
+- Returns `NaN` if `x` is `|x| > 1`, `status::errdom`
 - Returns `NaN` if `x` is `NaN`
 
 # Reference
 - C23 F.10.1.8
+- [oneapi::math::vm::acospi](https://uxlfoundation.github.io/oneAPI-spec/spec/elements/oneMath/source/domains/vm/acospi.html#onemath-vm-acospi)
 """
 cr_acospi
 
@@ -169,12 +177,15 @@ Compute the principal value of the arc sine of `x`, divided by `π`,
 thus measuring the angle in half-revolutions.
 
 Returns `arcsin(x)/π` in interval `[-1/2, 1/2]`.
+
 - Returns `±0` if `x` is `±0`
-- Returns `NaN` if `x` is `|x| > 1`
+- Returns `±1/2` if `x` is `±1`
+- Returns `NaN` if `x` is `|x| > 1`, `status::errdom`
 - Returns `NaN` if `x` is `NaN`
 
 # Reference
 - C23 F.10.1.9
+- [oneapi::math::vm::asinpi](https://uxlfoundation.github.io/oneAPI-spec/spec/elements/oneMath/source/domains/vm/asinpi.html#onemath-vm-asinpi)
 """
 cr_asinpi
 
@@ -324,13 +335,15 @@ Compute the arc hyperbolic tangent of `x`,
 
 Returns `arctanh(x)` in interval `[-∞, ∞]`.
 - Returns `±0` if `x` is `±0`
-- Returns `±∞` if `x` is `±1`, and raises the "divide-by-zero" floating-point exception
-- Returns `NaN` if `x` is `|x| > 1`
+- Returns `±∞` if `x` is `±1`,
+    and raises the "divide-by-zero" floating-point exception (`status::sing`)
+- Returns `NaN` if `x` is `|x| > 1`, `status::errdom`
 - Returns `NaN` if `x` is `NaN`
 
 # Reference
 - [DLMF: §4.37.3](https://dlmf.nist.gov/4.37#E3)
 - C23 F.10.2.3
+- [oneapi::math::vm::atanh](https://uxlfoundation.github.io/oneAPI-spec/spec/elements/oneMath/source/domains/vm/atanh.html#onemath-vm-atanh)
 """
 cr_atanh
 
@@ -498,15 +511,17 @@ a.k.a. natural logarithm.
 
 Returns ``\\log_e x``
 
-- Returns `-∞` if `x` is `±0`, and raises the "divide-by-zero" floating-point exception
+- Returns `-∞` if `x` is `±0`,
+    and raises the "divide-by-zero" floating-point exception (`status::sing`)
 - Returns `+0` if `x` is `1`
-- Returns `NaN` if `x` is `x < 0`
+- Returns `NaN` if `x` is `x < 0`, `status::errdom`
 - Returns `+∞` if `x` is `+∞`
 - Returns `NaN` if `x` is `NaN`
 
 # Reference
 - [DLMF: §4.2.2](https://dlmf.nist.gov/4.2#E2)
 - C23 F.10.3.11
+- [oneapi::math::vm::ln](https://uxlfoundation.github.io/oneAPI-spec/spec/elements/oneMath/source/domains/vm/ln.html#onemath-vm-ln)
 """
 cr_log
 
@@ -673,7 +688,7 @@ Computes the reciprocal of the nonnegative square root of `x`.
 
 Returns ``\\frac{1}{\\sqrt{x}}``
 
-- Returns `+∞` if `x` is `±0`, and raises the "divide-by-zero" floating-point exception
+- Returns `±∞` if `x` is `±0`, and raises the "divide-by-zero" floating-point exception
 - Returns `NaN` if `x < 0`
 - Returns `+0` if `x` is `+∞`
 - Returns `NaN` if `x` is `NaN`

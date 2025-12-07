@@ -17,6 +17,9 @@ for T in [Float32, ]
         # asinpi(±0) returns ±0.
         @test PureLibm.cr_asinpi(T(0.0)) == T(0.0)
         @test PureLibm.cr_asinpi(-T(0.0)) == -T(0.0)
+        # asinpi(±1) = ±1/2
+        @test PureLibm.cr_asinpi(T(1.0)) == T(1) / 2
+        @test PureLibm.cr_asinpi(-T(1.0)) == -T(1) / 2
         # asinpi(x) returns a NaN and raises the "invalid" floating-point exception
         #   for |x| > 1.
         @test isnan(PureLibm.cr_asinpi(nextfloat(T(1))))
