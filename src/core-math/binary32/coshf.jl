@@ -48,7 +48,7 @@ julia> PureLibm.cr_cosh.(Float32[ -5:5... ])
 julia> PureLibm.cr_cosh(-50f0) == PureLibm.cr_cosh(50f0)
 true
 
-julia> PureLibm.cr_acosh(Inf32)
+julia> PureLibm.cr_cosh(Inf32)
 Inf32
 ```
 

@@ -67,7 +67,7 @@ julia> cr_asin(Inf32)
 NaN32
 ```
 
-See also: [`cr_asinspi(::Float32)`](@ref)
+See also: [`cr_asinpi(::Float32)`](@ref)
 
 # Reference
 - [src/binary32/asin/asinf.c](https://github.com/inkydragon/core-math/blob/2c08994e3cd967a63c4c1eed729353a1c3b9c798/src/binary32/asin/asinf.c)
