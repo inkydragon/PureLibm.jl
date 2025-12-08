@@ -45,19 +45,18 @@ This function computes `acos(x)/π`
 
 # Examples
 ```jldoctest
-julia> PureLibm.cr_acospi(1.0f0)
-0.0f0
+julia> PureLibm.cr_acospi.(Float32[-1.0, -0.5, 0.0, 0.5, 1.0])
+5-element Vector{Float32}:
+ 1.0
+ 0.6666667
+ 0.5
+ 0.33333334
+ 0.0
 
-julia> PureLibm.cr_acospi(-1.0f0)
-1.0f0
+julia> PureLibm.cr_acospi(nextfloat(1.0f0))     # |x| > 1, domain error
+NaN32
 
-julia> PureLibm.cr_acospi(0.0f0)
-0.5f0
-
-julia> PureLibm.cr_acospi(0.5f0)
-0.33333334f0
-
-julia> PureLibm.cr_acospi(Float32(1.0001))
+julia> PureLibm.cr_acospi(-nextfloat(1.0f0))
 NaN32
 
 julia> PureLibm.cr_acospi(Inf32)
