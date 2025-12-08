@@ -110,6 +110,8 @@ julia> PureLibm.cr_asinh.((Inf32, -Inf32))
 (Inf32, -Inf32)
 ```
 
+See also: [`cr_sinh(::Float32)`](@ref)
+
 # Reference
 - [core-math/src/binary32/asinh/asinhf.c](https://github.com/inkydragon/core-math/blob/e2166966c0e4a8f7ea0f5405891e3574d0a084a1/src/binary32/asinh/asinhf.c)
 """
