@@ -38,8 +38,9 @@ const CR_SINPIF_S = Float64[
 
 
 """
-Correctly-rounded sine of `Float32` value for angles.
+    cr_sinpi(x::Float32)
 
+Correctly-rounded sine of `Float32` value for angles.
 
 # Examples
 ```jldoctest

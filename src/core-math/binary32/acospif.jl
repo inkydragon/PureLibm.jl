@@ -63,6 +63,8 @@ julia> PureLibm.cr_acospi(Inf32)
 NaN32
 ```
 
+See also: [`cr_acos(::Float32)`](@ref)
+
 # Reference
 - [src/binary32/acospi/acospif.c](https://github.com/inkydragon/core-math/blob/7c7afc5d93cc3af4ff584f40f4a20af71488122a/src/binary32/acospi/acospif.c)
 """
