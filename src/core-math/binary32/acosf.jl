@@ -81,6 +81,8 @@ julia> cr_acos(Inf32)
 NaN32
 ```
 
+See also: [`cr_acospi(::Float32)`](@ref)
+
 # Reference
 - [src/binary32/acos/acosf.c](https://github.com/inkydragon/core-math/blob/24e4667a4c638fb5323d1492bf662ffebbc961e2/src/binary32/acos/acosf.c)
 """
