@@ -92,17 +92,19 @@ Correctly-rounded inverse hyperbolic tangent of `Float32`.
 
 # Examples
 ```jldoctest
-julia> PureLibm.cr_atanh.((0.0f0, -0.0f0))
-(0.0f0, -0.0f0)
-
-julia> PureLibm.cr_atanh.((0.5f0, -0.5f0))
-(0.54930615f0, -0.54930615f0)
+julia> PureLibm.cr_atanh.(Float32[-1, -0.999, -0.5, -0.0, 0.0, 0.5, 0.999, 1])
+8-element Vector{Float32}:
+ -Inf
+  -3.8002076
+  -0.54930615
+  -0.0
+   0.0
+   0.54930615
+   3.8002076
+  Inf
 
 julia> PureLibm.cr_atanh(-0.5f0) == -PureLibm.cr_atanh(0.5f0)
 true
-
-julia> PureLibm.cr_atanh.((1.0f0, -1.0f0))
-(Inf32, -Inf32)
 ```
 
 # Reference
