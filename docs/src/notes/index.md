@@ -17,14 +17,13 @@
 - [amd/ROCm libraries](https://rocm.docs.amd.com/en/latest/reference/api-libraries.html)
 
 ## Tools
+
 - [float.exposed](https://float.exposed/)
 
+## Books
 
-## [Books]
-## Markstein2000
-Markstein, P. (2000). IA-64 and Elementary Functions: Speed and Precision. Prentice Hall.
+- Markstein, P. (2000). IA-64 and Elementary Functions: Speed and Precision. Prentice Hall.
 
+## Papers
 
-## [Papers]
-## Shibata2019
-Shibata, N., & Petrogalli, F. (2019). SLEEF: A portable vectorized library of C standard mathematical functions. *IEEE Transactions on Parallel and Distributed Systems*, 31(6), 1316-1327.
+- Shibata, N., & Petrogalli, F. (2019). SLEEF: A portable vectorized library of C standard mathematical functions. *IEEE Transactions on Parallel and Distributed Systems*, 31(6), 1316-1327.
