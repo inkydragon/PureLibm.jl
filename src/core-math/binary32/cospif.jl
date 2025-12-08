@@ -43,6 +43,32 @@ const CR_COSPIF_S = Float64[
     cr_cospi(x::Float32)
 
 Correctly-rounded cosine of `Float32` for angles.
+
+# Examples
+```jldoctest
+julia> PureLibm.cr_cospi(0.0f0)
+1.0f0
+
+julia> PureLibm.cr_cospi(1/3f0)
+0.49999997f0
+
+julia> PureLibm.cr_cospi(1/2f0)
+0.0f0
+
+julia> PureLibm.cr_cospi(1f0)
+-1.0f0
+
+julia> PureLibm.cr_cospi.(Float32[ n+0.5 for n in -5:5 ]) |> iszero
+true
+
+julia> PureLibm.cr_cospi(Inf32)
+NaN32
+```
+
+See also: [`cr_cos(::Float32)`](@ref)
+
+# Reference
+
 """
 cr_cospi(x::Float32) = cr_cospif(x)
 
