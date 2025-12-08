@@ -160,17 +160,17 @@ Correctly-rounded sine of `Float32`.
 
 # Examples
 ```jldoctest
-julia> PureLibm.cr_sin(0.0f0)
-0.0f0
-
-julia> PureLibm.cr_sin(pi/6f0)
-0.5f0
-
-julia> PureLibm.cr_sin(deg2rad(30f0))
-0.5f0
-
-julia> PureLibm.cr_sin(pi/2f0)
-1.0f0
+julia> PureLibm.cr_sin.(pi * Float32[0, 1/6, 1/2, 5/6, 1, 7/6, 3/2, 11/6, 2])
+9-element Vector{Float32}:
+  0.0
+  0.5
+  1.0
+  0.50000006
+ -8.742278f-8
+ -0.49999997
+ -1.0
+ -0.49999976
+  1.7484555f-7
 
 julia> PureLibm.cr_sin(Inf32)
 NaN32
