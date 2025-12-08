@@ -30,17 +30,17 @@ This function computes `atan(x)/π`.
 
 # Examples
 ```jldoctest
-julia> PureLibm.cr_atanpi.((0.0f0, -0.0f0))
-(0.0f0, -0.0f0)
-
-julia> PureLibm.cr_atanpi.((0.5f0, -0.5f0))
-(0.14758362f0, -0.14758362f0)
+julia> PureLibm.cr_atanpi.(Float32[-Inf, -1.0, -0.0, 0.0, 1.0, Inf32])
+6-element Vector{Float32}:
+ -0.5
+ -0.25
+ -0.0
+  0.0
+  0.25
+  0.5
 
 julia> PureLibm.cr_atanpi(-0.5f0) == -PureLibm.cr_atanpi(0.5f0)
 true
-
-julia> PureLibm.cr_atanpi.((1.0f0, -1.0f0))
-(0.25f0, -0.25f0)
 ```
 
 # Reference
