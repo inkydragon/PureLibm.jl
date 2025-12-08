@@ -113,13 +113,15 @@ Correctly-rounded inverse hyperbolic cosine function for `Float32`.
 
 # Examples
 ```jldoctest
-julia> PureLibm.cr_acosh(1.0f0)
-0.0f0
+julia> PureLibm.cr_acosh.(Float32[1, 10, 100, 1e4, 1e8])
+5-element Vector{Float32}:
+  0.0
+  2.993223
+  5.298292
+  9.903487
+ 19.113829
 
-julia> PureLibm.cr_acosh(2.0f0)
-1.316958f0
-
-julia> PureLibm.cr_acosh(0.9999f0)
+julia> PureLibm.cr_acosh(prevfloat(1.0f0))  # x < 1, domain error
 NaN32
 
 julia> PureLibm.cr_acosh(Inf32)
@@ -127,7 +129,7 @@ Inf32
 ```
 
 # Reference
-- [src/binary32/acos/acosf.c](https://github.com/inkydragon/core-math/blob/6d735574dce9039b2b5585e1ec944fc8602782c8/src/binary32/acosh/acoshf.c)
+- [src/binary32/acosh/acoshf.c](https://github.com/inkydragon/core-math/blob/6d735574dce9039b2b5585e1ec944fc8602782c8/src/binary32/acosh/acoshf.c)
 """
 cr_acosh(x::Float32) = cr_acoshf(x)
 
