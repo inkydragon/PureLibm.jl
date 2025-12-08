@@ -92,14 +92,16 @@ Correctly-rounded inverse hyperbolic sine function for `Float32`.
 
 # Examples
 ```jldoctest
-julia> PureLibm.cr_asinh.((0.0f0, -0.0f0))
-(0.0f0, -0.0f0)
-
-julia> PureLibm.cr_asinh.((1.0f0, -1.0f0))
-(0.8813736f0, -0.8813736f0)
-
-julia> PureLibm.cr_asinh.((2.0f0, -2.0f0))
-(1.4436355f0, -1.4436355f0)
+julia> PureLibm.cr_asinh.(Float32[-100, -10, -1, -0.0, 0.0, 1, 10, 100])
+8-element Vector{Float32}:
+ -5.298342
+ -2.998223
+ -0.8813736
+ -0.0
+  0.0
+  0.8813736
+  2.998223
+  5.298342
 
 julia> PureLibm.cr_asinh(-10f0) == -PureLibm.cr_asinh(10f0)
 true
