@@ -128,6 +128,8 @@ julia> PureLibm.cr_acosh(Inf32)
 Inf32
 ```
 
+See also: [`cr_cosh(::Float32)`](@ref)
+
 # Reference
 - [src/binary32/acosh/acoshf.c](https://github.com/inkydragon/core-math/blob/6d735574dce9039b2b5585e1ec944fc8602782c8/src/binary32/acosh/acoshf.c)
 """

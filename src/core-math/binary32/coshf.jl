@@ -29,6 +29,31 @@ const CR_COSHF_CP = NTuple{4, Float64}((
 
 Correctly-rounded hyperbolic cosine of `Float32`.
 
+# Examples
+```jldoctest
+julia> PureLibm.cr_cosh.(Float32[ -5:5... ])
+11-element Vector{Float32}:
+ 74.209946
+ 27.308233
+ 10.067662
+  3.7621956
+  1.5430807
+  1.0
+  1.5430807
+  3.7621956
+ 10.067662
+ 27.308233
+ 74.209946
+
+julia> PureLibm.cr_cosh(-50f0) == PureLibm.cr_cosh(50f0)
+true
+
+julia> PureLibm.cr_acosh(Inf32)
+Inf32
+```
+
+See also: [`cr_acosh(::Float32)`](@ref)
+
 # Reference
 - [DLMF 4.28.2](https://dlmf.nist.gov/4.28#E2)
 - https://gitlab.inria.fr/core-math/core-math/-/blob/de59ecfbe35b4e2dddbad2849f3cdde7835d5a48/src/binary32/cosh/coshf.c
