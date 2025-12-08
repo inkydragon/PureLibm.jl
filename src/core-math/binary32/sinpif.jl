@@ -63,7 +63,7 @@ NaN32
 See also: [`cr_sin(::Float32)`](@ref)
 
 # Reference
-- https://gitlab.inria.fr/core-math/core-math/-/blob/03c15350fdcc286625bc5fe9b57e47a2275af293/src/binary32/sinpi/sinpif.c
+- [core-math/src/binary32/sinpi/sinpif.c](https://github.com/inkydragon/core-math/blob/03c15350fdcc286625bc5fe9b57e47a2275af293/src/binary32/sinpi/sinpif.c)
 """
 cr_sinpi(x::Float32) = cr_sinpif(x)
 
