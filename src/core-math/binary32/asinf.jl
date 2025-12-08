@@ -45,25 +45,22 @@ Correctly-rounded arc-sine function for `Float32`.
 
 # Examples
 ```jldoctest
-julia> cr_asin(-1.0f0) / pi
--0.5f0
+julia> cr_asin.(Float32[-1.0, -0.5, -0.0, 0.0, 0.5, 1.0]) / pi
+6-element Vector{Float32}:
+ -0.5
+ -0.16666667
+ -0.0
+  0.0
+  0.16666667
+  0.5
 
-julia> cr_asin(-0.5f0) / pi  # -1/6
--0.16666667f0
+julia> cr_asin(0.5f0) === Float32(pi/6)
+true
 
-julia> cr_asin(-0.0f0) / pi
--0.0f0
+julia> cr_asin(nextfloat(1.0f0))   # |x| > 1, domain error
+NaN32
 
-julia> cr_asin(0.0f0) / pi
-0.0f0
-
-julia> cr_asin(0.5f0) / pi
-0.16666667f0
-
-julia> cr_asin(1.0f0) / pi
-0.5f0
-
-julia> cr_asin(NaN32)
+julia> cr_asin(-nextfloat(1.0f0))
 NaN32
 
 julia> cr_asin(Inf32)
