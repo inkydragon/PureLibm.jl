@@ -48,18 +48,29 @@ This function computes `asin(x)/π`
 
 # Examples
 ```jldoctest
-julia> PureLibm.cr_asinpi(0.0f0)
-0.0f0
+julia> PureLibm.cr_asinpi.(Float32[-1.0, -0.5, -0.0, 0.0, 0.5, 1.0])
+6-element Vector{Float32}:
+ -0.5
+ -0.16666667
+ -0.0
+  0.0
+  0.16666667
+  0.5
 
-julia> PureLibm.cr_asinpi.((1.0f0, -1.0f0))
-(0.5f0, -0.5f0)
+julia> PureLibm.cr_asinpi(0.5f0) === Float32(1/6)
+true
 
-julia> PureLibm.cr_asinpi(nextfloat(1.0f0))
+julia> PureLibm.cr_asinpi(nextfloat(1.0f0))     # |x| > 1, domain error
+NaN32
+
+julia> PureLibm.cr_asinpi(-nextfloat(1.0f0))
 NaN32
 
 julia> PureLibm.cr_asinpi(Inf32)
 NaN32
 ```
+
+See also: [`cr_asin(::Float32)`](@ref)
 
 # Reference
 - [core-math/src/binary32/asinpi/asinpif.c](https://github.com/inkydragon/core-math/blob/7c7afc5d93cc3af4ff584f40f4a20af71488122a/src/binary32/asinpi/asinpif.c)

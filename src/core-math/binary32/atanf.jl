@@ -47,27 +47,20 @@ Correctly-rounded arc-tangent of `Float32`.
 
 # Examples
 ```jldoctest
-julia> cr_atan(Inf32) / pi
-0.5f0
+julia> cr_atan.(Float32[-Inf, -1.0, -0.0, 0.0, 1.0, Inf32]) / pi
+6-element Vector{Float32}:
+ -0.5
+ -0.25
+ -0.0
+  0.0
+  0.25
+  0.5
 
-julia> cr_atan(1.0f0) / pi
-0.25f0
-
-julia> cr_atan(0.0f0)
-0.0f0
-
-julia> cr_atan(-0.0f0)
--0.0f0
-
-julia> cr_atan(-1.0f0) / pi
--0.25f0
-
-julia> cr_atan(-Inf32) / pi
--0.5f0
-
-julia> cr_atan(-NaN32)
-NaN32
+julia> cr_atan(-0.5f0) == -cr_atan(0.5f0)
+true
 ```
+
+See also: [`cr_atanpi(::Float32)`](@ref)
 
 # Reference
 - [core-math/src/binary32/atan/atanf.c](https://github.com/inkydragon/core-math/blob/2c08994e3cd967a63c4c1eed729353a1c3b9c798/src/binary32/atan/atanf.c)

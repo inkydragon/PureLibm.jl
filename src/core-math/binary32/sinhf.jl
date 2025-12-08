@@ -56,6 +56,31 @@ const CR_SINHF_TB = UInt64[
     cr_sinh(x::Float32) 
 
 Correctly-rounded hyperbolic sine of `Float32`.
+
+# Examples
+```jldoctest
+julia> PureLibm.cr_sinh.(Float32[-100, -10, -1, -0.0, 0.0, 1, 10, 100])
+8-element Vector{Float32}:
+    -Inf
+ -11013.232
+     -1.1752012
+     -0.0
+      0.0
+      1.1752012
+  11013.232
+     Inf
+
+julia> PureLibm.cr_sinh(-10f0) == -PureLibm.cr_sinh(10f0)
+true
+
+julia> PureLibm.cr_sinh.((Inf32, -Inf32))
+(Inf32, -Inf32)
+```
+
+See also: [`cr_asinh(::Float32)`](@ref)
+
+# Reference
+
 """
 cr_sinh(x::Float32) = cr_sinhf(x)
 

@@ -9,6 +9,17 @@ Correctly-rounded half revolution arctangent function of two `Float32` values.
 
 !!! warning
     This function is not implemented yet
+
+# Examples
+```jldoctest
+julia> nothing
+
+```
+
+See also: [`cr_atan2(::Float32, ::Float32)`](@ref)
+
+# Reference
+
 """
 cr_atan2pi(y::Float32, x::Float32) = cr_atan2pif(y, x)
 

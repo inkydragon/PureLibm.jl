@@ -38,10 +38,32 @@ const CR_SINPIF_S = Float64[
 
 
 """
+    cr_sinpi(x::Float32)
+
 Correctly-rounded sine of `Float32` value for angles.
 
+# Examples
+```jldoctest
+julia> PureLibm.cr_sinpi.(Float32[0, 1/6, 1/2, 5/6, 1, 7/6, 3/2, 11/6, 2])
+9-element Vector{Float32}:
+  0.0
+  0.5
+  1.0
+  0.50000006
+  0.0
+ -0.49999988
+ -1.0
+ -0.49999988
+  0.0
+
+julia> PureLibm.cr_sinpi(Inf32)
+NaN32
+```
+
+See also: [`cr_sin(::Float32)`](@ref)
+
 # Reference
-- https://gitlab.inria.fr/core-math/core-math/-/blob/03c15350fdcc286625bc5fe9b57e47a2275af293/src/binary32/sinpi/sinpif.c
+- [core-math/src/binary32/sinpi/sinpif.c](https://github.com/inkydragon/core-math/blob/03c15350fdcc286625bc5fe9b57e47a2275af293/src/binary32/sinpi/sinpif.c)
 """
 cr_sinpi(x::Float32) = cr_sinpif(x)
 

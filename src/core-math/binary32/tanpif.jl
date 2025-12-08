@@ -16,6 +16,32 @@ const CR_TANPIF_CD = NTuple{4,Float64}((
     cr_tanpi(x::Float32)
 
 Correctly-rounded tangent of `Float32` for angles.
+
+# Examples
+```jldoctest
+julia> PureLibm.cr_tanpi.(Float32[-1/2, -1/4, -0.0, 0.0, 1/4, 1/2])
+6-element Vector{Float32}:
+ -Inf
+  -1.0
+  -0.0
+   0.0
+   1.0
+  Inf
+
+julia> PureLibm.cr_tanpi(1/6f0) ≈ inv(sqrt(3))
+true
+
+julia> PureLibm.cr_tanpi(-0.75f0) == -PureLibm.cr_tanpi(0.75f0)
+true
+
+julia> isnan(PureLibm.cr_tanpi(Inf32))
+true
+```
+
+See also: [`cr_tan(::Float32)`](@ref)
+
+# Reference
+
 """
 cr_tanpi(x::Float32) = cr_tanpif(x)
 
