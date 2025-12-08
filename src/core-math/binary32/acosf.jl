@@ -71,7 +71,13 @@ julia> cr_acos(0.5f0) / pi
 julia> cr_acos(1.0f0) / pi
 0.0f0
 
-julia> cr_acos(NaN32)
+julia> cr_acos(nextfloat(1.0f0))    # |x| > 1, domain error
+NaN32
+
+julia> cr_acos(-nextfloat(1.0f0))
+NaN32
+
+julia> cr_acos(Inf32)
 NaN32
 ```
 
