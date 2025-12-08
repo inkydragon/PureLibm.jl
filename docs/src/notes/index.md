@@ -18,7 +18,12 @@
 
 ## Tools
 
-- [float.exposed](https://float.exposed/)
+> [Community fp Tools](https://fpbench.org/community.html)
+
+- Web [float.exposed](https://float.exposed/)
+- Web [Herbie: Automatically Improving Floating Point Accuracy](https://herbie.uwplse.org/)
+- [Gappa](https://gappa.gitlabpages.inria.fr/)
+- [Sollya software tool](https://www.sollya.org/)
 
 ## Books
 
