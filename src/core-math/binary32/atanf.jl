@@ -60,6 +60,8 @@ julia> cr_atan(-0.5f0) == -cr_atan(0.5f0)
 true
 ```
 
+See also: [`cr_atanpi(::Float32)`](@ref)
+
 # Reference
 - [core-math/src/binary32/atan/atanf.c](https://github.com/inkydragon/core-math/blob/2c08994e3cd967a63c4c1eed729353a1c3b9c798/src/binary32/atan/atanf.c)
 """
