@@ -42,6 +42,33 @@ const CR_TANHF_CD = NTuple{8, Float64}((
     cr_tanh(x::Float32)
 
 Correctly-rounded hyperbolic tangent function for `Float32`.
+
+# Examples
+```jldoctest
+julia> PureLibm.cr_tanh.(Float32[-10, -5, -1, -0.5, -0.0, 0.0, 0.5, 1, 5, 10])
+10-element Vector{Float32}:
+ -1.0
+ -0.9999092
+ -0.7615942
+ -0.46211717
+ -0.0
+  0.0
+  0.46211717
+  0.7615942
+  0.9999092
+  1.0
+
+julia> PureLibm.cr_tanh(-0.5f0) == -PureLibm.cr_tanh(0.5f0)
+true
+
+julia> PureLibm.cr_tanh(Inf32)
+1.0f0
+```
+
+See also: [`cr_atanh(::Float32)`](@ref)
+
+# Reference
+
 """
 cr_tanh(x::Float32) = cr_tanhf(x)
 

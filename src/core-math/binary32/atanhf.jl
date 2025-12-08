@@ -107,6 +107,8 @@ julia> PureLibm.cr_atanh(-0.5f0) == -PureLibm.cr_atanh(0.5f0)
 true
 ```
 
+See also: [`cr_tanh(::Float32)`](@ref)
+
 # Reference
 - [core-math/src/binary32/atanh/atanhf.c](https://github.com/inkydragon/core-math/blob/4d6192d21a311e412b8cc76bd33c7ba4d41ccbab/src/binary32/atanh/atanhf.c)
 """
