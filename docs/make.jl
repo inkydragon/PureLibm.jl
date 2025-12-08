@@ -8,7 +8,8 @@ makedocs(;
     authors="Chengyu HAN <cyhan.dev@outlook.com> and contributors",
     sitename="PureLibm.jl",
     format=Documenter.HTML(;
-        canonical="https://inkydragon.github.io/PureLibm.jl",
+        # canonical="https://inkydragon.github.io/PureLibm.jl",
+        canonical="https://cyhan.dev/PureLibm.jl",
         edit_link="main",
         assets=String[],
     ),

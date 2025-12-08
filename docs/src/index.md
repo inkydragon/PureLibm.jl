@@ -4,9 +4,9 @@ CurrentModule = PureLibm
 
 # PureLibm
 
-> A pure Julia math library
+> A correctly rounded maths library in pure Julia.
 
-Documentation for [PureLibm](https://github.com/inkydragon/PureLibm.jl).
+Documentation for [PureLibm.jl](https://github.com/inkydragon/PureLibm.jl).
 
 ## Previous works
 
