@@ -23,6 +23,26 @@ const CR_CBRTF_C = NTuple{8,Float64}((
     cr_cbrt(x::Float32)
 
 Correctly-rounded cubic root of `Float32` value.
+
+# Examples
+```jldoctest
+julia> PureLibm.cr_cbrt.(Float32[-0.0, 0.0, 1e-3, 1e-9, 1e-30])
+5-element Vector{Float32}:
+ -0.0
+  0.0
+  0.1
+  0.001
+  1.0f-10
+
+julia> PureLibm.cr_cbrt(Float32(-pi)) === -PureLibm.cr_cbrt(Float32(pi))
+true
+
+julia> PureLibm.cr_cbrt(Inf32)
+Inf32
+```
+
+# Reference
+
 """
 cr_cbrt(x::Float32) = cr_cbrtf(x)
 
