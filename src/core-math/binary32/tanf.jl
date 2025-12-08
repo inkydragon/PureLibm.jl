@@ -118,11 +118,14 @@ Correctly-rounded tangent of `Float32`.
 
 # Examples
 ```jldoctest
-julia> cr_tan(0f0)
-0.0f0
-
-julia> cr_tan(pi/4f0)
-1.0f0
+julia> cr_tan.(pi * Float32[-1/2, -1/4, -0.0, 0.0, 1/4, 1/2])
+6-element Vector{Float32}:
+  2.2877332f7
+ -1.0
+ -0.0
+  0.0
+  1.0
+ -2.2877332f7
 
 julia> cr_tan(pi/6f0) ≈ inv(sqrt(3))
 true
