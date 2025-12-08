@@ -5,7 +5,25 @@
 """
     cr_rsqrt(x::Float32)
 
-Correctly-rounded reciprocal square root of Float32
+Correctly-rounded reciprocal square root of `Float32`
+
+# Examples
+```jldoctest
+julia> PureLibm.cr_rsqrt.(Float32[0.0, 1e-4, 1e-8, 1e-30])
+4-element Vector{Float32}:
+    Inf
+   100.0
+ 10000.0
+     1.0f15
+
+julia> PureLibm.cr_rsqrt(Inf32)
+0.0f0
+```
+
+See also: [`cr_sqrt(::Float32)`](@ref)
+
+# Reference
+
 """
 cr_rsqrt(x::Float32) = cr_rsqrtf(x)
 
