@@ -7,7 +7,15 @@
 ## Build and Install
 
 ```sh
+# Build
+cd ~
+git clone https://gitlab.inria.fr/gappa/gappa.git
+cd gappa
+./autogen.sh 
+./configure && ./remake -j
+# verify
+./src/gappa --version
 
 # install
-sudo ln -s ~/gappa/gappa /usr/bin/gappa
+sudo ln -s ~/gappa/src/gappa  /usr/bin/gappa
 ```
