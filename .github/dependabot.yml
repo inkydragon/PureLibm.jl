@@ -4,5 +4,12 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/" # Location of package manifests
     schedule:
-      # [daily, weekly, monthly]
+      # [weekly, monthly]
+      interval: "monthly"
+  - package-ecosystem: "julia"
+    directories:
+      - "/"
+      - "/docs"
+      - "/test"
+    schedule:
       interval: "monthly"
