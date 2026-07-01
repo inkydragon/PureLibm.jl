@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>tanh notes · PureLibm.jl</title><meta name="title" content="tanh notes · PureLibm.jl"/><meta property="og:title" content="tanh notes · PureLibm.jl"/><meta property="twitter:title" content="tanh notes · PureLibm.jl"/><meta name="description" content="Documentation for PureLibm.jl."/><meta property="og:description" content="Documentation for PureLibm.jl."/><meta property="twitter:description" content="Documentation for PureLibm.jl."/><meta property="og:url" content="https://cyhan.dev/PureLibm.jl/impl/tanh/"/><meta property="twitter:url" content="https://cyhan.dev/PureLibm.jl/impl/tanh/"/><link rel="canonical" href="https://cyhan.dev/PureLibm.jl/impl/tanh/"/><script data-outdated-warner src="../../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.050/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL="../.."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../../assets/documenter.js"></script><script src="../../search_index.js"></script><script src="../../siteinfo.js"></script><script src="../../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/catppuccin-mocha.css" data-theme-name="catppuccin-mocha"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/catppuccin-macchiato.css" data-theme-name="catppuccin-macchiato"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/catppuccin-frappe.css" data-theme-name="catppuccin-frappe"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/catppuccin-latte.css" data-theme-name="catppuccin-latte"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit"><a href="../../">PureLibm.jl</a></span></div><button class="docs-search-query input is-rounded is-small is-clickable my-2 mx-auto py-1 px-2" id="documenter-search-query">Search docs (Ctrl + /)</button><ul class="docs-menu"><li><a class="tocitem" href="../../">Home</a></li><li><span class="tocitem">Reference</span><ul><li><a class="tocitem" href="../../reference/">API</a></li><li><a class="tocitem" href="../../reference/f32/">Float32 API</a></li><li><a class="tocitem" href="../../reference/f64/">Float64 API</a></li></ul></li><li><span class="tocitem">Tech Notes</span><ul><li><a class="tocitem" href="../../notes/">Tech Notes</a></li><li><input class="collapse-toggle" id="menuitem-3-2" type="checkbox"/><label class="tocitem" for="menuitem-3-2"><span class="docs-label">C Standards</span><i class="docs-chevron"></i></label><ul class="collapsed"><li><a class="tocitem" href="../../notes/std-c99/">Std C99</a></li><li><a class="tocitem" href="../../notes/std-c11/">Std C11</a></li><li><a class="tocitem" href="../../notes/std-c23/">Std C23</a></li><li><a class="tocitem" href="../../notes/ieee754/">IEEE 754</a></li></ul></li><li><input class="collapse-toggle" id="menuitem-3-3" type="checkbox"/><label class="tocitem" for="menuitem-3-3"><span class="docs-label">Correctly Rounded</span><i class="docs-chevron"></i></label><ul class="collapsed"><li><a class="tocitem" href="../../notes/llvm-libc/">LLVM Libc [Apache]</a></li><li><a class="tocitem" href="../../notes/core-math/">Core Math [MIT]</a></li><li><a class="tocitem" href="../../notes/rlibm/">RLibm [MIT]</a></li></ul></li></ul></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><a class="docs-sidebar-button docs-navbar-link fa-solid fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a><nav class="breadcrumb"><ul class="is-hidden-mobile"><li class="is-active"><a href>tanh notes</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>tanh notes</a></li></ul></nav><div class="docs-right"><a class="docs-navbar-link" href="https://github.com/inkydragon/PureLibm.jl" title="View the repository on GitHub"><span class="docs-icon fa-brands"></span><span class="docs-label is-hidden-touch">GitHub</span></a><a class="docs-navbar-link" href="https://github.com/inkydragon/PureLibm.jl/blob/main/docs/src/impl/tanh.md" title="Edit source on GitHub"><span class="docs-icon fa-solid"></span></a><a class="docs-settings-button docs-navbar-link fa-solid fa-gear" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-article-toggle-button fa-solid fa-chevron-up" id="documenter-article-toggle-button" href="javascript:;" title="Collapse all docstrings"></a></div></header><article class="content" id="documenter-page"><h1 id="tanh-notes"><a class="docs-heading-anchor" href="#tanh-notes">tanh notes</a><a id="tanh-notes-1"></a><a class="docs-heading-anchor-permalink" href="#tanh-notes" title="Permalink"></a></h1><h2 id="tanhf"><a class="docs-heading-anchor" href="#tanhf">tanhf</a><a id="tanhf-1"></a><a class="docs-heading-anchor-permalink" href="#tanhf" title="Permalink"></a></h2><blockquote><p>TODO: find out why output not match</p></blockquote><p>polynomials generated using rminimax</p><pre><code class="language-sh hljs">./ratapprox --function=&quot;tanh(x)&quot; \
+    --dom=[0x1p-12,9.010913] \
+    --num=[x,x^3,x^5,x^7,x^9,x^11,x^13,x^15] \
+    --den=[1,x^2,x^4,x^6,x^8,x^10,x^12,x^14] \
+    --log --output=tanh.sollya</code></pre><p>Output:</p><pre><code class="language-c hljs">================ADIFFCORR FINISH=================
+
+Location        Maximum error
+4.72199 1.79261e-17
+Error norm = 1.79261e-17
+DC    norm = 1.7926e-17
+
+Final coefficients:
+Numerator:
+1 0.148698 0.00551317 7.65439e-05 4.47369e-07 1.06722e-09 8.35963e-13 9.39049e-17
+Denominator:
+1 0.482031 0.0328569 0.00072627 6.51159e-06 2.46293e-08 3.52285e-11 1.2741e-14
+Starting fpminimax...
+Finished fpminimax...
+-----------------------INFORMATION--------------------
+Function = tanh(x)
+Weight = reciprocal of tanh(x)
+Domain: [0.000244141, 9.01091]
+Numerator basis = x,x^3,x^5,x^7,x^9,x^11,x^13,x^15
+Denominator basis = 1,x^2,x^4,x^6,x^8,x^10,x^12,x^14
+Approximation error                              = 1.79261e-17
+Naive rounding approximation error               = 6.4631e-17
+fpminimax approximation error                    = 2.5133e-17
+------------------------------------------------------
+Writing results to the file tanh.sollya
+
+# cat tanh.sollya
+Numerator = [|
+0x1p+0,
+0x2.61112864ab514p-4,
+0x1.694fbb173746dp-8,
+0x5.0432349fa3ddp-16,
+0x7.8170936f8dea8p-24,
+0x4.956c3986a2de4p-32,
+0xe.b4e0db6c8209p-44,
+0x6.c443e5b5e3238p-56|];
+Denominator = [|
+0x1p+0,
+0x7.b6667dba00a58p-4,
+0x8.6950377fc376p-8,
+0x2.f98ced677f7d8p-12,
+0x6.d3f250ecd0ed8p-20,
+0x6.9c85a9f0f8084p-28,
+0x2.6bc03836ec5aep-36,
+0x3.9617e58e2a982p-48|];</code></pre><p>Note: the coefficients need to be normalized:</p><pre><code class="language-jl hljs">julia&gt; using Printf
+
+julia&gt; num = [
+       0x1p+0,
+       0x2.61112864ab514p-4,
+       0x1.694fbb173746dp-8,
+       0x5.0432349fa3ddp-16,
+       0x7.8170936f8dea8p-24,
+       0x4.956c3986a2de4p-32,
+       0xe.b4e0db6c8209p-44,
+       0x6.c443e5b5e3238p-56
+       ];
+
+julia&gt; den = [
+       0x1p+0,
+       0x7.b6667dba00a58p-4,
+       0x8.6950377fc376p-8,
+       0x2.f98ced677f7d8p-12,
+       0x6.d3f250ecd0ed8p-20,
+       0x6.9c85a9f0f8084p-28,
+       0x2.6bc03836ec5aep-36,
+       0x3.9617e58e2a982p-48
+       ];
+
+julia&gt; [@printf(&quot;%a\n&quot;, x) for x in num];
+0x1p+0
+0x1.3088943255a8ap-3
+0x1.694fbb173746dp-8
+0x1.410c8d27e8f74p-14
+0x1.e05c24dbe37aap-22
+0x1.255b0e61a8b79p-30
+0x1.d69c1b6d90412p-41
+0x1.b110f96d78c8ep-54
+
+julia&gt; [@printf(&quot;%a\n&quot;, x) for x in den];
+0x1p+0
+0x1.ed999f6e80296p-2
+0x1.0d2a06eff86ecp-5
+0x1.7cc676b3bfbecp-11
+0x1.b4fc943b343b6p-18
+0x1.a7216a7c3e021p-26
+0x1.35e01c1b762d7p-35
+0x1.cb0bf2c7154c1p-47</code></pre></article><nav class="docs-footer"><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.17.0 on <span class="colophon-date" title="Wednesday 1 July 2026 01:45">Wednesday 1 July 2026</span>. Using Julia version 1.12.6.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
